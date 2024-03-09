@@ -1,0 +1,119 @@
+.layout {
+  min-height: 100%;
+
+  &-header {
+    display: flex;
+    padding: var(--header-padding);
+    height: var(--header-height);
+    box-shadow: var(--header-shadow);
+    background-color: var(--header-bg-color);
+
+    &__logo,
+    &__user {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    &__logo {
+      width: calc(var(--sider-main-width) + var(--sider-sub-width) - var(--header-padding-x));
+    }
+
+    &__user {
+      flex: 1;
+      justify-content: right;
+      gap: var(--td-size-6);
+
+      .t-divider {
+        margin: 0;
+        border-color: var(--header-divider-color);
+      }
+    }
+  }
+
+  &-sider {
+    display: flex;
+    width: calc(var(--sider-main-width) + var(--sider-sub-width));
+
+    &.no-sider {
+      width: 0;
+    }
+
+    &.only-main {
+      width: var(--sider-main-width);
+    }
+
+    &.only-sub {
+      width: var(--sider-sub-width);
+    }
+
+    &-main {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: auto;
+      width: var(--sider-main-width);
+      background-color: var(--sider-main-bg-color);
+      border-right: var(--sider-border);
+      padding: var(--td-comp-paddingTB-s) 0;
+
+      &__menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: var(--sider-main-menu-color);
+        padding: var(--sider-main-menu-padding);
+
+        span {
+          font-size: var(--sider-main-menu-font-size);
+        }
+
+        &--icon {
+          display: flex;
+          justify-content: center;
+          font-size: var(--sider-main-menu-icon-size);
+        }
+
+        &:hover {
+          color: var(--sider-main-menu-color-hover);
+        }
+
+        &.is-active {
+          color: var(--sider-main-menu-color-active);
+        }
+      }
+    }
+
+    &-sub {
+      width: var(--sider-sub-width);
+      background-color: var(--sider-sub-bg-color);
+      border-right: var(--sider-border);
+    }
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--footer-padding);
+    color: var(--footer-color);
+    font-size: var(--footer-font-size);
+    line-height: var(--footer-line-height);
+
+    &__links {
+      .t-divider {
+        border-color: var(--td-border-level-2-color);
+      }
+
+      a {
+        color: var(--footer-color);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--td-text-color-primary);
+        }
+      }
+    }
+  }
+}

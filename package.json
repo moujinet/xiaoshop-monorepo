@@ -1,0 +1,53 @@
+{
+  "name": "xiaoshop-monorepo",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
+  "description": "XiaoShop - 云链小商城",
+  "author": "Luoyi <luoyi@mouji.net>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "nr --filter=@xiaoshop/admin dev",
+    "dev:uniapp": "",
+    "lint": "eslint packages/**/*.{vue,ts,tsx,js,jsx}",
+    "stylelint": "stylelint packages/**/src/**/*.{html,vue,css,less}",
+    "commit": "czg",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.8.0",
+    "@antfu/ni": "^0.21.12",
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-git": "^1.9.0",
+    "czg": "^1.9.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "lint-staged": "^15.2.2",
+    "pnpm": "^8.15.4",
+    "postcss-html": "^1.6.0",
+    "postcss-less": "^6.0.0",
+    "simple-git-hooks": "^2.10.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.4",
+    "typescript": "^5.4.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{vue,ts,tsx,js,jsx}": "eslint --fix",
+    "*.{html,vue,css,less}": [
+      "pnpm stylelint --fix"
+    ]
+  }
+}

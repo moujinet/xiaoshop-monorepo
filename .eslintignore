@@ -1,0 +1,4 @@
+snapshot*
+dist
+node_modules
+packages/apis/**
