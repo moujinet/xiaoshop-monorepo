@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router/auto'
-import type { IMenu } from '~/types'
+import type { TMenuMeta } from '~/types'
 
 /**
  * Transform id to path
@@ -8,68 +8,47 @@ import type { IMenu } from '~/types'
  * @returns string
  */
 export function transId2Path(id: string): string {
-  return `/${id.split('.').splice(1).join('/')}`
+  const parts: string[] = id.split('.')
+
+  if (parts[parts.length - 1] === 'index')
+    parts.pop()
+
+  return `/${parts.splice(1).join('/')}`
 }
 
 /**
  * Extend routes meta
  *
  * @param userRoutes RouteRecordRaw[]
- * @param menus IMenu[]
+ * @param metas TMenuMeta[]
  *
  * @returns RouteRecordRaw[]
  */
-export function extendRoutesMeta(userRoutes: RouteRecordRaw[], menus: IMenu[]): RouteRecordRaw[] {
+export function extendRoutesMeta(userRoutes: RouteRecordRaw[], metas: TMenuMeta[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
   userRoutes.forEach((r) => {
     const route = { ...r }
-    const meta = _deepFind(menus, route)
+    const meta = metas.find(m => transId2Path(m.id) === route.name || `${transId2Path(m.id)}/` === route.name)
 
     if (meta) {
       route.meta = {
         ...route.meta,
         id: meta.id,
         space: meta.space,
+        type: meta.type,
         module: meta.module,
         title: meta.name,
         desc: meta.desc,
         icon: meta.icon,
-        isPermission: meta.isPermission,
       }
     }
 
     if (route.children && route.children.length > 0)
-      route.children = extendRoutesMeta(route.children, menus) || []
+      route.children = extendRoutesMeta(route.children, metas) || []
 
     routes.push(route)
   })
 
   return routes
-}
-
-/**
- * Deep find menu by route name
- *
- * @param menus IMenu[]
- * @param route RouteRecordRaw
- *
- * @returns IMenu | undefined
- */
-function _deepFind(menus: IMenu[], route: RouteRecordRaw): IMenu | undefined {
-  const target = ((route.name || route.path) as string).replace(/\/+$/, '')
-
-  let matched: IMenu | undefined
-
-  for (const menu of menus) {
-    if (transId2Path(menu.id) === target) {
-      matched = menu
-      break
-    }
-
-    if (menu.children && menu.children.length > 0)
-      matched = _deepFind(menu.children, route) || matched
-  }
-
-  return matched
 }

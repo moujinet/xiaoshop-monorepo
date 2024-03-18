@@ -1,35 +1,32 @@
 import { type Component, createApp } from 'vue'
-import { type Router, createRouter } from 'vue-router/auto'
-import type { _RouterOptions } from 'unplugin-vue-router/types'
-import { defu } from 'defu'
+import { type Router, createRouter, createWebHistory } from 'vue-router/auto'
 import { createHead } from '@unhead/vue'
 import { setupLayouts } from 'virtual:generated-layouts'
 
 import type { IContextCallback, IGlobalContext, IGlobalOptions } from '~/types'
-import { DEFAULT_SPACES } from '~/configs/defaults'
-import { description as desc, version } from '~~/package.json'
+import { DEFAULT_SPACES } from '~/constants/defaults'
+import { description, version } from '~~/package.json'
 
 export function createAdminClient(
   App: Component,
-  routerOptions: _RouterOptions,
-  userOptions: Partial<IGlobalOptions> = {},
   ready?: IContextCallback<Promise<void>>,
   rootContainer = '#app',
 ) {
-  const options: IGlobalOptions = defu(userOptions, {
-    name: 'XiaoShop',
-    desc,
-    version,
-    debug: false,
-  })
+  const options: IGlobalOptions = {
+    name: import.meta.env.VITE_APP_NAME || 'XiaoShop',
+    desc: import.meta.env.VITE_APP_DESC || description || 'XiaoShop Admin',
+    version: version || '1.0.0',
+    debug: import.meta.env.DEV,
+  }
 
   async function createGlobalContext(): Promise<IGlobalContext> {
     const app = createApp(App)
     const pinia = createPinia()
     const head = createHead()
 
-    app.use(pinia)
-    app.use(head)
+    app
+      .use(pinia)
+      .use(head)
 
     // Defaults admin spaces
     const context = useContext()
@@ -40,13 +37,13 @@ export function createAdminClient(
     // Load admin modules
     loadModules()
 
-    // Create admin router
     const router = createRouter({
-      ...routerOptions,
+      history: createWebHistory(import.meta.env.BASE_URL),
+      scrollBehavior: () => ({ left: 0, top: 0 }),
       extendRoutes: (r) => {
-        const { nestedMenus } = storeToRefs(context)
+        const { menusMeta } = storeToRefs(useContext())
         const routes = setupLayouts(r)
-        return extendRoutesMeta(routes, nestedMenus.value)
+        return extendRoutesMeta(routes, menusMeta.value)
       },
     }) as Router
 
@@ -56,9 +53,14 @@ export function createAdminClient(
       options,
     }
 
+    // Load admin middlewares
+    loadMiddlewares(ctx)
+
+    // Load admin plugins
+    loadPlugins(ctx)
+
     app.use(router)
 
-    // Ready
     await ready?.(ctx)
 
     return ctx

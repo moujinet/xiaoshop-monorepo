@@ -1,3 +1,5 @@
+import type { IMenu } from '~/types'
+
 interface ILayoutVisible {
   sider: boolean
   mainMenu: boolean
@@ -12,6 +14,25 @@ export const useLayout = defineStore('layout', () => {
     subMenu: true,
     footer: true,
   })
+
+  const { menus } = storeToRefs(useContext())
+
+  /**
+   * Get top menus
+   */
+  const spaces = computed(() => menus.value.filter(m => m.type === 'space' && m.isShow))
+
+  /**
+   * Get modules by space id
+   *
+   * @param space string
+   * @returns IMenu[]
+   */
+  function getModules(space: string): IMenu[] {
+    return menus.value
+      .find(m => m.space === space)
+      ?.children || []
+  }
 
   /**
    * Toggle visible
@@ -30,7 +51,9 @@ export const useLayout = defineStore('layout', () => {
   }
 
   return {
+    spaces,
     visible,
     toggleVisible,
+    getModules,
   }
 })

@@ -1,4 +1,8 @@
-import type { IContextCallback, IGlobalContext, IRouteMiddleware } from '~/types'
+import type {
+  IContextCallback,
+  IGlobalContext,
+  IRouteMiddleware,
+} from '~/types'
 
 /**
  * Define middleware

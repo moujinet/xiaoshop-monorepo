@@ -1,4 +1,7 @@
-import type { ICallback, TModuleDefinition } from '~/types'
+import type {
+  ICallback,
+  TModuleDefinition,
+} from '~/types'
 
 /**
  * Define a module
@@ -23,7 +26,6 @@ export function defineModule(definition: TModuleDefinition): ICallback {
     // Create module
     useContext().createModule({
       ...definition,
-      id: `${definition.space}.${definition.id}`,
     })
   }
 }

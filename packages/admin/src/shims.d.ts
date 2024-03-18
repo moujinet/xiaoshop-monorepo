@@ -11,11 +11,10 @@ declare module 'vue-router' {
   interface RouteMeta {
     id?: string
     space?: string
+    type?: string
     module?: string
     title?: string
     desc?: string
-    icon?: string
-    isPermission?: boolean
     isLayout?: boolean
   }
 }

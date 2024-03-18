@@ -4,10 +4,14 @@ import type {
   IModule,
   ISpace,
   TMenuDefinition,
+  TMenuMeta,
   TMenuType,
   TModuleDefinition,
 } from '~/types'
 
+/**
+ * Global contexts
+ */
 export const useContext = defineStore('context', () => {
   /**
    * Global options
@@ -19,119 +23,30 @@ export const useContext = defineStore('context', () => {
     debug: false,
   })
   /**
+   * All modules
+   */
+  const _modules = ref<IModule[]>([])
+  /**
    * All menus
    */
   const _menus = ref<IMenu[]>([])
   /**
-   * Nested menu
-   *
-   * - key: spaceId
-   * - value: modules
+   * All menus meta
    */
-  const _nestedMenus = ref<Record<string, IMenu[]>>({})
-  /**
-   * All modules
-   */
-  const _modules = ref<IModule[]>([])
+  const _menusMeta = ref<TMenuMeta[]>([])
 
   /**
-   * All spaces
-   */
-  const spaces = computed(() => _menus.value.filter(m => m.type === 'space').sort((a, b) => a.sort - b.sort))
-  /**
-   * All modules
+   * Get all modules
    */
   const modules = computed(() => _modules.value.sort((a, b) => a.sort - b.sort))
   /**
-   * All menus (sorted by length)
+   * Get all menus
    */
   const menus = computed(() => _menus.value.sort((a, b) => a.sort - b.sort))
   /**
-   * All nested menus
+   * Get all menus meta
    */
-  const nestedMenus = computed(() => {
-    if (Object.values(_nestedMenus.value).length === 0) {
-      spaces.value.forEach((space) => {
-        _nestedMenus.value[space.id] = getNestedMenu(space.id)
-      })
-    }
-
-    return Object.values(_nestedMenus.value).flat()
-  })
-
-  /**
-   * Get all menus with the condition
-   *
-   * @param condition
-   * @returns IMenu[]
-   */
-  function getMenu(condition?: (m: IMenu) => boolean): IMenu[] {
-    return _menus.value.filter(condition || (() => true))
-  }
-
-  /**
-   * Get nested menu
-   *
-   * @param spaceId string
-   * @returns IMenu[]
-   */
-  function getNestedMenu(spaceId: string): IMenu[] {
-    const space = spaces.value.find(s => s.id === spaceId)
-    if (!space)
-      throw new Error(`🐤 Space "${spaceId}" not found.`)
-
-    if (!_nestedMenus.value[spaceId]) {
-      const __menus: IMenu[] = []
-      const spaceMenus = menus.value.filter(m => m.space === spaceId)
-
-      // modules
-      spaceMenus
-        .filter(m => m.type === 'module')
-        .forEach((m) => {
-          const module = { ...m } as IMenu
-
-          // groups
-          spaceMenus
-            .filter(m => m.type === 'group')
-            .forEach((g) => {
-              const group = { ...g } as IMenu
-
-              // pages
-              spaceMenus
-                .filter(m => m.id.startsWith(g.id) && m.type === 'page')
-                .forEach((p, idx) => {
-                  const page = { ...p } as IMenu
-
-                  if (space.path === '' && idx === 0)
-                    space.path = page.path
-
-                  group.children = group.children || []
-                  group.children.push(page)
-                })
-
-              module.children = module.children || []
-              module.children.push(group)
-            })
-
-          __menus.push(module)
-        })
-
-      _nestedMenus.value[spaceId] = __menus
-    }
-
-    return _nestedMenus.value[spaceId] || []
-  }
-
-  /**
-   * Whether the menu exists
-   *
-   * @param id string
-   * @param type TMenuType
-   * @returns boolean
-   */
-  function hasMenu(id: string, type: TMenuType): boolean {
-    return getMenu(m => m.id === id && m.type === type).length > 0
-  }
+  const menusMeta = computed(() => _menusMeta.value.sort((a, b) => a.space.length - b.space.length))
 
   /**
    * Create a space
@@ -139,19 +54,22 @@ export const useContext = defineStore('context', () => {
    * @param space ISpace
    */
   function createSpace(space: ISpace) {
-    if (spaces.value.find(s => s.id === space.id))
+    if (_menus.value.find(s => s.id === space.id))
       throw new Error(`🐤 Space "${space.id}" already exists.`)
 
-    const newSpace: TMenuDefinition = {
-      id: space.id || 'default',
-      type: 'space',
-      name: space.name || '空间',
-      desc: space.desc || '新的空间',
-      icon: space.icon || 'ph:browser',
-      sort: space.sort || spaces.value.length,
-    }
-
-    _createMenu(newSpace, space.id)
+    _menus.value.push(_normalizeMenu(
+      {
+        id: space.id,
+        type: 'space',
+        name: space.name || '空间',
+        desc: space.desc || '新的空间',
+        icon: space.icon || 'ph:browser',
+        sort: space.sort || _menus.value.filter(m => m.type === 'space').length + 1,
+        isShow: space.id !== 'global',
+      },
+      '',
+      '',
+    ))
   }
 
   /**
@@ -160,7 +78,7 @@ export const useContext = defineStore('context', () => {
    * @param definition TModuleDefinition
    */
   function createModule(definition: TModuleDefinition) {
-    if (modules.value.find(m => m.id === definition.id))
+    if (_modules.value.find(m => m.id === definition.id))
       throw new Error(`🐤 Module "${definition.id}" already exists.`)
 
     const newModule: Omit<IModule, 'version'> = {
@@ -169,69 +87,116 @@ export const useContext = defineStore('context', () => {
       name: definition.name || '模块',
       desc: definition.desc || '新的模块',
       icon: definition.icon || 'ph:cube',
-      sort: definition.sort || modules.value.filter(m => m.space === definition.space).length,
+      sort: definition.sort !== undefined
+        ? definition.sort
+        : modules.value.filter(m => m.space === definition.space).length + 1,
     }
+
+    // Add module info
     _modules.value.push({
       ...newModule,
       version: definition.version || '1.0.0',
     })
 
-    const newModuleMenu: TMenuDefinition = {
-      ...newModule,
-      type: 'module',
-      children: definition.menus,
-    }
+    // Add module menu
+    const space = _menus.value.find(m => m.id === newModule.space)
+    if (!space)
+      throw new Error(`🐤 Space "${definition.space}" not found.`)
 
-    _createMenu(newModuleMenu, definition.id)
+    const newModuleMenu: IMenu = _normalizeMenu(
+      {
+        ...newModule,
+        type: 'module',
+        children: definition.menus,
+      },
+      definition.id,
+      definition.space,
+    )
+
+    if (space.path === '')
+      space.path = _getFirstChildPage(newModuleMenu).path
+
+    if (!space.children)
+      space.children = []
+
+    space.children.push(newModuleMenu)
   }
 
   /**
-   * Create a menu
+   * Get breadcrumbs by menu id
+   *
+   * @param menuId string
+   * @returns TMenuMeta[]
+   */
+  function getBreadcrumbs(menuId: string): TMenuMeta[] {
+    const breadcrumbs: TMenuMeta[] = []
+    let fullId = ''
+
+    menuId.split('.').forEach((id) => {
+      fullId = fullId ? `${fullId}.${id}` : id
+      const menu = _menusMeta.value.find(m => m.id === fullId)
+
+      if (menu)
+        breadcrumbs.push(menu)
+    })
+
+    return breadcrumbs
+  }
+
+  /**
+   * Get normalized menu
    *
    * @param definition TMenuDefinition
    * @param moduleId string
    * @param parentId string
-   */
-  function _createMenu(
-    definition: TMenuDefinition,
-    moduleId: string,
-    parentId?: string,
-  ) {
-    const menuId = parentId ? `${parentId}.${definition.id}` : definition.id
-    const menuType = definition.type || _getMenuType(definition)
-    const newMenu = _normalizeMenu(menuId, moduleId, definition)
-
-    if (definition.children && definition.children.length > 0)
-      definition.children.forEach(child => _createMenu(child, moduleId, menuId))
-
-    if (!hasMenu(menuId, menuType))
-      _menus.value.push(newMenu)
-  }
-
-  /**
-   * Normalize menu
-   *
-   * @param menuId string
-   * @param moduleId string
-   * @param definition TMenuDefinition
    * @returns IMenu
    */
-  function _normalizeMenu(menuId: string, moduleId: string, definition: TMenuDefinition): IMenu {
+  function _normalizeMenu(
+    definition: TMenuDefinition,
+    moduleId: string,
+    parentId: string,
+  ): IMenu {
+    const menuId = (parentId ? `${parentId}.${definition.id}` : definition.id)
+      .replace(/\#/, '')
+      .replace(/\.index$/, '')
     const menuType = definition.type || _getMenuType(definition)
     const menuPath = definition.path || menuId.includes('.') ? transId2Path(menuId) : ''
 
     const newMenu: IMenu = {
       id: menuId,
-      space: definition.space || moduleId.split('.')[0],
+      space: definition.space || menuId?.split('.')[0],
       module: moduleId,
+      parent: parentId,
       type: menuType,
       name: definition.name,
-      icon: definition.icon || '',
       desc: definition.desc || '',
+      icon: definition.icon || '',
       path: menuPath,
-      sort: definition.sort || 0,
+      sort: definition.sort || _menusMeta.value.filter(m => m.module === moduleId).length + 1,
       isShow: definition.isShow === undefined ? true : definition.isShow,
-      isPermission: definition.isPermission === undefined ? true : definition.isPermission,
+    }
+
+    if (definition.children && definition.children.length > 0) {
+      definition.children
+        .sort((a, b) => (a.sort || 0) - (b.sort || 0))
+        .forEach((child) => {
+          if (!newMenu.children)
+            newMenu.children = []
+          newMenu.children.push(_normalizeMenu(child, moduleId, menuId))
+        })
+    }
+
+    // Menu meta
+    if (!_menusMeta.value.find(m => m.id === newMenu.id)) {
+      _menusMeta.value.push({
+        id: newMenu.id,
+        space: newMenu.space,
+        module: newMenu.module,
+        type: newMenu.type,
+        name: newMenu.name,
+        desc: newMenu.desc,
+        icon: newMenu.icon,
+      })
     }
 
     return newMenu
@@ -244,27 +209,67 @@ export const useContext = defineStore('context', () => {
    * @returns TMenuType
    */
   function _getMenuType(definition: TMenuDefinition): TMenuType {
-    if (definition.children && definition.children.length > 0)
+    if (
+      definition.children
+      && definition.children.filter(c => c.type === 'page').length > 0
+    )
       return 'group'
-    else if (definition.path?.startsWith('#'))
+    else if (definition.id === '#index')
+      return 'index'
+    else if (definition.id.startsWith('#'))
       return 'action'
 
     return 'page'
   }
 
+  /**
+   * Get first child page
+   *
+   * @param menu IMenu
+   * @returns IMenu
+   */
+  function _getFirstChildPage(menu: IMenu): IMenu {
+    return menu.children && menu.children.filter(m => m.type !== 'action').length > 0
+      ? _getFirstChildPage(menu.children[0])
+      : menu
+  }
+
   return {
-    spaces,
+    /**
+     * Get all modules
+     */
     modules,
+    /**
+     * Get all menus
+     */
     menus,
-    nestedMenus,
+    /**
+     * Get all menus meta
+     */
+    menusMeta,
+    /**
+     * Get global options
+     */
     options: computed(() => _options.value),
+    /**
+     * Update global options
+     *
+     * @param userOptions IGlobalOptions
+     */
     updateOptions: (userOptions: IGlobalOptions) => {
       _options.value = userOptions
     },
-    hasMenu,
-    getMenu,
-    getNestedMenu,
+    /**
+     * Create a space
+     */
     createSpace,
+    /**
+     * Create a module
+     */
     createModule,
+    /**
+     * Get breadcrumbs by menu id
+     */
+    getBreadcrumbs,
   }
 })

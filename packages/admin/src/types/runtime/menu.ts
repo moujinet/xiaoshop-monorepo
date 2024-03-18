@@ -1,13 +1,14 @@
 /**
  * Menu type
  */
-export type TMenuType = 'space' | 'module' | 'group' | 'page' | 'action' | 'user'
+export type TMenuType = 'space' | 'module' | 'group' | 'page' | 'action' | 'index'
 
 /**
  * Menu Interface
  */
 export interface IMenu {
   id: string
+  parent: string
   space: string
   module: string
   type: TMenuType
@@ -17,9 +18,16 @@ export interface IMenu {
   path: string
   sort: number
   isShow: boolean
-  isPermission: boolean
   children?: IMenu[]
 }
+
+/**
+ * Menu meta
+ */
+export type TMenuMeta = Omit<
+  IMenu,
+  'parent' | 'path' | 'sort' | 'isShow' | 'children'
+>
 
 /**
  * Menu definition

@@ -1,4 +1,7 @@
-import type { IContextCallback, IGlobalContext } from '~/types'
+import type {
+  IContextCallback,
+  IGlobalContext,
+} from '~/types'
 
 /**
  * Define plugin

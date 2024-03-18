@@ -7,6 +7,8 @@ import VueMacros from 'unplugin-vue-macros/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import VueComponents from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 
 import { loadEnv } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -15,6 +17,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 import { unheadVueComposablesImports } from '@unhead/vue'
 import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   // eslint-disable-next-line node/prefer-global/process
@@ -110,10 +113,25 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           },
         ],
         resolvers: [
+          IconsResolver({
+            customCollections: ['empty'],
+          }),
           TDesignResolver({
             library: 'vue-next',
           }),
         ],
+      }),
+
+      // https://github.com/unplugin/unplugin-icons
+      Icons({
+        compiler: 'vue3',
+        autoInstall: true,
+        customCollections: {
+          empty: FileSystemIconLoader(
+            './src/assets/empty',
+            svg => svg.replace(/^<svg /, '<svg fill="currentColor" '),
+          ),
+        },
       }),
 
       // https://github.com/antfu/vite-plugin-pwa
