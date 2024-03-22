@@ -1,28 +1,17 @@
-import type { ITagOption } from '~/types'
+export const NOTIFICATION_TYPE_NOTICE = 'notice'
+export const NOTIFICATION_TYPE_MESSAGE = 'message'
 
-/**
- * Settings store message template types
- */
-export const SETTINGS_STORE_MESSAGE_TEMPLATE_TYPES: ITagOption[] = [
-  { label: '全部', value: 0, theme: 'default' },
-  { label: '买家通知', value: 1, theme: 'success' },
-  { label: '商家通知', value: 2, theme: 'primary' },
+export const NOTIFICATION_TYPES = [
+  { value: NOTIFICATION_TYPE_NOTICE, label: '通知' },
+  { value: NOTIFICATION_TYPE_MESSAGE, label: '消息' },
 ]
 
-/**
- * Settings store message send status
- */
-export const SETTINGS_STORE_MESSAGE_SEND_STATUS: ITagOption[] = [
-  { label: '全部', value: 0, theme: 'default' },
-  { label: '待发送', value: 1, theme: 'warning' },
-  { label: '发送成功', value: 2, theme: 'success' },
-  { label: '发送失败', value: 3, theme: 'danger' },
-]
+export const NOTIFICATION_CATEGORY_SYSTEM = 'system'
+export const NOTIFICATION_CATEGORY_UPGRADE = 'upgrade'
+export const NOTIFICATION_CATEGORY_ORDER = 'order'
 
-/**
- * Settings store shipment express invoices
- */
-export const SETTINGS_STORE_SHIPMENT_EXPRESS_INVOICES: ITagOption[] = [
-  { label: '不支持', value: 0, theme: 'default' },
-  { label: '支持', value: 1, theme: 'success' },
+export const NOTIFICATION_CATEGORIES = [
+  { id: NOTIFICATION_CATEGORY_SYSTEM, name: '系统通知', color: '#3370ff', icon: 'ph:bell-duotone' },
+  { id: NOTIFICATION_CATEGORY_UPGRADE, name: '版本更新', color: '#00d0b6', icon: 'ph:circle-wavy-warning-duotone' },
+  { id: NOTIFICATION_CATEGORY_ORDER, name: '订单通知', color: '#ff7d00', icon: 'ph:shopping-cart-simple-duotone' },
 ]

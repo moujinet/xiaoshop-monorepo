@@ -1,82 +1,59 @@
 <script lang="ts" setup>
-import type { MenuValue } from 'tdesign-vue-next'
-import SiderSubmenu from '../sider/sider-submenu.vue'
+import LayoutSiderMain from './sider-main.vue'
+import LayoutSiderSub from './sider-sub.vue'
 
 defineOptions({
   name: 'LayoutSider',
 })
 
-const { visible } = storeToRefs(useLayout())
-const { getNestedMenu } = useContext()
-
-const route = useRoute()
-const activeModule = ref('')
-const activeMenu = ref('')
-
-const mainMenu = computed(() => getNestedMenu(route.meta.space || ''))
-const subMenu = computed(() => mainMenu.value.find(m => m.module === activeModule.value)?.children || [])
-
-const defaultExpandedKeys = computed<MenuValue[]>(() => subMenu.value.length ? [subMenu.value.map(m => m.id)[0]] : [])
-const expandedKeys = ref<MenuValue[]>([])
-
-watch(
-  () => route.fullPath,
-  () => {
-    activeModule.value = route.meta.module || ''
-    activeMenu.value = route.meta.id || ''
-    expandedKeys.value = defaultExpandedKeys.value
-  },
-  {
-    immediate: true,
-  },
-)
+withDefaults(defineProps<{
+  visible: {
+    main: boolean
+    sidebar: boolean
+  }
+}>(), {
+  visible: () => ({ main: true, sidebar: true }),
+})
 </script>
 
 <template>
-  <TAside
+  <a-layout-sider
     class="layout-sider"
     :class="{
-      'no-sider': mainMenu.length <= 1 && !subMenu.length,
-      'only-main': mainMenu.length > 1 && !subMenu.length,
-      'only-sub': subMenu.length && mainMenu.length <= 1,
+      'only-main': visible.main && !visible.sidebar,
+      'only-sidebar': visible.sidebar && !visible.main,
     }"
+    :style="{ width: 'var(--layout-sider-width)' }"
+    hide-trigger
   >
-    <div
-      v-if="visible.mainMenu && mainMenu.length > 1"
-      class="layout-sider-main"
-    >
-      <TTooltip
-        v-for="menu in mainMenu"
-        :key="menu.id"
-        :content="menu.desc"
-        placement="right"
-      >
-        <RouterLink
-          class="layout-sider-main__menu"
-          :class="{ 'is-active': activeModule === menu.id }"
-          :to="menu.path"
-        >
-          <i class="layout-sider-main__menu--icon">
-            <CommonIcon
-              :name="menu.icon"
-              :active="activeModule === menu.id"
-            />
-          </i>
-          <span>{{ menu.name }}</span>
-        </RouterLink>
-      </TTooltip>
-    </div>
-
-    <div v-if="visible.subMenu && subMenu.length" class="layout-sider-sub">
-      <TMenu
-        v-model:expanded="expandedKeys"
-        class="layout-sider-sub__menu"
-        width="100%"
-        :default-expanded="defaultExpandedKeys"
-        :value="activeMenu"
-      >
-        <SiderSubmenu :menus="subMenu" />
-      </TMenu>
-    </div>
-  </TAside>
+    <LayoutSiderMain v-if="visible.main" />
+    <LayoutSiderSub v-if="visible.sidebar" :has-main="visible.main" />
+  </a-layout-sider>
 </template>
+
+<style lang="less" scoped>
+.layout-sider {
+  --layout-sider-width: calc(var(--layout-sider-main-width) + var(--layout-sider-sub-width));
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding-top: var(--layout-header-height);
+  transition: var(--page-transition);
+  z-index: var(--layout-sider-zindex);
+  user-select: none;
+
+  &.only-main {
+    --layout-sider-width: var(--layout-sider-main-width);
+  }
+
+  &.only-sidebar {
+    --layout-sider-width: var(--layout-sider-sub-width);
+  }
+
+  :deep(.arco-layout-sider-children) {
+    overflow-x: hidden;
+  }
+}
+</style>

@@ -11,16 +11,25 @@ withDefaults(defineProps<{
   active?: boolean
   activeSuffix?: string
 }>(), {
-  inline: false,
+  inline: true,
   active: false,
   activeSuffix: '-fill',
 })
 </script>
 
 <template>
-  <Icon
-    class="t-icon"
-    :icon="active ? `${name}${activeSuffix}` : name"
-    :inline="inline"
-  />
+  <i class="common-icon">
+    <Icon
+      :icon="active ? `${name}${activeSuffix}` : name"
+      :inline="inline"
+    />
+  </i>
 </template>
+
+<style lang="less">
+.common-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

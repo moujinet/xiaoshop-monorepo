@@ -7,6 +7,7 @@
     "baseUrl": ".",
     "moduleResolution": "Bundler",
     "paths": {
+      "@/*": ["src/modules/*"],
       "~/*": ["src/*"],
       "~~/*": ["./*"]
     },
@@ -15,8 +16,7 @@
       "unplugin-vue-macros/macros-global",
       "unplugin-vue-router/client",
       "vite-plugin-pwa/client",
-      "vite-plugin-vue-layouts/client",
-      "tdesign-vue-next/global"
+      "vite-plugin-vue-layouts/client"
     ],
     "outDir": "../../dist/admin",
     "verbatimModuleSyntax": true

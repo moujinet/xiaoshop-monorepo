@@ -1,39 +1,23 @@
-/**
- * Menu type
- */
-export type TMenuType = 'space' | 'module' | 'group' | 'page' | 'action' | 'index'
+export type IMenuType = 'group' | 'index' | 'page' | 'action'
 
-/**
- * Menu Interface
- */
 export interface IMenu {
   id: string
   parent: string
   space: string
   module: string
-  type: TMenuType
+  type: IMenuType
   name: string
-  icon: string
   desc: string
+  icon: string
   path: string
   sort: number
   isShow: boolean
   children?: IMenu[]
 }
 
-/**
- * Menu meta
- */
-export type TMenuMeta = Omit<
-  IMenu,
-  'parent' | 'path' | 'sort' | 'isShow' | 'children'
->
-
-/**
- * Menu definition
- */
-export type TMenuDefinition = Omit<Partial<IMenu>, 'id' | 'name' | 'module' | 'children'> & {
+export type IMenuDefinition = Omit<Partial<IMenu>, 'id' | 'name' | 'space' | 'parent' | 'children'> & {
   id: string
   name: string
-  children?: TMenuDefinition[]
+
+  children?: IMenuDefinition[]
 }

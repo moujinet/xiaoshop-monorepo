@@ -1,62 +1,54 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'HeaderMenus',
+  name: 'LayoutHeaderMenus',
 })
 
-const route = useRoute()
-const { spaces } = useContext()
+const { spaces } = useApp()
 </script>
 
 <template>
-  <TSpace class="header-menus">
-    <TTooltip v-for="space in spaces" :key="space.id" :content="space.desc">
-      <RouterLink
-        class="header-menu-item"
-        :class="{ 'is-active': space.id === route.meta.space }"
-        :to="space.path"
+  <a-space>
+    <a-tooltip v-for="space in spaces" :key="space.id" :content="space.desc" mini>
+      <router-link
+        class="layout-header__menu"
+        :class="{ 'is-active': space.id === $route.meta.space }"
+        :to="space.path || ''"
       >
         <CommonIcon
-          class="header-menu-item__icon"
+          class="layout-header__menu--icon"
           :name="space.icon"
-          :active="space.id === route.meta.space"
+          :active="space.id === $route.meta.space"
         />
         <span>{{ space.name }}</span>
-      </RouterLink>
-    </TTooltip>
-  </TSpace>
+      </router-link>
+    </a-tooltip>
+  </a-space>
 </template>
 
-<style lang="less">
-.header-menu {
-  // .header-menus
-  &s {
-    user-select: none;
+<style lang="less" scoped>
+.layout-header__menu {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 0 16px;
+  transition: all 0.3s ease;
+  height: var(--layout-header-height);
+  color: var(--layout-header-text-color);
+
+  &.is-active {
+    font-weight: 500;
+    color: var(--layout-header-text-color-active);
+    background-color: var(--primary-color);
   }
 
-  &-item {
-    cursor: pointer;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--td-size-6);
-    transition: all 0.3s;
-    color: var(--td-font-white-2);
-    text-decoration: none;
+  &:hover {
+    color: var(--layout-header-text-color-active);
+  }
 
-    &__icon {
-      font-size: var(--td-font-size-title-large);
-      margin-right: var(--td-size-2);
-    }
-
-    &:hover {
-      color: var(--td-font-white-1);
-    }
-
-    &.is-active {
-      color: var(--td-font-white-1);
-      background-image: var(--header-menu-active-bg);
-    }
+  &--icon {
+    font-size: 18px;
+    margin-right: 6px;
   }
 }
 </style>

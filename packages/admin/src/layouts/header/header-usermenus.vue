@@ -1,53 +1,38 @@
-<script lang="tsx" setup>
-import type { DropdownProps } from 'tdesign-vue-next'
-import CommonIcon from '~/components/common/common-icon.vue'
-
+<script lang="ts" setup>
 defineOptions({
-  name: 'HeaderUsermenus',
+  name: 'LayoutHeaderUserMenus',
 })
 
-const user = reactive({
-  username: 'admin',
-})
+const greeting = getGreeting()
 
-const userMenus: DropdownProps['options'] = [
-  {
-    content: '个人设置',
-    prefixIcon: () => <CommonIcon class="header-usermenus__icon" name="ph:user" />,
-    divider: true,
-  },
-  {
-    content: '退出登录',
-    prefixIcon: () => <CommonIcon class="header-usermenus__icon" name="ph:sign-out" />,
-  },
+const usermenus = [
+  { name: '个人资料', icon: 'ph:user', url: '' },
+  { name: '退出登录', icon: 'ph:sign-out', url: '' },
 ]
 </script>
 
 <template>
-  <TDropdown :options="userMenus" trigger="click" placement="bottom-right">
-    <div class="header-usermenus">
-      {{ user.username }}
-      <CommonIcon class="header-usermenus__arrow" name="ph:caret-down" />
+  <a-dropdown position="br">
+    <div class="layout-header__usermenus">
+      {{ greeting }}, Administrator
+      <CommonIcon name="ph:caret-down" />
     </div>
-  </TDropdown>
+    <template #content>
+      <a-doption v-for="(item, index) in usermenus" :key="index" :value="item.url">
+        <template #icon>
+          <CommonIcon :name="item.icon" />
+        </template>
+        {{ item.name }}
+      </a-doption>
+    </template>
+  </a-dropdown>
 </template>
 
-<style lang="less">
-.header-usermenus {
+<style lang="less" scoped>
+.layout-header__usermenus {
   display: flex;
-  cursor: pointer;
   align-items: center;
-  transition: all 0.3s;
-  gap: var(--td-size-3);
-  color: var(--td-font-white-1);
-
-  &__arrow {
-    display: flex;
-    color: var(--td-font-white-3);
-  }
-
-  &__icon {
-    color: var(--td-font-gray-4)
-  }
+  column-gap: 8px;
+  cursor: pointer;
 }
 </style>

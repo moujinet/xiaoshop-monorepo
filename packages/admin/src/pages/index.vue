@@ -11,7 +11,7 @@ defineOptions({
 <route lang="json">
 {
   "meta": {
-    "layout": "empty"
+    "layout": "blank"
   }
 }
 </route>

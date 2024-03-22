@@ -1,31 +1,67 @@
 <script lang="ts" setup>
+import LogoSVG from '~/assets/images/logo.svg'
+
 defineOptions({
   name: 'LayoutFooter',
 })
-
-const { options } = useContext()
 </script>
 
 <template>
-  <TFooter class="layout-footer">
-    <div>
-      Copyright &copy; 2023-{{ new Date().getFullYear() }} {{ options.name }} All Rights Reserved.
+  <a-layout-footer class="layout-footer">
+    <div class="layout-footer__copyright">
+      <LogoSVG class="layout-footer__copyright--logo" />
+      &copy; {{ new Date().getFullYear() }} XiaoShop All Rights Reserved.
     </div>
 
-    <TSpace class="layout-footer__links" size="small">
-      <template #separator>
-        <TDivider layout="vertical" />
+    <a-space class="layout-footer__links">
+      <template #split>
+        <a-divider direction="vertical" />
       </template>
 
-      <RouterLink to="/" target="_blank">
+      <router-link to="/">
         技术支持
-      </RouterLink>
-      <RouterLink to="/" target="_blank">
+      </router-link>
+      <router-link to="/">
         意见反馈
-      </RouterLink>
-      <RouterLink to="/" target="_blank">
+      </router-link>
+      <router-link to="/">
         版本更新
-      </RouterLink>
-    </TSpace>
-  </TFooter>
+      </router-link>
+    </a-space>
+  </a-layout-footer>
 </template>
+
+<style lang="less" scoped>
+.layout-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-padding);
+  height: var(--layout-footer-height);
+  color: var(--layout-footer-text-color);
+  transition: var(--page-transition);
+
+  &__copyright {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    &--logo {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  }
+
+  &__links {
+    a {
+      font-size: 12px;
+      color: var(--layout-footer-text-color);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--layout-footer-text-color-hover);
+      }
+    }
+  }
+}
+</style>

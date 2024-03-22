@@ -9,14 +9,15 @@ import AutoImport from 'unplugin-auto-import/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
+import Layouts from 'vite-plugin-vue-layouts'
+import SvgLoader from 'vite-svg-loader'
 
 import { loadEnv } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
-import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 import { unheadVueComposablesImports } from '@unhead/vue'
-import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 export default ({ mode }: ConfigEnv): UserConfig => {
@@ -38,6 +39,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     resolve: {
       alias: {
+        '@': `${path.resolve(__dirname, 'src/modules')}/`,
         '~': `${path.resolve(__dirname, 'src')}/`,
         '~~': `${path.resolve(__dirname)}/`,
       },
@@ -62,8 +64,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       }),
 
       // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
-      ClientSideLayout({
-        importMode: 'async',
+      Layouts({
+        layoutsDirs: 'src/layouts',
       }),
 
       // https://github.com/posva/unplugin-vue-router
@@ -88,15 +90,13 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       AutoImport({
         dirs: [
           'src/composables',
-          'src/composables/runtime',
           'src/utils',
+          'src/utils/runtime',
         ],
         imports: ['vue', 'pinia', VueRouterAutoImports, unheadVueComposablesImports],
         dts: 'src/auto-imports.d.ts',
         resolvers: [
-          TDesignResolver({
-            library: 'vue-next',
-          }),
+          ArcoResolver(),
         ],
         vueTemplate: true,
         injectAtEnd: true,
@@ -116,8 +116,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
           IconsResolver({
             customCollections: ['empty'],
           }),
-          TDesignResolver({
-            library: 'vue-next',
+          ArcoResolver({
+            sideEffect: true,
           }),
         ],
       }),
@@ -129,8 +129,15 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         customCollections: {
           empty: FileSystemIconLoader(
             './src/assets/empty',
-            svg => svg.replace(/^<svg /, '<svg fill="currentColor" '),
           ),
+        },
+      }),
+
+      // https://github.com/jpkleemans/vite-svg-loader
+      SvgLoader({
+        defaultImport: 'component',
+        svgoConfig: {
+          multipass: true,
         },
       }),
 

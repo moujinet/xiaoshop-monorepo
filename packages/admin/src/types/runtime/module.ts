@@ -1,27 +1,24 @@
-import type { ICallback } from './global'
-import type { TMenuDefinition } from './menu'
+import type { IMenuDefinition } from './menu'
+import type { ICallback } from './utils'
 
-/**
- * Module Interface
- */
 export interface IModule {
   id: string
   space: string
   name: string
   desc: string
   icon: string
+  path: string
   version: string
   sort: number
 }
 
-/**
- * Module definition
- */
-export type TModuleDefinition = Omit<Partial<IModule>, 'id' | 'name' | 'space'> & {
+export type IModuleDefinition = Omit<Partial<IModule>, 'id' | 'name' | 'space'> & {
   id: string
   space: string
   name: string
-  menus?: TMenuDefinition[]
+  menus?: IMenuDefinition[]
 
   setup?: ICallback
 }
+
+export type IModuleInstaller = ICallback

@@ -1,14 +1,11 @@
-export default defineMiddleware((to) => {
-  const { options } = useContext()
+import { APP_NAME } from '~/constants/env'
 
+export default defineMiddleware((to) => {
   useHead({
     title: to.meta.desc
-      ? `${to.meta.desc} | ${options.desc}`
-      : to.meta.title
-        ? `${to.meta.title} | ${options.desc}`
-        : options.desc,
-    meta: [
-      { name: 'description', content: options.desc },
-    ],
+      ? `${to.meta.desc} | ${APP_NAME}`
+      : to.meta.name
+        ? `${to.meta.name} | ${APP_NAME}`
+        : APP_NAME,
   })
 })

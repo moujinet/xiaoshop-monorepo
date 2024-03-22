@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'Error404Page',
+  name: 'PageNotFound',
 })
 </script>
 
 <template>
-  Error404Page
+  <CommonEmpty type="notfound" description="页面不存在" />
 </template>
 
 <route lang="json">

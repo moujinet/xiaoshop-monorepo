@@ -1,3 +1,6 @@
 node_modules
 dist
 .DS_Store
+packages/admin/src/auto-imports.d.ts
+packages/admin/src/typed-router.d.ts
+packages/admin/src/vue-components.d.ts

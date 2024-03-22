@@ -1,58 +1,44 @@
 <script lang="ts" setup>
-import HeaderQRCode from './header-qrcode.vue'
-
 defineOptions({
-  name: 'HeaderLinks',
+  name: 'LayoutHeaderLinks',
 })
-
-const visible = ref(false)
-
-function showQRCodeDialog() {
-  visible.value = true
-}
 </script>
 
 <template>
-  <TSpace>
-    <TTooltip content="访问店铺">
-      <div class="header-link" @click="showQRCodeDialog">
-        <CommonIcon class="header-link__icon" name="ph:qr-code" inline />
-        访问店铺
-      </div>
-    </TTooltip>
+  <a-space size="medium">
+    <div class="layout-header__link">
+      <CommonIcon class="layout-header__link--icon" name="ph:qr-code" />
+      访问店铺
+    </div>
 
-    <TTooltip content="使用帮助">
-      <RouterLink class="header-link" to="/">
-        <CommonIcon class="header-link__icon" name="ph:question" inline />
-        使用帮助
-      </RouterLink>
-    </TTooltip>
-  </TSpace>
-
-  <HeaderQRCode v-model:visible="visible" />
+    <div class="layout-header__link">
+      <CommonIcon class="layout-header__link--icon" name="ph:question" />
+      使用帮助
+    </div>
+  </a-space>
 </template>
 
-<style lang="less">
-.header-link {
+<style lang="less" scoped>
+.layout-header__link {
   display: flex;
   align-items: center;
-  color: var(--td-font-white-2);
-  font-size: var(--td-font-size-link-medium);
+  font-size: 14px;
+  color: var(--layout-header-text-color);
   text-decoration: none;
-  transition: all 0.3s;
+  column-gap: 4px;
+  transition: all 0.3s ease;
   cursor: pointer;
-  gap: var(--td-size-2);
 
-  &__icon {
-    color: var(--td-success-color-4);
-    font-size: var(--td-font-size-link-large);
+  &--icon {
+    font-size: 16px;
+    color: var(--secondary-color-light);
   }
 
   &:hover {
-    color: var(--td-font-white-1);
+    color: var(--layout-header-text-color-active);
 
-    .header-link__icon {
-      color: var(--td-font-white-1);
+    .layout-header__link--icon {
+      color: var(--layout-header-text-color-active);
     }
   }
 }
