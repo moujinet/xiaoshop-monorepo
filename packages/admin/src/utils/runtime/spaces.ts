@@ -75,7 +75,7 @@ export const useSpaces = defineStore('space', () => {
   function updateSpacePath(spaceId: string, path: string) {
     const space = Object.values(_spaces.value).find(s => s.id === spaceId)
 
-    if (space && !space.path)
+    if (space && (!space.path || space.path === ''))
       space.path = path
   }
 

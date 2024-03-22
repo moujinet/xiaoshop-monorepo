@@ -20,9 +20,11 @@ export const useMenus = defineStore('menu', () => {
   function createModuleMenus(moduleId: string, userMenus: IMenuDefinition[]) {
     const menus: IMenu[] = []
 
-    userMenus.forEach((menu) => {
-      menus.push(_normalizeMenu(menu, moduleId, moduleId))
-    })
+    userMenus
+      .sort((a, b) => (a.sort || 0) - (b.sort || 0))
+      .forEach((menu) => {
+        menus.push(_normalizeMenu(menu, moduleId, moduleId))
+      })
 
     const { updateModulePath } = useModules()
     const firstMenu = menus.sort((a, b) => a.sort - b.sort)[0]

@@ -23,7 +23,7 @@ watch(
   <div class="layout-sider-main">
     <div class="layout-sider-main-wrapper">
       <div class="layout-sider-main__menu">
-        <a-tooltip v-for="mod in modules" :key="mod.id" :content="mod.name" position="right" mini>
+        <a-tooltip v-for="mod in modules" :key="mod.id" :content="mod.desc" position="right" mini>
           <router-link
             class="layout-sider-main__menu-item"
             :class="{ 'is-active': mod.id === $route.meta.module }"

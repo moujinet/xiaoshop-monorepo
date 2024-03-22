@@ -38,11 +38,12 @@ watch(
     <a-menu
       v-model:selected-keys="selectedKeys"
       auto-open
+      accordion
       @menu-item-click="onMenuItemClick"
     >
       <template v-for="menu in menus">
         <template v-if="menu.isShow">
-          <template v-if="menu.type === 'page' || menu.type === 'index'">
+          <template v-if="menu.type === 'page'">
             <a-menu-item :key="menu.path">
               <template v-if="menu.icon" #icon>
                 <CommonIcon :name="menu.icon" />
@@ -74,6 +75,7 @@ watch(
   width: var(--layout-sider-sub-width);
   min-height: 100%;
   background-color: var(--layout-sider-sub-bg-color);
+  padding-top: 4px;
 
   .common-icon {
     font-size: 18px;

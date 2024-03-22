@@ -54,7 +54,7 @@ const tooltip = computed(() => unread.value === 0 ? '暂无消息' : `您有 ${u
       </a-spin>
 
       <div class="layout-header__notice--footer">
-        <CommonLink size="small" prefix-icon="ph:broom" :disable="unread === 0">
+        <CommonLink size="small" :disable="unread === 0">
           设为已读
         </CommonLink>
         <CommonLink size="small" suffix-icon="ph:caret-right">
