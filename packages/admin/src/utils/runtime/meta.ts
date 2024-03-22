@@ -59,6 +59,8 @@ export const useMeta = defineStore('meta', () => {
       if (route.children && route.children.length > 0)
         route.children = extendRoutesMeta(route.children, parentPath)
 
+      parentPath = ''
+
       routes.push(route)
     })
 

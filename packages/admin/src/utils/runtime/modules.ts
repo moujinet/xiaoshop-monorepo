@@ -5,7 +5,7 @@ import type {
 } from '~/types'
 import { DEFAULT_VERSION } from '~/constants/defaults'
 
-export const useModules = defineStore('modules', () => {
+export const useModules = defineStore('module', () => {
   /**
    * 模块 (内部)
    */

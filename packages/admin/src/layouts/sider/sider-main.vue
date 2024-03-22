@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { IModule } from '~/types'
+
 defineOptions({
   name: 'LayoutSiderMain',
 })
@@ -6,7 +8,15 @@ defineOptions({
 const route = useRoute()
 const { getSpaceModules } = useApp()
 
-const modules = getSpaceModules(route.meta.space || '')
+const modules: Ref<IModule[]> = ref([])
+
+watch(
+  () => route.fullPath,
+  () => {
+    modules.value = getSpaceModules(route.meta.space || '').value
+  },
+  { immediate: true },
+)
 </script>
 
 <template>

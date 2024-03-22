@@ -1,7 +1,7 @@
 import type { ISpace } from '~/types'
 import { DEFAULT_SPACES } from '~/constants/defaults'
 
-export const useSpaces = defineStore('spaces', () => {
+export const useSpaces = defineStore('space', () => {
   /**
    * 是否已初始化
    */

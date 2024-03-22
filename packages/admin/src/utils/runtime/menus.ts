@@ -1,6 +1,6 @@
 import type { IMenu, IMenuDefinition, IMenuType } from '~/types'
 
-export const useMenus = defineStore('menus', () => {
+export const useMenus = defineStore('menu', () => {
   /**
    * 已注册菜单 (内部)
    */

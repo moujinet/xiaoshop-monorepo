@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { IMenu } from '~/types'
+
 defineOptions({
   name: 'LayoutSiderSub',
 })
@@ -11,9 +13,11 @@ withDefaults(defineProps<{
 
 const route = useRoute()
 const router = useRouter()
+
 const { getModuleMenus } = useApp()
-const menus = getModuleMenus(route.meta.module || '')
+
 const selectedKeys = ref<string[]>([])
+const menus: Ref<IMenu[]> = ref([])
 
 function onMenuItemClick(path: string) {
   router.push(path)
@@ -22,6 +26,7 @@ function onMenuItemClick(path: string) {
 watch(
   () => route.fullPath,
   () => {
+    menus.value = getModuleMenus(route.meta.module || '').value
     selectedKeys.value = [route.fullPath]
   },
   { immediate: true },
