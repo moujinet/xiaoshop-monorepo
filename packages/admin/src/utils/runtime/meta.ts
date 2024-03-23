@@ -19,6 +19,16 @@ export const useMeta = defineStore('meta', () => {
   })
 
   /**
+   * 返回指定元信息
+   *
+   * @param id string
+   * @returns IMeta | undefined
+   */
+  function getMeta(id: string): IMeta | undefined {
+    return metas.value.find(m => m.id === id)
+  }
+
+  /**
    * 扩展路由 Meta
    *
    * @param userRoutes RouteRecordRaw[]
@@ -152,6 +162,10 @@ export const useMeta = defineStore('meta', () => {
      * 所有元信息
      */
     metas,
+    /**
+     * 返回指定元信息
+     */
+    getMeta,
     /**
      * 刷新元信息
      */

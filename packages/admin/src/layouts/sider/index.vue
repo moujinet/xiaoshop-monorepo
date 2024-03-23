@@ -40,8 +40,10 @@ withDefaults(defineProps<{
   left: 0;
   height: 100%;
   padding-top: var(--layout-header-height);
+  border-right: 1px solid var(--layout-sider-border-color);
   transition: var(--page-transition);
   z-index: var(--layout-sider-zindex);
+  box-shadow: none;
   user-select: none;
 
   &.only-main {

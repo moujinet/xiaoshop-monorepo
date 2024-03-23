@@ -1,9 +1,12 @@
 <script lang="ts" setup>
+import { useStorage } from '@vueuse/core'
 import LogoSVG from '~/assets/images/logo.svg'
 
 defineOptions({
   name: 'LayoutFooter',
 })
+
+const version = useStorage('xiaoshop-version', '0.0.0')
 </script>
 
 <template>
@@ -25,7 +28,7 @@ defineOptions({
         意见反馈
       </router-link>
       <router-link to="/">
-        版本更新
+        版本更新 <small>v{{ version }}</small>
       </router-link>
     </a-space>
   </a-layout-footer>

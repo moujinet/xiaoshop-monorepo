@@ -2,7 +2,10 @@ import { type Component, createApp } from 'vue'
 import { type Router, createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createHead } from '@unhead/vue'
+
+import { useStorage } from '@vueuse/core'
 import type { IAsyncCallback, IContextCallback, IGlobalContext } from '~/types'
+import { version } from '~~/package.json'
 
 export function createAdminClient(
   App: Component,
@@ -50,6 +53,8 @@ export function createAdminClient(
   ;(async () => {
     const ctx = await createGlobalContext()
     await ctx.router.isReady()
+
+    useStorage('xiaoshop-version', version, localStorage)
 
     ctx.app.mount(rootContainer, true)
   })()
