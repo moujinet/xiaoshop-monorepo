@@ -13,9 +13,9 @@
     "lint": "eslint packages/**/src/**/*.{vue,ts}",
     "stylelint": "stylelint packages/**/src/**/*.{html,vue,css,less}",
     "test": "pnpm --filter=@xiaoshop/admin test",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "docs:dev": "vitepress dev packages/docs",
+    "docs:build": "vitepress build packages/docs",
+    "docs:preview": "vitepress preview packages/docs",
     "commit": "czg",
     "prepare": "simple-git-hooks"
   },
