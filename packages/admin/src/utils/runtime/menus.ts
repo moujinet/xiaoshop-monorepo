@@ -18,19 +18,24 @@ export const useMenus = defineStore('menu', () => {
    * @param userMenus IMenuDefinition[]
    */
   function createModuleMenus(moduleId: string, userMenus: IMenuDefinition[]) {
-    const menus: IMenu[] = []
+    const _: IMenu[] = []
+
+    if (!userMenus || useMenus.length === 0)
+      return
 
     userMenus
       .sort((a, b) => (a.sort || 0) - (b.sort || 0))
       .forEach((menu) => {
-        menus.push(_normalizeMenu(menu, moduleId, moduleId))
+        _.push(_normalizeMenu(menu, moduleId, moduleId))
       })
 
-    const { updateModulePath } = useModules()
-    const firstMenu = menus.sort((a, b) => a.sort - b.sort)[0]
-    updateModulePath(moduleId, _getFirstChildMenu(firstMenu).path)
+    if (_.length > 0) {
+      const { updateModulePath } = useModules()
+      const firstMenu = _.sort((a, b) => a.sort - b.sort)[0]
+      updateModulePath(moduleId, _getFirstChildMenu(firstMenu).path)
+    }
 
-    menus.map(m => _menus.value.push(m))
+    _.map(m => _menus.value.push(m))
   }
 
   /**
@@ -125,7 +130,10 @@ export const useMenus = defineStore('menu', () => {
    * @returns IMenu
    */
   function _getFirstChildMenu(menu: IMenu): IMenu {
-    return menu.children && menu.children.some(m => m.type === 'page' || m.type === 'index')
+    if (!menu.children || menu.children.length === 0)
+      return menu
+
+    return menu.children.some(m => m.type === 'page' || m.type === 'index')
       ? _getFirstChildMenu(menu.children
         .filter(m => m.type === 'page' || m.type === 'index')
         .sort(a => a.type === 'index' ? -1 : 1)[0],

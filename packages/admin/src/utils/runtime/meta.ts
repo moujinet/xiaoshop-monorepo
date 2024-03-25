@@ -36,6 +36,7 @@ export const useMeta = defineStore('meta', () => {
    */
   function extendRoutesMeta(userRoutes: RouteRecordRaw[], parentPath = ''): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = []
+    const _parentPath = parentPath
 
     userRoutes.forEach((r) => {
       const route = { ...r }
@@ -69,7 +70,7 @@ export const useMeta = defineStore('meta', () => {
       if (route.children && route.children.length > 0)
         route.children = extendRoutesMeta(route.children, parentPath)
 
-      parentPath = ''
+      parentPath = meta ? _parentPath : ''
 
       routes.push(route)
     })
