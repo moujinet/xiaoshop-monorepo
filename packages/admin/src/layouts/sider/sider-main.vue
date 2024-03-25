@@ -76,7 +76,7 @@ watch(
     position: relative;
     display: flex;
     flex-direction: column;
-    row-gap: 8px;
+    row-gap: 16px;
     transition: var(--page-transition);
     padding: var(--page-padding-sm) 0;
 

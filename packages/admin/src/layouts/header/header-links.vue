@@ -31,7 +31,7 @@ defineOptions({
 
   &--icon {
     font-size: 16px;
-    color: var(--secondary-color-light);
+    color: var(--theme-secondary-color-light);
   }
 
   &:hover {

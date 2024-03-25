@@ -5,9 +5,5 @@ defineOptions({
 </script>
 
 <template>
-  <router-view v-slot="{ Component, route }">
-    <transition name="slide" mode="out-in">
-      <component :is="Component" :key="route" />
-    </transition>
-  </router-view>
+  <router-view />
 </template>

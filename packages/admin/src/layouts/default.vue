@@ -8,7 +8,7 @@ defineOptions({
   name: 'DefaultLayout',
 })
 
-const { visible } = storeToRefs(useLayout())
+const { visible } = storeToRefs(useTheme())
 </script>
 
 <template>

@@ -39,7 +39,7 @@ const { spaces } = useApp()
   &.is-active {
     font-weight: 500;
     color: var(--layout-header-text-color-active);
-    background-image: linear-gradient(to top, var(--primary-color) 15%, var(--primary-color-dark) 85%, var(--primary-color-darker) 100%);
+    background-image: linear-gradient(to top, var(--theme-color) 15%, var(--theme-color-dark) 85%, var(--theme-color-darker) 100%);
   }
 
   &:hover {
@@ -47,7 +47,7 @@ const { spaces } = useApp()
   }
 
   &--icon {
-    font-size: 18px;
+    font-size: 20px;
     margin-right: 6px;
   }
 }

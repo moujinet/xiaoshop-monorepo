@@ -16,6 +16,7 @@ const router = useRouter()
 
 const { getModuleMenus } = useApp()
 
+const openedKeys = ref<string[]>([])
 const selectedKeys = ref<string[]>([])
 const menus: Ref<IMenu[]> = ref([])
 
@@ -28,6 +29,7 @@ watch(
   () => {
     menus.value = getModuleMenus(route.meta.module || '').value
     selectedKeys.value = [route.fullPath]
+    openedKeys.value = route.matched.map(item => item.meta?.id || '')
   },
   { immediate: true },
 )
@@ -37,6 +39,7 @@ watch(
   <div class="layout-sider-sub" :class="{ 'has-main': hasMain }">
     <a-menu
       v-model:selected-keys="selectedKeys"
+      v-model:open-keys="openedKeys"
       auto-open
       accordion
       @menu-item-click="onMenuItemClick"
