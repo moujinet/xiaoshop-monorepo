@@ -52,3 +52,43 @@ export function debug(type: string, message: string, context: any = null) {
     formatDateTime(new Date().getTime(), 'YY-MM-DD hh:mm:ss.SSS'),
   )
 }
+
+/**
+ * 对象去除某些属性
+ *
+ * @param obj T
+ * @param keys K
+ * @returns Omit<T, K | K2>
+ */
+export function omit<
+  T extends Record<string, any>,
+  K extends string,
+  K2 extends keyof T,
+>(obj: T, keys: (K | K2)[]) {
+  const result = { ...obj }
+
+  keys.forEach((key) => {
+    delete result[key]
+  })
+
+  return result as Omit<T, K2>
+}
+
+/**
+ * 对象选取某些属性
+ *
+ * @param obj
+ * @param keys
+ * @returns Pick<T, K | K2>
+ */
+export function pick<
+T extends Record<string, any>,
+K extends string,
+K2 extends keyof T,
+>(obj: T, keys: (K | K2)[]): Pick<T, K2> {
+  return keys.reduce((pre, cur) => {
+    if (cur in obj)
+      pre[cur] = obj[cur]
+    return pre
+  }, {} as Pick<T, K | K2>)
+}

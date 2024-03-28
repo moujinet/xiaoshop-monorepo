@@ -1,19 +1,10 @@
-import { useStorage } from '@vueuse/core'
-
 export function useToken() {
   /**
    * Token
-   */
-  const token = useStorage('token', '', sessionStorage)
-
-  /**
-   * 更新 token
    *
-   * @param newToken string
+   * TODO: refresh token
    */
-  function updateToken(newToken: string) {
-    token.value = newToken
-  }
+  const [token, updateToken] = useCache('token', '')
 
   return {
     /**

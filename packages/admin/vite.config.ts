@@ -8,6 +8,7 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Layouts from 'vite-plugin-vue-layouts'
 import SvgLoader from 'vite-svg-loader'
+import UnoCSS from 'unocss/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import VueMacros from 'unplugin-vue-macros/vite'
@@ -88,6 +89,9 @@ const plugins: PluginOption[] = [
       }),
     ],
   }),
+
+  // https://github.com/unocss/unocss
+  UnoCSS(),
 
   // https://github.com/unplugin/unplugin-icons
   Icons({

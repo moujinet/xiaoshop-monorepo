@@ -1,13 +1,15 @@
 body {
   // Color
-  --primary-color: rgb(var(--arcoblue-6));
-  --primary-color-light: rgb(var(--arcoblue-4));
-  --primary-color-dark: rgb(var(--arcoblue-7));
-  --primary-color-darker: rgb(var(--arcoblue-8));
-  --secondary-color: rgb(var(--green-6));
-  --secondary-color-light: rgb(var(--green-4));
-  --secondary-color-dark: rgb(var(--green-7));
-  --secondary-color-darker: rgb(var(--green-8));
+  --theme-color-rgb: var(--primary-6);
+  --theme-color: rgb(var(--primary-6));
+  --theme-color-light: rgb(var(--primary-4));
+  --theme-color-light-50: rgb(var(--primary-4) / 50%);
+  --theme-color-dark: rgb(var(--primary-7));
+  --theme-color-darker: rgb(var(--primary-8));
+  --theme-secondary-color: rgb(var(--green-6));
+  --theme-secondary-color-light: rgb(var(--green-4));
+  --theme-secondary-color-dark: rgb(var(--green-7));
+  --theme-secondary-color-darker: rgb(var(--green-8));
 
   // Page
   --page-padding: 20px;
@@ -17,19 +19,19 @@ body {
   // Layout -> Header
   --layout-header-height: 48px;
   --layout-header-bg-color: var(--color-neutral-10);
-  --layout-header-text-color: var(--color-neutral-5);
+  --layout-header-text-color: var(--color-text-4);
   --layout-header-text-color-active: var(--color-white);
   --layout-header-border-color: var(--color-neutral-8);
-  --layout-header-zindex: 1000;
+  --layout-header-zindex: 500;
 
   // Layout -> Sider
-  --layout-sider-zindex: 900;
-  --layout-sider-border-color: var(--color-neutral-4);
+  --layout-sider-zindex: 400;
+  --layout-sider-border-color: var(--color-border-2);
   --layout-sider-main-width: 64px;
-  --layout-sider-main-text-color: var(--color-neutral-8);
-  --layout-sider-main-text-color-hover: var(--color-neutral-10);
-  --layout-sider-main-text-color-active: var(--primary-color);
-  --layout-sider-main-bg-color: var(--color-fill-3);
+  --layout-sider-main-text-color: var(--color-text-3);
+  --layout-sider-main-text-color-hover: var(--color-text-2);
+  --layout-sider-main-text-color-active: var(--theme-color);
+  --layout-sider-main-bg-color: var(--color-fill-2);
   --layout-sider-sub-width: 180px;
   --layout-sider-sub-bg-color: var(--color-white);
 

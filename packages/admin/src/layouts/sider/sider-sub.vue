@@ -25,10 +25,10 @@ function onMenuItemClick(path: string) {
 }
 
 watch(
-  () => route.fullPath,
+  () => route.path,
   () => {
     menus.value = getModuleMenus(route.meta.module || '').value
-    selectedKeys.value = [route.fullPath]
+    selectedKeys.value = [route.path]
     openedKeys.value = route.matched.map(item => item.meta?.id || '')
   },
   { immediate: true },

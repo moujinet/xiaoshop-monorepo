@@ -3,11 +3,8 @@ defineOptions({
   name: 'LayoutHeaderLogo',
 })
 
-const options = {
-  name: 'XiaoShop',
-  desc: 'XiaoShop Admin',
-  logo: '/img/logo.png',
-}
+const { getOptions } = useSettings()
+const options = getOptions('store')
 </script>
 
 <template>

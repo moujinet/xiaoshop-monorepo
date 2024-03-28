@@ -1,11 +1,4 @@
 import axios, { type AxiosRequestConfig } from 'axios'
-import type { IApiResponse } from '~/types'
-
-interface IUseRequest<T> {
-  loading: Ref<boolean>
-  data: Ref<T | undefined>
-  error: Ref<string | undefined>
-}
 
 /**
  * 发起 API 请求 (Promise)
@@ -13,7 +6,7 @@ interface IUseRequest<T> {
  * @param config AxiosRequestConfig
  * @returns Promise
  */
-export function useRequestPromise<T = any>(config: AxiosRequestConfig): Promise<T> {
+export function usePromiseRequest<T = any>(config: AxiosRequestConfig): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     axios<IApiResponse<T>>(config)
       .then((response) => {
@@ -25,31 +18,58 @@ export function useRequestPromise<T = any>(config: AxiosRequestConfig): Promise<
   })
 }
 
+export interface IUseRequestReturn<T = any> {
+  /**
+   * 数据加载中
+   */
+  loading: Ref<boolean>
+  /**
+   * 响应数据
+   */
+  data: Ref<T>
+  /**
+   * 错误信息
+   */
+  error: Ref<unknown>
+  /**
+   * 刷新请求
+   */
+  refreshData: (refreshParams?: AxiosRequestConfig['params']) => void
+}
+
 /**
  * 发起 API 请求
  *
  * @param config AxiosRequestConfig
- * @returns IUseRequest
  */
-export function useRequest<T = any>(config: AxiosRequestConfig): IUseRequest<T> {
-  const loading = ref(true)
-  const data = ref<T>()
-  const error = ref<string>()
+export function useRequest<T = any>(config: AxiosRequestConfig): IUseRequestReturn<T> {
+  const loading = ref(false)
+  const error = ref()
+  const data = ref()
 
-  useRequestPromise<T>(config)
-    .then((res) => {
-      data.value = res
-    })
-    .catch((e) => {
-      error.value = e
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  function refreshData(refreshParams?: AxiosRequestConfig['params']) {
+    loading.value = true
+
+    usePromiseRequest<T>(
+      refreshParams
+        ? { ...config, params: refreshParams }
+        : config,
+    )
+      .then((res) => {
+        data.value = res
+      })
+      .catch((err) => {
+        error.value = err
+      })
+      .finally(() => {
+        loading.value = false
+      })
+  }
 
   return {
     loading,
     data,
     error,
+    refreshData,
   }
 }

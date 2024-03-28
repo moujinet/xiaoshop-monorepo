@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useStorage } from '@vueuse/core'
 import LogoSVG from '~/assets/images/logo.svg'
 
 defineOptions({
   name: 'LayoutFooter',
 })
 
-const version = useStorage('xiaoshop-version', '0.0.0')
+const { version } = useApp()
 </script>
 
 <template>

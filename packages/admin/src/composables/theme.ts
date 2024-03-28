@@ -1,4 +1,9 @@
-export const useLayout = defineStore('layout', () => {
+export const useTheme = defineStore('theme', () => {
+  /**
+   * 主题
+   */
+  const [theme] = useCache('theme', 'default')
+
   /**
    * 可见性开关
    */
@@ -13,13 +18,21 @@ export const useLayout = defineStore('layout', () => {
    *
    * @param mode 'zen' | 'default' | 'editor'
    */
-  function setMode(mode: 'default' | 'zen' | 'editor') {
+  function setLayoutMode(mode: 'default' | 'zen' | 'editor') {
     visible.main = ['default', 'editor'].includes(mode)
     visible.sidebar = ['default', 'editor'].includes(mode)
     visible.footer = ['default'].includes(mode)
   }
 
+  /**
+   *  设置主题
+   */
+  function changeTheme() {
+    document.documentElement.setAttribute('data-theme', theme.value || 'default')
+  }
+
   return {
+    theme,
     /**
      * 可见性开关
      */
@@ -27,6 +40,10 @@ export const useLayout = defineStore('layout', () => {
     /**
      * 设置布局模式
      */
-    setMode,
+    setLayoutMode,
+    /**
+     * 设置主题
+     */
+    changeTheme,
   }
 })

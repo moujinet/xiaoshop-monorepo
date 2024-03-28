@@ -1,12 +1,29 @@
+import { DEFAULT_VERSION } from '~/constants/defaults'
 import type { IMenu, IModule } from '~/types'
 
 export function useApp() {
+  const [version, setVersion] = useCache(
+    'version',
+    DEFAULT_VERSION,
+    {
+      expire: 0,
+    },
+  )
+
   /**
    * 所有空间
    */
   const spaces = computed(() => {
     const { activeSpaces } = storeToRefs(useSpaces())
     return activeSpaces.value
+  })
+
+  /**
+   * 所有模块
+   */
+  const modules = computed(() => {
+    const { modules } = storeToRefs(useModules())
+    return modules.value
   })
 
   /**
@@ -33,9 +50,21 @@ export function useApp() {
 
   return {
     /**
+     * 版本
+     */
+    version,
+    /**
      * 所有空间
      */
     spaces,
+    /**
+     * 所有模块
+     */
+    modules,
+    /**
+     * 设置版本
+     */
+    setVersion,
     /**
      * 获得空间下的所有模块
      */

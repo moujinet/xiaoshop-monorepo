@@ -3,6 +3,7 @@ import { setupApi } from '~/utils/api'
 import { IS_DEBUG_MODE } from '~/constants/env'
 import App from '~/app.vue'
 
+import 'uno.css'
 import '~/styles/index.less'
 
 createAdminClient(
@@ -14,7 +15,7 @@ createAdminClient(
     // Load all mocks
     if (IS_DEBUG_MODE) {
       Mock.setup({
-        timeout: '600-1000',
+        timeout: '100-600',
       })
 
       loadMocks()
