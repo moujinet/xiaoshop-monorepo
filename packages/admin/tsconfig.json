@@ -22,7 +22,8 @@
     "verbatimModuleSyntax": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*.test.ts"
   ],
   "exclude": [
     "public"

@@ -43,9 +43,13 @@
     "toml"
   ],
   "cSpell.words": [
+    "Aliyun",
     "apiclient",
     "arcoblue",
     "Cascader",
+    "cparagraph",
+    "ctitle",
+    "cword",
     "doption",
     "hoverable",
     "MCHID",
@@ -54,6 +58,7 @@
     "uniapp",
     "vueup",
     "weapp",
-    "wepay"
+    "wepay",
+    "wxwork"
   ]
 }
