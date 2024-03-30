@@ -73,14 +73,14 @@ defineProps<{
   }
 
   &.is-primary {
-    color: var(--primary-color);
+    color: var(--theme-color);
 
     &:hover {
-      color: var(--primary-color-light);
+      color: var(--theme-color-light);
     }
 
     &:active {
-      color: var(--primary-color-dark);
+      color: var(--theme-color-dark);
     }
   }
 

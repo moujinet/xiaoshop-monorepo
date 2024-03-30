@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import {
+  ICON_SUFFIX_ACTIVE,
+  ICON_SUFFIX_DEFAULT,
+  ICON_SUFFIX_DUOTONE,
+} from '~/constants/icon'
 
 defineOptions({
   name: 'CommonIcon',
@@ -9,18 +14,16 @@ withDefaults(defineProps<{
   name: string
   inline?: boolean
   active?: boolean
-  activeSuffix?: string
+  duotone?: boolean
 }>(), {
   inline: true,
-  active: false,
-  activeSuffix: '-fill',
 })
 </script>
 
 <template>
-  <i class="common-icon">
+  <i class="common-icon" :class="{ 'is-flex': !inline }">
     <Icon
-      :icon="active ? `${name}${activeSuffix}` : name"
+      :icon="duotone ? `${name}${ICON_SUFFIX_DUOTONE}` : active ? `${name}${ICON_SUFFIX_ACTIVE}` : `${name}${ICON_SUFFIX_DEFAULT}`"
       :inline="inline"
     />
   </i>
@@ -28,8 +31,10 @@ withDefaults(defineProps<{
 
 <style lang="less">
 .common-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &.is-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<{
 const route = useRoute()
 const router = useRouter()
 const { getMeta } = useMeta()
+const { visible } = storeToRefs(useTheme())
 
 const space = computed(() => {
   return getMeta(route.meta.space || '')
@@ -39,7 +40,14 @@ const computedSubTitle = computed(() => {
 
 <template>
   <div class="common-container">
-    <div class="common-container__header">
+    <div
+      class="common-container__header"
+      :class="{
+        'has-sidebar': visible.main && visible.sidebar,
+        'only-main': visible.main && !visible.sidebar,
+        'only-sub': visible.sidebar && !visible.main,
+      }"
+    >
       <a-page-header
         v-if="showHeader"
         class="common-container__header--inner"
@@ -90,7 +98,25 @@ const computedSubTitle = computed(() => {
 
 <style lang="less" scoped>
 .common-container {
+  position: relative;
+  width: 100%;
+
   &__header {
+    position: fixed;
+    z-index: var(--layout-header-zindex);
+
+    &.has-sidebar {
+      width: calc(100% - var(--layout-sider-main-width) - var(--layout-sider-sub-width));
+    }
+
+    &.only-main {
+      width: calc(100% - var(--layout-sider-main-width));
+    }
+
+    &.only-sub {
+      width: calc(100% - var(--layout-sider-sub-width));
+    }
+
     &--inner {
       background: url("/img/header-bg.png") no-repeat top right;
       background-size: contain;
@@ -117,6 +143,7 @@ const computedSubTitle = computed(() => {
 
   &__body {
     padding: var(--page-padding);
+    padding-top: calc(82px + var(--page-padding));
 
     &.is-flex {
       display: flex;

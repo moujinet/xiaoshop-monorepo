@@ -34,7 +34,7 @@ export interface IUseRequestReturn<T = any> {
   /**
    * 刷新请求
    */
-  refreshData: (refreshParams?: AxiosRequestConfig['params']) => void
+  refreshData: (refreshParams?: AxiosRequestConfig['params']) => Promise<T>
 }
 
 /**
@@ -50,20 +50,24 @@ export function useRequest<T = any>(config: AxiosRequestConfig): IUseRequestRetu
   function refreshData(refreshParams?: AxiosRequestConfig['params']) {
     loading.value = true
 
-    usePromiseRequest<T>(
-      refreshParams
-        ? { ...config, params: refreshParams }
-        : config,
-    )
-      .then((res) => {
-        data.value = res
-      })
-      .catch((err) => {
-        error.value = err
-      })
-      .finally(() => {
-        loading.value = false
-      })
+    return new Promise<T>((resolve, reject) => {
+      usePromiseRequest<T>(
+        refreshParams
+          ? { ...config, params: refreshParams }
+          : config,
+      )
+        .then((res) => {
+          data.value = res
+          resolve(res)
+        })
+        .catch((err) => {
+          error.value = err
+          reject(err)
+        })
+        .finally(() => {
+          loading.value = false
+        })
+    })
   }
 
   return {

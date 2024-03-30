@@ -92,3 +92,35 @@ K2 extends keyof T,
     return pre
   }, {} as Pick<T, K | K2>)
 }
+
+export function toNestedList<T extends Record<string, any>>(
+  list: T[],
+  idKey: keyof T = 'id',
+  pidKey: keyof T = 'parent',
+) {
+  const nestable = (parent: number) => {
+    const result: T[] = []
+
+    list
+      .filter(item => item[pidKey] === parent)
+      .forEach((item) => {
+        const children = nestable(item[idKey])
+        const child: T = {
+          ...item,
+        }
+
+        result.push(
+          children.length > 0
+            ? {
+                ...child,
+                children,
+              }
+            : child,
+        )
+      })
+
+    return result
+  }
+
+  return nestable(0)
+}

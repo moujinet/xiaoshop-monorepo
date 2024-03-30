@@ -4,6 +4,8 @@ import { IS_DEBUG_MODE } from '~/constants/env'
 import App from '~/app.vue'
 
 import 'uno.css'
+import '@arco-design/web-vue/es/message/style/css'
+import '@arco-design/web-vue/es/notification/style/css'
 import '~/styles/index.less'
 
 createAdminClient(

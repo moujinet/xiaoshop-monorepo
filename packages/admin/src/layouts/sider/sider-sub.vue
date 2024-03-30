@@ -28,8 +28,8 @@ watch(
   () => route.path,
   () => {
     menus.value = getModuleMenus(route.meta.module || '').value
-    selectedKeys.value = [route.path]
     openedKeys.value = route.matched.map(item => item.meta?.id || '')
+    selectedKeys.value = route.matched.map(item => transId2Path(item.meta?.id || ''))
   },
   { immediate: true },
 )
