@@ -44,7 +44,10 @@ export const useMeta = defineStore('meta', () => {
         if (route.path === '' || route.path === '/')
           return false
 
-        if (route.path.startsWith('/')) {
+        if (
+          route.path.startsWith('/')
+          || (route.name && (route.name as string).startsWith('/'))
+        ) {
           return transId2Path(m.id) === route.name
             || `${transId2Path(m.id)}/` === route.name
             || transId2Path(m.id) === route.path

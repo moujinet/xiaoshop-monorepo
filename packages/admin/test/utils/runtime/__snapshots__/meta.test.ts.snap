@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`meta > extendRoutesMeta 1`] = `
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "name": "/goods/manage/attributes/",
+                    "path": "",
+                  },
+                  {
+                    "meta": {
+                      "desc": "",
+                      "icon": "",
+                      "id": "shop.goods.manage.attributes.template",
+                      "module": "shop.goods",
+                      "name": "模板设置",
+                      "space": "shop",
+                    },
+                    "name": "/goods/manage/attributes/template",
+                    "path": "template",
+                  },
+                ],
+                "meta": {
+                  "desc": "",
+                  "icon": "",
+                  "id": "shop.goods.manage.attributes",
+                  "module": "shop.goods",
+                  "name": "商品参数",
+                  "space": "shop",
+                },
+                "path": "attributes",
+              },
+            ],
+            "meta": {
+              "desc": "",
+              "icon": "ph:package",
+              "id": "shop.goods.manage",
+              "module": "shop.goods",
+              "name": "商品管理",
+              "space": "shop",
+            },
+            "path": "manage",
+          },
+        ],
+        "path": "",
+      },
+    ],
+    "meta": {
+      "desc": "商品管理",
+      "icon": "ph:package",
+      "id": "shop.goods",
+      "isLayout": true,
+      "module": "",
+      "name": "商品",
+      "space": "shop",
+    },
+    "path": "/goods",
+  },
+]
+`;
