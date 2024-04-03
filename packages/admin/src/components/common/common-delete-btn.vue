@@ -21,10 +21,13 @@ const emit = defineEmits(['ok'])
     :content="confirmContent || '确定要删除吗?'"
     :ok-text="confirmOkText || '删除'"
     :cancel-text="confirmCancelText || '取消'"
+    type="warning"
     @ok="() => emit('ok')"
   >
-    <a-button :disabled="disabled" size="mini" type="text" status="danger">
-      删除
-    </a-button>
+    <slot>
+      <a-button :disabled="disabled" type="text" status="danger">
+        删除
+      </a-button>
+    </slot>
   </a-popconfirm>
 </template>

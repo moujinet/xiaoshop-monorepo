@@ -1,61 +1,103 @@
-import { getSettings } from '@/settings/apis/settings'
+import { Message } from '@arco-design/web-vue'
+import { doUpdateSettings, getSettings } from '@/settings/apis/settings'
+import { DEFAULT_MESSAGE_ID } from '~/constants/defaults'
 
-export const useSettings = defineStore('option', () => {
+interface IUseSettingsUpdateOptionsReturn {
   /**
-   * 配置缓存
+   * 是否正在加载
    */
-  const [options, _, refresh] = useCache<IKeyValue>(
-    'settings',
-    {},
-    {
-      autoRefresh: true,
-      refreshFn: () => _onRefresh(),
-    },
-  )
+  loading: Ref<boolean>
+  /**
+   * 执行更新，通常绑定在提交按钮或表单的 Submit 事件
+   *
+   * @returns void
+   */
+  onUpdate: () => void
+}
+
+export function useSettings() {
+  /**
+   * 所有设置
+   */
+  const [options, _updateOptions] = useCache('options', {})
 
   /**
-   * 获取配置项
+   * 返回指定配置
    *
    * @param key string
    * @param defaultVal any
-   * @returns any
+   * @returns unknown
    */
-  function getOption(key: string, defaultVal?: any) {
-    return options.value?.[key] || defaultVal
+  function getOption(key: string, defaultVal: any = undefined) {
+    if (!key)
+      return defaultVal
+
+    return options.value[key] || defaultVal
   }
 
   /**
-   * 获取指定分组的配置项
+   * 返回指定前缀配置
    *
    * @param group string
-   * @returns IKeyValue
+   * @param defaultVal any
+   * @returns any
    */
-  function getOptions(group: string): IKeyValue {
-    return options.value
-      ? Object.keys(options.value).reduce(
-        (obj: IKeyValue, key) => {
-          if (key.startsWith(`${group}.`))
-            obj[key.replace(`${group}.`, '')] = options.value?.[key]
-          return obj
-        },
-        {},
-      )
-      : {}
+  function getOptions(group: string, defaultVal: any = undefined) {
+    if (!group)
+      return defaultVal
+
+    if (Object.keys(options.value).some(key => key.startsWith(group))) {
+      return Object.keys(options.value).reduce((item, key) => {
+        if (key.startsWith(group))
+          item[key.replace(new RegExp(`^${group}\.`), '')] = options.value[key]
+        return item
+      }, {} as IKeyValue)
+    }
+
+    return defaultVal
   }
 
   /**
-   * 自动刷新配置回调
+   * 更新配置项
+   *
+   * @param group string
+   * @param options IKeyValue
+   * @returns IUseSettingsUpdateOptionsReturn
    */
-  function _onRefresh() {
-    return new Promise<IKeyValue>(
-      resolve => getSettings()
-        .then((settings) => {
-          resolve(settings.reduce((obj: IKeyValue, item) => {
-            obj[`${item.group}.${item.key}`] = _transformValueType(item.key, item.value)
-            return obj
-          }, {}))
-        }),
-    )
+  function updateOptions(group: string, options: IKeyValue): IUseSettingsUpdateOptionsReturn {
+    const data = Object.keys(options).reduce((item, key) => {
+      item[`${group}.${key}`] = options[key]
+      return item
+    }, {} as IKeyValue)
+
+    const { loading, refreshData } = doUpdateSettings(data)
+
+    const onUpdate = () => refreshData(data).then(() => {
+      Message.success({
+        id: DEFAULT_MESSAGE_ID,
+        content: '配置已更新',
+        onClose: () => {
+          refresh()
+        },
+      })
+    })
+
+    return {
+      loading,
+      onUpdate,
+    }
+  }
+
+  /**
+   * 刷新配置项
+   */
+  function refresh() {
+    getSettings().then((_) => {
+      _updateOptions(_.reduce((item, option) => {
+        item[option.key] = _transformValueType(option.key, option.value)
+        return item
+      }, {} as IKeyValue))
+    })
   }
 
   /**
@@ -65,8 +107,10 @@ export const useSettings = defineStore('option', () => {
    * @param val string
    */
   function _transformValueType(key: string, val: string) {
+    const keys = key.split('.')
+
     // Boolean
-    if (key.startsWith('enable'))
+    if (keys[keys.length - 1].startsWith('enable'))
       return val === '1'
 
     // JSON
@@ -77,21 +121,21 @@ export const useSettings = defineStore('option', () => {
   }
 
   return {
+  /**
+   * 刷新配置
+   */
+    refresh,
     /**
-     * 所有配置项
-     */
-    options,
-    /**
-     * 获取配置项
+     * 返回指定配置
      */
     getOption,
     /**
-     * 获取指定分组的配置项
+     * 返回指定前缀配置
      */
     getOptions,
     /**
-     * 强制刷新
+     * 更新配置
      */
-    refresh,
+    updateOptions,
   }
-})
+}

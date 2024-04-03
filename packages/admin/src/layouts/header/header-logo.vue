@@ -4,11 +4,11 @@ defineOptions({
 })
 
 const { getOptions } = useSettings()
-const options = getOptions('store')
+const options = getOptions('settings.store')
 </script>
 
 <template>
-  <router-link class="layout-header__logo" to="/" :title="options.desc">
+  <router-link class="layout-header__logo" to="/" :title="options.name">
     <img :src="options.logo" :alt="options.name">
     <h1>{{ options.name }}</h1>
   </router-link>

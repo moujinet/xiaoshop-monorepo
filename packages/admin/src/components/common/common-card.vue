@@ -20,7 +20,6 @@ withDefaults(defineProps<{
       'no-border': !bordered,
     }"
     :bordered="bordered"
-    :loading="loading"
     :hoverable="hoverable"
   >
     <template v-if="title || $slots.title" #title>
@@ -31,7 +30,9 @@ withDefaults(defineProps<{
       </CommonGroupTitle>
     </template>
 
-    <slot />
+    <a-spin :loading="loading" w-full>
+      <slot />
+    </a-spin>
   </a-card>
 </template>
 

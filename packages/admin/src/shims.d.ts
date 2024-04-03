@@ -7,6 +7,25 @@ declare module '*.vue' {
   export default component
 }
 
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    /**
+     * 检查用户权限
+     *
+     * @param permissions string[]
+     * @returns boolean
+     */
+    $permission: (permissions: string[]) => boolean
+    /**
+     * 检查用户角色
+     *
+     * @param roles string[]
+     * @returns boolean
+     */
+    $role: (roles: string[]) => boolean
+  }
+}
+
 declare module 'vue-router' {
   interface RouteMeta {
     id?: string
@@ -26,6 +45,7 @@ declare global {
     VITE_APP_NAME_SHORT: string
     VITE_API_BASE_URL: string
     VITE_API_REQUEST_TIMEOUT: number
+    VITE_ENABLE_DEVTOOL: string
   }
 
   interface IApiResponse<T = any> {

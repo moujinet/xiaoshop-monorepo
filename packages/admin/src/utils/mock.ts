@@ -23,7 +23,8 @@ export function defineMocks(definitions: IMockDefinition): IMockSetup {
       // eslint-disable-next-line no-console
       console.log('🚦', `"${requestUrl}"`, 'api mocked')
 
-      Mock.mock(new RegExp(requestUrl), ({ url, body }) => fn({
+      Mock.mock(new RegExp(requestUrl), ({ type, url, body }) => fn({
+        method: type.toUpperCase(),
         url,
         body: JSON.parse(body || '{}'),
         query: qs.parseUrl(url).query,

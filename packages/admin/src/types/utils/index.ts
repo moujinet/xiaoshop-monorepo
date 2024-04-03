@@ -3,6 +3,7 @@ export interface IMockSetup {
 }
 
 export interface IMockRequestOptions {
+  method: string
   url: string
   body: any
   query: any

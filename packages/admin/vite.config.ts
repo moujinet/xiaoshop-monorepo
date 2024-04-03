@@ -120,11 +120,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     VITE_BASE_URL,
     VITE_APP_NAME,
     VITE_APP_NAME_SHORT,
+    VITE_ENABLE_DEVTOOL,
   } = loadEnv(mode, root)
 
   if (mode !== 'production') {
     // https://github.com/vuejs/devtools-next
-    plugins.push(VueDevTools())
+    VITE_ENABLE_DEVTOOL === 'true' && plugins.push(VueDevTools())
   }
 
   return {

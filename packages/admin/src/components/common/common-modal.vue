@@ -31,9 +31,9 @@ function handleModalCancel(ev: Event) {
 </script>
 
 <template>
-  <div @click="visible = true">
+  <span @click="visible = true">
     <slot />
-  </div>
+  </span>
 
   <a-modal
     v-model:visible="visible"
@@ -44,6 +44,7 @@ function handleModalCancel(ev: Event) {
     title-align="start"
     width="auto"
     simple
+    unmount-on-close
     @ok="handleModalOk"
     @cancel="handleModalCancel"
   >

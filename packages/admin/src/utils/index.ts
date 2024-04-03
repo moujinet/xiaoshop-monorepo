@@ -93,6 +93,14 @@ K2 extends keyof T,
   }, {} as Pick<T, K | K2>)
 }
 
+/**
+ * 转换为嵌套数组
+ *
+ * @param list T[]
+ * @param idKey string
+ * @param pidKey string
+ * @returns T[]
+ */
 export function toNestedList<T extends Record<string, any>>(
   list: T[],
   idKey: keyof T = 'id',

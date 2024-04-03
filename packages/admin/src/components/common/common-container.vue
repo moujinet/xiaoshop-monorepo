@@ -91,6 +91,8 @@ const computedSubTitle = computed(() => {
     </div>
 
     <div class="common-container__body" :class="{ 'is-flex': flexible }">
+      <slot name="header" />
+
       <slot />
     </div>
   </div>
@@ -148,7 +150,7 @@ const computedSubTitle = computed(() => {
     &.is-flex {
       display: flex;
       flex-direction: column;
-      column-gap: var(--page-padding);
+      row-gap: var(--page-padding);
     }
   }
 }

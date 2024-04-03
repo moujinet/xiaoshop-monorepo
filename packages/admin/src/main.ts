@@ -11,9 +11,6 @@ import '~/styles/index.less'
 createAdminClient(
   App,
   async () => {
-    // Setup API
-    setupApi()
-
     // Load all mocks
     if (IS_DEBUG_MODE) {
       Mock.setup({
@@ -22,5 +19,8 @@ createAdminClient(
 
       loadMocks()
     }
+
+    // Setup API
+    setupApi()
   },
 )

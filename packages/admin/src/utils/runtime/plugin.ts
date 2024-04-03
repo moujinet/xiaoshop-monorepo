@@ -16,7 +16,7 @@ export function definePlugin(plugin: IPlugin): IPluginInstaller {
  * @param ctx IGlobalContext
  */
 export function loadPlugins(ctx: IGlobalContext) {
-  Object.values(import.meta.glob<IPluginInstaller>('~/plugins/**/*.ts', {
+  Object.values(import.meta.glob<IPluginInstaller>('~/plugins/**/install.ts', {
     eager: true,
     import: 'default',
   }),
