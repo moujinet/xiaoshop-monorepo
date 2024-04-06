@@ -30,6 +30,10 @@ withDefaults(defineProps<{
       </CommonGroupTitle>
     </template>
 
+    <template #cover>
+      <slot name="extra" />
+    </template>
+
     <a-spin :loading="loading" w-full>
       <slot />
     </a-spin>

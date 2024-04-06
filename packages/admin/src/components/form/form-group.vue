@@ -6,6 +6,7 @@ defineOptions({
 defineProps<{
   title?: string
   tips?: string
+  size?: 'mini' | 'small' | 'medium' | 'large'
 }>()
 </script>
 
@@ -35,7 +36,15 @@ defineProps<{
       </slot>
     </div>
 
-    <div class="form-group__body">
+    <div
+      class="form-group__body"
+      :class="{
+        'is-mini': size === 'mini',
+        'is-small': size === 'small',
+        'is-medium': size === 'medium',
+        'is-large': size === 'large',
+      }"
+    >
       <slot />
     </div>
   </div>
@@ -55,6 +64,30 @@ defineProps<{
 
   &__body {
     padding: var(--page-padding) 0;
+
+    &.is-mini {
+      .arco-form-item-content {
+        max-width: 120px;
+      }
+    }
+
+    &.is-small {
+      .arco-form-item-content {
+        max-width: 240px;
+      }
+    }
+
+    &.is-medium {
+      .arco-form-item-content {
+        max-width: 560px;
+      }
+    }
+
+    &.is-large {
+      .arco-form-item-content {
+        max-width: 760px;
+      }
+    }
   }
 }
 </style>
