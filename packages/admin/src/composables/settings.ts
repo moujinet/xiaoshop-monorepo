@@ -1,4 +1,3 @@
-import { Message } from '@arco-design/web-vue'
 import { doUpdateSettings, getSettings } from '@/settings/apis/settings'
 import { DEFAULT_MESSAGE_ID } from '~/constants/defaults'
 
@@ -73,7 +72,7 @@ export function useSettings() {
     const { loading, refreshData } = doUpdateSettings(data)
 
     const onUpdate = () => refreshData(data).then(() => {
-      Message.success({
+      AMessage.success({
         id: DEFAULT_MESSAGE_ID,
         content: '配置已更新',
         onClose: () => {

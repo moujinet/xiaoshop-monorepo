@@ -74,4 +74,6 @@ declare global {
   interface IKeyValue<T = any> {
     [key: string]: T
   }
+
+  type ToDictionary<T = any> = Pick<T, 'id' | 'name'>
 }

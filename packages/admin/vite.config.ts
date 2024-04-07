@@ -54,14 +54,25 @@ const plugins: PluginOption[] = [
     exclude: ['**/components/**'],
   }),
 
-  // https://github.com/antfu/unplugin-auto-import
+  // https://github.com/unplugin/unplugin-auto-import
   AutoImport({
     dirs: [
       'src/composables',
       'src/utils',
       'src/utils/runtime',
     ],
-    imports: ['vue', 'pinia', VueRouterAutoImports, unheadVueComposablesImports],
+    imports: [
+      'vue',
+      'pinia',
+      {
+        '@arco-design/web-vue': [
+          ['Message', 'AMessage'],
+          ['Notification', 'ANotification'],
+        ],
+      },
+      VueRouterAutoImports,
+      unheadVueComposablesImports,
+    ],
     dts: 'src/auto-imports.d.ts',
     resolvers: [
       ArcoResolver(),
@@ -70,7 +81,7 @@ const plugins: PluginOption[] = [
     injectAtEnd: true,
   }),
 
-  // https://github.com/antfu/unplugin-vue-components
+  // https://github.com/unplugin/unplugin-vue-components
   VueComponents({
     dts: 'src/vue-components.d.ts',
     dirs: ['src/components/**'],
