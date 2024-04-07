@@ -12,7 +12,7 @@ defineProps<{
   disabled?: boolean
 }>()
 
-const emit = defineEmits(['ok'])
+const emit = defineEmits(['delete'])
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const emit = defineEmits(['ok'])
     :ok-text="confirmOkText || '删除'"
     :cancel-text="confirmCancelText || '取消'"
     type="warning"
-    @ok="() => emit('ok')"
+    @ok="() => emit('delete')"
   >
     <slot>
       <a-button :disabled="disabled" type="text" status="danger">
