@@ -9,6 +9,8 @@ defineProps<{
   okText?: string
   cancelText?: string
   hideCancel?: boolean
+  disableOk?: boolean
+  onBeforeOk?: (done: (closed: boolean) => void) => void | boolean | Promise<void | boolean>
 }>()
 
 const emit = defineEmits(['ok', 'cancel'])
@@ -20,10 +22,6 @@ const visible = defineModel(
     default: false,
   },
 )
-
-function handleModalOk(ev: Event) {
-  emit('ok', ev)
-}
 
 function handleModalCancel(ev: Event) {
   emit('cancel', ev)
@@ -41,11 +39,12 @@ function handleModalCancel(ev: Event) {
     :ok-text="okText"
     :cancel-text="cancelText"
     :hide-cancel="hideCancel"
+    :on-before-ok="onBeforeOk"
+    :ok-button-props="{ htmlType: 'submit', disabled: disableOk }"
     title-align="start"
     width="auto"
     simple
     unmount-on-close
-    @ok="handleModalOk"
     @cancel="handleModalCancel"
   >
     <div v-if="visible" flex="~ center" w-500px>
