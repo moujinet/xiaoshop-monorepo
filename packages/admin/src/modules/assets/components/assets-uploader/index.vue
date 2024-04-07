@@ -2,7 +2,7 @@
 import AssetsBrowser from './browser.vue'
 import AssetsPreviewer from './previewer.vue'
 
-import type { IAssetImagePreview, IAssetType } from '@/assets/apis/assets'
+import type { IAssetImagePreview, IAssetType } from '@/assets/types'
 
 defineOptions({
   name: 'AssetsUploader',
@@ -141,6 +141,7 @@ provide<Ref<number>>('assets.uploader.reUploadIndex', reUploadIndex)
       display: flex;
       align-items: center;
       justify-content: space-between;
+      user-select: none;
 
       &-info {
         font-size: 12px;

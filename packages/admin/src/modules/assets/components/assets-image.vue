@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IAssetImagePreview } from '@/assets/apis/assets'
+import type { IAssetImagePreview } from '@/assets/types'
 
 defineOptions({
   name: 'AssetImage',

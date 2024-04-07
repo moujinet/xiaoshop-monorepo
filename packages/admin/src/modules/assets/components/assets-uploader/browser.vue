@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import AssetsBrowserFolderEditModal from './browser-folder-edit-modal.vue'
-import type { IAsset, IAssetImagePreview } from '@/assets/apis/assets'
+import { fetchAssetList } from '@/assets/apis/asset'
+import { fetchAssetGroupTree } from '@/assets/apis/group'
+import type { IAssetImagePreview } from '@/assets/types'
 
 defineOptions({
   name: 'AssetsBrowser',
@@ -16,82 +18,45 @@ const props = withDefaults(defineProps<{
   height: '400px',
 })
 
-const currentFolder = ref(['0'])
-const limit = inject<number>('assets.uploader.limit', 1)
+const keyword = ref('')
+const searchForm = reactive({
+  groupId: [0],
+  name: '',
+  page: 1,
+  size: 12,
+})
 
+const limit = inject<number>('assets.uploader.limit', 1)
 const selected = defineModel<IAssetImagePreview[]>('selected', {
   type: Array,
   default: () => [],
 })
-
 const computedTotal = computed(() => selected.value.length + props.total)
 
-const treeData = [
-  {
-    key: '0',
-    title: '默认分组',
-  },
-  {
-    title: 'Trunk 0-0',
-    key: '0-0',
-    children: [
-      {
-        title: 'Branch 0-0-0',
-        key: '0-0-0',
-        children: [
-          {
-            title: 'Leaf',
-            key: '0-0-0-0',
-          },
-          {
-            title: 'Leaf',
-            key: '0-0-0-1',
-          },
-        ],
-      },
-      {
-        title: 'Branch 0-0-1',
-        key: '0-0-1',
-        children: [
-          {
-            title: 'Leaf',
-            key: '0-0-1-0',
-          },
-        ],
-      },
-    ],
-  },
-]
+const { loading: folderLoading, data: folders, refreshData: refreshFolders } = fetchAssetGroupTree()
+const { loading, data: assets, refreshData } = fetchAssetList()
 
-const fileList = [
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-  { name: 'album', path: 'https://place.dog/200/100' },
-].map(item => ({
-  ...item,
-  id: Math.random(),
-  type: 'image',
-  path: `${item.path}?random=${Math.random()}`,
-  size: Math.floor(Math.random() * 1000),
-  createdTime: '2022-01-01 00:00:00',
-})) as IAsset[]
+watch(
+  folders,
+  () => {
+    searchForm.groupId = folders.value.length > 0 ? [folders.value[0].id] : []
+  },
+  { immediate: true },
+)
+
+watch(
+  [searchForm],
+  () => {
+    refreshData({
+      ...removeEmpty({
+        ...searchForm,
+        groupId: searchForm.groupId[0] ? searchForm.groupId[0] : '',
+      }),
+    })
+  },
+)
+
+refreshFolders()
 
 function handleSelectFile(file: IAssetImagePreview) {
   if (
@@ -119,24 +84,31 @@ function handleSelectFile(file: IAssetImagePreview) {
   <div class="assets-uploader-browser">
     <div class="assets-uploader-browser__folders">
       <div class="assets-uploader-browser__folders--actions">
-        <AssetsBrowserFolderEditModal>
+        <AssetsBrowserFolderEditModal @success="refreshFolders">
           <a-button type="outline" long>
             创建分组
           </a-button>
         </AssetsBrowserFolderEditModal>
       </div>
 
-      <a-tree
-        v-model:selected-keys="currentFolder"
-        :data="treeData"
-        :virtual-list-props="{
-          height,
-        }"
-        class="assets-uploader-browser__folders--tree"
-        size="mini"
-        block-node
-        show-line
-      />
+      <a-spin :loading="folderLoading">
+        <a-tree
+          v-model:selected-keys="searchForm.groupId"
+          :field-names="{ title: 'name', key: 'id' }"
+          :data="folders"
+          :virtual-list-props="{
+            height: `calc(${height} + 36px)`,
+          }"
+          block-node
+          show-line
+        >
+          <template #switcher-icon="node: any, { isLeaf, selected: folderSelected }">
+            <CommonIcon v-if="!isLeaf" name="ph:caret-down" />
+            <CommonIcon v-if="isLeaf && folderSelected" name="ph:folder-open" :active="folderSelected" font="size-16px" />
+            <CommonIcon v-if="isLeaf && !folderSelected" name="ph:folder" font="size-16px" />
+          </template>
+        </a-tree>
+      </a-spin>
     </div>
 
     <div class="assets-uploader-browser__list">
@@ -150,49 +122,67 @@ function handleSelectFile(file: IAssetImagePreview) {
         </a-upload>
 
         <div>
-          <a-input-search placeholder="搜索" />
+          <a-input-search
+            v-model="keyword"
+            placeholder="搜索"
+            allow-clear
+            @search="() => searchForm.name = keyword"
+            @clear="() => searchForm.name = ''"
+          />
         </div>
       </div>
 
-      <a-scrollbar :style="{ height, overflow: 'auto' }">
-        <div class="assets-uploader-browser__list--files">
-          <div
-            v-for="file in fileList"
-            :key="file.id"
-            class="assets-uploader-browser__file"
-            :class="{
-              'is-selected': selected.some(path => path.id === file.id),
-            }"
-            @click="handleSelectFile(file)"
-          >
-            <div class="assets-uploader-browser__file--cover">
-              <div v-if="selected.some(path => path.id === file.id)" class="assets-uploader-browser__file--checker">
-                <CommonIcon name="ph:check-bold" />
+      <a-spin :loading="loading">
+        <a-scrollbar :style="{ height, overflow: 'auto' }">
+          <div v-if="assets && assets.total > 0" class="assets-uploader-browser__list--assets">
+            <div
+              v-for="asset in assets.result"
+              :key="asset.id"
+              class="assets-uploader-browser__file"
+              :class="{
+                'is-selected': selected.some(path => path.id === asset.id),
+              }"
+              @click="handleSelectFile(asset)"
+            >
+              <div class="assets-uploader-browser__file--cover">
+                <div v-if="selected.some(path => path.id === asset.id)" class="assets-uploader-browser__file--checker">
+                  <CommonIcon name="ph:check-bold" />
+                </div>
+                <a-image
+                  :src="asset.path"
+                  :alt="asset.name"
+                  fit="contain"
+                  width="100%"
+                  height="100%"
+                  :preview="false"
+                  show-loader
+                >
+                  <template #loader>
+                    <div flex="~ center" w-full h-full>
+                      <a-spin />
+                    </div>
+                  </template>
+                </a-image>
               </div>
-              <a-image
-                :src="file.path"
-                :alt="file.name"
-                fit="contain"
-                width="100%"
-                height="100%"
-                :preview="false"
-                show-loader
-              >
-                <template #loader>
-                  <div flex="~ center" w-full h-full>
-                    <a-spin />
-                  </div>
-                </template>
-              </a-image>
-            </div>
-            <div class="assets-uploader-browser__file--info">
-              {{ file.name }}
+              <div class="assets-uploader-browser__file--info">
+                {{ asset.name }}
+              </div>
             </div>
           </div>
-        </div>
-      </a-scrollbar>
+          <div v-else :style="{ height }" flex="~ center">
+            <a-empty />
+          </div>
+        </a-scrollbar>
+      </a-spin>
 
-      <a-pagination :total="50" size="mini" simple />
+      <a-pagination
+        v-if="assets && assets.total > 0"
+        v-model:current="searchForm.page"
+        :total="assets.total"
+        :page-size="searchForm.size"
+        size="mini"
+        simple
+      />
     </div>
   </div>
 </template>
@@ -214,9 +204,9 @@ function handleSelectFile(file: IAssetImagePreview) {
     flex: 0 0 200px;
     border-right: 1px solid var(--color-border-2);
 
-    &--tree {
-      .arco-tree-node-title.arco-tree-node-title-block {
-        display: block;
+    .arco-tree-node-selected {
+      .common-icon {
+        color: var(--theme-color);
       }
     }
   }
@@ -229,7 +219,7 @@ function handleSelectFile(file: IAssetImagePreview) {
       justify-content: space-between;
     }
 
-    &--files {
+    &--assets {
       display: grid;
       grid-template-columns: repeat(auto-fill, 142px);
       gap: 12px;

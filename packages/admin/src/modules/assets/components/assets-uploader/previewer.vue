@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { VueDraggable } from 'vue-draggable-plus'
 import AssetsPreviewerImage from './previewer-image.vue'
-import type { IAssetImagePreview } from '@/assets/apis/assets'
+import type { IAssetImagePreview } from '@/assets/types'
 
 defineOptions({
   name: 'AssetsPreviewer',
