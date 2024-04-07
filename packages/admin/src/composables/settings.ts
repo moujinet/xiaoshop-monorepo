@@ -18,7 +18,7 @@ export function useSettings() {
   /**
    * 所有设置
    */
-  const [options, _updateOptions] = useCache('options', {})
+  const [options, _updateOptions] = useCache('options', {}, { autoRefresh: true })
 
   /**
    * 返回指定配置
