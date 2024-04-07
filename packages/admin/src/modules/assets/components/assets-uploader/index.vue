@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { AssetsUploadMode } from './types'
-
 import AssetsBrowser from './browser.vue'
 import AssetsPreviewer from './previewer.vue'
+
+import type { IAssetImagePreview, IAssetType } from '@/assets/apis/assets'
 
 defineOptions({
   name: 'AssetsUploader',
 })
 
 const props = withDefaults(defineProps<{
-  mode?: AssetsUploadMode
+  mode?: IAssetType
   limit?: number
 }>(), {
   mode: 'image',
@@ -35,7 +35,7 @@ else {
   options.multiple = false
 }
 
-const fileList = defineModel<string[]>(
+const fileList = defineModel<IAssetImagePreview[]>(
   'fileList',
   {
     type: Array,
@@ -44,8 +44,9 @@ const fileList = defineModel<string[]>(
 )
 
 const reUploadIndex = ref<number>(-1)
-const selected = ref<string[]>([])
-const computedTotal = computed(() => [...fileList.value, ...selected.value].length)
+const selected = ref<IAssetImagePreview[]>([])
+const computedReSelect = computed(() => reUploadIndex.value > -1 ? 1 : 0)
+const computedTotal = computed(() => [...fileList.value, ...selected.value].length - computedReSelect.value)
 
 function handleClose() {
   selected.value = []
@@ -65,15 +66,17 @@ function handleOk() {
 
 provide<number>('assets.uploader.limit', props.limit)
 provide<Ref<boolean>>('assets.uploader.browser.visible', visible)
-provide<Ref<string[]>>('assets.uploader.fileList', fileList)
+provide<Ref<IAssetImagePreview[]>>('assets.uploader.fileList', fileList)
 provide<Ref<number>>('assets.uploader.reUploadIndex', reUploadIndex)
 </script>
 
 <template>
   <AssetsPreviewer>
-    <div class="assets-uploader-trigger" @click="visible = true">
-      <CommonIcon name="ph:plus" />
-    </div>
+    <template v-if="fileList.length < limit">
+      <div class="assets-uploader-trigger" @click="visible = true">
+        <CommonIcon name="ph:plus" />
+      </div>
+    </template>
 
     <a-modal
       v-model:visible="visible"
@@ -86,7 +89,7 @@ provide<Ref<number>>('assets.uploader.reUploadIndex', reUploadIndex)
       @cancel="handleClose"
       @close="handleClose"
     >
-      <AssetsBrowser v-model:selected="selected" :total="fileList.length" />
+      <AssetsBrowser v-model:selected="selected" :re-select="computedReSelect" :total="fileList.length" />
 
       <template #footer>
         <div class="assets-uploader-modal__footer">

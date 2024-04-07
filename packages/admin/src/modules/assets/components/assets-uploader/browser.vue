@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import AssetsBrowserFolderEditModal from './browser-folder-edit-modal.vue'
+import type { IAsset, IAssetImagePreview } from '@/assets/apis/assets'
 
 defineOptions({
   name: 'AssetsBrowser',
 })
 
 const props = withDefaults(defineProps<{
+  reSelect?: number
   total?: number
   height?: string
 }>(), {
+  reSelect: 0,
   total: 0,
   height: '400px',
 })
@@ -16,7 +19,7 @@ const props = withDefaults(defineProps<{
 const currentFolder = ref(['0'])
 const limit = inject<number>('assets.uploader.limit', 1)
 
-const selected = defineModel('selected', {
+const selected = defineModel<IAssetImagePreview[]>('selected', {
   type: Array,
   default: () => [],
 })
@@ -61,35 +64,54 @@ const treeData = [
 ]
 
 const fileList = [
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-  { fileName: 'album', filePath: 'https://place.dog/200/100' },
-].map(item => ({ ...item, id: Math.random(), filePath: `${item.filePath}?random=${Math.random()}` }))
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+  { name: 'album', path: 'https://place.dog/200/100' },
+].map(item => ({
+  ...item,
+  id: Math.random(),
+  type: 'image',
+  path: `${item.path}?random=${Math.random()}`,
+  size: Math.floor(Math.random() * 1000),
+  createdTime: '2022-01-01 00:00:00',
+})) as IAsset[]
 
-function handleSelectFile(filePath: string) {
-  if (computedTotal.value >= limit)
+function handleSelectFile(file: IAssetImagePreview) {
+  if (
+    selected.value.some(path => path.id !== file.id)
+    && props.reSelect === 0
+    && computedTotal.value >= limit
+  )
     return
 
-  selected.value.includes(filePath)
-    ? selected.value.splice(selected.value.indexOf(filePath), 1)
-    : selected.value.push(filePath)
+  if (
+    selected.value.some(path => path.id !== file.id)
+    && props.reSelect > 0
+    && selected.value.length === props.reSelect
+  )
+    return
+
+  if (selected.value.some(path => path.id === file.id))
+    selected.value.splice(selected.value.findIndex(path => path.id === file.id), 1)
+  else
+    selected.value.push(file)
 }
 </script>
 
@@ -135,21 +157,21 @@ function handleSelectFile(filePath: string) {
       <a-scrollbar :style="{ height, overflow: 'auto' }">
         <div class="assets-uploader-browser__list--files">
           <div
-            v-for="item in fileList"
-            :key="item.id"
+            v-for="file in fileList"
+            :key="file.id"
             class="assets-uploader-browser__file"
             :class="{
-              'is-selected': selected.includes(item.filePath),
+              'is-selected': selected.some(path => path.id === file.id),
             }"
-            @click="handleSelectFile(item.filePath)"
+            @click="handleSelectFile(file)"
           >
             <div class="assets-uploader-browser__file--cover">
-              <div v-if="selected.includes(item.filePath)" class="assets-uploader-browser__file--checker">
+              <div v-if="selected.some(path => path.id === file.id)" class="assets-uploader-browser__file--checker">
                 <CommonIcon name="ph:check-bold" />
               </div>
               <a-image
-                :src="item.filePath"
-                :alt="item.fileName"
+                :src="file.path"
+                :alt="file.name"
                 fit="contain"
                 width="100%"
                 height="100%"
@@ -164,7 +186,7 @@ function handleSelectFile(filePath: string) {
               </a-image>
             </div>
             <div class="assets-uploader-browser__file--info">
-              {{ item.fileName }}
+              {{ file.name }}
             </div>
           </div>
         </div>

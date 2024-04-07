@@ -6,10 +6,9 @@ defineOptions({
 defineProps<{
   index: number
   src: string
-  moveImage: (dragIndex: number, hoverIndex: number) => void
 }>()
 
-defineEmits(['reUpload', 'delete'])
+const emit = defineEmits(['reUpload', 'delete'])
 
 const preview = ref(false)
 </script>
@@ -35,13 +34,13 @@ const preview = ref(false)
             </a-tooltip>
           </span>
 
-          <span class="action" @click="$emit('reUpload', index)">
+          <span class="action" @click="emit('reUpload', index)">
             <a-tooltip content="重新选择" mini>
               <CommonIcon name="ph:arrows-clockwise" />
             </a-tooltip>
           </span>
 
-          <a-popconfirm content="确定要删除吗?" @ok="$emit('delete', index)">
+          <a-popconfirm content="确定要删除吗?" @ok="emit('delete', index)">
             <span class="action">
               <a-tooltip content="删除" mini>
                 <CommonIcon name="ph:trash" />
