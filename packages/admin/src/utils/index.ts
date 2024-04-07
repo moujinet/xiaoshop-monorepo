@@ -132,3 +132,15 @@ export function toNestedList<T extends Record<string, any>>(
 
   return nestable(0)
 }
+
+/**
+ * 删除对象中空的属性
+ */
+export function removeEmpty(obj: Record<string, any>) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === null || obj[key] === undefined || obj[key] === '')
+      delete obj[key]
+  })
+
+  return obj
+}
