@@ -9,7 +9,7 @@ defineProps<{
 
 const emit = defineEmits(['change'])
 
-const modelValue = defineModel('value', {
+const modelValue = defineModel('modelValue', {
   type: String,
   default: '',
 })

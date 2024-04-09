@@ -4,6 +4,9 @@ defineOptions({
 })
 
 function formatter(value: string) {
+  if (value === '0')
+    return ''
+
   const values = value.split('.')
   values[0] = values[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 

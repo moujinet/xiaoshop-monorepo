@@ -76,7 +76,7 @@ function handleSelectFile(file: IAssetImagePreview) {
   if (selected.value.some(path => path.id === file.id))
     selected.value.splice(selected.value.findIndex(path => path.id === file.id), 1)
   else
-    selected.value.push(file)
+    selected.value.push(pick(file, ['id', 'path']))
 }
 </script>
 
