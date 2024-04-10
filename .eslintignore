@@ -2,3 +2,4 @@ snapshot*
 dist
 node_modules
 packages/apis/**
+packages/docs/**/*.md

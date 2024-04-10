@@ -2,9 +2,18 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: '云链小店',
+  title: 'Xiaoshop 云链小店',
   description: '开源电商系统',
   cleanUrls: true,
+  markdown: {
+    container: {
+      tipLabel: '提示',
+      warningLabel: '警告',
+      dangerLabel: '危险',
+      infoLabel: '信息',
+      detailsLabel: '详细信息',
+    },
+  },
   head: [
     [
       'link',
@@ -14,6 +23,9 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo-sm.png',
+    outline: {
+      level: 'deep',
+    },
     nav: [
       {
         text: '文档',
@@ -65,11 +77,18 @@ export default defineConfig({
     sidebar: {
       '/docs/': [
         {
-          text: 'Guide',
+          text: '开发约定',
+          collapsed: false,
           items: [
-            { text: 'Index', link: '/guide/' },
-            { text: 'One', link: '/guide/one' },
-            { text: 'Two', link: '/guide/two' },
+            { text: 'API 设计', link: '/docs/conventions/api' },
+            { text: '数据库设计', link: '/docs/conventions/database' },
+          ],
+        },
+        {
+          text: '速查表',
+          collapsed: false,
+          items: [
+            { text: '错误码', link: '/docs/cheat-sheet/errors' },
           ],
         },
       ],
