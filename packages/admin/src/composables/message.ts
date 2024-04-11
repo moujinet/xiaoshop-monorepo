@@ -11,7 +11,14 @@ export interface IUseMessageOptions {
   onClose?: () => void
 }
 
-export function useMessage(options?: IUseMessageOptions) {
+export interface IUseMessageReturn {
+  success: (content: string) => void
+  warning: (content: string) => void
+  error: (content: string) => void
+  loading: (content: string) => void
+}
+
+export function useMessage(options?: IUseMessageOptions): IUseMessageReturn {
   const {
     id = DEFAULT_MESSAGE_ID,
     duration = DEFAULT_MESSAGE_DURATION,

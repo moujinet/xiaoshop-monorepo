@@ -7,12 +7,19 @@ export type IUseNotificationOptions = IUseMessageOptions & {
   position: NotificationPosition
 }
 
+export interface IUseNotificationReturn {
+  info: (config: IUseNotificationUserConfig | RenderContent) => void
+  success: (config: IUseNotificationUserConfig | RenderContent) => void
+  warning: (config: IUseNotificationUserConfig | RenderContent) => void
+  error: (config: IUseNotificationUserConfig | RenderContent) => void
+}
+
 export interface IUseNotificationUserConfig {
   title?: RenderContent
   content: RenderContent
 }
 
-export function useNotification(options?: IUseNotificationOptions) {
+export function useNotification(options?: IUseNotificationOptions): IUseNotificationReturn {
   const {
     id = DEFAULT_MESSAGE_ID,
     duration = DEFAULT_MESSAGE_DURATION,
