@@ -1,5 +1,5 @@
 import type { InternalAxiosRequestConfig } from 'axios'
-import { Notification } from '@arco-design/web-vue'
+import { errors } from './errors'
 import { API_BASE_URL, API_REQUEST_TIMEOUT } from '~/constants/env'
 
 /**
@@ -33,18 +33,20 @@ export function handleConfigureAuthHeaders(config: InternalAxiosRequestConfig): 
 }
 
 /**
- * 拦截未知错误
+ * 拦截 API 响应错误
  *
  * @param code number
  * @param message string
  * @returns boolean
  */
-export function handleUnknownError(code: number, message: string): boolean {
+export function handleApiErrorResponse(code: number, message: string): boolean {
+  if (errors[code]) {
+    useMessage().error(errors[code])
+    return false
+  }
+
   if (code !== 0) {
-    Notification.error({
-      title: '未知错误',
-      content: message,
-    })
+    useMessage().error(message)
     return false
   }
 
@@ -58,26 +60,26 @@ export function handleUnknownError(code: number, message: string): boolean {
  * @returns boolean
  */
 export function handleNetworkError(httpStatus?: number): boolean {
-  const networkErrors: Record<string, string> = {
-    400: '错误的请求',
-    401: '未授权，请重新登录',
-    403: '拒绝访问',
-    404: '请求错误，未找到该资源',
-    405: '请求方法未允许',
-    408: '请求超时',
-    500: '服务器端出错',
-    501: '网络未实现',
-    502: '网络错误',
-    503: '服务不可用',
-    504: '网络超时',
-    505: 'HTTP 版本不支持该请求',
+  const networkErrors: Record<number, string> = {
+    400: '错误的请求 (400)',
+    401: '未授权，请重新登录 (401)',
+    403: '拒绝访问 (403)',
+    404: '请求错误，未找到该资源 (404)',
+    405: '请求方法未允许 (405)',
+    408: '请求超时 (408)',
+    500: '服务器端出错 (500)',
+    501: '网络未实现 (501)',
+    502: '网络错误 (502)',
+    503: '服务不可用 (503)',
+    504: '网络超时 (504)',
   }
 
   if (httpStatus && networkErrors[httpStatus]) {
-    Notification.error({
+    useNotification().error({
       title: '网络错误',
       content: networkErrors[httpStatus],
     })
+
     return false
   }
 

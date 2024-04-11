@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {
+  handleApiErrorResponse,
   handleConfigureAuthHeaders,
   handleConfigureBaseUrl,
   handleNetworkError,
-  handleUnknownError,
 } from './interceptors'
 import { handleRequestDebugInfo } from './debug'
 
@@ -30,7 +30,7 @@ export function setupApi() {
       if (response.status !== 200)
         return Promise.reject(response.data)
 
-      handleUnknownError(response.data.code, response.data.message)
+      handleApiErrorResponse(response.data.code, response.data.message)
 
       // 调试信息
       handleRequestDebugInfo(response)
