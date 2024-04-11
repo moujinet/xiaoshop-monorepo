@@ -1,5 +1,4 @@
 import { doUpdateSettings, getSettings } from '@/settings/apis/settings'
-import { DEFAULT_MESSAGE_ID } from '~/constants/defaults'
 
 interface IUseSettingsUpdateOptionsReturn {
   /**
@@ -72,13 +71,11 @@ export function useSettings() {
     const { loading, refreshData } = doUpdateSettings(data)
 
     const onUpdate = () => refreshData(data).then(() => {
-      AMessage.success({
-        id: DEFAULT_MESSAGE_ID,
-        content: '配置已更新',
+      useMessage({
         onClose: () => {
           refresh()
         },
-      })
+      }).success('配置已更新')
     })
 
     return {

@@ -7,6 +7,7 @@ export const DEFAULT_VERSION = '1.0.0'
 export const DEFAULT_PAGE_SIZE = 20
 
 export const DEFAULT_MESSAGE_ID = 'GLOBAL'
+export const DEFAULT_MESSAGE_DURATION = 1200
 
 export const DEFAULT_SPACES: ISpace[] = [
   { id: 'shop', name: '店铺', desc: '店铺管理', icon: 'ph:storefront', path: '', sort: 1 },

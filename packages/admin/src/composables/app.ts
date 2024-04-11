@@ -1,5 +1,5 @@
-import { DEFAULT_VERSION } from '~/constants/defaults'
 import type { IMenu, IModule } from '~/types'
+import { DEFAULT_VERSION } from '~/constants/defaults'
 
 export function useApp() {
   const [version, setVersion] = useCache(

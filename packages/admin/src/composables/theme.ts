@@ -1,6 +1,6 @@
 type LayoutMode = 'default' | 'zen'
 
-type LayoutPanel = 'main' | 'sidebar' | 'footer'
+type LayoutPanel = 'main' | 'sidebar' | 'footer' | 'container'
 
 export const useTheme = defineStore('theme', () => {
   /**
@@ -15,6 +15,7 @@ export const useTheme = defineStore('theme', () => {
     main: true,
     sidebar: true,
     footer: true,
+    container: false,
   })
 
   /**
