@@ -11,6 +11,7 @@ export default defineConfig({
   theme: {
     colors: {
       primary: 'rgba(var(--theme-color-rgb), <alpha-value>)',
+      danger: 'rgba(var(--danger-6), <alpha-value>)',
       fill: 'rgba(var(--gray-2), <alpha-value>)',
     },
   },

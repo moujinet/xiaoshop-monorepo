@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@8.15.6",
-  "description": "XiaoShop 云链小商城 - 后台管理系统",
+  "description": "XiaoShop 云链小店 - 后台管理系统",
   "author": "Luoyi <luoyi@mouji.net>",
   "license": "Apache-2.0",
   "scripts": {
@@ -35,7 +35,7 @@
     "@types/nprogress": "^0.2.3",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "@vue-macros/volar": "^0.18.17",
+    "@vue-macros/volar": "^0.18.18",
     "@xiaoshop/schema": "workspace:^",
     "less": "^4.2.0",
     "mockjs": "^1.1.0",
@@ -44,15 +44,15 @@
     "unplugin-auto-import": "^0.17.5",
     "unplugin-icons": "^0.18.5",
     "unplugin-vue-components": "^0.26.0",
-    "unplugin-vue-macros": "^2.9.0",
+    "unplugin-vue-macros": "^2.9.1",
     "unplugin-vue-router": "^0.8.5",
     "vite": "^5.2.8",
     "vite-bundle-visualizer": "^1.1.0",
     "vite-plugin-pwa": "^0.19.8",
-    "vite-plugin-vue-devtools": "^7.0.25",
+    "vite-plugin-vue-devtools": "^7.0.27",
     "vite-plugin-vue-layouts": "^0.11.0",
     "vite-svg-loader": "^5.1.0",
     "vitest": "^1.4.0",
-    "vue-tsc": "^2.0.10"
+    "vue-tsc": "^2.0.12"
   }
 }
