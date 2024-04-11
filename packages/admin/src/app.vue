@@ -11,6 +11,10 @@ useTheme().changeTheme()
 
 <template>
   <a-config-provider :locale="zhCN">
+    <template #empty>
+      <CommonEmpty />
+    </template>
+
     <router-view />
   </a-config-provider>
 </template>

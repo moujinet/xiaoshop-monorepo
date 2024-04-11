@@ -24,7 +24,6 @@ withDefaults(defineProps<{
     <IEmptyEmpty v-if="type === 'empty'" class="common-empty__icon" />
     <IEmptyError v-if="type === 'error'" class="common-empty__icon" />
     <IEmptyMessage v-if="type === 'message'" class="common-empty__icon" />
-    <IEmptyAuth v-if="type === 'auth'" class="common-empty__icon" />
     <IEmptyNotFound v-if="type === 'notfound'" class="common-empty__icon" />
 
     <div class="common-empty__desc">
