@@ -53,7 +53,7 @@ module.exports = {
   prompt: {
     /** @use `pnpm commit :b` */
     alias: {
-      r: 'docs: 更新 README',
+      r: 'docs: 更新文档',
       b: 'build: 更新依赖',
       c: 'chore: 更新配置',
     },
