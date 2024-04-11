@@ -30,10 +30,12 @@ export function setupApi() {
       if (response.status !== 200)
         return Promise.reject(response.data)
 
-      handleApiErrorResponse(response.data.code, response.data.message)
-
       // 调试信息
       handleRequestDebugInfo(response)
+
+      // 错误处理
+      if (!handleApiErrorResponse(response.data.code, response.data.message))
+        return Promise.reject(response.data)
 
       return response
     },

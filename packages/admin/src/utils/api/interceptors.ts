@@ -60,7 +60,7 @@ export function handleApiErrorResponse(code: number, message: string): boolean {
  * @returns boolean
  */
 export function handleNetworkError(httpStatus?: number): boolean {
-  const networkErrors: Record<number, string> = {
+  const networkErrors: Record<string, string> = {
     400: '错误的请求 (400)',
     401: '未授权，请重新登录 (401)',
     403: '拒绝访问 (403)',
