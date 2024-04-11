@@ -36,6 +36,8 @@ const computedSubTitle = computed(() => {
     return route.meta.desc || undefined
   return props.subtitle
 })
+
+useTheme().setAutoVisible('container', true)
 </script>
 
 <template>
@@ -105,6 +107,7 @@ const computedSubTitle = computed(() => {
 
   &__header {
     position: fixed;
+    width: 100%;
     z-index: var(--layout-header-zindex);
 
     &.has-sidebar {
@@ -144,8 +147,7 @@ const computedSubTitle = computed(() => {
   }
 
   &__body {
-    padding: var(--page-padding);
-    padding-top: calc(82px + var(--page-padding));
+    padding: calc(83px + var(--page-padding)) var(--page-padding) 0 var(--page-padding);
 
     &.is-flex {
       display: flex;
