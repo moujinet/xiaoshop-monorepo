@@ -26,7 +26,9 @@ const emit = defineEmits(['delete'])
   >
     <slot>
       <a-button :disabled="disabled" type="text" status="danger">
-        删除
+        <slot name="text">
+          {{ btnText || '删除' }}
+        </slot>
       </a-button>
     </slot>
   </a-popconfirm>
