@@ -38,6 +38,7 @@ const emit = defineEmits(['submit', 'submitFailed', 'submitSuccess'])
       @submit-success="emit('submitSuccess', $event)"
     >
       <slot />
+      <slot name="footer" />
     </a-form>
   </CommonCard>
 </template>
