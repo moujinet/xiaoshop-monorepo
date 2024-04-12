@@ -11,16 +11,14 @@ const { visible } = useTheme()
 
 const computedHeight = computed(() => {
   return props.height === 'auto'
-    ? `calc(100vh - var(--layout-header-height)${visible.footer ? ' - var(--layout-footer-height)' : ''}${visible.container ? ' - var(--page-padding) - 86px' : ' - 3px'} - 32px)`
+    ? `calc(100vh - var(--layout-header-height)${visible.footer ? ' - var(--layout-footer-height)' : ''}${visible.container ? ' - var(--page-padding) - 86px' : ' - 3px'} )`
     : props.height || 'auto'
 })
 </script>
 
 <template>
-  <div class="common-panel">
-    <a-scrollbar :style="{ height: computedHeight, overflow: 'auto' }">
-      <slot />
-    </a-scrollbar>
+  <div class="common-panel" :class="{ 'is-auto': props.height === 'auto' }" :style="{ height: computedHeight }">
+    <slot />
   </div>
 </template>
 
@@ -29,5 +27,9 @@ const computedHeight = computed(() => {
   padding: 16px;
   border-radius: 3px;
   background-color: var(--color-bg-3);
+
+  &.is-auto {
+    overflow: hidden;
+  }
 }
 </style>
