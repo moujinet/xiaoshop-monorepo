@@ -35,6 +35,26 @@ export function formatDateTime(
 }
 
 /**
+ * 返回指定单位的大小
+ *
+ * @param bytes number
+ * @param decimals number
+ * @returns string
+ */
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (bytes === 0)
+    return '0 字节'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['字节', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
+}
+
+/**
  * 输出调试信息
  *
  * @param type
