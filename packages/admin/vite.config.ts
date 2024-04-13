@@ -11,7 +11,7 @@ import SvgLoader from 'vite-svg-loader'
 import UnoCSS from 'unocss/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import VueMacros from 'unplugin-vue-macros/vite'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 
 import { loadEnv } from 'vite'
@@ -23,13 +23,11 @@ import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 const plugins: PluginOption[] = [
-  // https://github.com/vue-macros/vue-macross
-  VueMacros({
-    plugins: {
-      vue: Vue(),
-      vueJsx: VueJsx(),
-    },
-  }),
+  Vue(),
+  VueJsx(),
+
+  // https://github.com/vue-macros/vue-macros/tree/main/packages/define-options
+  DefineOptions(),
 
   // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
   Layouts({

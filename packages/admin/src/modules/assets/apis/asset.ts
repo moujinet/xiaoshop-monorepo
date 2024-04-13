@@ -2,16 +2,16 @@ import type { IAsset } from '@/assets/types'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
- * 获取素材列表
+ * 获取素材分页列表
  *
- * @api get /asset/list
+ * @api get /asset/pages
  * @param params Record<string, any>
  * @returns IUseRequestReturn<IApiPaginationResult<IAsset>>
  */
-export function fetchAssetList(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IAsset>> {
+export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IAsset>> {
   return useRequest<IApiPaginationResult<IAsset>>({
     method: 'get',
-    url: '/asset/list',
+    url: '/asset/pages',
     params,
   })
 }
@@ -20,10 +20,10 @@ export function fetchAssetList(params?: Record<string, any>): IUseRequestReturn<
  * 获取素材详情
  *
  * @api get /asset/detail
- * @param id number
+ * @param id IAsset['id']
  * @returns IUseRequestReturn<IAsset>
  */
-export function fetchAssetDetail(id: number): IUseRequestReturn<IAsset> {
+export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
   return useRequest<IAsset>({
     method: 'get',
     url: '/asset/detail',
@@ -52,13 +52,15 @@ export function createAsset(data: Omit<IAsset, 'id' | 'createdTime'>): Promise<a
  * 更新素材
  *
  * @api put /asset/update
- * @param data Omit<IAsset, 'createdTime'>
+ * @param id IAsset['id']
+ * @param data Omit<IAsset, 'id' | 'createdTime'>
  * @returns Promise<any>
  */
-export function updateAsset(data: Omit<IAsset, 'createdTime'>): Promise<any> {
+export function updateAsset(id: IAsset['id'], data: Omit<IAsset, 'id' | 'createdTime'>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
     url: '/asset/update',
+    params: { id },
     data,
   })
 }
@@ -67,14 +69,14 @@ export function updateAsset(data: Omit<IAsset, 'createdTime'>): Promise<any> {
  * 删除素材
  *
  * @api delete /asset/delete
- * @param id number
+ * @param id IAsset['id']
  * @returns Promise<any>
  */
-export function deleteAsset(id: number): Promise<any> {
+export function deleteAsset(id: IAsset['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/asset/delete',
-    params: {
+    data: {
       id,
     },
   })

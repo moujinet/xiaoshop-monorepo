@@ -8,14 +8,14 @@ for (let i = 0; i < 200; i++) {
     groupId: 1,
     type: 'image',
     name: `demo-${i}.png`,
-    path: `https://place.dog/200/200?t=${i}`,
+    path: `https://place.dog/800/800?t=${i}`,
     size: 1024,
     createdTime: Date.now(),
   })
 }
 
 export default defineMocks({
-  '/api/asset/list': ({ query }) => {
+  '/api/asset/pages': ({ query }) => {
     return responsePaginationMock(
       assets.filter(a => a.groupId === Number(query.groupId)),
       query,

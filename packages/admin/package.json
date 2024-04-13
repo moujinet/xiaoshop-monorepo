@@ -40,12 +40,12 @@
     "less": "^4.2.0",
     "mockjs": "^1.1.0",
     "query-string": "^9.0.0",
-    "unocss": "^0.59.1",
+    "unocss": "^0.59.2",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-icons": "^0.18.5",
     "unplugin-vue-components": "^0.26.0",
-    "unplugin-vue-macros": "^2.9.1",
-    "unplugin-vue-router": "^0.8.5",
+    "unplugin-vue-define-options": "^1.4.3",
+    "unplugin-vue-router": "^0.8.6",
     "vite": "^5.2.8",
     "vite-bundle-visualizer": "^1.1.0",
     "vite-plugin-pwa": "^0.19.8",
@@ -53,6 +53,6 @@
     "vite-plugin-vue-layouts": "^0.11.0",
     "vite-svg-loader": "^5.1.0",
     "vitest": "^1.5.0",
-    "vue-tsc": "^2.0.12"
+    "vue-tsc": "^2.0.13"
   }
 }

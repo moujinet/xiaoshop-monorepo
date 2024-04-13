@@ -13,7 +13,7 @@
     },
     "types": [
       "vite/client",
-      "unplugin-vue-macros/macros-global",
+      "unplugin-vue-define-options/macros-global",
       "unplugin-vue-router/client",
       "vite-plugin-pwa/client",
       "vite-plugin-vue-layouts/client"

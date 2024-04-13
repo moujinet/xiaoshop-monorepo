@@ -12,6 +12,7 @@ export interface IUseMessageOptions {
 }
 
 export interface IUseMessageReturn {
+  info: (content: string) => void
   success: (content: string) => void
   warning: (content: string) => void
   error: (content: string) => void
@@ -28,6 +29,14 @@ export function useMessage(options?: IUseMessageOptions): IUseMessageReturn {
   } = options || {}
 
   return {
+    /**
+     * 显示信息消息
+     *
+     * @param content string
+     */
+    info: (content: string) => {
+      AMessage.info({ id, content, duration, closable, showIcon, resetOnHover: true, onClose })
+    },
     /**
      * 显示成功消息
      *

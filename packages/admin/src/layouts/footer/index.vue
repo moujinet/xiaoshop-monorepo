@@ -42,6 +42,7 @@ const { version } = useApp()
   height: var(--layout-footer-height);
   color: var(--layout-footer-text-color);
   transition: var(--page-transition);
+  user-select: none;
 
   &__copyright {
     display: flex;
