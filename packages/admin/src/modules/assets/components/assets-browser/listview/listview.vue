@@ -1,11 +1,10 @@
 <script lang="ts" setup>
+import AssetsBrowserGroupEditModal from '../group/group-edit-modal.vue'
+import AssetsBrowserUploadModal from '../upload/upload-modal.vue'
+import AssetsBrowserListviewCard from './listview-card.vue'
+
 import type { IAsset, IAssetSnapshot, IAssetType } from '@/assets/types'
 import { fetchAssetPages } from '@/assets/apis/asset'
-import {
-  AssetsBrowserGroupEditModal,
-  AssetsBrowserListviewCard,
-  AssetsBrowserUploadModal,
-} from '@/assets/components'
 import { ASSET_TYPES } from '~/constants'
 
 defineOptions({

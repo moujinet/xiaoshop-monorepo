@@ -28,9 +28,9 @@ const preview = ref(false)
     class="assets-browser-image"
     fit="contain"
     show-loader
-    @preview-visible-change="() => (preview = false)"
+    @preview-visible-change="() => (preview = editable ? false : !preview)"
   >
-    <template #extra>
+    <template v-if="editable" #extra>
       <a-tooltip content="预览" mini>
         <CommonIcon name="ph:eye" :inline="false" @click="preview = true" />
       </a-tooltip>

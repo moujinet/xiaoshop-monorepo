@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AssetsBrowserPanel } from '@/assets/components'
+import { AssetsBrowserLayoutPanel } from '@/assets/components'
 
 defineOptions({
   name: 'AssetsManageImagesPage',
@@ -8,6 +8,6 @@ defineOptions({
 
 <template>
   <CommonContainer>
-    <AssetsBrowserPanel type="image" />
+    <AssetsBrowserLayoutPanel type="image" />
   </CommonContainer>
 </template>

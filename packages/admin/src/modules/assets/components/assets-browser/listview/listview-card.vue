@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import AssetsBrowserListviewDrawer from './listview-drawer.vue'
+
 import type { IAsset } from '@/assets/types'
-import { AssetsBrowserListviewDrawer } from '@/assets/components'
 import { ASSET_TYPES } from '~/constants'
 
 defineOptions({

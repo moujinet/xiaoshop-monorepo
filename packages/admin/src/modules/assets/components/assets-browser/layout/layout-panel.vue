@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { useElementBounding } from '@vueuse/core'
+
+import AssetsBrowserGroupTree from '../group/group-tree.vue'
+import AssetsBrowserListview from '../listview/listview.vue'
 import type { IAssetType } from '@/assets/types'
 
-import {
-  AssetsBrowserGroups,
-  AssetsBrowserListview,
-} from '@/assets/components'
-
 defineOptions({
-  name: 'AssetsBrowserPage',
+  name: 'AssetsBrowserLayoutPanel',
 })
 
 defineProps<{
@@ -27,7 +25,7 @@ const { height } = useElementBounding(panelRef)
   <div flex="~" gap="4" max-h-full>
     <div class="w-50 h-full">
       <CommonPanel ref="panelRef" height="auto">
-        <AssetsBrowserGroups
+        <AssetsBrowserGroupTree
           ref="groupRef"
           v-model:current-group="currentGroupId"
           v-model:current-group-name="currentGroupName"

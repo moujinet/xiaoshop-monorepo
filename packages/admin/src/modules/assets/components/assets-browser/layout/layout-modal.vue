@@ -1,14 +1,12 @@
 <script lang="ts" setup>
+import AssetsBrowserGroupTree from '../group/group-tree.vue'
+import AssetsBrowserListview from '../listview/listview.vue'
+
+import { ASSET_TYPES } from '~/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
-import {
-  AssetsBrowserGroups,
-  AssetsBrowserListview,
-} from '@/assets/components'
-import { ASSET_TYPES } from '~/constants'
-
 defineOptions({
-  name: 'AssetsBrowserModal',
+  name: 'AssetsBrowserLayoutModal',
   inheritAttrs: false,
 })
 
@@ -76,7 +74,6 @@ function handleShow() {
     v-if="visible"
     v-model:visible="visible"
     :title="`选择${typeName}`"
-    :mask-closable="false"
     :width="width"
     title-align="start"
     body-class="assets-browser-modal"
@@ -88,7 +85,7 @@ function handleShow() {
   >
     <div class="assets-browser-modal__body">
       <div class="assets-browser-modal__body--groups">
-        <AssetsBrowserGroups
+        <AssetsBrowserGroupTree
           v-model:current-group="selectedGroupId"
           v-model:current-group-name="selectedGroupName"
           :type="type"

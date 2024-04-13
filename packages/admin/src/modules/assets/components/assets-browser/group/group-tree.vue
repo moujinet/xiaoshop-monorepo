@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import AssetsBrowserGroupEditModal from './group-edit-modal.vue'
+
 import type { IAssetType } from '@/assets/types'
 import { fetchAssetGroupTree } from '@/assets/apis/group'
-import { AssetsBrowserGroupEditModal } from '@/assets/components'
 
 defineOptions({
-  name: 'AssetsBrowserGroups',
+  name: 'AssetsBrowserGroupTree',
 })
 
 const props = defineProps<{

@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { VueDraggable } from 'vue-draggable-plus'
+
+import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
+
 import { ASSET_TYPES } from '~/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
-import { AssetsBrowserImage, AssetsBrowserModal } from '@/assets/components'
+import { AssetsBrowserImage } from '@/assets/components'
 
 defineOptions({
   name: 'AssetsBrowser',
@@ -76,6 +79,7 @@ watch(
         v-for="asset in computedFileList"
         :key="asset.id"
         :asset="asset"
+        editable
         @delete="handleDelete"
       />
     </VueDraggable>
@@ -85,11 +89,12 @@ watch(
         v-for="asset in computedFileList"
         :key="asset.id"
         :asset="asset"
+        editable
         @delete="handleDelete"
       />
     </template>
 
-    <AssetsBrowserModal
+    <AssetsBrowserLayoutModal
       v-if="computedFileList.length < limit"
       :type="type"
       :limit="limit"
@@ -100,7 +105,7 @@ watch(
       <div class="assets-browser__trigger" :class="{ 'is-disable': disable }">
         <CommonIcon :name="triggerIcon" />
       </div>
-    </AssetsBrowserModal>
+    </AssetsBrowserLayoutModal>
   </div>
 </template>
 

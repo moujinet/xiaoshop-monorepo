@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AssetsBrowserPanel } from '@/assets/components'
+import { AssetsBrowserLayoutPanel } from '@/assets/components'
 
 defineOptions({
   name: 'AssetsManageVideosPage',
@@ -8,6 +8,6 @@ defineOptions({
 
 <template>
   <CommonContainer>
-    <AssetsBrowserPanel type="video" />
+    <AssetsBrowserLayoutPanel type="video" />
   </CommonContainer>
 </template>
