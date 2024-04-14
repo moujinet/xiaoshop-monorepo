@@ -1,4 +1,5 @@
 export interface IUseModalOptions {
+  form?: Ref<any>
   label?: ComputedRef<string>
   visible?: Ref<boolean>
   loading?: Ref<boolean>
@@ -21,11 +22,25 @@ export function useModal(options: IUseModalOptions): IUseModalReturn {
   const {
     visible = ref(false),
     loading = ref(false),
-    label = computed(() => '操作'),
     status = computed(() => true),
     onVisible = () => {},
-    onBeforeOk = () => Promise.resolve(),
   } = options
+
+  const label = options.label || computed(() => (status.value ? '更新' : '创建'))
+
+  const onBeforeOk = () => {
+    if (options.onBeforeOk) {
+      return options.onBeforeOk()
+    }
+    else if (options.form) {
+      return options.form.value?.validate()
+        .then((err: any) => {
+          return err ? Promise.reject(err) : Promise.resolve(true)
+        })
+    }
+
+    return Promise.resolve(true)
+  }
 
   watch(
     visible,
@@ -40,6 +55,7 @@ export function useModal(options: IUseModalOptions): IUseModalReturn {
 
     const message = useMessage({
       onClose: () => {
+        loading.value = false
         done()
       },
     })
@@ -63,7 +79,6 @@ export function useModal(options: IUseModalOptions): IUseModalReturn {
                 done(!status.value)
               })
               .finally(() => {
-                loading.value = false
                 options.onAfterOk && options.onAfterOk()
               })
           }
