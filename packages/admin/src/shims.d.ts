@@ -78,4 +78,8 @@ declare global {
   type ToDictionary<T = any> = Pick<T, 'id' | 'name'>
 
   type IFormData<T> = Omit<T, 'id' | 'createdTime' | 'updatedTime'>
+
+  import type { FieldRule } from '@arco-design/web-vue'
+
+  type IFormRules = Record<string, FieldRule<any> | FieldRule<any>[]> | undefined
 }

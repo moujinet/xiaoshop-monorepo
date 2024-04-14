@@ -19,7 +19,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['success', 'delete'])
 const formRef = ref()
-const isEdit = computed(() => !!props.id)
+const isEdit = computed(() => !!props.id && props.id !== 0)
 const rules = {
   name: {
     required: true,
