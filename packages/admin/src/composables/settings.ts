@@ -109,6 +109,10 @@ export function useSettings() {
     if (keys[keys.length - 1].startsWith('enable'))
       return val === '1'
 
+    // Number
+    if (Number.isInteger(val))
+      return val
+
     // JSON
     if (val.startsWith('[') && val.endsWith(']'))
       return JSON.parse(val)
