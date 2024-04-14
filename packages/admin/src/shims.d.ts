@@ -76,4 +76,6 @@ declare global {
   }
 
   type ToDictionary<T = any> = Pick<T, 'id' | 'name'>
+
+  type IFormData<T> = Omit<T, 'id' | 'createdTime' | 'updatedTime'>
 }
