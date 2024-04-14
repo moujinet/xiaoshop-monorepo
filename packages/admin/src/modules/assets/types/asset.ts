@@ -10,6 +10,9 @@ export interface IAsset {
   name: string
   path: string
   size: number
+  enableCompress: number
+  enableWatermark: number
+  enableThumbnail: number
   createdTime: number
 }
 

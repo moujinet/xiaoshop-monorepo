@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IAssetType } from '@/assets/types'
+import type { IAssetGroup, IAssetType } from '@/assets/types'
 import {
   createAssetGroup,
   deleteAssetGroup,
@@ -7,6 +7,7 @@ import {
   fetchAssetGroupRoots,
   updateAssetGroup,
 } from '@/assets/apis/group'
+import { ASSET_TYPE_IMAGE } from '~/constants'
 
 defineOptions({
   name: 'AssetsBrowserGroupEditModal',
@@ -26,10 +27,13 @@ const rules = {
     message: '请输入分组名称',
   },
 }
-const form = reactive({
+const form = reactive<IFormData<IAssetGroup>>({
   parentId: 0,
   name: '',
   type: props.type,
+  enableCompress: 1,
+  enableThumbnail: 1,
+  enableWatermark: 1,
 })
 
 const { loading, refreshData: refreshDetail } = fetchAssetGroupDetail(props.id || 0)
@@ -50,6 +54,9 @@ const { visible, handleModalOk } = useModal({
           if (res) {
             form.parentId = res.parentId
             form.name = res.name
+            form.enableCompress = res.enableCompress
+            form.enableThumbnail = res.enableThumbnail
+            form.enableWatermark = res.enableWatermark
           }
         })
     }
@@ -104,6 +111,8 @@ function handleDelete() {
         ref="formRef"
         :model="form"
         :rules="rules"
+        :label-col-props="{ span: 6 }"
+        :wrapper-col-props="{ span: 18 }"
         scroll-to-first-error
       >
         <a-form-item field="name" label="分组名称" validate-trigger="blur" show-colon>
@@ -125,6 +134,20 @@ function handleDelete() {
             />
           </div>
         </a-form-item>
+
+        <template v-if="type === ASSET_TYPE_IMAGE">
+          <a-form-item field="enableCompress" label="启用图片压缩" show-colon>
+            <a-switch v-model="form.enableCompress" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+          </a-form-item>
+
+          <a-form-item field="enableThumbnail" label="启用图片缩略图" show-colon>
+            <a-switch v-model="form.enableThumbnail" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+          </a-form-item>
+
+          <a-form-item field="enableWatermark" label="启用水印" show-colon>
+            <a-switch v-model="form.enableWatermark" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+          </a-form-item>
+        </template>
 
         <a-alert v-if="isEdit" type="error" title="删除分组" :show-icon="false">
           <p>删除分组后，该分组下的所有资源都会被删除。</p>

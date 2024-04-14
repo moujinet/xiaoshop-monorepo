@@ -46,11 +46,11 @@ export default defineModule({
     },
     {
       id: 'settings',
-      name: '相关设置',
+      name: '模块设置',
       icon: 'ph:gear-six',
       children: [
-        { id: 'upload', name: '上传设置' },
-        { id: 'storages', name: '云空间设置' },
+        { id: 'images', name: '图片处理' },
+        { id: 'cloud', name: '云存储' },
       ],
     },
   ],

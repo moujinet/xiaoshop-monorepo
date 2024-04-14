@@ -5,6 +5,9 @@ export interface IAssetGroup {
   parentId: IAssetGroup['id']
   type: IAssetType
   name: string
+  enableCompress: number
+  enableWatermark: number
+  enableThumbnail: number
   createdTime: number
 }
 

@@ -10,6 +10,9 @@ for (let i = 0; i < 200; i++) {
     name: `demo-${i}.png`,
     path: `https://place.dog/800/800?t=${i}`,
     size: 1024,
+    enableCompress: 1,
+    enableWatermark: 0,
+    enableThumbnail: 0,
     createdTime: Date.now(),
   })
 }
