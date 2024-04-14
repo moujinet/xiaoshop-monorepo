@@ -37,10 +37,10 @@ export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
  * 创建素材
  *
  * @api post /asset/create
- * @param data Omit<IAsset, 'id' | 'createdTime'>
+ * @param data IFormData<IAsset>
  * @returns Promise<any>
  */
-export function createAsset(data: Omit<IAsset, 'id' | 'createdTime'>): Promise<any> {
+export function createAsset(data: IFormData<IAsset>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
     url: '/asset/create',
@@ -53,10 +53,10 @@ export function createAsset(data: Omit<IAsset, 'id' | 'createdTime'>): Promise<a
  *
  * @api put /asset/update
  * @param id IAsset['id']
- * @param data Omit<IAsset, 'id' | 'createdTime'>
+ * @param data IFormData<IAsset>
  * @returns Promise<any>
  */
-export function updateAsset(id: IAsset['id'], data: Omit<IAsset, 'id' | 'createdTime'>): Promise<any> {
+export function updateAsset(id: IAsset['id'], data: IFormData<IAsset>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
     url: '/asset/update',

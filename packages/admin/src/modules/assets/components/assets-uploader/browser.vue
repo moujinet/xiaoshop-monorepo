@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AssetsBrowserFolderEditModal from './browser-folder-edit-modal.vue'
-import { fetchAssetList } from '@/assets/apis/asset'
+import { fetchAssetPages } from '@/assets/apis/asset'
 import { fetchAssetGroupTree } from '@/assets/apis/group'
 import type { IAssetImagePreview } from '@/assets/types'
 
@@ -34,7 +34,7 @@ const selected = defineModel<IAssetImagePreview[]>('selected', {
 const computedTotal = computed(() => selected.value.length + props.total)
 
 const { loading: folderLoading, data: folders, refreshData: refreshFolders } = fetchAssetGroupTree()
-const { loading, data: assets, refreshData } = fetchAssetList()
+const { loading, data: assets, refreshData } = fetchAssetPages()
 
 watch(
   folders,

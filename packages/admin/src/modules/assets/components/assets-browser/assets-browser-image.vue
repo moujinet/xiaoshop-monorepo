@@ -7,8 +7,8 @@ defineOptions({
 
 defineProps<{
   asset: IAssetImagePreview
-  width?: string
-  height?: string
+  width?: string | number
+  height?: string | number
   editable?: boolean
 }>()
 

@@ -42,7 +42,7 @@ const computedRoots = computed(() => {
 const { visible, handleModalOk } = useModal({
   loading,
   status: isEdit,
-  label: computed(() => isEdit.value ? '更新' : '创建'),
+  form: formRef,
   onVisible: () => {
     if (isEdit.value) {
       refreshDetail({ id: props.id })
@@ -58,12 +58,6 @@ const { visible, handleModalOk } = useModal({
     form.name = ''
 
     refreshData()
-  },
-  onBeforeOk: () => {
-    return formRef.value?.validate()
-      .then((err: any) => {
-        return err ? Promise.reject(err) : Promise.resolve(true)
-      })
   },
   onOkIfy: () => {
     return updateAssetGroup(props.id || 0, form)
@@ -84,8 +78,12 @@ function handleDelete() {
 
   deleteAssetGroup(props.id || 0)
     .then(() => {
-      emit('delete')
-      visible.value = false
+      useMessage({
+        onClose: () => {
+          emit('delete')
+          visible.value = false
+        },
+      }).success('删除分组成功')
     })
 }
 </script>

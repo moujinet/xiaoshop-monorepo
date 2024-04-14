@@ -13,8 +13,4 @@ export interface IAsset {
   createdTime: number
 }
 
-export type IAssetPreview = Pick<IAsset, 'id' | 'type' | 'path'>
-
 export type IAssetSnapshot = Pick<IAsset, 'id' | 'type' | 'path'>
-
-export type IAssetImagePreview = Pick<IAsset, 'id' | 'path'>

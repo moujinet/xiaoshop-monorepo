@@ -1,14 +1,14 @@
-import type { IAssetGroup, IAssetGroupTreeNode, IAssetGroupType } from '@/assets/types'
+import type { IAssetGroup, IAssetGroupTreeNode, IAssetType } from '@/assets/types'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取素材分组树
  *
  * @api get /asset/group/list
- * @param type IAssetGroupType
+ * @param type IAssetType
  * @returns IUseRequestReturn<IAssetGroup[]>
  */
-export function fetchAssetGroupTree(type: IAssetGroupType): IUseRequestReturn<IAssetGroupTreeNode[]> {
+export function fetchAssetGroupTree(type: IAssetType): IUseRequestReturn<IAssetGroupTreeNode[]> {
   const { data, loading, error, refreshData } = useRequest<IAssetGroupTreeNode[]>({
     method: 'get',
     url: '/asset/group/list',
@@ -29,10 +29,10 @@ export function fetchAssetGroupTree(type: IAssetGroupType): IUseRequestReturn<IA
  * 获取素材分组根节点
  *
  * @api get /asset/group/roots
- * @param type IAssetGroupType
+ * @param type IAssetType
  * @returns IUseRequestReturn<IAssetGroup[]>
  */
-export function fetchAssetGroupRoots(type: IAssetGroupType): IUseRequestReturn<IAssetGroup[]> {
+export function fetchAssetGroupRoots(type: IAssetType): IUseRequestReturn<IAssetGroup[]> {
   return useRequest<IAssetGroup[]>({
     method: 'get',
     url: '/asset/group/roots',
@@ -63,10 +63,10 @@ export function fetchAssetGroupDetail(id: IAssetGroup['id']): IUseRequestReturn<
  * 创建素材分组
  *
  * @api post /asset/group/create
- * @param data Omit<IAssetGroup, 'id' | 'createdTime'>
+ * @param data IFormData<IAssetGroup>
  * @returns Promise<any>
  */
-export function createAssetGroup(data: Omit<IAssetGroup, 'id' | 'createdTime'>): Promise<any> {
+export function createAssetGroup(data: IFormData<IAssetGroup>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
     url: '/asset/group/create',
@@ -79,10 +79,10 @@ export function createAssetGroup(data: Omit<IAssetGroup, 'id' | 'createdTime'>):
  *
  * @api put /asset/group/update
  * @param id IAssetGroup['id']
- * @param data Omit<IAssetGroup, 'id' | 'createdTime'>
+ * @param data IFormData<IAssetGroup>
  * @returns Promise<any>
  */
-export function updateAssetGroup(id: IAssetGroup['id'], data: Omit<IAssetGroup, 'id' | 'createdTime'>): Promise<any> {
+export function updateAssetGroup(id: IAssetGroup['id'], data: IFormData<IAssetGroup>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
     url: '/asset/group/update',
