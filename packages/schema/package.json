@@ -2,7 +2,7 @@
   "name": "@xiaoshop/schema",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@8.15.7",
   "description": "XiaoShop types and constants",
   "sideEffects": false,
   "exports": {
