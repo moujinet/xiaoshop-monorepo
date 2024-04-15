@@ -69,20 +69,34 @@ watch(
 
 <template>
   <div class="assets-browser">
-    <VueDraggable
-      v-if="limit > 1 && fileList.length > 0"
-      v-model="fileList"
-      class="assets-browser__preview"
-      ghost-class="is-ghost"
-    >
-      <AssetsBrowserImage
-        v-for="asset in computedFileList"
-        :key="asset.id"
-        :asset="asset"
-        editable
-        @delete="handleDelete"
-      />
-    </VueDraggable>
+    <template v-if="limit > 1">
+      <VueDraggable
+        v-model="fileList"
+        class="assets-browser__preview"
+        ghost-class="is-ghost"
+      >
+        <AssetsBrowserImage
+          v-for="asset in computedFileList"
+          :key="asset.id"
+          :asset="asset"
+          editable
+          @delete="handleDelete"
+        />
+
+        <AssetsBrowserLayoutModal
+          v-if="computedFileList.length < limit"
+          :type="type"
+          :limit="limit"
+          :disable="disable"
+          :default-selected="defaultSelected"
+          @submit="handleSubmit"
+        >
+          <div class="assets-browser__trigger" :class="{ 'is-disable': disable }">
+            <CommonIcon :name="triggerIcon" />
+          </div>
+        </AssetsBrowserLayoutModal>
+      </VueDraggable>
+    </template>
 
     <template v-else>
       <AssetsBrowserImage
@@ -92,20 +106,20 @@ watch(
         editable
         @delete="handleDelete"
       />
-    </template>
 
-    <AssetsBrowserLayoutModal
-      v-if="computedFileList.length < limit"
-      :type="type"
-      :limit="limit"
-      :disable="disable"
-      :default-selected="defaultSelected"
-      @submit="handleSubmit"
-    >
-      <div class="assets-browser__trigger" :class="{ 'is-disable': disable }">
-        <CommonIcon :name="triggerIcon" />
-      </div>
-    </AssetsBrowserLayoutModal>
+      <AssetsBrowserLayoutModal
+        v-if="computedFileList.length < limit"
+        :type="type"
+        :limit="limit"
+        :disable="disable"
+        :default-selected="defaultSelected"
+        @submit="handleSubmit"
+      >
+        <div class="assets-browser__trigger" :class="{ 'is-disable': disable }">
+          <CommonIcon :name="triggerIcon" />
+        </div>
+      </AssetsBrowserLayoutModal>
+    </template>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
 import AssetsBrowserGroupTree from '../group/group-tree.vue'
 import AssetsBrowserListview from '../listview/listview.vue'
 
-import { ASSET_TYPES } from '~/constants'
+import { ASSET_TYPES, ASSET_TYPE_IMAGE } from '~/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
 defineOptions({
@@ -11,21 +11,27 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<{
-  type: IAssetType
+  type?: IAssetType
   defaultSelected?: IAssetSnapshot[]
   limit?: number
   disable?: boolean
   width?: number
   height?: number
 }>(), {
+  type: ASSET_TYPE_IMAGE,
   limit: 1,
   width: 800,
   height: 520,
 })
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(['submit', 'close'])
 
-const visible = ref(false)
+const visible = defineModel('visible', {
+  type: Boolean,
+  default: false,
+  required: false,
+})
+
 const typeName = ASSET_TYPES.find(item => item.value === props.type)?.label || ''
 
 const selectedGroupId = ref<number[]>([0])
@@ -39,6 +45,7 @@ watch(
     if (visible.value)
       selected.value = props.defaultSelected ? [...props.defaultSelected] : []
   },
+  { immediate: true },
 )
 
 function handleSelect(selectedAssets: IAssetSnapshot[]) {
@@ -55,6 +62,7 @@ function handleClose() {
     return
 
   visible.value = false
+  emit('close')
 }
 
 function handleShow() {
@@ -77,7 +85,6 @@ function handleShow() {
     :width="width"
     title-align="start"
     body-class="assets-browser-modal"
-    unmount-on-closes
     draggable
     @cancel="handleClose"
     @close="handleClose"
