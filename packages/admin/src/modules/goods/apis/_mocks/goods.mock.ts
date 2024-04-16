@@ -1,10 +1,10 @@
 import Mock from 'mockjs'
 import type { IGoods } from '@/goods/types'
 
-const goods: IGoods[] = []
+const data: IGoods[] = []
 
 for (let i = 0; i < 100; i++) {
-  goods.push({
+  data.push({
     id: i + 1,
     type: 'goods',
     status: Mock.Random.pick(['in-stock', 'stock-out', 'draft', 'alarm']),
@@ -82,16 +82,8 @@ for (let i = 0; i < 100; i++) {
         volume: Mock.Random.integer(500, 1500),
       },
     ],
-    skuId: Mock.Random.id(),
-    price: Mock.Random.integer(100, 500),
-    originalPrice: Mock.Random.integer(500, 1500),
-    costPrice: Mock.Random.integer(10, 100),
-    stock: Mock.Random.integer(500, 1500),
-    alarmStock: Mock.Random.integer(50, 150),
-    weight: Mock.Random.integer(500, 1500),
-    volume: Mock.Random.integer(500, 1500),
-    enableHideStock: Mock.Random.boolean(),
     unit: '件',
+    enableHideStock: Mock.Random.boolean(),
     enablePurchaseLimit: Mock.Random.boolean(),
     purchaseLimit: Mock.Random.integer(1, 5),
     purchaseMinQty: 1,
@@ -107,12 +99,37 @@ for (let i = 0; i < 100; i++) {
     buyButtonNameType: 'default',
     buyButtonName: '',
     detail: Mock.Random.cparagraph(100, 200),
+    sort: Mock.Random.integer(1, 100),
+    createdTime: 0,
   })
 }
 
 export default defineMocks({
-  '/api/goods/list': () => {
-    return responseMock<IGoods[]>(goods.filter(d => d.type === 'goods'))
+  '/api/goods/pages': ({ query }) => {
+    return responsePaginationMock(
+      data
+        .filter((item) => { // status
+          if (query.status && query.status !== '')
+            return item.status === query.status
+          return true
+        })
+        .sort((a, b) => b.sort - a.sort)
+        .map((item) => { // transform data
+          return pick(item, [
+            'id',
+            'type',
+            'status',
+            'name',
+            'images',
+            'skus',
+            'tag',
+            'services',
+            'guarantees',
+            'createdTime',
+          ])
+        }),
+      query,
+    )
   },
   '/api/goods/create': () => {
     return responseMock()

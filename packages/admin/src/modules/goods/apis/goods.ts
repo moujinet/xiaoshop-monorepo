@@ -1,5 +1,21 @@
-import type { IGoods, IGoodsFormData } from '@/goods/types'
+import type { IUseRequestReturn } from '~/utils/request'
+import type { IGoods, IGoodsFormData, IGoodsPageListItem } from '@/goods/types'
 import { GOODS_STATUS_IN_STOCK, GOODS_STATUS_SOLD_OUT } from '@/goods/constants'
+
+/**
+ * 获取商品分页列表
+ *
+ * @api get /goods/pages
+ * @param params Record<string, any>
+ * @returns IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>>
+ */
+export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>> {
+  return useRequest<IApiPaginationResult<IGoodsPageListItem>>({
+    method: 'get',
+    url: '/goods/pages',
+    params,
+  })
+}
 
 /**
  * 商品上架
