@@ -1,7 +1,7 @@
 import type { RenderContent } from '@arco-design/web-vue/es/_utils/types'
 import type { NotificationPosition } from '@arco-design/web-vue/es/notification/interface'
 import type { IUseMessageOptions } from './message'
-import { DEFAULT_MESSAGE_DURATION, DEFAULT_MESSAGE_ID } from '~/constants/defaults'
+import { DEFAULT_MESSAGE_ID, DEFAULT_NOTIFICATION_DURATION } from '~/constants/defaults'
 
 export type IUseNotificationOptions = IUseMessageOptions & {
   position: NotificationPosition
@@ -22,10 +22,10 @@ export interface IUseNotificationUserConfig {
 export function useNotification(options?: IUseNotificationOptions): IUseNotificationReturn {
   const {
     id = DEFAULT_MESSAGE_ID,
-    duration = DEFAULT_MESSAGE_DURATION,
+    duration = DEFAULT_NOTIFICATION_DURATION,
     showIcon = true,
     closable = true,
-    position = 'bottomRight',
+    position = 'topRight',
     onClose,
   } = options || {}
 
