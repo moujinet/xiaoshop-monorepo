@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'GoodsManageListPage',
+  name: 'EditorPagesHomePage',
 })
 </script>
 
 <template>
-  GoodsManageListPage
+  <div>
+    EditorPagesHomePage
+  </div>
 </template>
