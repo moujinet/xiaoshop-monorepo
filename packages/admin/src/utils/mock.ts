@@ -20,9 +20,6 @@ import type { IMockDefinition, IMockSetup } from '~/types'
 export function defineMocks(definitions: IMockDefinition): IMockSetup {
   return () => {
     Object.entries(definitions).forEach(([requestUrl, fn]) => {
-      // eslint-disable-next-line no-console
-      console.log('🚦', `"${requestUrl}"`, 'api mocked')
-
       Mock.mock(new RegExp(requestUrl), ({ type, url, body }) => fn({
         method: type.toUpperCase(),
         url,
