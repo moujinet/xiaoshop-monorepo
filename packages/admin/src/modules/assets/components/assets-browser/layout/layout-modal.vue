@@ -2,7 +2,7 @@
 import AssetsBrowserGroupTree from '../group/group-tree.vue'
 import AssetsBrowserListview from '../listview/listview.vue'
 
-import { ASSET_TYPES, ASSET_TYPE_IMAGE } from '~/constants'
+import { ASSET_TYPES, ASSET_TYPE_IMAGE } from '@/assets/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
 defineOptions({

@@ -2,7 +2,7 @@
 import AssetsBrowserListviewDrawer from './listview-drawer.vue'
 
 import type { IAsset } from '@/assets/types'
-import { ASSET_TYPES } from '~/constants'
+import { ASSET_TYPES } from '@/assets/constants'
 
 defineOptions({
   name: 'AssetsBrowserListviewCard',

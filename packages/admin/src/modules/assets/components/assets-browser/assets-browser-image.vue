@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { IAssetImagePreview } from '@/assets/types'
+import type { IAssetSnapshot } from '@/assets/types'
 
 defineOptions({
   name: 'AssetsBrowserImage',
 })
 
 defineProps<{
-  asset: IAssetImagePreview
+  asset: IAssetSnapshot
   width?: string | number
   height?: string | number
   editable?: boolean

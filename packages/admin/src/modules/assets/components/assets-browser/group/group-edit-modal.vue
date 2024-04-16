@@ -7,7 +7,7 @@ import {
   fetchAssetGroupRoots,
   updateAssetGroup,
 } from '@/assets/apis/group'
-import { ASSET_TYPE_IMAGE } from '~/constants'
+import { ASSET_TYPE_IMAGE } from '@/assets/constants'
 
 defineOptions({
   name: 'AssetsBrowserGroupEditModal',

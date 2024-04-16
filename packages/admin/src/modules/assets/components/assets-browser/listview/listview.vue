@@ -5,7 +5,7 @@ import AssetsBrowserListviewCard from './listview-card.vue'
 
 import type { IAsset, IAssetSnapshot, IAssetType } from '@/assets/types'
 import { fetchAssetPages } from '@/assets/apis/asset'
-import { ASSET_TYPES } from '~/constants'
+import { ASSET_TYPES } from '@/assets/constants'
 
 defineOptions({
   name: 'AssetsBrowserListView',

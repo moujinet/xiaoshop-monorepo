@@ -3,7 +3,7 @@ import { VueDraggable } from 'vue-draggable-plus'
 
 import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
 
-import { ASSET_TYPES } from '~/constants'
+import { ASSET_TYPES } from '@/assets/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 import { AssetsBrowserImage } from '@/assets/components'
 

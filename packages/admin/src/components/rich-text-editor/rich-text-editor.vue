@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import AssetsBrowser from '@/assets/components/assets-browser'
-import { ASSET_TYPE_IMAGE, ASSET_TYPE_VIDEO } from '~/constants'
+import { ASSET_TYPE_IMAGE, ASSET_TYPE_VIDEO } from '@/assets/constants'
 
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 

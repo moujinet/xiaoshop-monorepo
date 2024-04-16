@@ -1,6 +1,6 @@
 import { createVNode, render } from 'vue'
 import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
-import { ASSET_TYPE_IMAGE } from '~/constants'
+import { ASSET_TYPE_IMAGE } from '@/assets/constants'
 import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
 export interface IUseAssetsBrowserOpenOptions {
