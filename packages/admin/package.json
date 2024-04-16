@@ -23,7 +23,7 @@
     "dayjs": "^1.11.10",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
-    "vue": "^3.4.21",
+    "vue": "^3.4.22",
     "vue-draggable-plus": "^0.4.0"
   },
   "devDependencies": {
