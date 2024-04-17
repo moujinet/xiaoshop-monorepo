@@ -17,17 +17,45 @@ export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn
   })
 }
 
+export function countGoodsAlarms(): Promise<number> {
+  return usePromiseRequest({
+    method: 'get',
+    url: '/goods/alarms/count',
+  })
+}
+
+/**
+ * 更新商品排序
+ *
+ * @api put /goods/sort/update
+ * @param id IGoods['id']
+ * @param sort IGoods['sort']
+ * @returns Promise<any>
+ */
+export function updateGoodsSort(id: IGoods['id'], sort: IGoods['sort']): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/sort/update',
+    params: {
+      id,
+    },
+    data: {
+      sort,
+    },
+  })
+}
+
 /**
  * 商品上架
  *
- * @api put /goods/update-status
+ * @api put /goods/status/update
  * @param id IGoods['id']
  * @returns Promise<any>
  */
 export function setGoodsInStock(id: IGoods['id']): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/update-status',
+    url: '/goods/status/update',
     params: {
       id,
     },
@@ -40,14 +68,14 @@ export function setGoodsInStock(id: IGoods['id']): Promise<any> {
 /**
  * 商品下架
  *
- * @api put /goods/update-status
+ * @api put /goods/status/update
  * @param id IGoods['id']
  * @returns Promise<any>
  */
-export function setGoodsStockOut(id: IGoods['id']): Promise<any> {
+export function setGoodsSoldOut(id: IGoods['id']): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/update-status',
+    url: '/goods/status/update',
     params: {
       id,
     },

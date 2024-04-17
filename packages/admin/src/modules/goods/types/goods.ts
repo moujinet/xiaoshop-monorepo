@@ -98,6 +98,38 @@ export interface IGoods {
    */
   skus: IGoodsSku[]
   /**
+   * 商品编码
+   */
+  skuId: string
+  /**
+   * 商品价格
+   */
+  price: number
+  /**
+   * 商品原价（划线价）
+   */
+  originalPrice: number
+  /**
+   * 商品成本价
+   */
+  costPrice: number
+  /**
+   * 商品库存
+   */
+  stock: number
+  /**
+   * 商品预警库存
+   */
+  alarmStock: number
+  /**
+   * 商品重量 kg
+   */
+  weight: number
+  /**
+   * 商品体积 m3
+   */
+  volume: number
+  /**
    * 是否隐藏库存
    */
   enableHideStock: boolean
@@ -239,5 +271,7 @@ export type IGoodsFormData = Omit<
 
 export type IGoodsPageListItem = Pick<
   IGoods,
-  'id' | 'type' | 'status' | 'name' | 'images' | 'skus' | 'tag' | 'services' | 'guarantees' | 'createdTime'
+  'id' | 'type' | 'status' | 'name' | 'images' | 'skus' |
+  'skuId' | 'price' | 'originalPrice' | 'stock' | 'unit' |
+  'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
 >

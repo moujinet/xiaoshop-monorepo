@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
-import type { IGoods } from '@/goods/types'
+import type { IGoods, IGoodsPageListItem } from '@/goods/types'
+import { GOODS_STATUS_ALARM } from '@/goods/constants'
 
 const data: IGoods[] = []
 
@@ -7,7 +8,7 @@ for (let i = 0; i < 100; i++) {
   data.push({
     id: i + 1,
     type: 'goods',
-    status: Mock.Random.pick(['in-stock', 'stock-out', 'draft', 'alarm']),
+    status: Mock.Random.pick(['in-stock', 'sold-out', 'draft', 'alarm']),
     name: Mock.Random.ctitle(10, 30),
     images: [
       {
@@ -82,6 +83,14 @@ for (let i = 0; i < 100; i++) {
         volume: Mock.Random.integer(500, 1500),
       },
     ],
+    skuId: Mock.Random.id(),
+    price: Mock.Random.integer(100, 500),
+    originalPrice: Mock.Random.integer(500, 1500),
+    costPrice: Mock.Random.integer(10, 100),
+    stock: Mock.Random.integer(500, 1500),
+    alarmStock: Mock.Random.integer(50, 150),
+    weight: Mock.Random.integer(500, 1500),
+    volume: Mock.Random.integer(500, 1500),
     unit: '件',
     enableHideStock: Mock.Random.boolean(),
     enablePurchaseLimit: Mock.Random.boolean(),
@@ -100,20 +109,20 @@ for (let i = 0; i < 100; i++) {
     buyButtonName: '',
     detail: Mock.Random.cparagraph(100, 200),
     sort: Mock.Random.integer(1, 100),
-    createdTime: 0,
+    createdTime: Date.now(),
   })
 }
 
 export default defineMocks({
   '/api/goods/pages': ({ query }) => {
-    return responsePaginationMock(
+    return responsePaginationMock<IGoodsPageListItem>(
       data
         .filter((item) => { // status
           if (query.status && query.status !== '')
             return item.status === query.status
           return true
         })
-        .sort((a, b) => b.sort - a.sort)
+        .sort((a, b) => a.sort - b.sort)
         .map((item) => { // transform data
           return pick(item, [
             'id',
@@ -122,14 +131,29 @@ export default defineMocks({
             'name',
             'images',
             'skus',
+            'skuId',
+            'price',
+            'originalPrice',
+            'stock',
+            'unit',
             'tag',
             'services',
             'guarantees',
+            'sort',
             'createdTime',
           ])
         }),
       query,
     )
+  },
+  '/api/goods/alarms/count': () => {
+    return responseMock(data.filter(item => item.status === GOODS_STATUS_ALARM).length)
+  },
+  '/api/goods/sort/update': () => {
+    return responseMock()
+  },
+  '/api/goods/status/update': () => {
+    return responseMock()
   },
   '/api/goods/create': () => {
     return responseMock()
