@@ -155,10 +155,25 @@ export function toNestedList<T extends Record<string, any>>(
 
 /**
  * 删除对象中空的属性
+ *
+ * @param obj Record<string, any>
+ * @param isStrict boolean
+ * @param specials string[]
+ * @returns Record<string, any>
  */
-export function removeEmpty(obj: Record<string, any>) {
+export function removeEmpty(
+  obj: Record<string, any>,
+  isStrict?: boolean,
+  specials?: string[],
+) {
   Object.keys(obj).forEach((key) => {
     if (obj[key] === null || obj[key] === undefined || obj[key] === '')
+      delete obj[key]
+
+    if (isStrict && (obj[key] === 0 || obj[key] === false))
+      delete obj[key]
+
+    if (specials && specials.length > 0 && specials.includes(obj[key]))
       delete obj[key]
   })
 
