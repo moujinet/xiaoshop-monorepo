@@ -30,8 +30,10 @@ function handleValueChange(val: string) {
       (props.type === 'number' && Number.isInteger(Number(val)))
       || props.type === 'string'
     )
-  )
+  ) {
+    value.value = val
     emit('change', props.type === 'string' ? val : Number(val))
+  }
 }
 </script>
 

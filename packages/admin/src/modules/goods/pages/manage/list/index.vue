@@ -146,9 +146,11 @@ watch(
 
 function refresh() {
   handleSearch()
-  searchForm.page === 1 && refreshData({ ...computedSearchForm.value })
+
   selectedKeys.value = []
   expandedRowKeys.value = []
+
+  searchForm.page === 1 && refreshData({ ...computedSearchForm.value })
 }
 
 function handleSearch() {
