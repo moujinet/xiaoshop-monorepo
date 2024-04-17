@@ -9,7 +9,17 @@ const props = defineProps<{
   defaultCollapsed?: boolean
 }>()
 
+const emit = defineEmits(['search', 'reset'])
+
+const formRef = ref()
+
 const collapsed = ref(props.defaultCollapsed || false)
+
+function handleSearchReset() {
+  formRef.value?.resetFields()
+
+  emit('reset')
+}
 </script>
 
 <template>
@@ -20,6 +30,7 @@ const collapsed = ref(props.defaultCollapsed || false)
     }"
   >
     <a-form
+      ref="formRef"
       :model="form"
       class="form-search__form"
       layout="inline"
@@ -34,8 +45,12 @@ const collapsed = ref(props.defaultCollapsed || false)
 
     <div class="form-search__footer">
       <a-space class="form-search__btn">
-        <a-button type="primary">
+        <a-button type="primary" @click="emit('search')">
           查询
+        </a-button>
+
+        <a-button @click="handleSearchReset">
+          重置
         </a-button>
 
         <slot name="footer" />
