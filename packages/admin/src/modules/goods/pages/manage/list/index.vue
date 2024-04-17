@@ -94,6 +94,7 @@ const columns = [
     title: '排序',
     dataIndex: 'sort',
     slotName: 'sort',
+    titleSlotName: 'sortTitle',
     width: 100,
   },
   {
@@ -321,6 +322,13 @@ function handleBatchSetup() {
         @page-change="handlePageChange"
         @page-size-change="handlePageSizeChange"
       >
+        <template #sortTitle>
+          排序
+          <a-tooltip content="提示: 点击编辑按钮开始编辑排序, 数值越小越靠前" mini>
+            <CommonIcon name="ph:question-fill" c-primary />
+          </a-tooltip>
+        </template>
+
         <template #statusTitle>
           状态
           <a-tooltip content="提示: 在售状态下的商品无法编辑, 需要先将商品下架, 再进行编辑" mini>
