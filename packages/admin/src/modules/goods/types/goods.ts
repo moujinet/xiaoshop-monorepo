@@ -97,7 +97,6 @@ export interface IGoods {
    * 商品 SKU
    */
   skus: IGoodsSku[]
-
   /**
    * 商品编码
    */
@@ -123,14 +122,13 @@ export interface IGoods {
    */
   alarmStock: number
   /**
-   * 商品重量 KG
+   * 商品重量 kg
    */
   weight: number
   /**
-   * 商品体积 M3
+   * 商品体积 m3
    */
   volume: number
-
   /**
    * 是否隐藏库存
    */
@@ -199,16 +197,81 @@ export interface IGoods {
    * 商品详情
    */
   detail: string
+  /**
+   * 商品排序
+   */
+  sort: number
+  /**
+   * 商品创建时间
+   */
+  createdTime: number
 }
 
 export type IGoodsFormData = Omit<
   IGoods,
-  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees'
+  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees' | 'sort' | 'createdTime'
 > & {
+  /**
+   * 商品分类
+   */
   categories: number[]
+  /**
+   * 商品标签
+   */
   tagId: number
+  /**
+   * 商品分组
+   */
   groupId: number
+  /**
+   * 商品品牌
+   */
   brandId: number
+  /**
+   * 商品服务
+   */
   services: number[]
+  /**
+   * 商品保障
+   */
   guarantees: number[]
+  /**
+   * 商品编码
+   */
+  skuId: string
+  /**
+   * 商品价格
+   */
+  price: number
+  /**
+   * 商品原价（划线价）
+   */
+  originalPrice: number
+  /**
+   * 商品成本价
+   */
+  costPrice: number
+  /**
+   * 商品库存
+   */
+  stock: number
+  /**
+   * 商品预警库存
+   */
+  alarmStock: number
+  /**
+   * 商品重量 KG
+   */
+  weight: number
+  /**
+   * 商品体积 M3
+   */
+  volume: number
 }
+
+export type IGoodsPageListItem = Pick<
+  IGoods,
+  'id' | 'type' | 'status' | 'name' | 'images' | 'skus' |
+  'skuId' | 'price' | 'originalPrice' | 'stock' | 'unit' |
+  'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
+>

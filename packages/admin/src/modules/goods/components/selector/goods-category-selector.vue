@@ -25,6 +25,7 @@ function loadChildren(record: any, done: (children?: any[]) => void) {
     :field-names="{ label: 'name', value: 'id' }"
     :load-more="loadChildren"
     :allow-search="false"
+    :fallback="false"
     placeholder="请选择"
     allow-clear
   />

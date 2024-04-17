@@ -107,18 +107,6 @@ export default defineModule({
       ],
     },
     {
-      id: 'stock',
-      name: '库存管理',
-      icon: 'ph:warehouse',
-      children: [
-        { id: 'list', name: '库存管理' },
-        { id: 'stock-in', name: '入库管理' },
-        { id: 'stock-out', name: '出库管理' },
-        { id: 'stock-swap', name: '库存调拨' },
-        { id: 'stock-check', name: '库存盘点' },
-      ],
-    },
-    {
       id: 'tools',
       name: '商品工具',
       icon: 'ph:wrench',

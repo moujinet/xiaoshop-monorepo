@@ -50,6 +50,7 @@ import {
   GOODS_STOCK_DEDUCT_TYPES,
   GOODS_STOCK_DEDUCT_TYPE_ORDER,
   GOODS_STOCK_DEDUCT_TYPE_PAYMENT,
+  GOODS_TYPES,
   GOODS_TYPE_GOODS,
 } from '@/goods/constants'
 
@@ -166,7 +167,7 @@ function handleNextStep() {
 
       <template v-if="step === 1">
         <!-- 商品信息 -->
-        <FormGroup title="商品类型">
+        <FormGroup v-if="GOODS_TYPES.length > 1" title="商品类型">
           <GoodsCreateNav v-model="form.type" />
         </FormGroup>
 
