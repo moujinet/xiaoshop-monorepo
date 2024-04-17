@@ -2,7 +2,7 @@
   "name": "@xiaoshop/schema",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@8.15.7",
+  "packageManager": "pnpm@9.0.1",
   "description": "XiaoShop types and constants",
   "sideEffects": false,
   "exports": {
@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "tsup": "^8.0.2",
-    "vue": "^3.4.22"
+    "vue": "^3.4.23"
   }
 }

@@ -11,7 +11,6 @@ import {
   GoodsBrandEditModal,
   GoodsBrandSelector,
   GoodsCategorySelector,
-  GoodsCreateNav,
   GoodsGroupEditModal,
   GoodsGroupSelector,
   GoodsGuaranteeEditModal,
@@ -27,6 +26,7 @@ import {
 import {
   GoodsFormSteps,
   GoodsFormSubmit,
+  GoodsFormTypeRadioCard,
 } from '@/goods/components/goods-form'
 
 import {
@@ -168,7 +168,7 @@ function handleNextStep() {
       <template v-if="step === 1">
         <!-- 商品信息 -->
         <FormGroup v-if="GOODS_TYPES.length > 1" title="商品类型">
-          <GoodsCreateNav v-model="form.type" />
+          <GoodsFormTypeRadioCard v-model="form.type" />
         </FormGroup>
 
         <!-- 基本信息 -->

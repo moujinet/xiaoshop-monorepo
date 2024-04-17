@@ -1,9 +1,4 @@
 /**
- * Nav
- */
-export { default as GoodsCreateNav } from './nav/goods-create-nav.vue'
-
-/**
  * Checkbox
  */
 export { default as GoodsGuaranteesCheckbox } from './checkbox/goods-guarantees-checkbox.vue'
