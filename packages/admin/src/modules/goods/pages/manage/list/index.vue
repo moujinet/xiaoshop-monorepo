@@ -91,6 +91,12 @@ const columns = [
     width: 100,
   },
   {
+    title: '销量',
+    dataIndex: 'sales',
+    slotName: 'sales',
+    width: 100,
+  },
+  {
     title: '排序',
     dataIndex: 'sort',
     slotName: 'sort',
@@ -369,6 +375,10 @@ function handleBatchSetup() {
 
         <template #stock="{ record }">
           {{ record.stock }} <small class="text-gray">{{ record.unit }}</small>
+        </template>
+
+        <template #sales="{ record }">
+          {{ record.sales }} <small class="text-gray">{{ record.unit }}</small>
         </template>
 
         <template #status="{ record }">

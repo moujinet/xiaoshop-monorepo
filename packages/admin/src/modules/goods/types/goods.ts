@@ -202,6 +202,10 @@ export interface IGoods {
    */
   sort: number
   /**
+   * 商品销量
+   */
+  sales: number
+  /**
    * 商品创建时间
    */
   createdTime: number
@@ -209,7 +213,7 @@ export interface IGoods {
 
 export type IGoodsFormData = Omit<
   IGoods,
-  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees' | 'sort' | 'createdTime'
+  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees' | 'sort' | 'sales' | 'createdTime'
 > & {
   /**
    * 商品分类
@@ -271,7 +275,7 @@ export type IGoodsFormData = Omit<
 
 export type IGoodsPageListItem = Pick<
   IGoods,
-  'id' | 'type' | 'status' | 'name' | 'images' |
+  'id' | 'type' | 'status' | 'name' | 'images' | 'sales' |
   'skuId' | 'price' | 'originalPrice' | 'stock' | 'unit' |
   'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
 >

@@ -89,6 +89,7 @@ for (let i = 0; i < 100; i++) {
     buyButtonNameType: 'default',
     buyButtonName: '',
     detail: Mock.Random.cparagraph(100, 200),
+    sales: Mock.Random.integer(1, 10000),
     sort: Mock.Random.integer(1, 100),
     createdTime: Date.now(),
   })
@@ -144,6 +145,7 @@ export default defineMocks({
             'tag',
             'services',
             'guarantees',
+            'sales',
             'sort',
             'createdTime',
           ])
