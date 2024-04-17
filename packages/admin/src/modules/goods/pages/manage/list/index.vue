@@ -44,6 +44,7 @@ const router = useRouter()
 
 const alarms = ref(0)
 const selectedKeys = ref<IGoods['id'][]>([])
+const expandedRowKeys = ref<Array<string | number>>([])
 const searchForm = reactive({
   status: 'all',
   name: '',
@@ -62,7 +63,6 @@ const computedSearchForm = computed(() => ({ ...removeEmpty(searchForm, true, ['
 const message = useMessage({
   onClose: () => {
     refresh()
-    selectedKeys.value = []
   },
 })
 
@@ -147,6 +147,8 @@ watch(
 function refresh() {
   handleSearch()
   searchForm.page === 1 && refreshData({ ...computedSearchForm.value })
+  selectedKeys.value = []
+  expandedRowKeys.value = []
 }
 
 function handleSearch() {
@@ -168,7 +170,7 @@ function handlePageSizeChange(size: number) {
 function handleGoodsSortChange(id: number, sort: number) {
   updateGoodsSort(id, sort)
     .then(() => {
-      message.success('排序成功')
+      message.success('修改排序成功')
     })
 }
 
@@ -289,6 +291,7 @@ function handleBatchSetup() {
 
       <a-table
         v-model:selected-keys="selectedKeys"
+        v-model:expanded-keys="expandedRowKeys"
         :loading="loading"
         :columns="columns"
         :data="data && data.result"
