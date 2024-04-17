@@ -139,6 +139,8 @@ watch(
         formData[key] = Number(route.query[key] as string)
     })
 
+    selectedKeys.value = []
+    expandedRowKeys.value = []
     refreshData(computedSearchForm.value)
   },
   { immediate: true },
