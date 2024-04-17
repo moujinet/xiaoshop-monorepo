@@ -24,18 +24,26 @@ import {
   GOODS_TYPES,
 } from '@/goods/constants'
 
-import { countGoodsAlarms, fetchGoodsPages, updateGoodsSort } from '@/goods/apis/goods'
+import {
+  copyGoodsToDraft,
+  countGoodsAlarms,
+  deleteGoods,
+  fetchGoodsPages,
+  setGoodsInStock,
+  setGoodsSoldOut,
+  updateGoodsSort,
+} from '@/goods/apis/goods'
+import type { IGoods } from '@/goods/types'
 
 defineOptions({
   name: 'GoodsManageListIndexPage',
 })
 
-const message = useMessage()
 const route = useRoute()
 const router = useRouter()
 
 const alarms = ref(0)
-const selectedKeys = ref<number[]>([])
+const selectedKeys = ref<IGoods['id'][]>([])
 const searchForm = reactive({
   status: 'all',
   name: '',
@@ -50,6 +58,13 @@ const searchForm = reactive({
   pageSize: DEFAULT_PAGE_SIZE,
 })
 const computedSearchForm = computed(() => ({ ...removeEmpty(searchForm, true, ['all']) }))
+
+const message = useMessage({
+  onClose: () => {
+    refresh()
+    selectedKeys.value = []
+  },
+})
 
 const columns = [
   {
@@ -107,6 +122,9 @@ const expandable = reactive<TableExpandable>({
   },
 })
 
+// alarms
+countGoodsAlarms().then(res => (alarms.value = res))
+
 const { loading, data, refreshData } = fetchGoodsPages()
 
 watch(
@@ -126,7 +144,10 @@ watch(
   { immediate: true },
 )
 
-countGoodsAlarms().then(res => (alarms.value = res))
+function refresh() {
+  handleSearch()
+  searchForm.page === 1 && refreshData({ ...computedSearchForm.value })
+}
 
 function handleSearch() {
   router.replace({ query: { ...computedSearchForm.value, page: 1 } })
@@ -149,31 +170,40 @@ function handleGoodsSortChange(id: number, sort: number) {
     .then(() => {
       message.success('排序成功')
     })
-    .finally(() => {
-      handleSearch()
-      searchForm.page === 1 && refreshData({ ...computedSearchForm.value })
-    })
+}
+
+function handleGoodsCopy(id: IGoods['id']) {
+  copyGoodsToDraft(id).then(() => {
+    searchForm.status = GOODS_STATUS_DRAFT
+    message.success('复制成功')
+  })
 }
 
 /**
  * 批量删除
  */
-function handleBatchDelete() {
-  message.success('删除成功')
+function handleBatchDelete(ids: IGoods['id'][]) {
+  deleteGoods(ids).then(() => {
+    message.success('删除成功')
+  })
 }
 
 /**
  * 批量上架
  */
-function handleBatchInStock() {
-  message.success('上架成功')
+function handleBatchInStock(ids: IGoods['id'][]) {
+  setGoodsInStock(ids).then(() => {
+    message.success('上架成功')
+  })
 }
 
 /**
  * 批量下架
  */
-function handleBatchSoldOut() {
-  message.success('下架成功')
+function handleBatchSoldOut(ids: IGoods['id'][]) {
+  setGoodsSoldOut(ids).then(() => {
+    message.success('下架成功')
+  })
 }
 
 /**
@@ -221,7 +251,7 @@ function handleBatchSetup() {
       </a-tabs>
 
       <a-space class="mb-4">
-        <CommonDeleteBtn @ok="handleBatchDelete">
+        <CommonDeleteBtn @ok="handleBatchDelete(selectedKeys)">
           <a-button
             :disabled="selectedKeys.length === 0 && $permission(['shop.goods.manage.list.delete'])"
             size="small"
@@ -234,7 +264,7 @@ function handleBatchSetup() {
           v-if="searchForm.status === GOODS_STATUS_SOLD_OUT || searchForm.status === GOODS_STATUS_DRAFT"
           :disabled="selectedKeys.length === 0"
           size="small"
-          @click="handleBatchInStock"
+          @click="handleBatchInStock(selectedKeys)"
         >
           上架
         </a-button>
@@ -243,7 +273,7 @@ function handleBatchSetup() {
           v-if="searchForm.status === GOODS_STATUS_IN_STOCK"
           :disabled="selectedKeys.length === 0"
           size="small"
-          @click="handleBatchSoldOut"
+          @click="handleBatchSoldOut(selectedKeys)"
         >
           下架
         </a-button>
@@ -375,17 +405,25 @@ function handleBatchSetup() {
                 <a-doption
                   v-if="record.status === GOODS_STATUS_SOLD_OUT || record.status === GOODS_STATUS_DRAFT"
                   v-permission="['shop.goods.manage.list.in-stock']"
-                  @click="handleBatchInStock()"
                 >
-                  上架
+                  <a-popconfirm
+                    content="确定要上架吗?"
+                    @ok="handleBatchInStock([record.id])"
+                  >
+                    <span>上架</span>
+                  </a-popconfirm>
                 </a-doption>
 
                 <a-doption
                   v-if="record.status === GOODS_STATUS_IN_STOCK"
                   v-permission="['shop.goods.manage.list.sold-out']"
-                  @click="handleBatchSoldOut()"
                 >
-                  下架
+                  <a-popconfirm
+                    content="确定要下架吗?"
+                    @ok="handleBatchSoldOut([record.id])"
+                  >
+                    <span>下架</span>
+                  </a-popconfirm>
                 </a-doption>
 
                 <a-doption @click="$router.push({ path: '/goods/manage/list/history', query: { id: record.id } })">
@@ -395,12 +433,17 @@ function handleBatchSetup() {
                 <a-doption>评价</a-doption>
 
                 <a-doption v-permission="['shop.goods.manage.list.edit']">
-                  复制
+                  <a-popconfirm
+                    content="确定要复制吗?"
+                    @ok="handleGoodsCopy(record.id)"
+                  >
+                    <span>复制</span>
+                  </a-popconfirm>
                 </a-doption>
 
                 <a-doption v-permission="['shop.goods.manage.list.delete']">
-                  <CommonDeleteBtn @delete="handleBatchDelete">
-                    <span>删除</span>
+                  <CommonDeleteBtn @delete="handleBatchDelete([record.id])">
+                    <span class="text-red">删除</span>
                   </CommonDeleteBtn>
                 </a-doption>
               </template>

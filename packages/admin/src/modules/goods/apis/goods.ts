@@ -72,15 +72,15 @@ export function updateGoodsSort(id: IGoods['id'], sort: IGoods['sort']): Promise
  * 商品上架
  *
  * @api put /goods/status/update
- * @param id IGoods['id']
+ * @param ids IGoods['id'][]
  * @returns Promise<any>
  */
-export function setGoodsInStock(id: IGoods['id']): Promise<any> {
+export function setGoodsInStock(ids: IGoods['id'][]): Promise<any> {
   return usePromiseRequest({
     method: 'put',
     url: '/goods/status/update',
     params: {
-      id,
+      ids,
     },
     data: {
       status: GOODS_STATUS_IN_STOCK,
@@ -92,15 +92,15 @@ export function setGoodsInStock(id: IGoods['id']): Promise<any> {
  * 商品下架
  *
  * @api put /goods/status/update
- * @param id IGoods['id']
+ * @param ids IGoods['id'][]
  * @returns Promise<any>
  */
-export function setGoodsSoldOut(id: IGoods['id']): Promise<any> {
+export function setGoodsSoldOut(ids: IGoods['id'][]): Promise<any> {
   return usePromiseRequest({
     method: 'put',
     url: '/goods/status/update',
     params: {
-      id,
+      ids,
     },
     data: {
       status: GOODS_STATUS_SOLD_OUT,
@@ -162,15 +162,15 @@ export function updateGoods(id: IGoods['id'], data: IGoodsFormData): Promise<any
  * 删除商品
  *
  * @api delete /goods/delete
- * @param id IGoods['id']
+ * @param ids IGoods['id'][]
  * @returns Promise<any>
  */
-export function deleteGoods(id: IGoods['id']): Promise<any> {
+export function deleteGoods(ids: IGoods['id'][]): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/goods/delete',
     data: {
-      id,
+      ids,
     },
   })
 }
