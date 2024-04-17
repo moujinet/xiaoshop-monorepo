@@ -271,7 +271,7 @@ export type IGoodsFormData = Omit<
 
 export type IGoodsPageListItem = Pick<
   IGoods,
-  'id' | 'type' | 'status' | 'name' | 'images' | 'skus' |
+  'id' | 'type' | 'status' | 'name' | 'images' |
   'skuId' | 'price' | 'originalPrice' | 'stock' | 'unit' |
   'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
 >

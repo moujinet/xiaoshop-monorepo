@@ -1,5 +1,5 @@
 import type { IUseRequestReturn } from '~/utils/request'
-import type { IGoods, IGoodsFormData, IGoodsPageListItem } from '@/goods/types'
+import type { IGoods, IGoodsFormData, IGoodsPageListItem, IGoodsSku } from '@/goods/types'
 import { GOODS_STATUS_IN_STOCK, GOODS_STATUS_SOLD_OUT } from '@/goods/constants'
 
 /**
@@ -17,9 +17,32 @@ export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn
   })
 }
 
+/**
+ * 获取指定商品 SKU 列表
+ *
+ * @api get /goods/sku/list
+ * @param id IGoods['id']
+ * @returns IUseRequestReturn<IGoodsSku[]>
+ */
+export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku[]> {
+  return useRequest<IGoodsSku[]>({
+    method: 'get',
+    url: '/goods/sku/list',
+    params: {
+      id,
+    },
+  })
+}
+
+/**
+ * 统计商品预警
+ *
+ * @api post /goods/alarms/count
+ * @returns Promise<number>
+ */
 export function countGoodsAlarms(): Promise<number> {
   return usePromiseRequest({
-    method: 'get',
+    method: 'post',
     url: '/goods/alarms/count',
   })
 }

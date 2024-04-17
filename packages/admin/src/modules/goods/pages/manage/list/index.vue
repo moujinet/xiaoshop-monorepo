@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { TableExpandable } from '@arco-design/web-vue'
+
 import { AssetsBrowserImage } from '@/assets/components'
 import {
   GoodsBrandSelector,
@@ -7,6 +9,9 @@ import {
   GoodsTagsSelector,
   GoodsTypeSelector,
 } from '@/goods/components'
+import {
+  GoodsSkuList,
+} from '@/goods/components/sku'
 
 import { DEFAULT_PAGE_SIZE } from '~/constants/defaults'
 
@@ -96,7 +101,11 @@ const columns = [
   },
 ]
 
-countGoodsAlarms().then(res => (alarms.value = res))
+const expandable = reactive<TableExpandable>({
+  expandedRowRender: (record) => {
+    return h(GoodsSkuList, { id: record.id, unit: record.unit })
+  },
+})
 
 const { loading, data, refreshData } = fetchGoodsPages()
 
@@ -116,6 +125,8 @@ watch(
   },
   { immediate: true },
 )
+
+countGoodsAlarms().then(res => (alarms.value = res))
 
 function handleSearch() {
   router.replace({ query: { ...computedSearchForm.value, page: 1 } })
@@ -252,6 +263,7 @@ function handleBatchSetup() {
         :columns="columns"
         :data="data && data.result"
         :bordered="false"
+        :expandable="expandable"
         :row-selection="{
           type: 'checkbox',
           showCheckedAll: true,
@@ -382,9 +394,7 @@ function handleBatchSetup() {
 
                 <a-doption>评价</a-doption>
 
-                <a-doption
-                  v-permission="['shop.goods.manage.list.edit']"
-                >
+                <a-doption v-permission="['shop.goods.manage.list.edit']">
                   复制
                 </a-doption>
 

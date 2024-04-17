@@ -77,8 +77,8 @@ for (let i = 0; i < 100; i++) {
         price: Mock.Random.integer(100, 500),
         originalPrice: Mock.Random.integer(500, 1500),
         costPrice: Mock.Random.integer(10, 100),
-        stock: Mock.Random.integer(500, 1500),
-        alarmStock: Mock.Random.integer(50, 150),
+        stock: Mock.Random.integer(150, 1500),
+        alarmStock: Mock.Random.integer(150, 1500),
         weight: Mock.Random.integer(500, 1500),
         volume: Mock.Random.integer(500, 1500),
       },
@@ -87,8 +87,8 @@ for (let i = 0; i < 100; i++) {
     price: Mock.Random.integer(100, 500),
     originalPrice: Mock.Random.integer(500, 1500),
     costPrice: Mock.Random.integer(10, 100),
-    stock: Mock.Random.integer(500, 1500),
-    alarmStock: Mock.Random.integer(50, 150),
+    stock: Mock.Random.integer(150, 1500),
+    alarmStock: Mock.Random.integer(150, 1500),
     weight: Mock.Random.integer(500, 1500),
     volume: Mock.Random.integer(500, 1500),
     unit: '件',
@@ -130,7 +130,6 @@ export default defineMocks({
             'status',
             'name',
             'images',
-            'skus',
             'skuId',
             'price',
             'originalPrice',
@@ -144,6 +143,11 @@ export default defineMocks({
           ])
         }),
       query,
+    )
+  },
+  '/api/goods/sku/list': ({ query }) => {
+    return responseMock(
+      data.find(item => item.id === Number(query.id))?.skus || [],
     )
   },
   '/api/goods/alarms/count': () => {
