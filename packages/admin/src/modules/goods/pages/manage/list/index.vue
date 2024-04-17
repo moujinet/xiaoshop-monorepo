@@ -390,6 +390,7 @@ function handleBatchSetup() {
             <GoodsStockEditModal
               v-if="$permission(['shop.goods.manage.list.edit'])"
               :id="record.id"
+              @success="refresh"
             >
               <a-button type="text">
                 库存

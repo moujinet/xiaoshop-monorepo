@@ -63,26 +63,7 @@ for (let i = 0; i < 100; i++) {
         enableImage: false,
       },
     ],
-    skus: [
-      {
-        id: 1,
-        specs: [
-          {
-            id: 1,
-            name: '颜色',
-          },
-        ],
-        name: '红色',
-        skuId: Mock.Random.id(),
-        price: Mock.Random.integer(100, 500),
-        originalPrice: Mock.Random.integer(500, 1500),
-        costPrice: Mock.Random.integer(10, 100),
-        stock: Mock.Random.integer(150, 1500),
-        alarmStock: Mock.Random.integer(150, 1500),
-        weight: Mock.Random.integer(500, 1500),
-        volume: Mock.Random.integer(500, 1500),
-      },
-    ],
+    skus: [],
     skuId: Mock.Random.id(),
     price: Mock.Random.integer(100, 500),
     originalPrice: Mock.Random.integer(500, 1500),
@@ -112,6 +93,31 @@ for (let i = 0; i < 100; i++) {
     createdTime: Date.now(),
   })
 }
+
+data.map((item) => {
+  for (let i = 0; i < Mock.Random.integer(2, 10); i++) {
+    item.skus.push({
+      id: Mock.Random.increment(),
+      specs: [
+        {
+          id: 1,
+          name: '颜色',
+        },
+      ],
+      name: Mock.Random.pick(['红色', '蓝色', '绿色', '黑色', '白色', '灰色', '黄色']),
+      skuId: Mock.Random.id(),
+      price: Mock.Random.integer(100, 500),
+      originalPrice: Mock.Random.integer(500, 1500),
+      costPrice: Mock.Random.integer(10, 100),
+      stock: Mock.Random.integer(150, 1500),
+      alarmStock: Mock.Random.integer(150, 1500),
+      weight: Mock.Random.integer(500, 1500),
+      volume: Mock.Random.integer(500, 1500),
+    })
+  }
+
+  return item
+})
 
 export default defineMocks({
   '/api/goods/pages': ({ query }) => {
@@ -149,6 +155,9 @@ export default defineMocks({
     return responseMock(
       data.find(item => item.id === Number(query.id))?.skus || [],
     )
+  },
+  '/goods/sku/update': () => {
+    return responseMock()
   },
   '/api/goods/alarms/count': () => {
     return responseMock(data.filter(item => item.status === GOODS_STATUS_ALARM).length)

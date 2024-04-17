@@ -6,6 +6,7 @@ defineOptions({
 defineProps<{
   title?: string
   loading?: boolean
+  width?: string | number
   okText?: string
   cancelText?: string
   hideCancel?: boolean
@@ -41,13 +42,13 @@ function handleModalCancel(ev: Event) {
     :hide-cancel="hideCancel"
     :on-before-ok="onBeforeOk"
     :ok-button-props="{ htmlType: 'submit', disabled: disableOk }"
+    :width="width || '600px'"
     title-align="start"
-    width="auto"
     simple
     unmount-on-close
     @cancel="handleModalCancel"
   >
-    <div v-if="visible" flex="~ center" w-500px>
+    <div v-if="visible" flex="~ center">
       <a-spin :loading="loading" w-full>
         <slot name="modal" />
       </a-spin>

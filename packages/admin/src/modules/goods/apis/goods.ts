@@ -35,6 +35,26 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
 }
 
 /**
+ * 更新指定商品 SKU 列表
+ *
+ * @param id IGoods['id']
+ * @param skus IGoodsSku[]
+ * @returns Promise<any>
+ */
+export function updateGoodsSkus(id: IGoods['id'], skus: Partial<IGoodsSku>[]): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/sku/update',
+    params: {
+      id,
+    },
+    data: {
+      skus,
+    },
+  })
+}
+
+/**
  * 统计商品预警
  *
  * @api post /goods/alarms/count
