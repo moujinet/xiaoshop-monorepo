@@ -2,7 +2,7 @@
 import { GOODS_TYPES } from '@/goods/constants'
 
 defineOptions({
-  name: 'GoodsCreateNav',
+  name: 'GoodsFormTypeRadio',
 })
 
 const props = defineProps<{
