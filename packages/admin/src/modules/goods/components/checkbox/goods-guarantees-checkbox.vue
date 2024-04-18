@@ -9,8 +9,16 @@ defineOptions({
 const guarantees = ref<IGoodsGuarantee[]>([])
 const { refreshData: loadGuarantees } = fetchGoodsGuaranteeList()
 
-loadGuarantees().then((res) => {
-  guarantees.value = res
+function refresh() {
+  loadGuarantees().then((res) => {
+    guarantees.value = res
+  })
+}
+
+refresh()
+
+defineExpose({
+  refresh,
 })
 </script>
 

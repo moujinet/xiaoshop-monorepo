@@ -61,6 +61,12 @@ defineOptions({
   name: 'GoodsManageListCreateGoodsPage',
 })
 
+const tagRef = ref()
+const groupRef = ref()
+const brandRef = ref()
+const serviceRef = ref()
+const guaranteeRef = ref()
+
 const step = ref(1)
 const loading = ref(false)
 const { y } = useWindowScroll({ behavior: 'smooth' })
@@ -218,11 +224,11 @@ function handleNextStep() {
 
           <a-form-item field="tagId" label="商品标签" show-colon>
             <div class="form-item-sm">
-              <GoodsTagsSelector v-model="form.tagId" />
+              <GoodsTagsSelector ref="tagRef" v-model="form.tagId" />
             </div>
 
             <template #extra>
-              <GoodsTagEditModal>
+              <GoodsTagEditModal @success="() => tagRef.refresh()">
                 <CommonLink type="primary">
                   新建标签
                 </CommonLink>
@@ -232,11 +238,11 @@ function handleNextStep() {
 
           <a-form-item field="groupId" label="商品分组" show-colon>
             <div class="form-item-sm">
-              <GoodsGroupSelector v-model="form.groupId" />
+              <GoodsGroupSelector ref="groupRef" v-model="form.groupId" />
             </div>
 
             <template #extra>
-              <GoodsGroupEditModal>
+              <GoodsGroupEditModal @success="() => groupRef.refresh()">
                 <CommonLink type="primary">
                   新建分组
                 </CommonLink>
@@ -246,11 +252,11 @@ function handleNextStep() {
 
           <a-form-item field="brandId" label="商品品牌" show-colon>
             <div class="form-item-sm">
-              <GoodsBrandSelector v-model="form.brandId" />
+              <GoodsBrandSelector ref="brandRef" v-model="form.brandId" />
             </div>
 
             <template #extra>
-              <GoodsBrandEditModal>
+              <GoodsBrandEditModal @success="() => brandRef.refresh()">
                 <CommonLink type="primary">
                   新建品牌
                 </CommonLink>
@@ -259,10 +265,10 @@ function handleNextStep() {
           </a-form-item>
 
           <a-form-item field="services" label="附加服务" show-colon>
-            <GoodsServicesCheckbox v-model="form.services" />
+            <GoodsServicesCheckbox ref="serviceRef" v-model="form.services" />
 
             <template #extra>
-              <GoodsServiceEditModal>
+              <GoodsServiceEditModal @success="() => serviceRef.refresh()">
                 <CommonLink type="primary">
                   新建附加服务
                 </CommonLink>
@@ -271,10 +277,10 @@ function handleNextStep() {
           </a-form-item>
 
           <a-form-item field="guarantees" label="服务保障" show-colon>
-            <GoodsGuaranteesCheckbox v-model="form.guarantees" />
+            <GoodsGuaranteesCheckbox ref="guaranteeRef" v-model="form.guarantees" />
 
             <template #extra>
-              <GoodsGuaranteeEditModal>
+              <GoodsGuaranteeEditModal @success="() => guaranteeRef.refresh()">
                 <CommonLink type="primary">
                   新建服务保障
                 </CommonLink>

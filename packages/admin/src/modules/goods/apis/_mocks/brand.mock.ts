@@ -26,8 +26,17 @@ export default defineMocks({
       data.find(d => d.id === Number(query.id)),
     )
   },
-  '/api/goods/brand/create': () => {
-    return responseMock(undefined, '10001 - 保存失败', 10001)
+  '/api/goods/brand/create': ({ body }) => {
+    data.push({
+      id: data.length + 1,
+      name: body.name,
+      logo: body.logo,
+      desc: body.desc,
+      sort: body.sort,
+      createdTime: Date.now(),
+    })
+
+    return responseMock()
   },
   '/api/goods/brand/update': () => {
     return responseMock()

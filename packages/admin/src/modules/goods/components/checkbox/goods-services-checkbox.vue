@@ -9,8 +9,16 @@ defineOptions({
 const services = ref<IGoodsService[]>([])
 const { refreshData: loadServices } = fetchGoodsServiceList()
 
-loadServices().then((res) => {
-  services.value = res
+function refresh() {
+  loadServices().then((res) => {
+    services.value = res
+  })
+}
+
+refresh()
+
+defineExpose({
+  refresh,
 })
 </script>
 
