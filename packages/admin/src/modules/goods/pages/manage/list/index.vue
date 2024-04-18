@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { TableExpandable } from '@arco-design/web-vue'
+import type { TableColumnData, TableExpandable } from '@arco-design/web-vue'
 
 import { AssetsBrowserImage } from '@/assets/components'
 import {
@@ -67,7 +67,7 @@ const message = useMessage({
   },
 })
 
-const columns = [
+const columns: TableColumnData[] = [
   {
     title: '商品信息',
     dataIndex: 'name',
@@ -121,6 +121,7 @@ const columns = [
     title: '',
     slotName: 'actions',
     width: 160,
+    fixed: 'right',
   },
 ]
 
