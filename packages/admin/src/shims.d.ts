@@ -48,6 +48,10 @@ declare global {
     VITE_ENABLE_DEVTOOL: string
   }
 
+  import type { MaybeRef } from 'vue'
+
+  export type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
+
   interface IApiResponse<T = any> {
     code: number
     message?: string

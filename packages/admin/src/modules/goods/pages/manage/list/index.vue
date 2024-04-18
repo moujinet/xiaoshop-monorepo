@@ -107,7 +107,7 @@ const columns: TableColumnData[] = [
     title: '创建时间',
     dataIndex: 'createdTime',
     slotName: 'createdTime',
-    width: 180,
+    width: 100,
   },
   {
     title: '状态',
@@ -400,7 +400,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
         </template>
 
         <template #createdTime="{ record }">
-          {{ formatDateTime(record.createdTime) }}
+          {{ formatTimeAgo(record.createdTime) }}
         </template>
 
         <template #actions="{ record }">
