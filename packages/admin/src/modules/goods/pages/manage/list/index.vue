@@ -43,7 +43,6 @@ defineOptions({
 const route = useRoute()
 const router = useRouter()
 
-const alarms = ref(0)
 const selectedKeys = ref<IGoods['id'][]>([])
 const expandedRowKeys = ref<Array<string | number>>([])
 const searchForm = reactive({
@@ -131,7 +130,9 @@ const expandable = reactive<TableExpandable>({
   },
 })
 
-// alarms
+const isAffix = ref(false)
+
+const alarms = ref(0)
 countGoodsAlarms().then(res => (alarms.value = res))
 
 const { loading, data, refreshData } = fetchGoodsPages()
@@ -241,58 +242,64 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
     </a-alert>
 
     <CommonCard>
-      <a-tabs
-        v-model:active-key="searchForm.status"
-        type="card"
-        size="large"
-        class="mb-4"
-        hide-content
-        @change="handleTabsChange"
-      >
-        <a-tab-pane key="all" title="全部" />
-        <a-tab-pane v-for="item in GOODS_STATUSES" :key="item.value">
-          <template #title>
-            <a-badge :count="item.value === GOODS_STATUS_ALARM ? alarms : 0" :offset="[6, -3]" dot>
-              {{ item.label }}
-            </a-badge>
-          </template>
-        </a-tab-pane>
-      </a-tabs>
+      <template #extra>
+        <a-affix :offset-top="133" @change="(val) => (isAffix = val)">
+          <div :class="{ 'bg-white pb-4 border-solid border-0 border-b-1 border-$color-border-2': isAffix }" class="pt-4 px-4">
+            <a-tabs
+              v-model:active-key="searchForm.status"
+              type="card"
+              size="large"
+              class="mb-4"
+              hide-content
+              @change="handleTabsChange"
+            >
+              <a-tab-pane key="all" title="全部" />
+              <a-tab-pane v-for="item in GOODS_STATUSES" :key="item.value">
+                <template #title>
+                  <a-badge :count="item.value === GOODS_STATUS_ALARM ? alarms : 0" :offset="[6, -3]" dot>
+                    {{ item.label }}
+                  </a-badge>
+                </template>
+              </a-tab-pane>
+            </a-tabs>
 
-      <a-space class="mb-4">
-        <CommonDeleteBtn @ok="handleBatchDelete(selectedKeys)">
-          <a-button
-            :disabled="selectedKeys.length === 0 && $permission(['shop.goods.manage.list.delete'])"
-            size="small"
-          >
-            删除
-          </a-button>
-        </CommonDeleteBtn>
+            <a-space>
+              <CommonDeleteBtn @ok="handleBatchDelete(selectedKeys)">
+                <a-button
+                  :disabled="selectedKeys.length === 0 && $permission(['shop.goods.manage.list.delete'])"
+                  size="small"
+                >
+                  删除
+                </a-button>
+              </CommonDeleteBtn>
 
-        <a-button
-          v-if="searchForm.status === GOODS_STATUS_SOLD_OUT || searchForm.status === GOODS_STATUS_DRAFT"
-          :disabled="selectedKeys.length === 0"
-          size="small"
-          @click="handleBatchInStock(selectedKeys)"
-        >
-          上架
-        </a-button>
+              <a-button
+                v-if="searchForm.status === GOODS_STATUS_SOLD_OUT || searchForm.status === GOODS_STATUS_DRAFT"
+                :disabled="selectedKeys.length === 0"
+                size="small"
+                @click="handleBatchInStock(selectedKeys)"
+              >
+                上架
+              </a-button>
 
-        <a-button
-          v-if="searchForm.status === GOODS_STATUS_IN_STOCK"
-          :disabled="selectedKeys.length === 0"
-          size="small"
-          @click="handleBatchSoldOut(selectedKeys)"
-        >
-          下架
-        </a-button>
+              <a-button
+                v-if="searchForm.status === GOODS_STATUS_IN_STOCK"
+                :disabled="selectedKeys.length === 0"
+                size="small"
+                @click="handleBatchSoldOut(selectedKeys)"
+              >
+                下架
+              </a-button>
 
-        <GoodsBatchSetupModal :ids="selectedKeys" @success="refresh">
-          <a-button :disabled="selectedKeys.length === 0" size="small">
-            设置
-          </a-button>
-        </GoodsBatchSetupModal>
-      </a-space>
+              <GoodsBatchSetupModal :ids="selectedKeys" @success="refresh">
+                <a-button :disabled="selectedKeys.length === 0" size="small">
+                  设置
+                </a-button>
+              </GoodsBatchSetupModal>
+            </a-space>
+          </div>
+        </a-affix>
+      </template>
 
       <a-table
         v-model:selected-keys="selectedKeys"
