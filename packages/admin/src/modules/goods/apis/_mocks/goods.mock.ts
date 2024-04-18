@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import type { IGoods, IGoodsPageListItem } from '@/goods/types'
+import type { IGoods, IGoodsPageListItem, IGoodsRecycleListItem } from '@/goods/types'
 import { GOODS_STATUS_ALARM } from '@/goods/constants'
 
 const data: IGoods[] = []
@@ -92,6 +92,7 @@ for (let i = 0; i < 100; i++) {
     sales: Mock.Random.integer(1, 10000),
     sort: Mock.Random.integer(1, 100),
     createdTime: Date.now(),
+    deletedTime: Date.now(),
   })
 }
 
@@ -137,9 +138,7 @@ export default defineMocks({
             'status',
             'name',
             'images',
-            'skuId',
             'price',
-            'originalPrice',
             'stock',
             'unit',
             'tag',
@@ -154,7 +153,7 @@ export default defineMocks({
     )
   },
   '/api/goods/recycle/pages': ({ query }) => {
-    return responsePaginationMock<IGoodsPageListItem>(
+    return responsePaginationMock<IGoodsRecycleListItem>(
       data
         .sort((a, b) => a.sort - b.sort)
         .map((item) => { // transform data
@@ -164,17 +163,12 @@ export default defineMocks({
             'status',
             'name',
             'images',
-            'skuId',
             'price',
-            'originalPrice',
-            'stock',
             'unit',
             'tag',
             'services',
             'guarantees',
-            'sales',
-            'sort',
-            'createdTime',
+            'deletedTime',
           ])
         }),
       query,

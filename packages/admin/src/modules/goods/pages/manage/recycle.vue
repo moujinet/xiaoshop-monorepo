@@ -51,8 +51,8 @@ const columns: TableColumnData[] = [
   },
   {
     title: '删除时间',
-    dataIndex: 'createdTime',
-    slotName: 'createdTime',
+    dataIndex: 'deletedTime',
+    slotName: 'deletedTime',
     width: 180,
   },
   {
@@ -209,8 +209,8 @@ function handleShiftDelete(id: number) {
           <CommonPrice :price="record.price" mode="suffix" />
         </template>
 
-        <template #createdTime="{ record }">
-          {{ formatDateTime(record.createdTime) }}
+        <template #deletedTime="{ record }">
+          {{ formatDateTime(record.deletedTime) }}
         </template>
 
         <template #actions="{ record }">
