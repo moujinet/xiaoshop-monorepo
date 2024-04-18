@@ -18,6 +18,21 @@ export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn
 }
 
 /**
+ * 获取回收站商品分页列表
+ *
+ * @api get /goods/recycle/pages
+ * @param params Record<string, any>
+ * @returns IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>>
+ */
+export function fetchGoodsRecyclePages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>> {
+  return useRequest<IApiPaginationResult<IGoodsPageListItem>>({
+    method: 'get',
+    url: '/goods/recycle/pages',
+    params,
+  })
+}
+
+/**
  * 获取指定商品 SKU 列表
  *
  * @api get /goods/sku/list
@@ -35,96 +50,15 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
 }
 
 /**
- * 更新指定商品 SKU 列表
- *
- * @param id IGoods['id']
- * @param skus IGoodsSku[]
- * @returns Promise<any>
- */
-export function updateGoodsSkus(id: IGoods['id'], skus: Partial<IGoodsSku>[]): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/sku/update',
-    params: {
-      id,
-    },
-    data: {
-      skus,
-    },
-  })
-}
-
-/**
  * 统计商品预警
  *
- * @api post /goods/alarms/count
+ * @api post /goods/count/alarms
  * @returns Promise<number>
  */
 export function countGoodsAlarms(): Promise<number> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/alarms/count',
-  })
-}
-
-/**
- * 更新商品排序
- *
- * @api put /goods/sort/update
- * @param id IGoods['id']
- * @param sort IGoods['sort']
- * @returns Promise<any>
- */
-export function updateGoodsSort(id: IGoods['id'], sort: IGoods['sort']): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/sort/update',
-    params: {
-      id,
-    },
-    data: {
-      sort,
-    },
-  })
-}
-
-/**
- * 商品上架
- *
- * @api put /goods/status/update
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function setGoodsInStock(ids: IGoods['id'][]): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/status/update',
-    params: {
-      ids,
-    },
-    data: {
-      status: GOODS_STATUS_IN_STOCK,
-    },
-  })
-}
-
-/**
- * 商品下架
- *
- * @api put /goods/status/update
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function setGoodsSoldOut(ids: IGoods['id'][]): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/status/update',
-    params: {
-      ids,
-    },
-    data: {
-      status: GOODS_STATUS_SOLD_OUT,
-    },
+    url: '/goods/count/alarms',
   })
 }
 
@@ -141,6 +75,86 @@ export function copyGoodsToDraft(id: IGoods['id']): Promise<any> {
     url: '/goods/copy',
     data: {
       id,
+    },
+  })
+}
+
+/**
+ * 更新指定商品 SKU 列表
+ *
+ * @param id IGoods['id']
+ * @param skus IGoodsSku[]
+ * @returns Promise<any>
+ */
+export function updateGoodsSkus(id: IGoods['id'], skus: Partial<IGoodsSku>[]): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/update/sku',
+    params: {
+      id,
+    },
+    data: {
+      skus,
+    },
+  })
+}
+/**
+ * 更新商品排序
+ *
+ * @api put /goods/update/sort
+ * @param id IGoods['id']
+ * @param sort IGoods['sort']
+ * @returns Promise<any>
+ */
+export function updateGoodsSort(id: IGoods['id'], sort: IGoods['sort']): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/update/sort',
+    params: {
+      id,
+    },
+    data: {
+      sort,
+    },
+  })
+}
+
+/**
+ * 商品上架
+ *
+ * @api put /goods/update/status
+ * @param ids IGoods['id'][]
+ * @returns Promise<any>
+ */
+export function setGoodsInStock(ids: IGoods['id'][]): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/update/status',
+    params: {
+      ids,
+    },
+    data: {
+      status: GOODS_STATUS_IN_STOCK,
+    },
+  })
+}
+
+/**
+ * 商品下架
+ *
+ * @api put /goods/update/status
+ * @param ids IGoods['id'][]
+ * @returns Promise<any>
+ */
+export function setGoodsSoldOut(ids: IGoods['id'][]): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/update/status',
+    params: {
+      ids,
+    },
+    data: {
+      status: GOODS_STATUS_SOLD_OUT,
     },
   })
 }
@@ -198,18 +212,65 @@ export function updateGoods(id: IGoods['id'], data: IGoodsFormData): Promise<any
 }
 
 /**
- * 删除商品
+ * 批量删除商品
  *
- * @api delete /goods/delete
+ * @api delete /goods/batch/delete
  * @param ids IGoods['id'][]
  * @returns Promise<any>
  */
-export function deleteGoods(ids: IGoods['id'][]): Promise<any> {
+export function batchDeleteGoods(ids: IGoods['id'][]): Promise<any> {
+  return usePromiseRequest({
+    method: 'delete',
+    url: '/goods/delete/batch',
+    data: {
+      ids,
+    },
+  })
+}
+
+/**
+ * 彻底删除商品
+ *
+ * @api delete /goods/delete
+ * @param id IGoods['id']
+ * @returns Promise<any>
+ */
+export function shiftDeleteGoods(id: IGoods['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/goods/delete',
     data: {
-      ids,
+      id,
     },
+  })
+}
+
+/**
+ * 恢复删除的商品
+ *
+ * @api put /goods/undeleted
+ * @param id IGoods['id']
+ * @returns Promise<any>
+ */
+export function undeletedGoods(id: IGoods['id']): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/undeleted',
+    params: {
+      id,
+    },
+  })
+}
+
+/**
+ * 清空已删除的商品
+ *
+ * @api delete /goods/cleanup/deleted
+ * @returns Promise<any>
+ */
+export function cleanupDeletedGoods(): Promise<any> {
+  return usePromiseRequest({
+    method: 'delete',
+    url: '/goods/cleanup/deleted',
   })
 }

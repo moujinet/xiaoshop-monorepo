@@ -26,9 +26,9 @@ import {
 } from '@/goods/constants'
 
 import {
+  batchDeleteGoods,
   copyGoodsToDraft,
   countGoodsAlarms,
-  deleteGoods,
   fetchGoodsPages,
   setGoodsInStock,
   setGoodsSoldOut,
@@ -199,7 +199,7 @@ function handleGoodsCopy(id: IGoods['id']) {
  * 批量删除
  */
 function handleBatchDelete(ids: IGoods['id'][]) {
-  deleteGoods(ids).then(() => {
+  batchDeleteGoods(ids).then(() => {
     message.success('删除成功')
   })
 }

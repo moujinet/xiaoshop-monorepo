@@ -153,21 +153,48 @@ export default defineMocks({
       query,
     )
   },
+  '/api/goods/recycle/pages': ({ query }) => {
+    return responsePaginationMock<IGoodsPageListItem>(
+      data
+        .sort((a, b) => a.sort - b.sort)
+        .map((item) => { // transform data
+          return pick(item, [
+            'id',
+            'type',
+            'status',
+            'name',
+            'images',
+            'skuId',
+            'price',
+            'originalPrice',
+            'stock',
+            'unit',
+            'tag',
+            'services',
+            'guarantees',
+            'sales',
+            'sort',
+            'createdTime',
+          ])
+        }),
+      query,
+    )
+  },
   '/api/goods/sku/list': ({ query }) => {
     return responseMock(
       data.find(item => item.id === Number(query.id))?.skus || [],
     )
   },
-  '/goods/sku/update': () => {
+  '/goods/update/sku': () => {
     return responseMock()
   },
-  '/api/goods/alarms/count': () => {
+  '/api/goods/count/alarms': () => {
     return responseMock(data.filter(item => item.status === GOODS_STATUS_ALARM).length)
   },
-  '/api/goods/sort/update': () => {
+  '/api/goods/update/sort': () => {
     return responseMock()
   },
-  '/api/goods/status/update': () => {
+  '/api/goods/update/status': () => {
     return responseMock()
   },
   '/api/goods/create': () => {
@@ -182,7 +209,16 @@ export default defineMocks({
   '/api/goods/copy': () => {
     return responseMock()
   },
+  '/api/goods/delete/batch': () => {
+    return responseMock()
+  },
   '/api/goods/delete': () => {
+    return responseMock()
+  },
+  '/api/goods/undeleted': () => {
+    return responseMock()
+  },
+  '/api/goods/cleanup/deleted': () => {
     return responseMock()
   },
 })
