@@ -462,7 +462,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
                 <a-doption v-permission="['shop.goods.manage.list.delete']">
                   <CommonDeleteBtn @delete="handleBatchDelete([record.id])">
-                    <span class="text-red">删除</span>
+                    <span class="text-danger">删除</span>
                   </CommonDeleteBtn>
                 </a-doption>
               </template>

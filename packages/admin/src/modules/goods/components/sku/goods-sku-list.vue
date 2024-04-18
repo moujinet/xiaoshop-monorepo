@@ -53,10 +53,10 @@ if (!data.value?.length)
         <span class="p-2" border-t="~ solid $color-border-1">
           <CommonPrice :price="sku.costPrice" mode="suffix" />
         </span>
-        <span class="p-2" border-t="~ solid $color-border-1" :class="{ 'text-red font-500': sku.stock <= sku.alarmStock }">
+        <span class="p-2" border-t="~ solid $color-border-1" :class="{ 'text-danger font-500': sku.stock <= sku.alarmStock }">
           {{ sku.stock }} <small class="text-gray">{{ props.unit || '件' }}</small>
         </span>
-        <span class="p-2" border-t="~ solid $color-border-1" :class="{ 'text-red font-500': sku.stock <= sku.alarmStock }">
+        <span class="p-2" border-t="~ solid $color-border-1" :class="{ 'text-danger font-500': sku.stock <= sku.alarmStock }">
           {{ sku.alarmStock }} <small class="text-gray">{{ props.unit || '件' }}</small>
         </span>
         <span class="p-2" border-t="~ solid $color-border-1">
