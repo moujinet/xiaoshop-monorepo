@@ -176,6 +176,9 @@ export default defineMocks({
   '/api/goods/update': () => {
     return responseMock()
   },
+  '/api/goods/update/batch': () => {
+    return responseMock()
+  },
   '/api/goods/copy': () => {
     return responseMock()
   },

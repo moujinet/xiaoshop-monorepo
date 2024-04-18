@@ -146,6 +146,25 @@ export function copyGoodsToDraft(id: IGoods['id']): Promise<any> {
 }
 
 /**
+ * 批量设置商品属性
+ *
+ * @api put /goods/update/batch
+ * @param ids IGoods['id'][]
+ * @param data Partial<IGoodsFormData>
+ * @returns Promise<any>
+ */
+export function batchSetupGoods(ids: IGoods['id'][], data: Partial<IGoodsFormData>): Promise<any> {
+  return usePromiseRequest({
+    method: 'put',
+    url: '/goods/update/batch',
+    params: {
+      ids,
+    },
+    data,
+  })
+}
+
+/**
  * 创建商品
  *
  * @api post /goods/create

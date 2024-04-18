@@ -3,6 +3,7 @@ import type { TableExpandable } from '@arco-design/web-vue'
 
 import { AssetsBrowserImage } from '@/assets/components'
 import {
+  GoodsBatchSetupModal,
   GoodsBrandSelector,
   GoodsCategorySelector,
   GoodsStockEditModal,
@@ -218,12 +219,6 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
     message.success('下架成功')
   })
 }
-
-/**
- * 批量设置
- */
-function handleBatchSetup() {
-}
 </script>
 
 <template>
@@ -291,13 +286,11 @@ function handleBatchSetup() {
           下架
         </a-button>
 
-        <a-button
-          :disabled="selectedKeys.length === 0"
-          size="small"
-          @click="handleBatchSetup"
-        >
-          设置
-        </a-button>
+        <GoodsBatchSetupModal :ids="selectedKeys" @success="refresh">
+          <a-button :disabled="selectedKeys.length === 0" size="small">
+            设置
+          </a-button>
+        </GoodsBatchSetupModal>
       </a-space>
 
       <a-table

@@ -3,6 +3,9 @@
  */
 export { default as GoodsGuaranteesCheckbox } from './checkbox/goods-guarantees-checkbox.vue'
 export { default as GoodsServicesCheckbox } from './checkbox/goods-services-checkbox.vue'
+export { default as GoodsDeliveryTypesCheckbox } from './checkbox/goods-delivery-types-checkbox.vue'
+export { default as GoodsDeliveryCostsTypeCheckbox } from './checkbox/goods-delivery-costs-type-checkbox.vue'
+export { default as GoodsDeliveryCostsTemplateSelector } from './selector/goods-delivery-costs-template-selector.vue'
 
 /**
  * Editor
@@ -23,6 +26,7 @@ export { default as GoodsGroupEditModal } from './modal/group-edit-modal.vue'
 export { default as GoodsStockEditModal } from './modal/stock-edit-modal.vue'
 export { default as GoodsTagEditModal } from './modal/tag-edit-modal.vue'
 export { default as GoodsServiceEditModal } from './modal/service-edit-modal.vue'
+export { default as GoodsBatchSetupModal } from './modal/batch-setup-modal.vue'
 
 /**
  * Selector

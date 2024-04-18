@@ -11,6 +11,9 @@ import {
   GoodsBrandEditModal,
   GoodsBrandSelector,
   GoodsCategorySelector,
+  GoodsDeliveryCostsTemplateSelector,
+  GoodsDeliveryCostsTypeCheckbox,
+  GoodsDeliveryTypesCheckbox,
   GoodsGroupEditModal,
   GoodsGroupSelector,
   GoodsGuaranteeEditModal,
@@ -34,11 +37,9 @@ import {
   GOODS_BUY_BUTTON_TYPE_CUSTOM,
   GOODS_BUY_BUTTON_TYPE_DEFAULT,
   GOODS_DEFAULT_BUY_BUTTON_NAME,
-  GOODS_DELIVERY_COSTS_TYPES,
   GOODS_DELIVERY_COSTS_TYPE_COD,
   GOODS_DELIVERY_COSTS_TYPE_TEMPLATE,
   GOODS_DELIVERY_COSTS_TYPE_UNIFIED,
-  GOODS_DELIVERY_TYPES,
   GOODS_DELIVERY_TYPE_EXPRESS,
   GOODS_PUBLISH_TYPES,
   GOODS_PUBLISH_TYPE_AUTO,
@@ -294,32 +295,26 @@ function handleNextStep() {
         <!-- 物流信息 -->
         <FormGroup title="物流信息">
           <a-form-item field="deliveryTypes" label="配送方式" show-colon required>
-            <a-checkbox-group v-model="form.deliveryTypes">
-              <a-checkbox v-for="item in GOODS_DELIVERY_TYPES" :key="item.value" :value="item.value">
-                {{ item.label }}
-              </a-checkbox>
-            </a-checkbox-group>
+            <GoodsDeliveryTypesCheckbox v-model="form.deliveryTypes" />
           </a-form-item>
 
           <a-form-item field="deliveryCostsType" label="物流费用" show-colon>
-            <a-radio-group v-model="form.deliveryCostsType" direction="vertical" :options="GOODS_DELIVERY_COSTS_TYPES" />
+            <GoodsDeliveryCostsTypeCheckbox v-model="form.deliveryCostsType" />
           </a-form-item>
 
-          <a-form-item v-if="form.deliveryCostsType === GOODS_DELIVERY_COSTS_TYPE_UNIFIED" field="slogan" label="统一运费" show-colon required>
+          <a-form-item v-if="form.deliveryCostsType === GOODS_DELIVERY_COSTS_TYPE_UNIFIED" field="deliveryCosts" label="统一运费" show-colon required>
             <div class="form-item-xs">
-              <a-input v-model="form.slogan" placeholder="0.00">
+              <FormNumberInput v-model="form.deliveryCosts" placeholder="0.00">
                 <template #suffix>
                   元
                 </template>
-              </a-input>
+              </FormNumberInput>
             </div>
           </a-form-item>
 
-          <a-form-item v-if="form.deliveryCostsType === GOODS_DELIVERY_COSTS_TYPE_TEMPLATE" field="slogan" label="运费模板" show-colon required>
+          <a-form-item v-if="form.deliveryCostsType === GOODS_DELIVERY_COSTS_TYPE_TEMPLATE" field="deliveryCostsTemplateId" label="运费模板" show-colon required>
             <div class="form-item-sm">
-              <a-select placeholder="请选择">
-                <a-option>Brand</a-option>
-              </a-select>
+              <GoodsDeliveryCostsTemplateSelector v-model="form.deliveryCostsTemplateId" />
             </div>
 
             <template #extra>
@@ -366,7 +361,7 @@ function handleNextStep() {
 
           <a-form-item v-if="form.buyButtonNameType === GOODS_BUY_BUTTON_TYPE_CUSTOM" field="buyButtonName" label="自定义按钮名称" show-colon>
             <div class="form-item-xs">
-              <a-input v-model="form.buyButtonName" placeholder="请输入  6 个字以内的按钮名称" :max-length="6" />
+              <a-input v-model="form.buyButtonName" placeholder="请输入 6 个字以内的按钮名称" :max-length="6" />
             </div>
 
             <template #extra>
