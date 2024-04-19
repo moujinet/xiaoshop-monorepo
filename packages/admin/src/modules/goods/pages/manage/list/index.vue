@@ -1,18 +1,7 @@
 <script lang="ts" setup>
 import type { TableColumnData, TableExpandable } from '@arco-design/web-vue'
 
-import { AssetsBrowserImage } from '@/assets/components'
-import {
-  GoodsBatchSetupModal,
-  GoodsBrandSelector,
-  GoodsCategorySelector,
-  GoodsStockEditModal,
-  GoodsTagsSelector,
-  GoodsTypeSelector,
-} from '@/goods/components'
-import {
-  GoodsSkuList,
-} from '@/goods/components/sku'
+import type { IGoods } from '@/goods/types'
 
 import { DEFAULT_PAGE_SIZE } from '~/constants/defaults'
 
@@ -25,6 +14,19 @@ import {
   GOODS_TYPES,
 } from '@/goods/constants'
 
+import { AssetsBrowserImage } from '@/assets/components'
+
+import {
+  GoodsBatchSetupModal,
+  GoodsBrandSelector,
+  GoodsCategorySelector,
+  GoodsStockEditModal,
+  GoodsTagsSelector,
+  GoodsTypeSelector,
+} from '@/goods/components'
+
+import { GoodsSkuList } from '@/goods/components/sku'
+
 import {
   batchDeleteGoods,
   copyGoodsToDraft,
@@ -34,7 +36,6 @@ import {
   setGoodsSoldOut,
   updateGoodsSort,
 } from '@/goods/apis/goods'
-import type { IGoods } from '@/goods/types'
 
 defineOptions({
   name: 'GoodsManageListIndexPage',
@@ -229,7 +230,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
       <a-button
         v-permission="['shop.goods.manage.list.create']"
         type="primary"
-        @click="$router.push({ path: '/goods/manage/list/create/goods' })"
+        @click="$router.push({ path: '/goods/manage/list/create', query: { type: 'goods' } })"
       >
         发布商品
       </a-button>
@@ -409,6 +410,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               v-if="record.status !== GOODS_STATUS_IN_STOCK"
               v-permission="['shop.goods.manage.list.edit']"
               type="text"
+              @click="$router.push({ path: '/goods/manage/list/edit', query: { id: record.id } })"
             >
               编辑
             </a-button>

@@ -17,24 +17,8 @@ export default defineModule({
           name: '商品列表',
           children: [
             { id: 'index', name: '商品列表' },
-            {
-              id: 'create',
-              name: '发布商品',
-              children: [
-                { id: 'goods', name: '发布实物商品' },
-                { id: 'virtual', name: '发布虚拟商品' },
-                { id: 'card', name: '发布电子卡密' },
-              ],
-            },
-            {
-              id: 'edit',
-              name: '编辑商品',
-              children: [
-                { id: 'goods', name: '编辑实物商品' },
-                { id: 'virtual', name: '编辑虚拟商品' },
-                { id: 'card', name: '编辑电子卡密' },
-              ],
-            },
+            { id: 'create', name: '发布商品' },
+            { id: 'edit', name: '编辑商品' },
             { id: 'history', name: '浏览记录' },
             { id: 'comments', name: '评价' },
             { id: '#export', name: '导出商品' },

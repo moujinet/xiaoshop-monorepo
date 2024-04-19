@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import type { IGoods, IGoodsSku } from '@/goods/types'
-import { fetchGoodsSkuList, updateGoodsSkus } from '@/goods/apis/goods'
 
 import { GoodsSkuValuePopup } from '@/goods/components/sku'
+
+import {
+  fetchGoodsSkuList,
+  updateGoodsSkus,
+} from '@/goods/apis/goods'
 
 defineOptions({
   name: 'GoodsStockEditModal',
@@ -14,6 +18,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const visible = ref(false)
 const formData = ref<Partial<IGoodsSku>[]>([])
 const { loading, data, refreshData } = fetchGoodsSkuList(props.id)

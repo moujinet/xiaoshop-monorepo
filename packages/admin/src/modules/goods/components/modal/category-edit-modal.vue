@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import { createGoodsCategory, fetchGoodsCategoryDetail, fetchGoodsCategoryList, updateGoodsCategory } from '@/goods/apis/category'
+import {
+  createGoodsCategory,
+  fetchGoodsCategoryDetail,
+  fetchGoodsCategoryList,
+  updateGoodsCategory,
+} from '@/goods/apis/category'
 
 defineOptions({
   name: 'GoodsCategoryEditModal',
@@ -10,6 +15,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive({

@@ -179,6 +179,9 @@ export default defineMocks({
       data.find(item => item.id === Number(query.id))?.skus || [],
     )
   },
+  '/api/goods/detail': ({ query }) => {
+    return responseMock(data.find(item => item.id === Number(query.id)))
+  },
   '/goods/update/sku': () => {
     return responseMock()
   },

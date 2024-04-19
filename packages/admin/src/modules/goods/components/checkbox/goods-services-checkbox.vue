@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoodsService } from '@/goods/types'
+
 import { fetchGoodsServiceList } from '@/goods/apis/service'
 
 defineOptions({
@@ -25,9 +26,9 @@ defineExpose({
 <template>
   <a-checkbox-group>
     <a-checkbox v-for="item in services" :key="item.id" :value="item.id">
-      <div>
+      <span>
         {{ item.name }} <small class="text-gray">(+ ¥{{ item.price.toFixed(2) }})</small>
-      </div>
+      </span>
     </a-checkbox>
   </a-checkbox-group>
 </template>

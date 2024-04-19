@@ -50,6 +50,23 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
 }
 
 /**
+ * 获取指定商品详情
+ *
+ * @api get /goods/detail
+ * @param id IGoods['id']
+ * @returns IUseRequestReturn<IGoods>
+ */
+export function fetchGoodsDetail(id: IGoods['id']): IUseRequestReturn<IGoods> {
+  return useRequest<IGoods>({
+    method: 'get',
+    url: '/goods/detail',
+    params: {
+      id,
+    },
+  })
+}
+
+/**
  * 统计商品预警
  *
  * @api post /goods/count/alarms

@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import type { IGoodsAttributeTemplateAttribute } from '@/goods/types'
-import { GOODS_ATTRIBUTE_TYPES, GOODS_ATTRIBUTE_TYPE_INPUT } from '@/goods/constants'
-import { createGoodsAttribute, fetchGoodsAttributeDetail, updateGoodsAttribute } from '@/goods/apis/attribute'
+
+import {
+  GOODS_ATTRIBUTE_TYPES,
+  GOODS_ATTRIBUTE_TYPE_INPUT,
+} from '@/goods/constants'
+
+import {
+  createGoodsAttribute,
+  fetchGoodsAttributeDetail,
+  updateGoodsAttribute,
+} from '@/goods/apis/attribute'
 
 defineOptions({
   name: 'GoodsAttributeEditModal',
@@ -13,6 +22,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive<IFormData<IGoodsAttributeTemplateAttribute>>({

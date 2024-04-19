@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoods } from '@/goods/types'
+
 import { fetchGoodsSkuList } from '@/goods/apis/goods'
 
 defineOptions({

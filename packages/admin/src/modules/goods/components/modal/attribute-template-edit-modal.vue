@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoodsAttributeTemplate } from '@/goods/types'
+
 import {
   createGoodsAttributeTemplate,
   fetchGoodsAttributeTemplateDetail,
@@ -15,6 +16,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive<IFormData<IGoodsAttributeTemplate>>({

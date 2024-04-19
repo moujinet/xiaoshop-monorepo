@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { IGoods, IGoodsFormData } from '@/goods/types'
-import { batchSetupGoods } from '@/goods/apis/goods'
+
 import {
   GOODS_BUY_BUTTON_TYPES,
   GOODS_BUY_BUTTON_TYPE_CUSTOM,
@@ -19,6 +19,8 @@ import {
   GoodsServicesCheckbox,
   GoodsTagsSelector,
 } from '@/goods/components'
+
+import { batchSetupGoods } from '@/goods/apis/goods'
 
 defineOptions({
   name: 'GoodsBatchSetupModal',

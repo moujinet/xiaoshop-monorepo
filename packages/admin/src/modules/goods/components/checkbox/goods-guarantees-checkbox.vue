@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoodsGuarantee } from '@/goods/types'
+
 import { fetchGoodsGuaranteeList } from '@/goods/apis/guarantee'
 
 defineOptions({
