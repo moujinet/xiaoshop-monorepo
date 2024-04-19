@@ -33,6 +33,11 @@ export default defineMocks({
       // 商品管理 - 采集设置
       { key: 'shop.goods.clawerApiKey', value: '' },
 
+      // 商品管理 - 物流设置
+      { key: 'shop.goods.enableExpress', value: '1' },
+      { key: 'shop.goods.enableLocal', value: '1' },
+      { key: 'shop.goods.enableSelf', value: '1' },
+
       // 素材管理 - 图片处理
       { key: 'app.assets.enableImageCompress', value: '1' },
       { key: 'app.assets.imageCompressQuality', value: '90' },

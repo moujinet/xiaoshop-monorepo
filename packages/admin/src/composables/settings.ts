@@ -1,4 +1,4 @@
-import { doUpdateSettings, getSettings } from '@/settings/apis/settings'
+import { getSettings, updateSettings } from '@/settings/apis/settings'
 
 interface IUseSettingsUpdateOptionsReturn {
   /**
@@ -63,20 +63,26 @@ export function useSettings() {
    * @returns IUseSettingsUpdateOptionsReturn
    */
   function updateOptions(group: string, options: IKeyValue): IUseSettingsUpdateOptionsReturn {
-    const data = Object.keys(options).reduce((item, key) => {
-      item[`${group}.${key}`] = options[key]
-      return item
-    }, {} as IKeyValue)
+    const loading = ref(false)
 
-    const { loading, refreshData } = doUpdateSettings(data)
+    const onUpdate = () => {
+      loading.value = true
 
-    const onUpdate = () => refreshData(data).then(() => {
-      useMessage({
-        onClose: () => {
-          refresh()
-        },
-      }).success('配置已更新')
-    })
+      const data = _transformOptions(group, options)
+      const res = updateSettings(data)
+        .then(() => {
+          useMessage({
+            onClose: () => {
+              refresh()
+            },
+          }).success('配置已更新')
+        })
+        .finally(() => {
+          loading.value = false
+        })
+
+      return res
+    }
 
     return {
       loading,
@@ -94,6 +100,28 @@ export function useSettings() {
         return item
       }, {} as IKeyValue))
     })
+  }
+
+  /**
+   * 转换选项类型用于提交
+   *
+   * @param group string
+   * @param options IKeyValue
+   * @returns IKeyValue
+   */
+  function _transformOptions(group: string, options: IKeyValue) {
+    const data = Object.keys(options).reduce((item, key) => {
+      item[`${group}.${key}`]
+        = key.startsWith('enable')
+          ? options[key] === true ? '1' : '0'
+          : key.startsWith('[') && key.endsWith(']')
+            ? JSON.stringify(options[key])
+            : options[key].toString()
+
+      return item
+    }, {} as IKeyValue)
+
+    return data
   }
 
   /**

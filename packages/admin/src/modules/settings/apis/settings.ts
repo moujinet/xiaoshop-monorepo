@@ -16,6 +16,7 @@ export interface IApiSettingsItem {
 /**
  * 获取所有设置
  *
+ * @apis get /settings/list
  * @returns Promise<IApiSettingsItem[]>
  */
 export function getSettings(): Promise<IApiSettingsItem[]> {
@@ -26,25 +27,14 @@ export function getSettings(): Promise<IApiSettingsItem[]> {
 }
 
 /**
- * 获取指定前缀设置
- *
- * @returns Promise<IApiSettingsItem[]>
- */
-export function getSettingsByPrefix(prefix: string): Promise<IApiSettingsItem[]> {
-  return usePromiseRequest<IApiSettingsItem[]>({
-    method: 'get',
-    url: '/settings',
-    params: { prefix },
-  })
-}
-
-/**
  * 更新设置
  *
+ * @apis put /settings/update
  * @param settings IKeyValue
+ * @returns Promise<any>
  */
-export function doUpdateSettings(settings: IKeyValue) {
-  return useRequest<void>({
+export function updateSettings(settings: IKeyValue): Promise<any> {
+  return usePromiseRequest<void>({
     method: 'put',
     url: '/settings/update',
     data: settings,
