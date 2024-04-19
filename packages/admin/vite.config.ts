@@ -66,6 +66,7 @@ const plugins: PluginOption[] = [
         '@arco-design/web-vue': [
           ['Message', 'AMessage'],
           ['Notification', 'ANotification'],
+          ['Modal', 'AModal'],
         ],
       },
       VueRouterAutoImports,
