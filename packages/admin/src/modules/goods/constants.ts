@@ -74,7 +74,7 @@ export const GOODS_DELIVERY_TYPE_LOCAL = 'local'
 export const GOODS_DELIVERY_TYPES = [
   { value: GOODS_DELIVERY_TYPE_EXPRESS, label: '快递发货' },
   { value: GOODS_DELIVERY_TYPE_SELF, label: '到店自提' },
-  { value: GOODS_DELIVERY_TYPE_LOCAL, label: '同城配送' },
+  // { value: GOODS_DELIVERY_TYPE_LOCAL, label: '同城配送' },
 ]
 
 export type IGoodsDeliveryType = typeof GOODS_DELIVERY_TYPE_EXPRESS | typeof GOODS_DELIVERY_TYPE_SELF | typeof GOODS_DELIVERY_TYPE_LOCAL

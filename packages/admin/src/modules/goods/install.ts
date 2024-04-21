@@ -111,12 +111,40 @@ export default defineModule({
           name: '物流设置',
           children: [
             {
-              id: 'express',
-              name: '快递公司',
+              id: 'index',
+              name: '物流设置',
             },
             {
-              id: 'city-heros',
-              name: '配送员',
+              id: 'express',
+              name: '快递公司',
+              children: [
+                { id: 'index', name: '快递公司列表' },
+                { id: '#create', name: '新增快递公司' },
+                { id: '#edit', name: '编辑快递公司' },
+                { id: '#delete', name: '删除快递公司' },
+              ],
+            },
+            {
+              id: 'templates',
+              name: '运费模板',
+              children: [
+                { id: 'index', name: '运费模板列表' },
+                { id: '#create', name: '创建运费模板' },
+                { id: '#edit', name: '编辑运费模板' },
+                { id: '#delete', name: '删除运费模板' },
+              ],
+            },
+            {
+              id: 'tracking',
+              name: '物流跟踪',
+            },
+            {
+              id: 'delivery',
+              name: '配送范围',
+            },
+            {
+              id: 'self-pickup',
+              name: '自提设置',
             },
           ],
         },

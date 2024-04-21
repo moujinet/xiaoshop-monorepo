@@ -38,18 +38,21 @@ export function useSettings() {
    *
    * @param group string
    * @param defaultVal any
+   * @param pickKeys string[]
    * @returns any
    */
-  function getOptions(group: string, defaultVal: any = undefined) {
+  function getOptions(group: string, defaultVal: any = undefined, pickKeys: string[] = []) {
     if (!group)
       return defaultVal
 
     if (Object.keys(options.value).some(key => key.startsWith(group))) {
-      return Object.keys(options.value).reduce((item, key) => {
+      const opts = Object.keys(options.value).reduce((item, key) => {
         if (key.startsWith(group))
           item[key.replace(new RegExp(`^${group}\.`), '')] = options.value[key]
         return item
       }, {} as IKeyValue)
+
+      return pickKeys.length > 0 ? pick(opts, pickKeys) : opts
     }
 
     return defaultVal

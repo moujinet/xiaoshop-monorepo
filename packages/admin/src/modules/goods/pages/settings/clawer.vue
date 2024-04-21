@@ -4,7 +4,7 @@ defineOptions({
 })
 
 const { getOptions, updateOptions } = useSettings()
-const form = reactive(getOptions('shop.goods', {}))
+const form = reactive(getOptions('shop.goods', {}, ['clawerApiKey']))
 const { loading, onUpdate } = updateOptions('shop.goods', form)
 </script>
 

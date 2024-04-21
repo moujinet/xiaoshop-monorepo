@@ -3,6 +3,8 @@ export { default as GoodsAttributeTemplateEditModal } from './attribute-template
 export { default as GoodsBatchSetupModal } from './batch-setup-modal.vue'
 export { default as GoodsBrandEditModal } from './brand-edit-modal.vue'
 export { default as GoodsCategoryEditModal } from './category-edit-modal.vue'
+export { default as GoodsExpressCompanyEditModal } from './express-company-edit-modal.vue'
+export { default as GoodsExpressPostmanEditModal } from './express-postman-edit-modal.vue'
 export { default as GoodsGroupEditModal } from './group-edit-modal.vue'
 export { default as GoodsGuaranteeEditModal } from './guarantee-edit-modal.vue'
 export { default as GoodsServiceEditModal } from './service-edit-modal.vue'
