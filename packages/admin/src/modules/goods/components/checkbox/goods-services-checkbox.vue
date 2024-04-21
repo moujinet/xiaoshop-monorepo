@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoodsService } from '@/goods/types'
+
 import { fetchGoodsServiceList } from '@/goods/apis/service'
 
 defineOptions({
@@ -9,17 +10,25 @@ defineOptions({
 const services = ref<IGoodsService[]>([])
 const { refreshData: loadServices } = fetchGoodsServiceList()
 
-loadServices().then((res) => {
-  services.value = res
+function refresh() {
+  loadServices().then((res) => {
+    services.value = res
+  })
+}
+
+refresh()
+
+defineExpose({
+  refresh,
 })
 </script>
 
 <template>
   <a-checkbox-group>
     <a-checkbox v-for="item in services" :key="item.id" :value="item.id">
-      <div>
+      <span>
         {{ item.name }} <small class="text-gray">(+ ¥{{ item.price.toFixed(2) }})</small>
-      </div>
+      </span>
     </a-checkbox>
   </a-checkbox-group>
 </template>

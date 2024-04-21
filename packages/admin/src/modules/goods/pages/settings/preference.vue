@@ -8,7 +8,13 @@ defineOptions({
 })
 
 const { getOptions, updateOptions } = useSettings()
-const form = reactive(getOptions('shop.goods', {}))
+const form = reactive(
+  getOptions(
+    'shop.goods',
+    {},
+    ['enableGoodsStock', 'enableGoodsSales', 'enableGoodsOriginalPrice', 'defaultGoodsImage'],
+  ),
+)
 const { loading, onUpdate } = updateOptions('shop.goods', form)
 
 const defaultGoodsImage = ref<IAssetSnapshot | undefined>()

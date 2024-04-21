@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { IGoodsGuarantee } from '@/goods/types'
+
 import { AssetsBrowser } from '@/assets/components'
+
 import {
   createGoodsGuarantee,
   fetchGoodsGuaranteeDetail,
@@ -16,6 +18,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive<IFormData<IGoodsGuarantee>>({

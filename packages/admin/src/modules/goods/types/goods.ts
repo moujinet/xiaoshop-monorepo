@@ -202,14 +202,22 @@ export interface IGoods {
    */
   sort: number
   /**
+   * 商品销量
+   */
+  sales: number
+  /**
    * 商品创建时间
    */
   createdTime: number
+  /**
+   * 商品删除时间
+   */
+  deletedTime: number
 }
 
 export type IGoodsFormData = Omit<
   IGoods,
-  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees' | 'sort' | 'createdTime'
+  'id' | 'categories' | 'tag' | 'group' | 'brand' | 'services' | 'guarantees' | 'sort' | 'sales' | 'createdTime' | 'deletedTime'
 > & {
   /**
    * 商品分类
@@ -271,7 +279,12 @@ export type IGoodsFormData = Omit<
 
 export type IGoodsPageListItem = Pick<
   IGoods,
-  'id' | 'type' | 'status' | 'name' | 'images' | 'skus' |
-  'skuId' | 'price' | 'originalPrice' | 'stock' | 'unit' |
-  'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
+  'id' | 'type' | 'status' | 'name' | 'images' | 'sales' | 'price' |
+  'stock' | 'unit' | 'tag' | 'services' | 'guarantees' | 'sort' | 'createdTime'
+>
+
+export type IGoodsRecycleListItem = Pick<
+  IGoods,
+  'id' | 'type' | 'name' | 'images' | 'price' | 'unit' |
+  'tag' | 'services' | 'guarantees' | 'deletedTime'
 >

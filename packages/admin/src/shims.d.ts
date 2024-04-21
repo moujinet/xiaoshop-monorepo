@@ -48,6 +48,10 @@ declare global {
     VITE_ENABLE_DEVTOOL: string
   }
 
+  import type { MaybeRef } from 'vue'
+
+  export type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
+
   interface IApiResponse<T = any> {
     code: number
     message?: string
@@ -77,7 +81,7 @@ declare global {
 
   type ToDictionary<T = any> = Pick<T, 'id' | 'name'>
 
-  type IFormData<T> = Omit<T, 'id' | 'createdTime' | 'updatedTime'>
+  type IFormData<T> = Omit<T, 'id' | 'createdTime' | 'updatedTime' | 'deletedTime'>
 
   import type { FieldRule } from '@arco-design/web-vue'
 

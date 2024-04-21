@@ -12,8 +12,24 @@ defineOptions({
   name: 'GoodsAttributesEditor',
 })
 
+const props = withDefaults(defineProps<{
+  defaultTemplateId?: number
+}>(), {
+  defaultTemplateId: 0,
+})
+
 const templateId = defineModel('templateId', { type: Number, default: 0 })
 const attributes = defineModel('attributes', { type: Array as PropType<IGoodsAttribute[]>, default: () => [] })
+
+const attributesNormalized = computed(() => {
+  return attributes.value.map((attr) => {
+    return {
+      ...attr,
+      options: attr.options.split(',').map((it: string) => it.trim()),
+      value: attr.type === GOODS_ATTRIBUTE_TYPE_CHECKBOX ? attr.value.split(',').map((it: string) => it.trim()) : attr.value,
+    }
+  })
+})
 
 const columns = [
   {
@@ -38,7 +54,13 @@ const { loading, refreshData: loadAttributes } = fetchGoodsAttributeList(templat
 
 watch(
   templateId,
-  async (newId) => {
+  async (newId, oldId) => {
+    if (
+      newId === oldId
+      || (newId === props.defaultTemplateId && attributes.value.length > 0)
+    )
+      return
+
     attributes.value = []
 
     if (!newId)
@@ -69,7 +91,7 @@ function handleAddAttribute() {
 
 <template>
   <FormGroup title="商品参数">
-    <a-form-item label="可选模板" show-colon>
+    <a-form-item v-if="defaultTemplateId === 0" label="可选模板" show-colon>
       <div class="form-item-sm">
         <GoodsAttributeTemplateSelector v-model="templateId" @clear="templateId = 0" />
       </div>
@@ -80,7 +102,7 @@ function handleAddAttribute() {
         <a-table
           :loading="loading"
           :columns="columns"
-          :data="attributes"
+          :data="attributesNormalized"
           :pagination="false"
           :hoverable="false"
           row-key="id"
@@ -92,13 +114,13 @@ function handleAddAttribute() {
 
           <template #options="{ record }">
             <a-radio-group v-if="record.type === GOODS_ATTRIBUTE_TYPE_RADIO" v-model="record.value">
-              <a-radio v-for="item in record.options.split(',').map((it: string) => it.trim())" :key="item" :value="item">
+              <a-radio v-for="item in record.options" :key="item" :value="item">
                 {{ item }}
               </a-radio>
             </a-radio-group>
 
             <a-checkbox-group v-if="record.type === GOODS_ATTRIBUTE_TYPE_CHECKBOX" v-model="record.value">
-              <a-checkbox v-for="item in record.options.split(',').map((it: string) => it.trim())" :key="item" :value="item">
+              <a-checkbox v-for="item in record.options" :key="item" :value="item">
                 {{ item }}
               </a-checkbox>
             </a-checkbox-group>

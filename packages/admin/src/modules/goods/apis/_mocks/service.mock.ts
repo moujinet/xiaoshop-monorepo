@@ -15,7 +15,16 @@ export default defineMocks({
       data.find(d => d.id === Number(query.id)),
     )
   },
-  '/api/goods/service/create': () => {
+  '/api/goods/service/create': ({ body }) => {
+    data.push({
+      id: data.length + 1,
+      name: body.name,
+      price: body.price,
+      desc: body.desc,
+      sort: body.sort,
+      createdTime: Date.now(),
+    })
+
     return responseMock()
   },
   '/api/goods/service/update': () => {

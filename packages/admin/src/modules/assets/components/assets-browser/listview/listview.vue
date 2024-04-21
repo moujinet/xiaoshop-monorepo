@@ -88,13 +88,17 @@ function isSelected(asset: IAsset) {
 }
 
 function isCanSelect(asset: IAsset) {
-  return selected.value.length === 0 // 没有选中
-    || (!isSelected(asset) && selected.value.length < props.limit) // 没有选中, 且没有超过限制
-    || isSelected(asset) // 有选中, 且超过限制, 允许取消选中
+  return props.limit !== 0
+    && (
+      selected.value.length === 0 // 没有选中
+      || (!isSelected(asset) && selected.value.length < props.limit) // 没有选中, 且没有超过限制
+      || isSelected(asset) // 有选中, 且超过限制, 允许取消选中
+    )
 }
 
 function checkLimit(asset: IAsset) {
   if (props.mode === 'select'
+    && props.limit !== 0
     && selected.value.length === props.limit
     && !isCanSelect(asset)
   )

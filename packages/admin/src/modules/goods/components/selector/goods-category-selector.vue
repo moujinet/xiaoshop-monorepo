@@ -16,6 +16,10 @@ function loadChildren(record: any, done: (children?: any[]) => void) {
     done(children.map(item => ({ ...item, isLeaf: true })))
   })
 }
+
+defineExpose({
+  refresh: refreshData,
+})
 </script>
 
 <template>

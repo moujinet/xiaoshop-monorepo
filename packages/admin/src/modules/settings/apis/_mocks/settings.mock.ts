@@ -24,11 +24,28 @@ export default defineMocks({
       { key: 'settings.store.longitude', value: '39.984120' },
       { key: 'settings.store.latitude', value: '116.307484' },
 
-      // 商品设置
+      // 商品管理 - 显示设置
       { key: 'shop.goods.enableGoodsStock', value: '1' },
       { key: 'shop.goods.enableGoodsSales', value: '1' },
       { key: 'shop.goods.enableGoodsOriginalPrice', value: '1' },
       { key: 'shop.goods.defaultGoodsImage', value: '' },
+
+      // 商品管理 - 采集设置
+      { key: 'shop.goods.clawerApiKey', value: '' },
+
+      // 商品管理 - 物流设置
+      { key: 'shop.goods.enableExpress', value: '1' },
+      { key: 'shop.goods.enableLocal', value: '0' },
+      { key: 'shop.goods.enableSelf', value: '0' },
+
+      // 商品管理 - 快递100设置
+      { key: 'shop.goods.kd100AppKey', value: '' },
+      { key: 'shop.goods.kd100Customer', value: '' },
+
+      // 商品管理 - 自提设置
+      { key: 'shop.goods.selfPickupDays', value: '[1, 2, 3, 4, 5, 6, 7]' },
+      { key: 'shop.goods.selfPickupTimeFrames', value: '[["9:00", "23:00"]]' },
+      { key: 'shop.goods.selfPickupTimeStep', value: '30' },
 
       // 素材管理 - 图片处理
       { key: 'app.assets.enableImageCompress', value: '1' },

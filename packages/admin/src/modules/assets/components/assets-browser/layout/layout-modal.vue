@@ -117,7 +117,9 @@ function handleShow() {
     <template #footer>
       <div class="assets-browser-modal__footer">
         <span class="assets-browser-modal__footer--info">
-          已选 <strong>{{ selected.length }}</strong> 项, 最多选择 <strong>{{ limit }}</strong> 项
+          <template v-if="limit > 0">
+            已选 <strong>{{ selected.length }}</strong> 项, 最多选择 <strong>{{ limit }}</strong> 项
+          </template>
         </span>
 
         <a-space>

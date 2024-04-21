@@ -8,6 +8,10 @@ defineOptions({
 const { loading, data, refreshData } = fetchGoodsTagList()
 
 refreshData()
+
+defineExpose({
+  refresh: refreshData,
+})
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { IGoodsGuarantee } from '@/goods/types'
+
 import { fetchGoodsGuaranteeList } from '@/goods/apis/guarantee'
 
 defineOptions({
@@ -9,8 +10,16 @@ defineOptions({
 const guarantees = ref<IGoodsGuarantee[]>([])
 const { refreshData: loadGuarantees } = fetchGoodsGuaranteeList()
 
-loadGuarantees().then((res) => {
-  guarantees.value = res
+function refresh() {
+  loadGuarantees().then((res) => {
+    guarantees.value = res
+  })
+}
+
+refresh()
+
+defineExpose({
+  refresh,
 })
 </script>
 

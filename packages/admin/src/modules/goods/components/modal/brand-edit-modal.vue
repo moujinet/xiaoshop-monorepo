@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import type { IGoodsBrand } from '@/goods/types'
-import { createGoodsBrand, fetchGoodsBrandDetail, updateGoodsBrand } from '@/goods/apis/brand'
+
 import { AssetsBrowser } from '@/assets/components'
+
+import {
+  createGoodsBrand,
+  fetchGoodsBrandDetail,
+  updateGoodsBrand,
+} from '@/goods/apis/brand'
 
 defineOptions({
   name: 'GoodsBrandEditModal',
@@ -12,6 +18,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['success'])
+
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive<IFormData<IGoodsBrand>>({
