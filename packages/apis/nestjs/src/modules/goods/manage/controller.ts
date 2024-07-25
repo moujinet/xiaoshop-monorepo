@@ -7,11 +7,13 @@ import {
   CreateGoodsResponse,
   DeleteBatchGoodsRequest,
   DeleteGoodsRequest,
+  GetGoodsPagesRequest,
   GetGoodsRequest,
   GoodsBasicInfoPayload,
   GoodsBasicInfoResponse,
   GoodsDetailInfoResponse,
   GoodsDetailPayload,
+  GoodsPageListResponse,
   GoodsResponse,
   GoodsStockInfoPayload,
   GoodsStockInfoResponse,
@@ -21,6 +23,7 @@ import {
   ApiDoneResponse,
   ApiExceptionResponse,
   ApiObjectResponse,
+  ApiPaginatedResponse,
 } from '~/common/response/decorators'
 import {
   EXCEPTION_BAD_REQUEST,
@@ -38,6 +41,16 @@ export class GoodsController {
     private readonly service: GoodsService,
     private readonly eventEmitter: EventEmitter2,
   ) {}
+
+  @ApiOperation({
+    summary: '获取「商品」分页列表',
+  })
+  @ApiPaginatedResponse(GoodsPageListResponse)
+  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
+  @Get('pages')
+  async pages(@Query() query: GetGoodsPagesRequest) {
+    return this.service.findPages(query)
+  }
 
   @ApiOperation({
     summary: '获取「商品」详情',

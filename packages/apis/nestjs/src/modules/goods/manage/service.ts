@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { Brackets, In, LessThanOrEqual, Not, Repository } from 'typeorm'
+import { Between, Brackets, FindOptionsWhere, In, LessThanOrEqual, Like, Not, Repository } from 'typeorm'
 import {
   EnabledEnum,
   GoodsBuyBtnTypeEnum,
@@ -13,15 +13,18 @@ import {
   GoodsStatusEnum,
   GoodsStockDeductModeEnum,
   GoodsTypeEnum,
+  type IApiPaginationData,
   type IGoods,
   type IGoodsBasicInfo,
   type IGoodsDetailInfo,
+  type IGoodsListItem,
   type IGoodsStockInfo,
   LogisticsDeliveryModeEnum,
 } from '@xiaoshop/schema'
 import {
   BatchUpdateGoodsData,
   CreateGoodsResponse,
+  GetGoodsPagesRequest,
   GoodsBasicInfoPayload,
   GoodsDetailPayload,
   GoodsStockInfoPayload,
@@ -57,6 +60,117 @@ export class GoodsService {
     private readonly repository: Repository<Goods>,
     private readonly eventEmitter: EventEmitter2,
   ) {}
+
+  /**
+   * 获取商品分页列表
+   *
+   * @param query GetGoodsPagesRequest
+   * @throws FailedException
+   * @returns Promise<IApiPaginationData<IGoodsListItem>>
+   * @see {@link IGoodsListItem}
+   */
+  async findPages(query: GetGoodsPagesRequest): Promise<IApiPaginationData<IGoodsListItem>> {
+    try {
+      const where: FindOptionsWhere<Goods> = {
+        isDeleted: EnabledEnum.NO,
+      }
+
+      if (query.status)
+        where.status = query.status
+
+      if (query.source)
+        where.source = query.source
+
+      if (query.skuCode)
+        where.skuCode = query.skuCode
+
+      if (query.categoryId)
+        where.categories = { id: query.categoryId }
+
+      if (query.brandId)
+        where.brand = { id: query.brandId }
+
+      if (query.groupId)
+        where.group = { id: query.groupId }
+
+      if (query.tagId)
+        where.tag = { id: query.tagId }
+
+      if (query.name)
+        where.name = Like(`%${query.name}%`)
+
+      if (query.price) {
+        const [min, max] = query.price.split(',')
+        where.price = Between(Number(min), Number(max))
+      }
+
+      if (query.stock) {
+        const [min, max] = query.stock.split(',')
+        where.stock = Between(Number(min), Number(max))
+      }
+
+      if (query.sales) {
+        const [min, max] = query.sales.split(',')
+        where.sales = Between(Number(min), Number(max))
+      }
+
+      if (query.inStockTime) {
+        const [start, end] = query.inStockTime.split(',')
+        where.inStockTime = Between(`${start} 00:00:00`, `${end} 23:59:59`)
+      }
+
+      if (query.stockedTime) {
+        const [start, end] = query.stockedTime.split(',')
+        where.stockedTime = Between(`${start} 00:00:00`, `${end} 23:59:59`)
+      }
+
+      if (query.createdTime) {
+        const [start, end] = query.createdTime.split(',')
+        where.createdTime = Between(`${start} 00:00:00`, `${end} 23:59:59`)
+      }
+
+      const pagesize = query.pagesize || 10
+      const page = query.page || 1
+
+      const [result, total] = await this.repository.findAndCount({
+        select: {
+          id: true,
+          status: true,
+          source: true,
+          name: true,
+          images: true,
+          tag: { id: true, name: true },
+          group: { id: true, name: true },
+          price: true,
+          stock: true,
+          sales: true,
+          sort: true,
+          updatedTime: true,
+        },
+        relations: [
+          'group',
+          'tag',
+        ],
+        where,
+        skip: pagesize * (page - 1),
+        take: pagesize,
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
+      })
+
+      return {
+        result,
+        total,
+        page,
+        pagesize,
+      }
+    }
+    catch (e) {
+      throw new FailedException('获取商品分页列表', e.message)
+    }
+  }
 
   /**
    * 获取商品完整详情

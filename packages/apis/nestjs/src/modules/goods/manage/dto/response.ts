@@ -20,6 +20,7 @@ import {
   type IGoodsCategoryDict,
   type IGoodsDetailInfo,
   type IGoodsGroupDict,
+  IGoodsListItem,
   type IGoodsLogisticsBackFreightBy,
   type IGoodsLogisticsFreightChargeMode,
   type IGoodsProtectionInfo,
@@ -279,3 +280,23 @@ export class GoodsDetailInfoResponse
     'detail',
   ] as const)
   implements IGoodsDetailInfo {}
+
+/**
+ * 商品分页列表响应
+ */
+export class GoodsPageListResponse
+  extends PickType(GoodsResponse, [
+    'id',
+    'status',
+    'source',
+    'name',
+    'images',
+    'tag',
+    'group',
+    'price',
+    'stock',
+    'sales',
+    'sort',
+    'updatedTime',
+  ] as const)
+  implements IGoodsListItem {}

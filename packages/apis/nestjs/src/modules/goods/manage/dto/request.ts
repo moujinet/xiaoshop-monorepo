@@ -1,10 +1,8 @@
 import {
   GoodsSourceEnum,
   GoodsStatusEnum,
-  GoodsTypeEnum,
   type IGoodsSource,
   type IGoodsStatus,
-  type IGoodsType,
 } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsNotEmpty, IsNumberString, IsOptional, IsString } from 'class-validator'
@@ -16,6 +14,11 @@ import { nanoid } from '~/utils'
  * 获取商品分页列表请求 DTO
  */
 export class GetGoodsPagesRequest extends PaginationQueryDto {
+  @ApiProperty({ required: false, description: '商品状态', enum: GoodsStatusEnum, example: example.status })
+  @IsEnum(GoodsStatusEnum)
+  @IsOptional()
+  readonly status: IGoodsStatus
+
   @ApiProperty({ required: false, description: '商品名称', example: example.name })
   @IsString()
   @IsOptional()
@@ -25,21 +28,6 @@ export class GetGoodsPagesRequest extends PaginationQueryDto {
   @IsString()
   @IsOptional()
   readonly skuCode: string
-
-  @ApiProperty({ required: false, description: '商品状态', enum: GoodsStatusEnum, example: example.status })
-  @IsEnum(GoodsStatusEnum)
-  @IsOptional()
-  readonly status: IGoodsStatus
-
-  @ApiProperty({ required: false, description: '商品来源', enum: GoodsSourceEnum, example: example.source })
-  @IsEnum(GoodsSourceEnum)
-  @IsOptional()
-  readonly source: IGoodsSource
-
-  @ApiProperty({ required: false, description: '商品类型', enum: GoodsTypeEnum, example: example.type })
-  @IsEnum(GoodsTypeEnum)
-  @IsOptional()
-  readonly type: IGoodsType
 
   @ApiProperty({ required: false, description: '商品分类 ID', example: 1 })
   @IsNumberString()
@@ -60,6 +48,11 @@ export class GetGoodsPagesRequest extends PaginationQueryDto {
   @IsNumberString()
   @IsOptional()
   readonly tagId: number
+
+  @ApiProperty({ required: false, description: '商品来源', enum: GoodsSourceEnum, example: example.source })
+  @IsEnum(GoodsSourceEnum)
+  @IsOptional()
+  readonly source: IGoodsSource
 
   @ApiProperty({ required: false, description: '商品价格', example: '10,20' })
   @IsString()
@@ -86,7 +79,7 @@ export class GetGoodsPagesRequest extends PaginationQueryDto {
   @IsOptional()
   readonly stockedTime: string
 
-  @ApiProperty({ required: false, description: '创建时间', example: '2000-01-01,2000-01-02' })
+  @ApiProperty({ required: false, description: '发布时间', example: '2000-01-01,2000-01-02' })
   @IsString()
   @IsOptional()
   readonly createdTime: string
