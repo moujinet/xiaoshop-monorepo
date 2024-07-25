@@ -9,7 +9,6 @@ import {
   GoodsLogisticsFreightChargeModeEnum,
   GoodsPublishModeEnum,
   GoodsSourceEnum,
-  GoodsStatusEnum,
   GoodsStockDeductModeEnum,
   GoodsTypeEnum,
   type IEnabled,
@@ -22,7 +21,6 @@ import {
   type IGoodsPublishMode,
   type IGoodsSource,
   type IGoodsSpec,
-  type IGoodsStatus,
   type IGoodsStockDeductMode,
   type IGoodsStockInfoFormData,
   type IGoodsType,
@@ -66,11 +64,6 @@ export class GoodsBasicInfoPayload implements IGoodsBasicInfoFormData {
   @IsEnum(GoodsTypeEnum)
   @IsOptional()
   readonly type: IGoodsType
-
-  @ApiProperty({ required: false, description: '商品状态', enum: GoodsStatusEnum, example: example.status })
-  @IsEnum(GoodsStatusEnum)
-  @IsOptional()
-  readonly status: IGoodsStatus
 
   @ApiProperty({ required: false, description: '商品来源', enum: GoodsSourceEnum, example: example.source })
   @IsEnum(GoodsSourceEnum)

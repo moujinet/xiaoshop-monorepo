@@ -420,7 +420,6 @@ export class GoodsService {
 
       goods.id = nanoid()
       goods.type = data.type || GoodsTypeEnum.ENTITY
-      goods.status = data.status || GoodsStatusEnum.IN_STOCK
       goods.source = data.source || GoodsSourceEnum.MANUAL
       goods.video = data.video || ''
       goods.images = data.images || []
@@ -438,6 +437,7 @@ export class GoodsService {
       goods.autoInStockAt = data.autoInStockAt || null
       goods.buyBtnNameType = data.buyBtnNameType || GoodsBuyBtnTypeEnum.DEFAULT
       goods.buyBtnName = data.buyBtnName || ''
+      goods.status = GoodsStatusEnum.DRAFT
 
       // Tag
       if (data.tagId) {
@@ -607,6 +607,10 @@ export class GoodsService {
           goods[key] = data[key]
         }
       })
+
+      goods.status = data.publishMode === GoodsPublishModeEnum.DIRECT
+        ? GoodsStatusEnum.IN_STOCK
+        : GoodsStatusEnum.STOCKED
 
       await this.repository.save(goods)
 
