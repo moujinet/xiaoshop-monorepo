@@ -383,3 +383,29 @@ export type IGoodsListItem = Pick<
   | 'sort'
   | 'updatedTime'
 >
+
+/**
+ * 商品批量更新
+ */
+export type IGoodsBatchUpdateFormData = Partial<
+  Pick<
+    IGoods,
+    | 'logisticsDeliveryModes'
+    | 'logisticsFreight'
+    | 'logisticsFreightTemplateId'
+    | 'logisticsFreightChargeMode'
+    | 'logisticsBackFreightBy'
+    | 'enablePurchaseLimits'
+    | 'purchaseMinQty'
+    | 'purchaseMaxQty'
+    | 'buyBtnNameType'
+    | 'buyBtnName'
+  > & {
+    categoryIds: number[]
+    tagId: number
+    groupId: number
+    brandId: number
+    protectionIds: number[]
+    additionIds: number[]
+  }
+>
