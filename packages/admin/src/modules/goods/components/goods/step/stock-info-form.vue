@@ -96,6 +96,11 @@ watch(
 )
 
 function getFormData() {
+  if (skus.value.length > 0) {
+    stockInfo.price = skus.value.map((sku: any) => sku.price).reduce((acc: number, cur: number) => Math.min(acc, cur), skus.value[0].price)
+    stockInfo.stock = skus.value.map((sku: any) => sku.stock).reduce((acc: number, cur: number) => acc + cur, 0)
+  }
+
   return {
     stockInfo,
     specs,

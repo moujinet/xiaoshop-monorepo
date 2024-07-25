@@ -94,9 +94,9 @@ watch(
         form.categoryIds = res.categories.map(cate => cate.id)
         form.shareDesc = res.shareDesc
         form.slogan = res.slogan
-        form.tagId = res.tag.id || 0
-        form.groupId = res.group.id || 0
-        form.brandId = res.brand.id || 0
+        form.tagId = res.tag ? res.tag.id : 0
+        form.groupId = res.group ? res.group.id : 0
+        form.brandId = res.brand ? res.brand.id : 0
         form.additionIds = res.additions.map(addition => addition.id)
         form.protectionIds = res.protections.map(protection => protection.id)
         form.attributeTemplateId = res.attributeTemplateId || 0
