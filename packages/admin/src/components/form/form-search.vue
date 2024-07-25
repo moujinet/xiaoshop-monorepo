@@ -45,7 +45,7 @@ function handleSearchReset() {
 
     <div class="form-search__footer">
       <a-space class="form-search__btn">
-        <a-button type="primary" @click="emit('search')">
+        <a-button type="primary" @click="emit('search', form)">
           查询
         </a-button>
 
@@ -66,7 +66,7 @@ function handleSearchReset() {
         @click="collapsed = !collapsed"
       >
         {{ collapsed ? '展开' : '收起' }}
-        <CommonIcon name="ph:caret-double-up" />
+        <CommonIcon name="mingcute:up" />
       </a-button>
     </div>
   </CommonCard>

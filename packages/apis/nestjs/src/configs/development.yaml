@@ -1,0 +1,37 @@
+app:
+  prefix: '/dev'
+  port: 3001
+  swagger: true
+
+upload:
+  dest: './public/upload'
+
+db:
+  mysql:
+    type: 'mysql'
+    host: '127.0.0.1'
+    port: 55001
+    username: 'root'
+    password: '123456'
+    database: 'xiaoshop'
+    charset: 'utf8mb4'
+    timezone: '+08:00'
+    logging: false
+    logger: 'advanced-console'
+    synchronize: false
+    autoLoadEntities: true
+  redis:
+    host: '127.0.0.1'
+    port: 6379
+    db: 0
+
+cache:
+  keyPrefix: 'cache'
+  db: 1
+  ttl: 5000
+  max: 100
+
+queue:
+  prefix: 'queue'
+  redis:
+    db: 2

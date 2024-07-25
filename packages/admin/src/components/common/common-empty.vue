@@ -21,14 +21,16 @@ withDefaults(defineProps<{
       [`is-${size}`]: size,
     }"
   >
-    <IEmptyEmpty v-if="type === 'empty'" class="common-empty__icon" />
-    <IEmptyError v-if="type === 'error'" class="common-empty__icon" />
-    <IEmptyMessage v-if="type === 'message'" class="common-empty__icon" />
-    <IEmptyNotFound v-if="type === 'notfound'" class="common-empty__icon" />
+    <IconEmptyEmpty v-if="type === 'empty'" class="common-empty__icon" />
+    <IconEmptyError v-if="type === 'error'" class="common-empty__icon" />
+    <IconEmptyMessage v-if="type === 'message'" class="common-empty__icon" />
+    <IconEmptyNotFound v-if="type === 'notfound'" class="common-empty__icon" />
 
     <div class="common-empty__desc">
       {{ description }}
     </div>
+
+    <slot />
   </div>
 </template>
 
@@ -48,7 +50,7 @@ withDefaults(defineProps<{
 
   &__desc {
     font-size: 12px;
-    padding-bottom: 20px;
+    padding-bottom: var(--page-padding-sm);
   }
 
   &.is-small {

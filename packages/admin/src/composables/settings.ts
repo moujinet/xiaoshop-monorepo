@@ -1,4 +1,6 @@
-import { getSettings, updateSettings } from '@/settings/apis/settings'
+import type { ISettingsOption } from '@xiaoshop/schema'
+import type { ValidatedError } from '@arco-design/web-vue'
+import { getSettings, updateSettings } from '@/settings/apis'
 
 interface IUseSettingsUpdateOptionsReturn {
   /**
@@ -10,14 +12,18 @@ interface IUseSettingsUpdateOptionsReturn {
    *
    * @returns void
    */
-  onUpdate: () => void
+  onUpdate: (data: { values: Record<string, any>, errors: Record<string, ValidatedError> | undefined }) => void
 }
 
 export function useSettings() {
   /**
    * 所有设置
    */
-  const [options, _updateOptions] = useCache('options', {}, { autoRefresh: true })
+  const [options, _updateOptions] = useCache<IKeyValue<string>>(
+    'options',
+    {},
+    { storage: sessionStorage, expire: 1500, refreshFn: () => new Promise(() => refresh(true)) },
+  )
 
   /**
    * 返回指定配置
@@ -30,7 +36,10 @@ export function useSettings() {
     if (!key)
       return defaultVal
 
-    return options.value[key] || defaultVal
+    if (!Object.keys(options.value!).includes(key))
+      refresh(true)
+
+    return Object.keys(options.value!).includes(key) ? options.value![key] : defaultVal
   }
 
   /**
@@ -45,10 +54,10 @@ export function useSettings() {
     if (!group)
       return defaultVal
 
-    if (Object.keys(options.value).some(key => key.startsWith(group))) {
-      const opts = Object.keys(options.value).reduce((item, key) => {
+    if (Object.keys(options.value!).some(key => key.startsWith(group))) {
+      const opts = Object.keys(options.value!).reduce((item, key) => {
         if (key.startsWith(group))
-          item[key.replace(new RegExp(`^${group}\.`), '')] = options.value[key]
+          item[key.replace(new RegExp(`^${group}\.`), '')] = options.value![key]
         return item
       }, {} as IKeyValue)
 
@@ -68,15 +77,19 @@ export function useSettings() {
   function updateOptions(group: string, options: IKeyValue): IUseSettingsUpdateOptionsReturn {
     const loading = ref(false)
 
-    const onUpdate = () => {
+    const onUpdate = (data: { values: Record<string, any>, errors: Record<string, ValidatedError> | undefined }) => {
+      const { errors } = data
+
+      if (errors)
+        return
+
       loading.value = true
 
-      const data = _transformOptions(group, options)
-      const res = updateSettings(data)
+      const res = updateSettings(_transformOptions(group, options))
         .then(() => {
           useMessage({
             onClose: () => {
-              refresh()
+              refresh(true)
             },
           }).success('配置已更新')
         })
@@ -96,13 +109,16 @@ export function useSettings() {
   /**
    * 刷新配置项
    */
-  function refresh() {
-    getSettings().then((_) => {
-      _updateOptions(_.reduce((item, option) => {
-        item[option.key] = _transformValueType(option.key, option.value)
-        return item
-      }, {} as IKeyValue))
-    })
+  function refresh(force: boolean = false) {
+    if (force || Object.keys(options.value!).length === 0) {
+      getSettings()
+        .then((_) => {
+          _updateOptions(_.reduce((item, option) => {
+            item[option.key] = _transformValueType(option.key, option.value)
+            return item
+          }, {} as IKeyValue))
+        })
+    }
   }
 
   /**
@@ -110,19 +126,21 @@ export function useSettings() {
    *
    * @param group string
    * @param options IKeyValue
-   * @returns IKeyValue
+   * @returns ISettingsOption
    */
-  function _transformOptions(group: string, options: IKeyValue) {
+  function _transformOptions(group: string, options: IKeyValue): ISettingsOption[] {
     const data = Object.keys(options).reduce((item, key) => {
-      item[`${group}.${key}`]
-        = key.startsWith('enable')
+      item.push({
+        key: `${group}.${key}`,
+        value: key.startsWith('enable')
           ? options[key] === true ? '1' : '0'
-          : key.startsWith('[') && key.endsWith(']')
+          : Array.isArray(options[key]) || JSON.stringify(options[key]).startsWith('{')
             ? JSON.stringify(options[key])
-            : options[key].toString()
+            : options[key].toString(),
+      })
 
       return item
-    }, {} as IKeyValue)
+    }, [] as ISettingsOption[])
 
     return data
   }
@@ -145,7 +163,7 @@ export function useSettings() {
       return val
 
     // JSON
-    if (val.startsWith('[') && val.endsWith(']'))
+    if ((val.startsWith('[') && val.endsWith(']')) || (val.startsWith('{') && val.endsWith('}')))
       return JSON.parse(val)
 
     return val

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["src/*"],
+      "~~/*": ["./*"]
+    },
+    "outDir": "../../dist/schema",
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src/**/*"]
+}

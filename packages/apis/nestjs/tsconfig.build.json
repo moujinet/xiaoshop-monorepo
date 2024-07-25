@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "coverage", "tests", "dist", "upload", "upload-test"]
+}

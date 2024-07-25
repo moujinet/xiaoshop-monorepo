@@ -1,174 +1,214 @@
 <script lang="ts" setup>
-import { GOODS_ATTRIBUTE_TYPES } from '@/goods/constants'
-import { deleteGoodsAttribute, fetchGoodsAttributeList, fetchGoodsAttributeTemplateDetail } from '@/goods/apis/attribute'
-import { GoodsAttributeEditModal, GoodsAttributeTemplateEditModal } from '@/goods/components'
+import type { TableColumnData } from '@arco-design/web-vue'
+
+import {
+  GOODS_ATTRIBUTE_OPTION_TYPES,
+  type IGoodsAttributeTemplate,
+  type IGoodsAttributeTemplateOption,
+} from '@xiaoshop/schema'
+
+import { GoodsAttributeTemplateOptionsModal } from '@/goods/components'
+
+import {
+  fetchGoodsAttributeTemplateDetail,
+  updateGoodsAttributeTemplate,
+} from '@/goods/apis'
 
 defineOptions({
   name: 'GoodsManageAttributesTemplatePage',
 })
 
-const columns = [
-  {
-    title: '参数名称',
-    dataIndex: 'name',
-    width: 200,
-  },
-  {
-    title: '参数类型',
-    dataIndex: 'type',
-    slotName: 'type',
-    width: 200,
-  },
-  {
-    title: '参数项',
-    dataIndex: 'options',
-    slotName: 'options',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdTime',
-    slotName: 'createdTime',
-    width: 200,
-  },
-  {
-    title: '操作',
-    slotName: 'actions',
-    width: 100,
-  },
-]
-
-const detail = reactive({
-  id: 0,
-  name: '',
-  desc: '',
-  createdTime: 0,
-})
-
 const route = useRoute()
+const formRef = ref()
 const templateId = route.query.id ? Number(route.query.id) : 0
 
-const {
-  loading: templateLoading,
-  refreshData: refreshTemplateData,
-} = fetchGoodsAttributeTemplateDetail(templateId)
+const columns: TableColumnData[] = [
+  { title: '参数名称', dataIndex: 'name', width: 160 },
+  { title: '参数类型', dataIndex: 'type', slotName: 'type', width: 90, align: 'center' },
+  { title: '参数项/默认值', dataIndex: 'options', slotName: 'options' },
+  { title: '操作', slotName: 'actions', width: 100, align: 'center' },
+]
 
-refreshTemplateData().then((res) => {
-  detail.id = res.id
-  detail.name = res.name
-  detail.desc = res.desc
-  detail.createdTime = res.createdTime
+const rules: IFormRules = {
+  name: [
+    {
+      required: true,
+      message: '请输入参数模板名称',
+    },
+  ],
+  options: [
+    {
+      required: true,
+      message: '请输入参数模板参数',
+    },
+  ],
+}
+
+const detail = reactive<IFormData<IGoodsAttributeTemplate>>({
+  name: '',
+  desc: '',
+  options: [],
 })
 
-const { loading, data, refreshData } = fetchGoodsAttributeList(templateId)
+const {
+  loading,
+  refreshData,
+} = fetchGoodsAttributeTemplateDetail(templateId)
 
-refreshData()
-
-function handleDelete(id: number) {
-  const message = useMessage({
-    onClose: () => {
-      refreshData()
-    },
+function refresh() {
+  refreshData().then((res) => {
+    detail.name = res.name
+    detail.desc = res.desc
+    detail.options = res.options || []
   })
+}
 
-  deleteGoodsAttribute(id)
-    .then(() => {
-      message.success('删除成功')
-    })
-    .catch(() => {
-      message.error('删除失败')
-    })
+function getAttributeTypeLabel(type: string) {
+  return GOODS_ATTRIBUTE_OPTION_TYPES.find(item => item.value === type)?.label
 }
 
 function getAttributeTypeColor(type: string) {
-  return GOODS_ATTRIBUTE_TYPES.find(item => item.value === type)?.color || 'gray'
+  return GOODS_ATTRIBUTE_OPTION_TYPES.find(item => item.value === type)?.color || 'gray'
 }
+
+function handleCreateAttribute(attribute: IGoodsAttributeTemplateOption) {
+  if (detail.options.some(item => item.name === attribute.name)) {
+    return useMessage().error('参数名称已存在')
+  }
+
+  detail.options.push({
+    name: attribute.name,
+    type: attribute.type,
+    options: [...attribute.options],
+    defaultValue: [...attribute.defaultValue],
+  })
+}
+
+function handleUpdateAttribute(attribute: IGoodsAttributeTemplateOption, index: number) {
+  if (detail.options.some((item, idx) => idx !== index && item.name === attribute.name)) {
+    return useMessage().error('参数名称已存在')
+  }
+
+  detail.options[index] = {
+    name: attribute.name,
+    type: attribute.type,
+    options: [...attribute.options],
+    defaultValue: [...attribute.defaultValue],
+  }
+}
+
+function handleSubmit() {
+  const message = useMessage({
+    onClose: () => {
+      refresh()
+    },
+  })
+
+  updateGoodsAttributeTemplate(templateId, detail)
+    .then(() => {
+      message.success('更新成功')
+    })
+    .catch(() => {
+      message.error('更新失败')
+    })
+}
+
+refresh()
 </script>
 
 <template>
   <CommonContainer flexible>
-    <CommonCard :title="`模板: ${detail.name}`" :loading="templateLoading">
-      <div flex="~ between v-center">
-        <div flex="~ gap-8">
-          <div>
-            <a-typography-text type="secondary" bold>
-              模板说明:
-            </a-typography-text>
-            <a-typography-text>{{ detail.desc }}</a-typography-text>
+    <CommonCard title="模板详情" :loading="loading">
+      <a-form
+        ref="formRef"
+        :model="detail"
+        :rules="rules"
+        :label-col-props="{ span: 3 }"
+        :wrapper-col-props="{ span: 21 }"
+        scroll-to-first-error
+        @submit="handleSubmit"
+      >
+        <a-form-item field="name" label="模板名称" show-colon>
+          <div class="form-item">
+            <a-input v-model="detail.name" placeholder="请输入模板名称" />
           </div>
+        </a-form-item>
 
-          <div>
-            <a-typography-text type="secondary" bold>
-              创建于:
-            </a-typography-text>
-            <a-typography-text>{{ formatDateTime(detail.createdTime) }}</a-typography-text>
+        <a-form-item field="desc" label="模板说明" show-colon>
+          <div class="form-item">
+            <a-textarea v-model="detail.desc" placeholder="请输入模板说明" />
           </div>
-        </div>
+        </a-form-item>
 
-        <GoodsAttributeTemplateEditModal :id="detail.id">
-          <a-button>
-            编辑
-          </a-button>
-        </GoodsAttributeTemplateEditModal>
-      </div>
-    </CommonCard>
-
-    <CommonCard :loading="loading">
-      <a-space direction="vertical" fill>
-        <GoodsAttributeEditModal :template-id="templateId" @success="refreshData">
-          <a-button type="primary">
-            添加参数
-          </a-button>
-        </GoodsAttributeEditModal>
-
-        <a-table
-          :columns="columns"
-          :data="data"
-          :bordered="false"
-          :pagination="false"
-          row-key="id"
-          hoverable
-          stripe
-          show-empty-tree
-        >
-          <template #type="{ record }">
-            <a-tag :color="getAttributeTypeColor(record.type)" size="small" bordered>
-              {{ GOODS_ATTRIBUTE_TYPES.find(item => item.value === record.type)?.label }}
-            </a-tag>
-          </template>
-
-          <template #options="{ record }">
-            <a-space v-if="record.type !== 'input'">
-              <a-tag
-                v-for="(item, index) in record.options.split(',').map((it: string) => it.trim())"
-                :key="index"
-                size="small"
-                bordered
-              >
-                {{ item }}
-              </a-tag>
-            </a-space>
-            <span v-else>
-              -
-            </span>
-          </template>
-
-          <template #createdTime="{ record }">
-            {{ formatDateTime(record.createdTime) }}
-          </template>
-
-          <template #actions="{ record }">
-            <a-space>
-              <GoodsAttributeEditModal :id="record.id" :template-id="templateId" @success="refreshData">
-                <a-button type="text">
-                  编辑
+        <a-form-item field="options" label="模板参数" show-colon>
+          <div class="form-item-full">
+            <a-space direction="vertical" fill>
+              <GoodsAttributeTemplateOptionsModal @success="handleCreateAttribute">
+                <a-button type="outline" size="small">
+                  添加参数
                 </a-button>
-              </GoodsAttributeEditModal>
+              </GoodsAttributeTemplateOptionsModal>
 
-              <CommonDeleteBtn @delete="handleDelete(record.id)" />
+              <a-table
+                :columns="columns"
+                :data="detail.options"
+                :bordered="false"
+                :pagination="false"
+                hoverable
+              >
+                <template #type="{ record }">
+                  <a-tag :color="getAttributeTypeColor(record.type)">
+                    {{ getAttributeTypeLabel(record.type) }}
+                  </a-tag>
+                </template>
+
+                <template #options="{ record }">
+                  <a-space v-if="record.type !== 'input'">
+                    <a-tag
+                      v-for="(item, index) in record.options"
+                      :key="index"
+                      :color="record.defaultValue.includes(item) ? getAttributeTypeColor(record.type) : 'gray'"
+                      :bordered="record.defaultValue.includes(item)"
+                    >
+                      {{ item }}
+                    </a-tag>
+                  </a-space>
+                  <span v-else>
+                    {{ record.defaultValue && record.defaultValue.join(',') || '' }}
+                  </span>
+                </template>
+
+                <template #actions="{ record }">
+                  <a-space>
+                    <GoodsAttributeTemplateOptionsModal
+                      :option="record as IGoodsAttributeTemplateOption"
+                      :index="detail.options.indexOf(record)"
+                      @success="handleUpdateAttribute"
+                    >
+                      <a-button type="text">
+                        编辑
+                      </a-button>
+                    </GoodsAttributeTemplateOptionsModal>
+
+                    <CommonConfirm @ok="() => detail.options.splice(detail.options.indexOf(record), 1)" />
+                  </a-space>
+                </template>
+              </a-table>
+
+              <div>
+                <CommonIcon name="mingcute:information" color="gray" active />
+                提示: 编辑模板参数后，请记得保存。
+              </div>
             </a-space>
-          </template>
-        </a-table>
-      </a-space>
+          </div>
+        </a-form-item>
+
+        <a-form-item>
+          <a-button type="primary" html-type="submit" size="large">
+            保存
+          </a-button>
+        </a-form-item>
+      </a-form>
     </CommonCard>
   </CommonContainer>
 </template>

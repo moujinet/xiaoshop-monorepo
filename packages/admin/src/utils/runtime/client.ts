@@ -1,14 +1,15 @@
 import { type Component, createApp } from 'vue'
-import { type Router, createRouter, createWebHistory } from 'vue-router/auto'
+import { createRouter, createWebHistory } from 'vue-router'
 import { setupLayouts } from 'virtual:generated-layouts'
+import { routes } from 'vue-router/auto-routes'
 import { createHead } from '@unhead/vue'
 
-import type { IAsyncCallback, IContextCallback, IGlobalContext } from '~/types'
+import type { IAsyncCallback, ICallback, IGlobalContext } from '~/types'
 import { version } from '~~/package.json'
 
 export function createAdminClient(
   App: Component,
-  ready?: IContextCallback<IAsyncCallback>,
+  ready?: ICallback,
   rootContainer = '#app',
 ) {
   async function createGlobalContext(): IAsyncCallback<IGlobalContext> {
@@ -20,18 +21,20 @@ export function createAdminClient(
       .use(pinia)
       .use(head)
 
+    ready?.()
+
     // 加载模块
     loadModules()
 
+    const { extendRoutesMeta } = useMeta()
+
     const router = createRouter({
+      routes: extendRoutesMeta(
+        setupLayouts(routes),
+      ),
       history: createWebHistory(import.meta.env.BASE_URL),
       scrollBehavior: () => ({ left: 0, top: 0 }),
-      extendRoutes: (r) => {
-        const routes = setupLayouts(r)
-        const { extendRoutesMeta } = useMeta()
-        return extendRoutesMeta(routes)
-      },
-    }) as Router
+    })
 
     app.use(router)
 
@@ -43,8 +46,6 @@ export function createAdminClient(
     // 加载中间件及插件
     loadMiddlewares(ctx)
     loadPlugins(ctx)
-
-    await ready?.(ctx)
 
     return ctx
   }

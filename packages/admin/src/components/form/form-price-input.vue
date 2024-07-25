@@ -3,8 +3,14 @@ defineOptions({
   name: 'FormPriceInput',
 })
 
+const props = withDefaults(defineProps<{
+  showZero?: boolean
+}>(), {
+  showZero: false,
+})
+
 function formatter(value: string) {
-  if (value === '0')
+  if (!props.showZero && value === '0')
     return ''
 
   const values = value.split('.')

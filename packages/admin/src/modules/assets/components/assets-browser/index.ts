@@ -1,24 +1,23 @@
+import { AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
 import { createVNode, render } from 'vue'
 import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
-import { ASSET_TYPE_IMAGE } from '@/assets/constants'
-import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
 export interface IUseAssetsBrowserOpenOptions {
   type?: IAssetType
   limit?: number
-  onSelect?: (fileList: IAssetSnapshot[]) => void
+  onSelect?: (fileList: string[]) => void
 }
 
 function openModal(options: IUseAssetsBrowserOpenOptions = {}) {
   let container: HTMLElement | null = document.createElement('div')
 
   const {
-    type = ASSET_TYPE_IMAGE,
+    type = AssetTypeEnum.IMAGE,
     limit = 1,
     onSelect = () => {},
   } = options
 
-  function handleSelect(selectedAssets: IAssetSnapshot[]) {
+  function handleSelect(selectedAssets: string[]) {
     onSelect(selectedAssets)
   }
 

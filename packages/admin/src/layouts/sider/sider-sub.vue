@@ -28,8 +28,8 @@ watch(
   () => route.path,
   () => {
     menus.value = getModuleMenus(route.meta.module || '').value
-    openedKeys.value = route.matched.map(item => item.meta?.id || '')
-    selectedKeys.value = route.matched.map(item => transId2Path(item.meta?.id || ''))
+    openedKeys.value = route.matched.map(item => transId2Path(item.meta?.id || '')).filter(item => item !== '/')
+    selectedKeys.value = route.matched.map(item => transId2Path(item.meta?.id || '')).filter(item => item !== '/')
   },
   { immediate: true },
 )
@@ -40,8 +40,8 @@ watch(
     <a-menu
       v-model:selected-keys="selectedKeys"
       v-model:open-keys="openedKeys"
-      auto-open
       accordion
+      auto-open
       @menu-item-click="onMenuItemClick"
     >
       <template v-for="menu in menus">
@@ -55,7 +55,7 @@ watch(
             </a-menu-item>
           </template>
           <template v-else>
-            <a-sub-menu :key="menu.id" :title="menu.name">
+            <a-sub-menu :key="menu.path" :title="menu.name">
               <template v-if="menu.icon" #icon>
                 <CommonIcon :name="menu.icon" />
               </template>

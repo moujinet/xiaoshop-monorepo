@@ -48,7 +48,11 @@ function handleModalCancel(ev: Event) {
     unmount-on-close
     @cancel="handleModalCancel"
   >
-    <div v-if="visible" flex="~ center">
+    <template v-if="$slots.title" #title>
+      <slot name="title" />
+    </template>
+
+    <div v-if="visible" class="flex-(~ center)">
       <a-spin :loading="loading" w-full>
         <slot name="modal" />
       </a-spin>

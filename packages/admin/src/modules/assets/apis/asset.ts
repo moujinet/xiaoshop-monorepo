@@ -1,17 +1,17 @@
-import type { IAsset } from '@/assets/types'
+import { AssetTypeEnum, type IAsset, type IAssetInfo, type IAssetUploadOptions } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取素材分页列表
  *
- * @api get /asset/pages
+ * @api get /assets/pages
  * @param params Record<string, any>
  * @returns IUseRequestReturn<IApiPaginationResult<IAsset>>
  */
 export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IAsset>> {
   return useRequest<IApiPaginationResult<IAsset>>({
     method: 'get',
-    url: '/asset/pages',
+    url: '/assets/pages',
     params,
   })
 }
@@ -19,14 +19,14 @@ export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn
 /**
  * 获取素材详情
  *
- * @api get /asset/detail
+ * @api get /assets/detail
  * @param id IAsset['id']
- * @returns IUseRequestReturn<IAsset>
+ * @returns IUseRequestReturn<IAssetInfo>
  */
-export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
-  return useRequest<IAsset>({
+export function fetchAssetInfo(id: IAsset['id']): IUseRequestReturn<IAssetInfo> {
+  return useRequest<IAssetInfo>({
     method: 'get',
-    url: '/asset/detail',
+    url: '/assets/info',
     params: {
       id,
     },
@@ -34,48 +34,78 @@ export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
 }
 
 /**
- * 创建素材
+ * 获取素材详情
  *
- * @api post /asset/create
- * @param data IFormData<IAsset>
- * @returns Promise<any>
+ * @api get /assets/detail
+ * @param id IAsset['id']
+ * @returns IUseRequestReturn<IAsset>
  */
-export function createAsset(data: IFormData<IAsset>): Promise<any> {
-  return usePromiseRequest({
-    method: 'post',
-    url: '/asset/create',
-    data,
+export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
+  return useRequest<IAsset>({
+    method: 'get',
+    url: '/assets/detail',
+    params: {
+      id,
+    },
   })
 }
 
+interface IUploadAssetOptions {
+  /**
+   * 上传进度回调
+   *
+   * @param {number} percent
+   * @param {ProgressEvent} event
+   */
+  onProgress: (percent: number, event?: ProgressEvent) => void
+  /**
+   * 上传成功回调
+   *
+   * @param {any} response
+   */
+  onSuccess: (response?: any) => void
+  /**
+   * 上传失败回调
+   *
+   * @param {any} response
+   */
+  onError: (response?: any) => void
+}
+
 /**
- * 更新素材
+ * 上传素材
  *
- * @api put /asset/update
- * @param id IAsset['id']
- * @param data IFormData<IAsset>
- * @returns Promise<any>
+ * @param {File} file
+ * @param {IAssetUploadOptions} data
  */
-export function updateAsset(id: IAsset['id'], data: IFormData<IAsset>): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/asset/update',
-    params: { id },
+export function uploadAsset(
+  file: File,
+  data: IAssetUploadOptions,
+  options: IUploadAssetOptions,
+) {
+  const url = [AssetTypeEnum.IMAGE, AssetTypeEnum.ICON].includes(data.type)
+    ? '/assets/upload/image'
+    : '/assets/upload/video'
+
+  return useUploadRequest<IAssetUploadOptions>({
+    url,
+    file,
     data,
+    ...options,
   })
 }
 
 /**
  * 删除素材
  *
- * @api delete /asset/delete
+ * @api delete /assets/delete
  * @param id IAsset['id']
  * @returns Promise<any>
  */
 export function deleteAsset(id: IAsset['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/asset/delete',
+    url: '/assets/delete',
     data: {
       id,
     },

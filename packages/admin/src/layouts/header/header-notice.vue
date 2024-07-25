@@ -22,7 +22,7 @@ const tooltip = computed(() => unread.value === 0 ? '暂无消息' : `您有 ${u
       <a-tooltip :content="tooltip" position="br" mini>
         <a-badge :count="unread" :dot="unread > 0">
           <CommonIcon
-            name="ph:chat-centered-dots"
+            name="mingcute:message-1"
             :class="{ 'is-unread': unread > 0 }"
             :active="unread > 0"
           />
@@ -48,7 +48,7 @@ const tooltip = computed(() => unread.value === 0 ? '暂无消息' : `您有 ${u
       <a-spin :loading="loading" style="width: 100%">
         <a-scrollbar class="layout-header__notice--scroll">
           <div class="layout-header__notice--list">
-            <!-- <CommonEmpty type="message" description="暂无未读消息" /> -->
+            <CommonEmpty type="message" description="暂无未读消息" />
           </div>
         </a-scrollbar>
       </a-spin>
@@ -57,7 +57,7 @@ const tooltip = computed(() => unread.value === 0 ? '暂无消息' : `您有 ${u
         <CommonLink size="small" :disable="unread === 0">
           设为已读
         </CommonLink>
-        <CommonLink size="small" suffix-icon="ph:caret-right">
+        <CommonLink size="small" suffix-icon="mingcute:right">
           查看全部
         </CommonLink>
       </div>

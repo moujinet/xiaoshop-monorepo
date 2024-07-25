@@ -22,27 +22,38 @@ type ICacheReturns<T = any> = [
 interface ICacheOptions<T = any> {
   storage?: Storage
   expire?: number
-  autoRefresh?: boolean
   refreshFn?: () => Promise<T>
+}
+
+export function useCacheManager() {
+  const namespace = useStorage<string>('xiaoshop', Date.now().toString(), sessionStorage)
+
+  return {
+    namespace: unref(namespace),
+    refresh: () => {
+      namespace.value = Date.now().toString()
+    },
+  }
 }
 
 export function useCache<T = any>(
   key: string,
   defaultVal?: T,
   useOptions?: ICacheOptions<T>,
-): ICacheReturns {
+): ICacheReturns<T> {
   const options = {
     storage: useOptions?.storage || localStorage,
-    expire: useOptions?.expire || 3600,
-    autoRefresh: useOptions?.autoRefresh || false,
+    expire: useOptions?.expire || -1,
     refreshFn: useOptions?.refreshFn,
   }
+
+  const { namespace } = useCacheManager()
 
   /**
    * 缓存容器
    */
   const _cache_ = useStorage<ICache<T | undefined>>(
-    `xiaoshop.${key}`,
+    `${namespace}.${key}`,
     { cached: 0, data: defaultVal } as ICache<T | undefined>,
     options.storage,
   )
@@ -50,10 +61,7 @@ export function useCache<T = any>(
   /**
    * 获取缓存
    */
-  const getValue = computed(() => {
-    if (_isTimeout())
-      refreshValue()
-
+  const getValue = computed<T | undefined>(() => {
     return _isTimeout()
       ? defaultVal
       : _cache_.value.data
@@ -63,13 +71,14 @@ export function useCache<T = any>(
    * 刷新缓存
    */
   function refreshValue() {
-    if (options.autoRefresh && options.refreshFn) {
-      options.refreshFn().then((data) => {
-        _cache_.value = {
-          cached: Date.now(),
-          data,
-        }
-      })
+    if (options.refreshFn) {
+      options.refreshFn()
+        .then((data) => {
+          _cache_.value = {
+            cached: Date.now(),
+            data,
+          }
+        })
     }
   }
 
@@ -101,7 +110,9 @@ export function useCache<T = any>(
    * @returns boolean
    */
   function _isTimeout() {
-    return options.expire === 0
+    return options.expire === -1
+      ? false
+      : options.expire === 0
       || _cache_.value.cached === 0
       || _cache_.value.cached + options.expire * 1000 < Date.now()
   }

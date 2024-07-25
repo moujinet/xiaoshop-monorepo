@@ -1,10 +1,9 @@
 {
   "name": "@xiaoshop/schema",
-  "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@9.0.1",
-  "description": "XiaoShop types and constants",
+  "description": "XiaoShop 云链小店 (@schema)",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,17 +11,20 @@
       "require": "./dist/index.cjs"
     }
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
+    "build": "tsup --dts-resolve",
     "dev": "nr build --watch",
-    "build": "tsup src/index.ts --format esm,cjs --dts --no-splitting --dts-resolve",
     "prepublishOnly": "nr build"
   },
   "devDependencies": {
-    "tsup": "^8.0.2",
-    "vue": "^3.4.23"
-  }
+    "tsup": "^8.2.3",
+    "vue": "^3.4.34"
+  },
+  "packageManager": "pnpm@9.6.0"
 }

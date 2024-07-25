@@ -4,8 +4,8 @@ defineOptions({
 })
 
 const { getOptions, updateOptions } = useSettings()
-const form = reactive(getOptions('shop.goods', {}, ['clawerApiKey']))
-const { loading, onUpdate } = updateOptions('shop.goods', form)
+const form = reactive(getOptions('goods.clawer', {}, ['apiKey']))
+const { loading, onUpdate } = updateOptions('goods.clawer', form)
 </script>
 
 <template>
@@ -30,13 +30,13 @@ const { loading, onUpdate } = updateOptions('shop.goods', form)
       </a-alert>
 
       <FormGroup title="采集接口" size="medium">
-        <a-form-item field="clawerApiKey" label="API KEY" show-colon>
-          <a-input v-model="form.clawerApiKey" placeholder="请填写 API KEY" allow-clear />
+        <a-form-item field="apiKey" label="API KEY" show-colon>
+          <a-input v-model="form.apiKey" placeholder="请填写 API KEY" allow-clear />
         </a-form-item>
       </FormGroup>
 
       <a-form-item>
-        <a-button type="primary" html-type="submit">
+        <a-button type="primary" html-type="submit" size="large">
           保存
         </a-button>
       </a-form-item>

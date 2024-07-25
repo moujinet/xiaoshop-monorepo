@@ -7,12 +7,12 @@ defineOptions({
 <template>
   <a-space size="medium">
     <div class="layout-header__link">
-      <CommonIcon class="layout-header__link--icon" name="ph:qr-code" />
+      <CommonIcon class="layout-header__link--icon" name="mingcute:qrcode" />
       访问店铺
     </div>
 
     <div class="layout-header__link">
-      <CommonIcon class="layout-header__link--icon" name="ph:question" />
+      <CommonIcon class="layout-header__link--icon" name="mingcute:question" />
       使用帮助
     </div>
   </a-space>

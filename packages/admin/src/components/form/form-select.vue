@@ -12,5 +12,6 @@ defineOptions({
     :max-tag-count="3"
     unmount-on-close
     allow-clear
+    scrollbar
   />
 </template>

@@ -34,7 +34,7 @@ export function setupApi() {
       handleRequestDebugInfo(response)
 
       // 错误处理
-      if (!handleApiErrorResponse(response.data.code, response.data.message))
+      if (!handleApiErrorResponse(response.data.code, response.data.error || response.data.message))
         return Promise.reject(response.data)
 
       return response

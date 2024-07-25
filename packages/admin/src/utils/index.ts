@@ -1,3 +1,4 @@
+import { formatDateTime } from './datetime'
 import { IS_DEBUG_MODE } from '~/constants/env'
 
 /**
@@ -21,6 +22,28 @@ export function formatBytes(bytes: number, decimals = 2): string {
 }
 
 /**
+ * 格式化数值，显示千分位
+ *
+ * @param value number
+ * @returns string
+ */
+export function formatNumber(value: number | string): string {
+  return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+/**
+ * 获取年龄
+ *
+ * @param birthday number | string
+ * @returns number
+ */
+export function getAge(birthday: number | string) {
+  const ageDifMs = Date.now() - new Date(birthday).getTime()
+  const ageDate = new Date(ageDifMs)
+  return Math.ceil(ageDate.getTime() / (1000 * 60 * 60 * 24 * 365))
+}
+
+/**
  * 输出调试信息
  *
  * @param type
@@ -28,15 +51,16 @@ export function formatBytes(bytes: number, decimals = 2): string {
  * @param context
  */
 export function debug(type: string, message: string, context: any = null) {
-  IS_DEBUG_MODE
-  // eslint-disable-next-line no-console
-  && console.log(
-    '[XIAOSHOP]',
-    type.toUpperCase(),
-    message,
-    context,
-    formatDateTime(new Date().getTime(), 'YY-MM-DD hh:mm:ss.SSS'),
-  )
+  if (IS_DEBUG_MODE) {
+    // eslint-disable-next-line no-console
+    console.log(
+      '[XIAOSHOP]',
+      type.toUpperCase(),
+      message,
+      context,
+      formatDateTime(new Date().getTime(), 'YY-MM-DD hh:mm:ss.SSS'),
+    )
+  }
 }
 
 /**
@@ -68,9 +92,9 @@ export function omit<
  * @returns Pick<T, K | K2>
  */
 export function pick<
-T extends Record<string, any>,
-K extends string,
-K2 extends keyof T,
+  T extends Record<string, any>,
+  K extends string,
+  K2 extends keyof T,
 >(obj: T, keys: (K | K2)[]): Pick<T, K2> {
   return keys.reduce((pre, cur) => {
     if (cur in obj)
@@ -136,7 +160,7 @@ export function removeEmpty(
     if (obj[key] === null || obj[key] === undefined || obj[key] === '')
       delete obj[key]
 
-    if (isStrict && (obj[key] === 0 || obj[key] === false))
+    if (isStrict && (obj[key] === 0 || obj[key] === '0' || obj[key] === false))
       delete obj[key]
 
     if (specials && specials.length > 0 && specials.includes(obj[key]))
@@ -144,4 +168,51 @@ export function removeEmpty(
   })
 
   return obj
+}
+
+/**
+ * 隐藏手机号
+ *
+ * @param value string
+ * @param mass string
+ * @returns string
+ */
+export function hidePhone(
+  value: string,
+  mass: string = '*',
+): string {
+  const leadWord = value.slice(0, 3)
+  const tailWord = value.slice(-4)
+
+  return `${leadWord}${mass.repeat(value.length - 7)}${tailWord}`
+}
+
+/**
+ * 字典对象助手
+ *
+ * @param dicts []
+ * @param matchKey string
+ * @param value string
+ * @param defaultVal any
+ * @returns any
+ */
+export function dict<
+  T extends Record<string, any>,
+>(
+  dicts: T[],
+  matchKey: keyof T,
+  value: typeof matchKey extends keyof T ? T[typeof matchKey] : any,
+  defaultVal: any = void 0,
+) {
+  return dicts.find(item => item[matchKey] === value) || defaultVal
+}
+
+/**
+ * 首字母大写
+ *
+ * @param value string
+ * @returns string
+ */
+export function titleCase(value: string): string {
+  return `${value.charAt(0).toUpperCase()}${value.slice(1).toLowerCase()}`
 }

@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { IAssetSnapshot } from '@/assets/types'
 import { AssetsBrowser } from '@/assets/components'
-import { fetchAssetDetail } from '@/assets/apis/asset'
 
 defineOptions({
   name: 'AssetsSettingsImagesPage',
@@ -19,25 +17,10 @@ const positionMap = [
   { value: 'bottom-right', label: '右下' },
 ]
 
+const optionGroup = 'assets.image'
 const { getOptions, updateOptions } = useSettings()
-const form = reactive<IKeyValue>(getOptions('app.assets', {}))
-const { loading, onUpdate } = updateOptions('app.assets', form)
-const watermarkImage = ref<IAssetSnapshot | undefined>()
-
-if (form.watermarkImage) {
-  const { refreshData } = fetchAssetDetail(form.watermarkImage)
-  refreshData().then((data) => {
-    watermarkImage.value = pick(data, ['id', 'type', 'path'])
-  })
-}
-
-watch(
-  watermarkImage,
-  () => {
-    if (watermarkImage.value)
-      form.watermarkImage = watermarkImage.value.id
-  },
-)
+const form = reactive<IKeyValue>(getOptions(optionGroup, {}))
+const { loading, onUpdate } = updateOptions(optionGroup, form)
 </script>
 
 <template>
@@ -54,13 +37,13 @@ watch(
       </a-alert>
 
       <FormGroup title="图片压缩" size="small">
-        <a-form-item field="enableImageCompress" label="启用压缩" tooltip="开启图片压缩后, 图片会减小文件大小, 加快显示速度, 同时会增加服务器压力和降低图片质量" show-colon>
-          <a-switch v-model="form.enableImageCompress" checked-text="启用" unchecked-text="关闭" />
+        <a-form-item field="enableCompress" label="启用压缩" tooltip="开启图片压缩后, 图片会减小文件大小, 加快显示速度, 同时会增加服务器压力和降低图片质量" show-colon>
+          <a-switch v-model="form.enableCompress" checked-text="启用" unchecked-text="关闭" />
         </a-form-item>
 
-        <a-form-item v-if="form.enableImageCompress" field="imageCompressQuality" label="图片质量" show-colon>
+        <a-form-item v-if="form.enableCompress" field="compressQuality" label="图片质量" show-colon>
           <div class="form-item-xs">
-            <a-input v-model="form.imageCompressQuality" placeholder="请输入">
+            <a-input v-model="form.compressQuality" placeholder="请输入">
               <template #suffix>
                 %
               </template>
@@ -81,12 +64,12 @@ watch(
             show-colon
           >
             <a-input-group>
-              <a-input v-model="form.largeThumbnailWidth" placeholder="宽度">
+              <a-input v-model="form.thumbnailLargeWidth" placeholder="宽度">
                 <template #suffix>
                   px
                 </template>
               </a-input>
-              <a-input v-model="form.largeThumbnailHeight" placeholder="高度">
+              <a-input v-model="form.thumbnailLargeHeight" placeholder="高度">
                 <template #suffix>
                   px
                 </template>
@@ -100,12 +83,12 @@ watch(
             show-colon
           >
             <a-input-group>
-              <a-input v-model="form.mediumThumbnailWidth" placeholder="宽度">
+              <a-input v-model="form.thumbnailMediumWidth" placeholder="宽度">
                 <template #suffix>
                   px
                 </template>
               </a-input>
-              <a-input v-model="form.mediumThumbnailHeight" placeholder="高度">
+              <a-input v-model="form.thumbnailMediumHeight" placeholder="高度">
                 <template #suffix>
                   px
                 </template>
@@ -119,12 +102,12 @@ watch(
             show-colon
           >
             <a-input-group>
-              <a-input v-model="form.smallThumbnailWidth" placeholder="宽度">
+              <a-input v-model="form.thumbnailSmallWidth" placeholder="宽度">
                 <template #suffix>
                   px
                 </template>
               </a-input>
-              <a-input v-model="form.smallThumbnailHeight" placeholder="高度">
+              <a-input v-model="form.thumbnailSmallHeight" placeholder="高度">
                 <template #suffix>
                   px
                 </template>
@@ -152,8 +135,8 @@ watch(
           </a-form-item>
 
           <template v-if="form.watermarkType === 'image'">
-            <a-form-item field="watermarkImage" label="水印图片" tooltip="水印图片大小不能超出200KB, 宽高不能超出 500px * 500px" show-colon>
-              <AssetsBrowser v-model:file="watermarkImage" />
+            <a-form-item field="watermarkImageSrc" label="水印图片" tooltip="水印图片大小不能超出200KB, 宽高不能超出 500px * 500px" show-colon>
+              <AssetsBrowser v-model:file="form.watermarkImageSrc" />
             </a-form-item>
 
             <a-form-item field="watermarkImagePosition" label="水印图片位置" tooltip="水印图片显示在图片上的位置" show-colon>
@@ -206,9 +189,9 @@ watch(
           </template>
 
           <template v-if="form.watermarkType === 'text'">
-            <a-form-item field="watermarkText" label="水印文字" show-colon>
+            <a-form-item field="watermarkTextValue" label="水印文字" show-colon>
               <div class="form-item-sm">
-                <a-input v-model="form.watermarkText" placeholder="请输入水印文字" />
+                <a-input v-model="form.watermarkTextValue" placeholder="请输入水印文字" />
               </div>
             </a-form-item>
 
@@ -224,7 +207,7 @@ watch(
 
             <a-form-item field="watermarkTextColor" label="水印文字颜色" show-colon>
               <div class="form-item-xs">
-                <a-input v-model="form.watermarkTextColor" placeholder="请输入" />
+                <a-color-picker v-model="form.watermarkTextColor" show-preset show-text />
               </div>
             </a-form-item>
 

@@ -1,7 +1,0 @@
-export { default as GoodsAttributeTemplateSelector } from './goods-attribute-template-selector.vue'
-export { default as GoodsBrandSelector } from './goods-brand-selector.vue'
-export { default as GoodsCategorySelector } from './goods-category-selector.vue'
-export { default as GoodsDeliveryCostsTemplateSelector } from './goods-delivery-costs-template-selector.vue'
-export { default as GoodsGroupSelector } from './goods-group-selector.vue'
-export { default as GoodsTagsSelector } from './goods-tags-selector.vue'
-export { default as GoodsTypeSelector } from './goods-type-selector.vue'

@@ -2,6 +2,7 @@ module.exports = {
   defaultSeverity: 'error',
   extends: ['stylelint-config-standard'],
   rules: {
+    'at-rule-no-unknown': null,
     'no-descending-specificity': null,
     'import-notation': 'string',
     'no-empty-source': null,

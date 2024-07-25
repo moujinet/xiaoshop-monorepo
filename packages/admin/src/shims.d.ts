@@ -50,7 +50,7 @@ declare global {
 
   import type { MaybeRef } from 'vue'
 
-  export type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
+  type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
 
   interface IApiResponse<T = any> {
     code: number
@@ -86,4 +86,6 @@ declare global {
   import type { FieldRule } from '@arco-design/web-vue'
 
   type IFormRules = Record<string, FieldRule<any> | FieldRule<any>[]> | undefined
+
+  type IColorName = 'red' | 'orangered' | 'orange' | 'gold' | 'lime' | 'green' | 'cyan' | 'blue' | 'arcoblue' | 'purple' | 'pinkpurple' | 'magenta' | 'gray'
 }

@@ -14,11 +14,22 @@ const { spaces } = useApp()
         :class="{ 'is-active': space.id === $route.meta.space }"
         :to="space.path || ''"
       >
-        <CommonIcon
-          class="layout-header__menu--icon"
-          :name="space.icon"
-          :active="space.id === $route.meta.space"
-        />
+        <template v-if="space.icon === 'xiaoshop:logo'">
+          <IconImageLogo class="layout-header__menu--icon" />
+        </template>
+
+        <template v-else-if="space.icon === 'xiaoshop:connect'">
+          <IconImageLogo class="layout-header__menu--icon" />
+        </template>
+
+        <template v-else>
+          <CommonIcon
+            class="layout-header__menu--icon"
+            :name="space.icon"
+            :active="space.id === $route.meta.space"
+          />
+        </template>
+
         <span>{{ space.name }}</span>
       </router-link>
     </a-tooltip>

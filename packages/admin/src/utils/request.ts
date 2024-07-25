@@ -1,22 +1,5 @@
+import type { IApiResponse } from '@xiaoshop/schema'
 import axios, { type AxiosRequestConfig } from 'axios'
-
-/**
- * 发起 API 请求 (Promise)
- *
- * @param config AxiosRequestConfig
- * @returns Promise
- */
-export function usePromiseRequest<T = any>(config: AxiosRequestConfig): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    axios<IApiResponse<T>>(config)
-      .then((response) => {
-        resolve(response.data.data)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
 
 export interface IUseRequestReturn<T = any> {
   /**
@@ -35,6 +18,24 @@ export interface IUseRequestReturn<T = any> {
    * 刷新请求
    */
   refreshData: (refreshParams?: AxiosRequestConfig['params']) => Promise<T>
+}
+
+/**
+ * 发起 API 请求 (Promise)
+ *
+ * @param config AxiosRequestConfig
+ * @returns Promise
+ */
+export function usePromiseRequest<T = any>(config: AxiosRequestConfig): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    axios<IApiResponse<T>>(config)
+      .then((response) => {
+        resolve(response.data.data as T)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
 
 /**
@@ -76,4 +77,91 @@ export function useRequest<T = any>(config: AxiosRequestConfig): IUseRequestRetu
     error,
     refreshData,
   }
+}
+
+export interface IUseUploadRequestOptions<T = any> {
+  /**
+   * 上传地址
+   */
+  url: string
+  /**
+   * 上传文件
+   */
+  file: File
+  /**
+   * 上传参数
+   */
+  data?: T
+  /**
+   * 上传进度回调
+   *
+   * @param {number} percent
+   * @param {ProgressEvent} event
+   */
+  onProgress: (percent: number, event?: ProgressEvent) => void
+  /**
+   * 上传成功回调
+   *
+   * @param {any} response
+   */
+  onSuccess: (response?: any) => void
+  /**
+   * 上传失败回调
+   *
+   * @param {any} response
+   */
+  onError: (response?: any) => void
+}
+
+/**
+ * 发起文件上传请求
+ *
+ * @param {IUseUploadRequestOptions} options
+ * @returns {AbortController['abort']} AbortController
+ */
+export function useUploadRequest<T = any>(
+  options: IUseUploadRequestOptions<T>,
+): AbortController['abort'] {
+  const {
+    url,
+    file,
+    data,
+    onError,
+    onProgress,
+    onSuccess,
+  } = options
+
+  const form = new FormData()
+  form.append('file', file)
+
+  if (data) {
+    for (const key in data)
+      form.append(key, data[key] as any)
+  }
+
+  const controller = new AbortController()
+
+  axios<IApiResponse<T>>({
+    method: 'post',
+    url,
+    data: form,
+    signal: controller.signal,
+    onUploadProgress: (progress) => {
+      let percent = 0
+
+      if (progress.total)
+        percent = Math.floor((progress.loaded * 100) / progress.total)
+
+      onProgress(percent, progress.event)
+    },
+  }).then((res) => {
+    if (res.data.code !== 0)
+      onError(res.data.message || res.data.error || '未知错误')
+    else
+      onSuccess(res)
+  }).catch((err) => {
+    onError(err)
+  })
+
+  return controller.abort
 }

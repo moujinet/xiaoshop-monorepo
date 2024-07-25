@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 defineOptions({
   name: 'CommonCard',
+  inheritAttrs: false,
 })
 
 withDefaults(defineProps<{
@@ -30,11 +31,15 @@ withDefaults(defineProps<{
       </CommonGroupTitle>
     </template>
 
-    <template #cover>
+    <template v-if="$slots.actions" #extra>
+      <slot name="actions" />
+    </template>
+
+    <template v-if="$slots.extra" #cover>
       <slot name="extra" />
     </template>
 
-    <a-spin :loading="loading" w-full>
+    <a-spin :loading="loading" class="w-full">
       <slot />
     </a-spin>
   </a-card>

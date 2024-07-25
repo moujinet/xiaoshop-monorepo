@@ -1,28 +1,14 @@
-export interface IApiSettingsItem {
-  /**
-   * 设置 ID
-   */
-  id: number
-  /**
-   * 设置键
-   */
-  key: string
-  /**
-   * 设置值
-   */
-  value: string
-}
-
+import type { ISettings, ISettingsOption } from '@xiaoshop/schema'
 /**
  * 获取所有设置
  *
  * @apis get /settings/list
- * @returns Promise<IApiSettingsItem[]>
+ * @returns Promise<ISettings[]>
  */
-export function getSettings(): Promise<IApiSettingsItem[]> {
-  return usePromiseRequest<IApiSettingsItem[]>({
+export function getSettings(): Promise<ISettings[]> {
+  return usePromiseRequest<ISettings[]>({
     method: 'get',
-    url: '/settings',
+    url: '/settings/list',
   })
 }
 
@@ -30,11 +16,11 @@ export function getSettings(): Promise<IApiSettingsItem[]> {
  * 更新设置
  *
  * @apis put /settings/update
- * @param settings IKeyValue
+ * @param settings ISettingsOption
  * @returns Promise<any>
  */
-export function updateSettings(settings: IKeyValue): Promise<any> {
-  return usePromiseRequest<void>({
+export function updateSettings(settings: ISettingsOption[]): Promise<any> {
+  return usePromiseRequest<any>({
     method: 'put',
     url: '/settings/update',
     data: settings,

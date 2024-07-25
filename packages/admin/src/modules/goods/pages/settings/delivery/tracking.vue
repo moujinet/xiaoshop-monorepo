@@ -4,8 +4,8 @@ defineOptions({
 })
 
 const { getOptions, updateOptions } = useSettings()
-const form = reactive(getOptions('shop.goods', {}, ['kd100AppKey', 'kd100Customer']))
-const { loading, onUpdate } = updateOptions('shop.goods', form)
+const form = reactive(getOptions('logistics.express.kd100', {}, ['appKey', 'customer']))
+const { loading, onUpdate } = updateOptions('logistics.express.kd100', form)
 </script>
 
 <template>
@@ -24,17 +24,17 @@ const { loading, onUpdate } = updateOptions('shop.goods', form)
       </a-alert>
 
       <FormGroup title="快递 100 接口设置" size="medium">
-        <a-form-item field="kd100AppKey" label="应用密钥" show-colon>
-          <a-input v-model="form.kd100AppKey" placeholder="请填写应用密钥 APP KEY" allow-clear />
+        <a-form-item field="appKey" label="应用密钥" show-colon>
+          <a-input v-model="form.appKey" placeholder="请填写应用密钥 APP KEY" allow-clear />
         </a-form-item>
 
-        <a-form-item field="kd100Customer" label="公司编号" show-colon>
-          <a-input v-model="form.kd100Customer" placeholder="请填写公司编号 CUSTOMER" allow-clear />
+        <a-form-item field="customer" label="公司编号" show-colon>
+          <a-input v-model="form.customer" placeholder="请填写公司编号 CUSTOMER" allow-clear />
         </a-form-item>
       </FormGroup>
 
       <a-form-item>
-        <a-button type="primary" html-type="submit">
+        <a-button type="primary" html-type="submit" size="large">
           保存
         </a-button>
       </a-form-item>

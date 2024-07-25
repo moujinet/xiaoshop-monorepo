@@ -15,7 +15,7 @@ defineOptions({
     <div class="layout-header__wrapper">
       <a-space>
         <!-- <div class="layout-header__collapse-btn">
-          <CommonIcon name="ph:dots-nine" />
+          <CommonIcon name="mingcute:dot-grid" />
           <a-divider direction="vertical" class="layout-header__divider" />
         </div> -->
         <LayoutHeaderLogo />

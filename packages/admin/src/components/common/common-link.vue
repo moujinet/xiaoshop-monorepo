@@ -9,7 +9,9 @@ defineProps<{
   size?: 'small' | 'large'
   disable?: boolean
   prefixIcon?: string
+  prefixIconColor?: IColorName
   suffixIcon?: string
+  suffixIconColor?: IColorName
 }>()
 </script>
 
@@ -28,6 +30,7 @@ defineProps<{
         v-if="prefixIcon"
         :name="prefixIcon"
         :inline="false"
+        :color="prefixIconColor"
         class="common-link__prefix"
       />
     </slot>
@@ -39,6 +42,7 @@ defineProps<{
         v-if="suffixIcon"
         :name="suffixIcon"
         :inline="false"
+        :color="suffixIconColor"
         class="common-link__suffix"
       />
     </slot>
@@ -47,7 +51,7 @@ defineProps<{
 
 <style lang="less">
 .common-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   cursor: pointer;
   text-decoration: none;

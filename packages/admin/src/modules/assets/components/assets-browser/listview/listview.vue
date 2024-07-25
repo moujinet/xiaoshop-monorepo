@@ -1,11 +1,10 @@
 <script lang="ts" setup>
+import { ASSET_TYPES, EnabledEnum, type IAsset, type IAssetType, type IEnabled } from '@xiaoshop/schema'
 import AssetsBrowserGroupEditModal from '../group/group-edit-modal.vue'
 import AssetsBrowserUploadModal from '../upload/upload-modal.vue'
 import AssetsBrowserListviewCard from './listview-card.vue'
 
-import type { IAsset, IAssetSnapshot, IAssetType } from '@/assets/types'
-import { fetchAssetPages } from '@/assets/apis/asset'
-import { ASSET_TYPES } from '@/assets/constants'
+import { fetchAssetPages } from '@/assets/apis'
 
 defineOptions({
   name: 'AssetsBrowserListView',
@@ -15,14 +14,21 @@ defineOptions({
 const props = withDefaults(defineProps<{
   type: IAssetType
   height: number
-  defaultSelected?: IAssetSnapshot[]
+  defaultSelected?: string[]
   mode?: 'select' | 'edit'
   limit?: number
   groupId?: number
   groupName?: string
+  enableCompress?: IEnabled
+  enableThumbnail?: IEnabled
+  enableWatermark?: IEnabled
+  empty?: boolean
 }>(), {
   mode: 'select',
   limit: 1,
+  enableCompress: EnabledEnum.NO,
+  enableThumbnail: EnabledEnum.NO,
+  enableWatermark: EnabledEnum.NO,
 })
 
 const emit = defineEmits(['groupNameChanged', 'groupDelete', 'select'])
@@ -37,7 +43,7 @@ const keyword = ref('')
 const searchForm = reactive({
   name: '',
   page: 1,
-  size: 24,
+  pagesize: 24,
 })
 
 const { loading, data, refreshData } = fetchAssetPages()
@@ -54,6 +60,7 @@ watch(
 function refresh() {
   refreshData(removeEmpty({
     ...searchForm,
+    type: props.type,
     groupId: computedGroupId.value,
   }))
 }
@@ -62,7 +69,7 @@ function handleSearch() {
   searchForm.name = keyword.value
 }
 
-const selected = ref<IAssetSnapshot[]>([])
+const selected = ref<string[]>([])
 
 watch(
   () => props.defaultSelected,
@@ -75,16 +82,16 @@ watch(
 function handleSelect(asset: IAsset, isSelected: boolean) {
   if (props.mode === 'select') {
     if (isSelected)
-      selected.value.push({ id: asset.id, type: asset.type, path: asset.path } as IAssetSnapshot)
+      selected.value.push(asset.path)
     else
-      selected.value.splice(selected.value.indexOf(asset), 1)
+      selected.value.splice(selected.value.indexOf(asset.path), 1)
 
     emit('select', [...selected.value])
   }
 }
 
 function isSelected(asset: IAsset) {
-  return selected.value.some(item => item.id === asset.id)
+  return selected.value.includes(asset.path)
 }
 
 function isCanSelect(asset: IAsset) {
@@ -101,19 +108,20 @@ function checkLimit(asset: IAsset) {
     && props.limit !== 0
     && selected.value.length === props.limit
     && !isCanSelect(asset)
-  )
+  ) {
     useMessage().info(`最多只能选择 ${props.limit} 张图片`)
+  }
 }
 </script>
 
 <template>
   <div class="h-full">
-    <div flex="~ v-center between" h-32px>
-      <div v-if="mode === 'edit'" flex="~ v-center" bg="$color-fill-2" gap-4 rounded py-2 px-4>
-        <CommonIcon :loading="!groupName" name="ph:folder" active color="$theme-color" />
+    <div class="flex-(~ v-center between) h-8">
+      <div v-if="mode === 'edit'" class="flex-(~ v-center) bg-$color-fill-2 gap-4 rounded py-2 px-4">
+        <CommonIcon :loading="!groupName && !empty" name="mingcute:folder" color="arcoblue" active />
 
-        <span v-if="groupName" font="bold" color="$color-text-1">
-          {{ groupName }}
+        <span v-if="groupName || empty" class="font-bold text-$color-text-1">
+          {{ groupName ? groupName : '暂无分组' }}
         </span>
 
         <AssetsBrowserGroupEditModal
@@ -124,22 +132,23 @@ function checkLimit(asset: IAsset) {
           @delete="emit('groupDelete')"
         >
           <CommonLink type="primary">
-            <CommonIcon name="ph:pencil-simple" />
+            <CommonIcon name="mingcute:edit-2" />
           </CommonLink>
         </AssetsBrowserGroupEditModal>
       </div>
 
-      <div flex="~ v-center gap-2" :class="{ 'w-full flex-between': mode === 'select' }">
-        <AssetsBrowserUploadModal>
-          <a-button type="primary">
-            <template #icon>
-              <CommonIcon name="ph:upload-simple" />
-            </template>
-            上传{{ computedGroupTypeName }}
-          </a-button>
-        </AssetsBrowserUploadModal>
+      <div class="flex-(~ v-center gap-2)" :class="{ 'w-full flex-between': mode === 'select' }">
+        <AssetsBrowserUploadModal
+          v-if="!empty"
+          :type="type"
+          :group-id="computedGroupId"
+          :enable-compress="enableCompress"
+          :enable-thumbnail="enableThumbnail"
+          :enable-watermark="enableWatermark"
+          @success="refresh"
+        />
 
-        <div w-240px>
+        <div class="w-240px">
           <a-input-search
             v-model="keyword"
             :placeholder="`搜索${computedGroupTypeName}`"
@@ -151,19 +160,19 @@ function checkLimit(asset: IAsset) {
       </div>
     </div>
 
-    <div mt-4>
-      <a-spin :loading="loading" w-full>
+    <div class="mt-4">
+      <a-spin :loading="loading" class="w-full">
         <a-scrollbar
           outer-class="assets-browser-groups__scrollbar"
           :style="{ height: `${height - 120}px`, overflow: 'auto' }"
         >
-          <div v-if="!data || data.total === 0" flex="~ center" h-full>
+          <div v-if="!data || data.total === 0" class="flex-(~ center) h-full">
             <CommonEmpty :description="loading ? '努力加载中...' : `暂无${computedGroupTypeName}`" />
           </div>
 
           <template v-else>
             <div
-              class="grid "
+              class="grid"
               :class="mode === 'edit' ? 'grid-cols-2 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-3 gap-6' : 'grid-cols-4 gap-4'"
             >
               <AssetsBrowserListviewCard
@@ -185,7 +194,7 @@ function checkLimit(asset: IAsset) {
           v-if="data && data.total > 0"
           v-model:current="searchForm.page"
           :total="data && data.total || 0"
-          :page-size="searchForm.size"
+          :page-size="searchForm.pagesize"
           size="mini"
           class="mt-4"
           simple

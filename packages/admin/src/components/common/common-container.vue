@@ -6,6 +6,7 @@ defineOptions({
 const props = withDefaults(defineProps<{
   title?: string
   subtitle?: string
+  backTo?: string
   showHeader?: boolean
   showBreadcrumb?: boolean
   showBack?: boolean
@@ -37,6 +38,13 @@ const computedSubTitle = computed(() => {
   return props.subtitle
 })
 
+function goBack() {
+  if (props.backTo)
+    router.push({ path: props.backTo })
+  else
+    router.go(-1)
+}
+
 useTheme().setAutoVisible('container', true)
 </script>
 
@@ -54,7 +62,7 @@ useTheme().setAutoVisible('container', true)
         v-if="showHeader"
         class="common-container__header--inner"
         :show-back="showBack"
-        @back="router.go(-1)"
+        @back="goBack"
       >
         <template #title>
           <slot name="title">

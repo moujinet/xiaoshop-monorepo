@@ -10,7 +10,6 @@ import Layouts from 'vite-plugin-vue-layouts'
 import SvgLoader from 'vite-svg-loader'
 import UnoCSS from 'unocss/vite'
 import VueComponents from 'unplugin-vue-components/vite'
-import VueDevTools from 'vite-plugin-vue-devtools'
 import DefineOptions from 'unplugin-vue-define-options/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 
@@ -48,7 +47,6 @@ const plugins: PluginOption[] = [
         },
       },
     ],
-    logs: true,
     exclude: ['**/components/**'],
   }),
 
@@ -92,7 +90,8 @@ const plugins: PluginOption[] = [
     ],
     resolvers: [
       IconsResolver({
-        customCollections: ['empty'],
+        componentPrefix: 'icon',
+        customCollections: ['empty', 'image'],
       }),
       ArcoResolver({
         sideEffect: true,
@@ -110,6 +109,9 @@ const plugins: PluginOption[] = [
     customCollections: {
       empty: FileSystemIconLoader(
         './src/assets/empty',
+      ),
+      image: FileSystemIconLoader(
+        './src/assets/images',
       ),
     },
   }),
@@ -130,13 +132,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     VITE_BASE_URL,
     VITE_APP_NAME,
     VITE_APP_NAME_SHORT,
-    VITE_ENABLE_DEVTOOL,
   } = loadEnv(mode, root)
-
-  if (mode !== 'production') {
-    // https://github.com/vuejs/devtools-next
-    VITE_ENABLE_DEVTOOL === 'true' && plugins.push(VueDevTools())
-  }
 
   return {
     base: VITE_BASE_URL,
@@ -161,6 +157,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     esbuild: {
       pure: mode === 'production' ? ['console.log', 'debugger'] : [],
+    },
+
+    optimizeDeps: {
+      include: ['@arco-design/web-vue'],
     },
 
     css: {

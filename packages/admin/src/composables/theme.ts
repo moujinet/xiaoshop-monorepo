@@ -6,7 +6,7 @@ export const useTheme = defineStore('theme', () => {
   /**
    * 主题
    */
-  const [theme] = useCache('theme', 'default')
+  const [theme] = useCache<string>('theme', 'default')
 
   /**
    * 可见性开关

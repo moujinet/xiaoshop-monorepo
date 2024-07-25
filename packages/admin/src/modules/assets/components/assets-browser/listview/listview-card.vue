@@ -1,8 +1,6 @@
 <script lang="ts" setup>
+import { ASSET_TYPES, AssetTypeEnum, type IAsset } from '@xiaoshop/schema'
 import AssetsBrowserListviewDrawer from './listview-drawer.vue'
-
-import type { IAsset } from '@/assets/types'
-import { ASSET_TYPES } from '@/assets/constants'
 
 defineOptions({
   name: 'AssetsBrowserListviewCard',
@@ -42,45 +40,50 @@ function handleSelect() {
         v-if="selected"
         class="absolute w-5 h-5 top-3 right-3 p-0.5 z-1 bg-primary c-white rounded-full flex flex-center"
       >
-        <CommonIcon name="ph:check-bold" class="text-12px" :inline="false" />
+        <CommonIcon name="mingcute:check" class="text-3" :inline="false" />
       </div>
 
-      <a-image
-        :src="asset.path"
-        :alt="asset.name"
-        :preview="editable"
-        :preview-props="{
-          actionsLayout: ['zoomIn', 'zoomOut', 'originalSize'],
-        }"
-        :class="{
-          'ring-1 ring-white/70': selected,
-        }"
-        fit="contain"
-        class="min-h-100px"
-        width="100%"
-        height="100%"
-        show-loader
-      >
-        <template #loader>
-          <div flex="~ center" w-full h-full>
-            <a-spin />
-          </div>
-        </template>
-      </a-image>
+      <template v-if="asset.type === AssetTypeEnum.IMAGE || asset.type === AssetTypeEnum.ICON">
+        <CommonImage
+          :src="asset.path"
+          :preview="editable"
+          :preview-props="{
+            actionsLayout: ['zoomIn', 'zoomOut', 'originalSize'],
+          }"
+          :class="{
+            'ring-1 ring-white/70': selected,
+          }"
+          fit="contain"
+          class="min-h-100px"
+          width="100%"
+          height="100%"
+          show-loader
+        >
+          <template #loader>
+            <div class="flex-(~ center) w-full h-full">
+              <a-spin />
+            </div>
+          </template>
+        </CommonImage>
+      </template>
+
+      <template v-else>
+        <CommonVideo :src="asset.path" :height="130" />
+      </template>
     </div>
 
-    <div flex="~ col">
+    <div class="flex-(~ col)">
       <a-typography-text class="py-2 mb-0!" :class="{ 'text-white!': selected }" ellipsis>
         {{ asset.name }}
       </a-typography-text>
-      <div flex="~ v-center between">
+      <div class="flex-(~ center between)">
         <span class="text-12px c-$color-text-4">
           {{ formatBytes(asset.size) }}
         </span>
-        <AssetsBrowserListviewDrawer :title="`查看${computedAssetTypeName}详情`" :asset="asset" @delete="emit('delete')">
+        <AssetsBrowserListviewDrawer :id="asset.id" :title="`查看${computedAssetTypeName}详情`" @delete="emit('delete')">
           <a-tooltip :content="`查看${computedAssetTypeName}详情`" mini>
             <CommonLink v-if="editable" type="primary">
-              <CommonIcon name="ph:info" class="text-16px" :inline="false" />
+              <CommonIcon name="mingcute:information" class="text-16px" :inline="false" />
             </CommonLink>
           </a-tooltip>
         </AssetsBrowserListviewDrawer>

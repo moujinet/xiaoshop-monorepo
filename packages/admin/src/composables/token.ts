@@ -4,7 +4,7 @@ export function useToken() {
    *
    * TODO: refresh token
    */
-  const [token, updateToken] = useCache('token', '')
+  const [token, updateToken] = useCache<string>('token', '')
 
   return {
     /**

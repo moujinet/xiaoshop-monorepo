@@ -2,7 +2,7 @@ export default defineModule({
   id: 'goods',
   space: 'shop',
   name: '商品',
-  icon: 'ph:package',
+  icon: 'mingcute:box-3',
   desc: '商品管理',
   version: '1.0.0',
   sort: 1,
@@ -10,15 +10,15 @@ export default defineModule({
     {
       id: 'manage',
       name: '商品管理',
-      icon: 'ph:package',
+      icon: 'mingcute:package-2',
       children: [
         {
-          id: 'list',
+          id: 'goods',
           name: '商品列表',
           children: [
             { id: 'index', name: '商品列表' },
             { id: 'create', name: '发布商品' },
-            { id: 'edit', name: '编辑商品' },
+            { id: 'update', name: '编辑商品' },
             { id: 'history', name: '浏览记录' },
             { id: 'comments', name: '评价' },
             { id: '#export', name: '导出商品' },
@@ -37,7 +37,7 @@ export default defineModule({
           ],
         },
         {
-          id: 'group',
+          id: 'groups',
           name: '商品分组',
           children: [
             { id: '#create', name: ' 创建分组' },
@@ -63,7 +63,7 @@ export default defineModule({
           ],
         },
         {
-          id: 'brand',
+          id: 'brands',
           name: '商品品牌',
           children: [
             { id: '#create', name: ' 创建品牌' },
@@ -72,15 +72,23 @@ export default defineModule({
           ],
         },
         {
-          id: 'services',
+          id: 'additions',
           name: '附加服务',
           children: [
-            { id: '#create', name: ' 创建分类' },
-            { id: '#edit', name: ' 编辑分类' },
-            { id: '#delete', name: ' 删除分类' },
+            { id: '#create', name: ' 创建附加服务' },
+            { id: '#edit', name: ' 编辑附加服务' },
+            { id: '#delete', name: ' 删除附加服务' },
           ],
         },
-        { id: 'guarantee', name: '服务保障' },
+        {
+          id: 'protections',
+          name: '服务保障',
+          children: [
+            { id: '#create', name: ' 创建服务保障' },
+            { id: '#edit', name: ' 编辑服务保障' },
+            { id: '#delete', name: ' 删除服务保障' },
+          ],
+        },
         {
           id: 'recycle',
           name: '回收站',
@@ -93,61 +101,30 @@ export default defineModule({
     {
       id: 'tools',
       name: '商品工具',
-      icon: 'ph:wrench',
+      icon: 'mingcute:tool',
       children: [
         { id: 'import', name: '导入商品' },
+        { id: 'export', name: '导出商品' },
         { id: 'clawer', name: '商品采集' },
       ],
     },
     {
       id: 'settings',
-      name: '相关设置',
-      icon: 'ph:gear-six',
+      name: '模块设置',
+      icon: 'mingcute:settings-6',
       children: [
-        { id: 'preference', name: '显示设置' },
-        { id: 'clawer', name: '采集设置' },
+        { id: 'preference', name: '商品显示' },
         {
           id: 'delivery',
-          name: '物流设置',
+          name: '物流发货',
           children: [
-            {
-              id: 'index',
-              name: '物流设置',
-            },
-            {
-              id: 'express',
-              name: '快递公司',
-              children: [
-                { id: 'index', name: '快递公司列表' },
-                { id: '#create', name: '新增快递公司' },
-                { id: '#edit', name: '编辑快递公司' },
-                { id: '#delete', name: '删除快递公司' },
-              ],
-            },
-            {
-              id: 'templates',
-              name: '运费模板',
-              children: [
-                { id: 'index', name: '运费模板列表' },
-                { id: '#create', name: '创建运费模板' },
-                { id: '#edit', name: '编辑运费模板' },
-                { id: '#delete', name: '删除运费模板' },
-              ],
-            },
-            {
-              id: 'tracking',
-              name: '物流跟踪',
-            },
-            {
-              id: 'delivery',
-              name: '配送范围',
-            },
-            {
-              id: 'self-pickup',
-              name: '自提设置',
-            },
+            { id: 'company', name: '快递公司' },
+            { id: 'template', name: '运费模板' },
+            { id: 'tracking', name: '物流跟踪' },
+            { id: 'self-pickup', name: '自提设置' },
           ],
         },
+        { id: 'clawer', name: '商品采集' },
       ],
     },
   ],

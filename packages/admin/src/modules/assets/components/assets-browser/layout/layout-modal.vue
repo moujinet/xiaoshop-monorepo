@@ -1,9 +1,7 @@
 <script lang="ts" setup>
+import { ASSET_TYPES, AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
 import AssetsBrowserGroupTree from '../group/group-tree.vue'
 import AssetsBrowserListview from '../listview/listview.vue'
-
-import { ASSET_TYPES, ASSET_TYPE_IMAGE } from '@/assets/constants'
-import type { IAssetSnapshot, IAssetType } from '@/assets/types'
 
 defineOptions({
   name: 'AssetsBrowserLayoutModal',
@@ -12,13 +10,13 @@ defineOptions({
 
 const props = withDefaults(defineProps<{
   type?: IAssetType
-  defaultSelected?: IAssetSnapshot[]
+  defaultSelected?: string[]
   limit?: number
   disable?: boolean
   width?: number
   height?: number
 }>(), {
-  type: ASSET_TYPE_IMAGE,
+  type: AssetTypeEnum.IMAGE,
   limit: 1,
   width: 800,
   height: 520,
@@ -36,8 +34,9 @@ const typeName = ASSET_TYPES.find(item => item.value === props.type)?.label || '
 
 const selectedGroupId = ref<number[]>([0])
 const selectedGroupName = ref<string>('')
+const isGroupEmpty = ref(true)
 
-const selected = ref<IAssetSnapshot[]>([])
+const selected = ref<string[]>([])
 
 watch(
   visible,
@@ -48,7 +47,7 @@ watch(
   { immediate: true },
 )
 
-function handleSelect(selectedAssets: IAssetSnapshot[]) {
+function handleSelect(selectedAssets: string[]) {
   selected.value = [...selectedAssets]
 }
 
@@ -97,6 +96,7 @@ function handleShow() {
           v-model:current-group-name="selectedGroupName"
           :type="type"
           :height="height"
+          @loaded="() => (isGroupEmpty = false)"
         />
       </div>
 
@@ -108,6 +108,7 @@ function handleShow() {
           :type="type"
           :height="height"
           :limit="limit"
+          :empty="isGroupEmpty"
           mode="select"
           @select="handleSelect"
         />

@@ -1,16 +1,26 @@
+import type {
+  IGoods,
+  IGoodsBasicInfo,
+  IGoodsBasicInfoFormData,
+  IGoodsDetailInfo,
+  IGoodsListItem,
+  IGoodsSku,
+  IGoodsSpec,
+  IGoodsStockInfo,
+} from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
-import type { IGoods, IGoodsFormData, IGoodsPageListItem, IGoodsSku } from '@/goods/types'
-import { GOODS_STATUS_IN_STOCK, GOODS_STATUS_SOLD_OUT } from '@/goods/constants'
 
 /**
  * 获取商品分页列表
  *
  * @api get /goods/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>>
+ * @returns IUseRequestReturn<IApiPaginationResult<IGoodsListItem>>
  */
-export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsPageListItem>>({
+export function fetchGoodsPages(
+  params?: Record<string, any>,
+): IUseRequestReturn<IApiPaginationResult<IGoodsListItem>> {
+  return useRequest<IApiPaginationResult<IGoodsListItem>>({
     method: 'get',
     url: '/goods/pages',
     params,
@@ -18,31 +28,18 @@ export function fetchGoodsPages(params?: Record<string, any>): IUseRequestReturn
 }
 
 /**
- * 获取回收站商品分页列表
+ * 获取商品基本信息
  *
- * @api get /goods/recycle/pages
- * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>>
- */
-export function fetchGoodsRecyclePages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IGoodsPageListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsPageListItem>>({
-    method: 'get',
-    url: '/goods/recycle/pages',
-    params,
-  })
-}
-
-/**
- * 获取指定商品 SKU 列表
- *
- * @api get /goods/sku/list
+ * @api get /goods/detail/basic
  * @param id IGoods['id']
- * @returns IUseRequestReturn<IGoodsSku[]>
+ * @returns IUseRequestReturn<IGoodsBasicInfo>
  */
-export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku[]> {
-  return useRequest<IGoodsSku[]>({
+export function fetchGoodsBasicInfo(
+  id: IGoods['id'],
+): IUseRequestReturn<IGoodsBasicInfo> {
+  return useRequest<IGoodsBasicInfo>({
     method: 'get',
-    url: '/goods/sku/list',
+    url: '/goods/detail/basic',
     params: {
       id,
     },
@@ -50,16 +47,18 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
 }
 
 /**
- * 获取指定商品详情
+ * 获取商品库存信息
  *
- * @api get /goods/detail
+ * @api get /goods/detail/stock
  * @param id IGoods['id']
- * @returns IUseRequestReturn<IGoods>
+ * @returns IUseRequestReturn<IGoodsStockInfo>
  */
-export function fetchGoodsDetail(id: IGoods['id']): IUseRequestReturn<IGoods> {
-  return useRequest<IGoods>({
+export function fetchGoodsStockInfo(
+  id: IGoods['id'],
+): IUseRequestReturn<IGoodsStockInfo> {
+  return useRequest<IGoodsStockInfo>({
     method: 'get',
-    url: '/goods/detail',
+    url: '/goods/detail/stock',
     params: {
       id,
     },
@@ -67,15 +66,115 @@ export function fetchGoodsDetail(id: IGoods['id']): IUseRequestReturn<IGoods> {
 }
 
 /**
- * 统计商品预警
+ * 获取商品库存信息
  *
- * @api post /goods/count/alarms
+ * @api get /goods/detail/content
+ * @param id IGoods['id']
+ * @returns IUseRequestReturn<IGoodsDetailInfo>
+ */
+export function fetchGoodsContent(
+  id: IGoods['id'],
+): IUseRequestReturn<IGoodsDetailInfo> {
+  return useRequest<IGoodsDetailInfo>({
+    method: 'get',
+    url: '/goods/detail/content',
+    params: {
+      id,
+    },
+  })
+}
+
+/**
+ * 统计商品预警数量
+ *
+ * @api get /goods/warning/count
  * @returns Promise<number>
  */
-export function countGoodsAlarms(): Promise<number> {
-  return usePromiseRequest({
+export function countGoodsWarning(): Promise<number> {
+  return usePromiseRequest<number>({
+    method: 'get',
+    url: '/goods/warning/count',
+  })
+}
+
+/**
+ * 创建商品基本信息
+ *
+ * @api post /goods/basic/create
+ * @param data IGoodsBasicInfoFormData
+ * @returns Promise<any>
+ */
+export function createBasicInfo(data: IGoodsBasicInfoFormData) {
+  return usePromiseRequest<any>({
     method: 'post',
-    url: '/goods/count/alarms',
+    url: '/goods/basic/create',
+    data,
+  })
+}
+
+/**
+ * 更新商品基本信息
+ *
+ * @api put /goods/basic/update
+ * @param id IGoods['id']
+ * @param data IGoodsBasicInfoFormData
+ * @returns Promise<any>
+ */
+export function updateBasicInfo(
+  id: IGoods['id'],
+  data: IGoodsBasicInfoFormData,
+) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/basic/update',
+    data,
+    params: {
+      id,
+    },
+  })
+}
+
+/**
+ * 更新商品库存信息
+ *
+ * @api put /goods/stock/update
+ * @param id IGoods['id']
+ * @param data IFormData<IGoodsStockInfo>
+ * @returns Promise<any>
+ */
+export function updateStockInfo(
+  id: IGoods['id'],
+  data: IFormData<IGoodsStockInfo>,
+) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/stock/update',
+    data,
+    params: {
+      id,
+    },
+  })
+}
+
+/**
+ * 更新商品详情
+ *
+ * @api put /goods/detail/update
+ * @param id IGoods['id']
+ * @param data IFormData<IGoodsDetailInfo>
+ * @returns Promise<any>
+ */
+export function updateDetailContent(
+  id: IGoods['id'],
+  data: IFormData<IGoodsDetailInfo>,
+) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/detail/update',
+    data,
+    params: {
+      id,
+    },
   })
 }
 
@@ -86,8 +185,8 @@ export function countGoodsAlarms(): Promise<number> {
  * @param id IGoods['id']
  * @returns Promise<any>
  */
-export function copyGoodsToDraft(id: IGoods['id']): Promise<any> {
-  return usePromiseRequest({
+export function copyToDraft(id: IGoods['id']) {
+  return usePromiseRequest<any>({
     method: 'post',
     url: '/goods/copy',
     data: {
@@ -97,130 +196,127 @@ export function copyGoodsToDraft(id: IGoods['id']): Promise<any> {
 }
 
 /**
- * 更新指定商品 SKU 列表
+ * 软删除商品
  *
+ * @api delete /goods/delete/soft
  * @param id IGoods['id']
- * @param skus IGoodsSku[]
  * @returns Promise<any>
  */
-export function updateGoodsSkus(id: IGoods['id'], skus: Partial<IGoodsSku>[]): Promise<any> {
-  return usePromiseRequest({
+export function softDelete(id: IGoods['id']) {
+  return usePromiseRequest<any>({
+    method: 'delete',
+    url: '/goods/delete/soft',
+    data: {
+      id,
+    },
+  })
+}
+
+/**
+ * 恢复已删除商品
+ *
+ * @api put /goods/delete/restore
+ * @param id IGoods['id']
+ * @returns Promise<any>
+ */
+export function restore(id: IGoods['id']) {
+  return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/update/sku',
+    url: '/goods/delete/restore',
+    data: {
+      id,
+    },
+  })
+}
+
+/**
+ * 批量更新商品
+ *
+ * @api put /goods/batch/update
+ * @param ids IGoods['id'][]
+ * @param data Record<string, any>
+ * @returns Promise<any>
+ */
+export function batchUpdate(
+  ids: IGoods['id'][],
+  data: Record<string, any>,
+) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/batch/update',
+    data: {
+      ids,
+      data,
+    },
+  })
+}
+
+/**
+ * 批量软删除商品
+ *
+ * @api delete /goods/batch/delete/soft
+ * @param ids IGoods['id'][]
+ * @returns Promise<any>
+ */
+export function batchSoftDelete(ids: IGoods['id'][]) {
+  return usePromiseRequest<any>({
+    method: 'delete',
+    url: '/goods/batch/delete/soft',
+    data: {
+      ids,
+    },
+  })
+}
+
+/**
+ * 批量恢复已删除商品
+ *
+ * @api put /goods/batch/delete/restore
+ * @param ids IGoods['id'][]
+ * @returns Promise<any>
+ */
+export function batchRestore(ids: IGoods['id'][]) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/batch/delete/restore',
+    data: {
+      ids,
+    },
+  })
+}
+
+/**
+ * 获取商品规格设置
+ *
+ * @api get /goods/spec/list
+ * @param id IGoods['id']
+ * @returns IUseRequestReturn<IGoodsSpec[]>
+ */
+export function fetchGoodsSpecList(id: IGoods['id']): IUseRequestReturn<IGoodsSpec[]> {
+  return useRequest<IGoodsSpec[]>({
+    method: 'get',
+    url: '/goods/spec/list',
     params: {
       id,
     },
-    data: {
-      skus,
-    },
   })
 }
+
 /**
- * 更新商品排序
+ * 更新商品规格设置
  *
- * @api put /goods/update/sort
+ * @api put /goods/spec/update
  * @param id IGoods['id']
- * @param sort IGoods['sort']
+ * @param data IFormData<IGoodsSpec>
  * @returns Promise<any>
  */
-export function updateGoodsSort(id: IGoods['id'], sort: IGoods['sort']): Promise<any> {
-  return usePromiseRequest({
+export function updateGoodsSpecs(
+  id: IGoods['id'],
+  data: IFormData<IGoodsSpec>[],
+) {
+  return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/update/sort',
-    params: {
-      id,
-    },
-    data: {
-      sort,
-    },
-  })
-}
-
-/**
- * 商品上架
- *
- * @api put /goods/update/status
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function setGoodsInStock(ids: IGoods['id'][]): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/update/status',
-    params: {
-      ids,
-    },
-    data: {
-      status: GOODS_STATUS_IN_STOCK,
-    },
-  })
-}
-
-/**
- * 商品下架
- *
- * @api put /goods/update/status
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function setGoodsSoldOut(ids: IGoods['id'][]): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/update/status',
-    params: {
-      ids,
-    },
-    data: {
-      status: GOODS_STATUS_SOLD_OUT,
-    },
-  })
-}
-
-/**
- * 批量设置商品属性
- *
- * @api put /goods/update/batch
- * @param ids IGoods['id'][]
- * @param data Partial<IGoodsFormData>
- * @returns Promise<any>
- */
-export function batchSetupGoods(ids: IGoods['id'][], data: Partial<IGoodsFormData>): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/update/batch',
-    params: {
-      ids,
-    },
-    data,
-  })
-}
-
-/**
- * 创建商品
- *
- * @api post /goods/create
- * @param data IGoodsFormData
- * @returns Promise<any>
- */
-export function createGoods(data: IGoodsFormData): Promise<any> {
-  return usePromiseRequest({
-    method: 'post',
-    url: '/goods/create',
-    data,
-  })
-}
-
-/**
- * 更新商品
- *
- * @param id IGoods['id']
- * @param data IGoodsFormData
- * @returns Promise<any>
- */
-export function updateGoods(id: IGoods['id'], data: IGoodsFormData): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/update',
+    url: '/goods/spec/update',
     data,
     params: {
       id,
@@ -229,50 +325,16 @@ export function updateGoods(id: IGoods['id'], data: IGoodsFormData): Promise<any
 }
 
 /**
- * 批量删除商品
+ * 获取商品多规格商品列表
  *
- * @api delete /goods/batch/delete
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function batchDeleteGoods(ids: IGoods['id'][]): Promise<any> {
-  return usePromiseRequest({
-    method: 'delete',
-    url: '/goods/delete/batch',
-    data: {
-      ids,
-    },
-  })
-}
-
-/**
- * 彻底删除商品
- *
- * @api delete /goods/delete
+ * @api get /goods/skus/list
  * @param id IGoods['id']
- * @returns Promise<any>
+ * @returns IUseRequestReturn<IGoodsSku[]>
  */
-export function shiftDeleteGoods(id: IGoods['id']): Promise<any> {
-  return usePromiseRequest({
-    method: 'delete',
-    url: '/goods/delete',
-    data: {
-      id,
-    },
-  })
-}
-
-/**
- * 恢复删除的商品
- *
- * @api put /goods/undeleted
- * @param id IGoods['id']
- * @returns Promise<any>
- */
-export function undeletedGoods(id: IGoods['id']): Promise<any> {
-  return usePromiseRequest({
-    method: 'put',
-    url: '/goods/undeleted',
+export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku[]> {
+  return useRequest<IGoodsSku[]>({
+    method: 'get',
+    url: '/goods/skus/list',
     params: {
       id,
     },
@@ -280,14 +342,23 @@ export function undeletedGoods(id: IGoods['id']): Promise<any> {
 }
 
 /**
- * 清空已删除的商品
+ * 更新商品多规格商品列表
  *
- * @api delete /goods/cleanup/deleted
+ * @api put /goods/skus/update
+ * @param id IGoods['id']
+ * @param data IFormData<IGoodsSku>[]
  * @returns Promise<any>
  */
-export function cleanupDeletedGoods(): Promise<any> {
-  return usePromiseRequest({
-    method: 'delete',
-    url: '/goods/cleanup/deleted',
+export function updateGoodsSkus(
+  id: IGoods['id'],
+  data: IFormData<IGoodsSku>[],
+) {
+  return usePromiseRequest<any>({
+    method: 'put',
+    url: '/goods/skus/update',
+    data,
+    params: {
+      id,
+    },
   })
 }

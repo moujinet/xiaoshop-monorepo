@@ -2,7 +2,7 @@ export default defineModule({
   id: 'editor',
   space: 'app',
   name: '设计',
-  icon: 'ph:devices',
+  icon: 'mingcute:device',
   desc: '应用设计',
   version: '1.0.0',
   sort: 1,
@@ -10,7 +10,7 @@ export default defineModule({
     {
       id: 'pages',
       name: '页面',
-      icon: 'ph:picture-in-picture',
+      icon: 'mingcute:layer',
       children: [
         { id: 'home', name: '店铺首页' },
         { id: 'catalog', name: '商品分类' },
@@ -23,17 +23,16 @@ export default defineModule({
     {
       id: 'tools',
       name: '工具',
-      icon: 'ph:wrench',
+      icon: 'mingcute:magic-1',
       children: [
         { id: 'templates', name: '风格模板' },
-        { id: 'assets', name: '素材管理' },
         { id: 'custom', name: '微页面' },
       ],
     },
     {
       id: 'publish',
       name: '发布设置',
-      icon: 'ph:rocket',
+      icon: 'mingcute:rocket',
       children: [
         { id: 'h5', name: 'H5 端' },
         { id: 'wechat', name: '微信小程序' },

@@ -1,32 +1,22 @@
 <script lang="ts" setup>
-import { deleteGoodsAttributeTemplate, fetchGoodsAttributeTemplateList } from '@/goods/apis/attribute'
-import { GoodsAttributeTemplateEditModal } from '@/goods/components'
+import { GoodsAttributeTemplateModal } from '@/goods/components'
+
+import {
+  deleteGoodsAttributeTemplate,
+  fetchGoodsAttributeTemplateList,
+} from '@/goods/apis'
 
 defineOptions({
   name: 'GoodsManageAttributesIndexPage',
 })
 
+const router = useRouter()
+
 const columns = [
-  {
-    title: '模板名称',
-    dataIndex: 'name',
-    width: 200,
-  },
-  {
-    title: '模板说明',
-    dataIndex: 'desc',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdTime',
-    slotName: 'createdTime',
-    width: 200,
-  },
-  {
-    title: '操作',
-    slotName: 'actions',
-    width: 100,
-  },
+  { title: '模板名称', dataIndex: 'name', width: 200 },
+  { title: '模板说明', dataIndex: 'desc', slotName: 'desc' },
+  { title: '更新时间', dataIndex: 'updatedTime', slotName: 'updatedTime', width: 200 },
+  { title: '操作', slotName: 'actions', width: 100 },
 ]
 
 const { loading, data, refreshData } = fetchGoodsAttributeTemplateList()
@@ -49,8 +39,6 @@ function handleDelete(id: number) {
     })
 }
 
-const router = useRouter()
-
 function handleSetup(id: number) {
   router.push({ name: '/goods/manage/attributes/template', query: { id } })
 }
@@ -59,11 +47,11 @@ function handleSetup(id: number) {
 <template>
   <CommonContainer flexible>
     <template #extra>
-      <GoodsAttributeTemplateEditModal @success="refreshData">
+      <GoodsAttributeTemplateModal @success="refreshData">
         <a-button type="primary">
           创建参数模板
         </a-button>
-      </GoodsAttributeTemplateEditModal>
+      </GoodsAttributeTemplateModal>
     </template>
 
     <CommonCard :loading="loading">
@@ -75,10 +63,13 @@ function handleSetup(id: number) {
         row-key="id"
         hoverable
         stripe
-        show-empty-tree
       >
-        <template #createdTime="{ record }">
-          {{ formatDateTime(record.createdTime) }}
+        <template #desc="{ record }">
+          {{ record.desc || '-' }}
+        </template>
+
+        <template #updatedTime="{ record }">
+          {{ formatDateTime(record.updatedTime) }}
         </template>
 
         <template #actions="{ record }">
@@ -87,7 +78,7 @@ function handleSetup(id: number) {
               设置
             </a-button>
 
-            <CommonDeleteBtn @delete="handleDelete(record.id)" />
+            <CommonConfirm @ok="handleDelete(record.id)" />
           </a-space>
         </template>
       </a-table>

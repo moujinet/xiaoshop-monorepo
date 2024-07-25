@@ -72,9 +72,11 @@ watch(
     searchForm.page = route.query.page ? Number(route.query.page) : searchForm.page
     keyword.value = searchForm.keyword
 
-    enableAliyunSms && refreshData({
-      ...searchForm,
-    })
+    if (enableAliyunSms) {
+      refreshData({
+        ...searchForm,
+      })
+    }
   },
   {
     immediate: true,

@@ -1,5 +1,4 @@
 import type { InternalAxiosRequestConfig } from 'axios'
-import { errors } from './errors'
 import { API_BASE_URL, API_REQUEST_TIMEOUT } from '~/constants/env'
 
 /**
@@ -40,11 +39,6 @@ export function handleConfigureAuthHeaders(config: InternalAxiosRequestConfig): 
  * @returns boolean
  */
 export function handleApiErrorResponse(code: number, message: string): boolean {
-  if (errors[code]) {
-    useMessage().error(errors[code])
-    return false
-  }
-
   if (code !== 0) {
     useMessage().error(message)
     return false

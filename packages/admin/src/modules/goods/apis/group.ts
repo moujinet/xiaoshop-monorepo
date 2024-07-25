@@ -1,4 +1,4 @@
-import type { IGoodsGroup } from '@/goods/types'
+import type { IGoodsGroup, IGoodsGroupDict } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -15,13 +15,26 @@ export function fetchGoodsGroupList(): IUseRequestReturn<IGoodsGroup[]> {
 }
 
 /**
+ * 获取商品分组字典列表
+ *
+ * @api get /goods/group/dict/list
+ * @returns IUseRequestReturn<IGoodsGroupDict[]>
+ */
+export function fetchGoodsGroupDictList(): IUseRequestReturn<IGoodsGroupDict[]> {
+  return useRequest<IGoodsGroupDict[]>({
+    method: 'get',
+    url: '/goods/group/dict/list',
+  })
+}
+
+/**
  * 获取商品分组详情
  *
  * @api get /goods/group/detail
- * @param id number
+ * @param id IGoodsGroup['id']
  * @returns IUseRequestReturn<IGoodsGroup>
  */
-export function fetchGoodsGroupDetail(id: number): IUseRequestReturn<IGoodsGroup> {
+export function fetchGoodsGroupDetail(id: IGoodsGroup['id']): IUseRequestReturn<IGoodsGroup> {
   return useRequest<IGoodsGroup>({
     method: 'get',
     url: '/goods/group/detail',
@@ -72,14 +85,14 @@ export function updateGoodsGroup(
  * 删除商品分组
  *
  * @api delete /goods/group/delete
- * @param id number
+ * @param id IGoodsGroup['id']
  * @returns Promise<any>
  */
-export function deleteGoodsGroup(id: number): Promise<any> {
+export function deleteGoodsGroup(id: IGoodsGroup['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/goods/group/delete',
-    params: {
+    data: {
       id,
     },
   })

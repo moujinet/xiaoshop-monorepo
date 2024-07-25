@@ -6,7 +6,7 @@
  */
 export function normalizeMenuId(id: string) {
   return id
-    .replace(/\#/, '')
+    .replace(/#/, '')
     .replace(/\.index$/, '')
 }
 

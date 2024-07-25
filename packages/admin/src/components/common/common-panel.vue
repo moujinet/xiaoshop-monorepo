@@ -5,6 +5,7 @@ defineOptions({
 
 const props = defineProps<{
   height?: string | 'auto'
+  collapsed?: boolean
 }>()
 
 const { visible } = useTheme()
@@ -17,7 +18,14 @@ const computedHeight = computed(() => {
 </script>
 
 <template>
-  <div class="common-panel" :class="{ 'is-auto': props.height === 'auto' }" :style="{ height: computedHeight }">
+  <div
+    class="common-panel"
+    :class="{
+      'is-auto': props.height === 'auto',
+      'is-collapsed': props.collapsed,
+    }"
+    :style="{ height: computedHeight }"
+  >
     <slot />
   </div>
 </template>
@@ -27,6 +35,10 @@ const computedHeight = computed(() => {
   padding: 16px;
   border-radius: 3px;
   background-color: var(--color-bg-3);
+
+  &.is-collapsed {
+    padding: 0;
+  }
 
   &.is-auto {
     overflow: hidden;

@@ -1,4 +1,4 @@
-import type { IGoodsTag } from '@/goods/types'
+import type { IGoodsTag, IGoodsTagDict } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -15,13 +15,26 @@ export function fetchGoodsTagList(): IUseRequestReturn<IGoodsTag[]> {
 }
 
 /**
+ * 获取商品标签字典列表
+ *
+ * @api get /goods/tag/dict/list
+ * @returns IUseRequestReturn<IGoodsTagDict[]>
+ */
+export function fetchGoodsTagDictList(): IUseRequestReturn<IGoodsTagDict[]> {
+  return useRequest<IGoodsTagDict[]>({
+    method: 'get',
+    url: '/goods/tag/dict/list',
+  })
+}
+
+/**
  * 获取商品标签详情
  *
  * @api get /goods/tag/detail
- * @param id number
+ * @param id IGoodsTag['id']
  * @returns IUseRequestReturn<IGoodsTag>
  */
-export function fetchGoodsTagDetail(id: number): IUseRequestReturn<IGoodsTag> {
+export function fetchGoodsTagDetail(id: IGoodsTag['id']): IUseRequestReturn<IGoodsTag> {
   return useRequest<IGoodsTag>({
     method: 'get',
     url: '/goods/tag/detail',
@@ -72,14 +85,14 @@ export function updateGoodsTag(
  * 删除商品标签
  *
  * @api delete /goods/tag/delete
- * @param id number
+ * @param id IGoodsTag['id']
  * @returns Promise<any>
  */
-export function deleteGoodsTag(id: number): Promise<any> {
+export function deleteGoodsTag(id: IGoodsTag['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/goods/tag/delete',
-    params: {
+    data: {
       id,
     },
   })

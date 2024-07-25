@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { IAssetSnapshot } from '@/assets/types'
-import { fetchAssetDetail } from '@/assets/apis/asset'
 import { AssetsBrowser } from '@/assets/components'
 
 defineOptions({
@@ -10,29 +8,12 @@ defineOptions({
 const { getOptions, updateOptions } = useSettings()
 const form = reactive(
   getOptions(
-    'shop.goods',
+    'goods.preference',
     {},
     ['enableGoodsStock', 'enableGoodsSales', 'enableGoodsOriginalPrice', 'defaultGoodsImage'],
   ),
 )
-const { loading, onUpdate } = updateOptions('shop.goods', form)
-
-const defaultGoodsImage = ref<IAssetSnapshot | undefined>()
-
-if (form.defaultGoodsImage) {
-  const { refreshData } = fetchAssetDetail(form.defaultGoodsImage)
-  refreshData().then((data) => {
-    defaultGoodsImage.value = pick(data, ['id', 'type', 'path'])
-  })
-}
-
-watch(
-  defaultGoodsImage,
-  () => {
-    if (defaultGoodsImage.value)
-      form.defaultGoodsImage = defaultGoodsImage.value.id
-  },
-)
+const { loading, onUpdate } = updateOptions('goods.preference', form)
 </script>
 
 <template>
@@ -59,12 +40,12 @@ watch(
 
       <FormGroup title="商品图片">
         <a-form-item field="defaultGoodsImage" label="默认商品图片" tooltip="商品未上传图片时或加载失败时，显示的默认图片" show-colon>
-          <AssetsBrowser v-model:file="defaultGoodsImage" />
+          <AssetsBrowser v-model:file="form.defaultGoodsImage" />
         </a-form-item>
       </FormGroup>
 
       <a-form-item>
-        <a-button type="primary" html-type="submit">
+        <a-button type="primary" html-type="submit" size="large">
           保存
         </a-button>
       </a-form-item>

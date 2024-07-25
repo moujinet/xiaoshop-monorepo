@@ -5,7 +5,6 @@ defineOptions({
   name: 'App',
 })
 
-useSettings().refresh()
 useTheme().changeTheme()
 </script>
 

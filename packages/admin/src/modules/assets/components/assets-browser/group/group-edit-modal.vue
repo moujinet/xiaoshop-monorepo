@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-import type { IAssetGroup, IAssetType } from '@/assets/types'
+import {
+  AssetTypeEnum,
+  EnabledEnum,
+  type IAssetGroup,
+  type IAssetType,
+} from '@xiaoshop/schema'
 import {
   createAssetGroup,
   deleteAssetGroup,
   fetchAssetGroupDetail,
   fetchAssetGroupRoots,
   updateAssetGroup,
-} from '@/assets/apis/group'
-import { ASSET_TYPE_IMAGE } from '@/assets/constants'
+} from '@/assets/apis'
 
 defineOptions({
   name: 'AssetsBrowserGroupEditModal',
@@ -31,9 +35,9 @@ const form = reactive<IFormData<IAssetGroup>>({
   parentId: 0,
   name: '',
   type: props.type,
-  enableCompress: 1,
-  enableThumbnail: 1,
-  enableWatermark: 1,
+  enableCompress: EnabledEnum.YES,
+  enableThumbnail: EnabledEnum.YES,
+  enableWatermark: EnabledEnum.YES,
 })
 
 const { loading, refreshData: refreshDetail } = fetchAssetGroupDetail(props.id || 0)
@@ -43,7 +47,7 @@ const computedRoots = computed(() => {
   return (roots.value || []).filter(item => item.id !== props.id)
 })
 
-const { visible, handleModalOk } = useModal({
+const { visible, handleModalOk } = useForm({
   loading,
   status: isEdit,
   form: formRef,
@@ -66,13 +70,13 @@ const { visible, handleModalOk } = useModal({
 
     refreshData()
   },
-  onOkIfy: () => {
+  onUpdate: () => {
     return updateAssetGroup(props.id || 0, form)
   },
-  onOkElse: () => {
+  onCreate: () => {
     return createAssetGroup(form)
   },
-  onAfterOk: () => {
+  onDone: () => {
     emit('success')
   },
 })
@@ -115,7 +119,7 @@ function handleDelete() {
         :wrapper-col-props="{ span: 18 }"
         scroll-to-first-error
       >
-        <a-form-item field="name" label="分组名称" validate-trigger="blur" show-colon>
+        <a-form-item field="name" label="分组名称" show-colon>
           <div class="form-item">
             <a-input
               v-model="form.name"
@@ -135,24 +139,24 @@ function handleDelete() {
           </div>
         </a-form-item>
 
-        <template v-if="type === ASSET_TYPE_IMAGE">
+        <template v-if="type === AssetTypeEnum.IMAGE">
           <a-form-item field="enableCompress" label="启用图片压缩" show-colon>
-            <a-switch v-model="form.enableCompress" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableCompress" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
 
           <a-form-item field="enableThumbnail" label="启用图片缩略图" show-colon>
-            <a-switch v-model="form.enableThumbnail" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableThumbnail" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
 
           <a-form-item field="enableWatermark" label="启用水印" show-colon>
-            <a-switch v-model="form.enableWatermark" :checked-value="1" :unchecked-value="0" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableWatermark" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
         </template>
 
         <a-alert v-if="isEdit" type="error" title="删除分组" :show-icon="false">
           <p>删除分组后，该分组下的所有资源都会被删除。</p>
           <div class="text-right">
-            <CommonDeleteBtn :loading="loading" btn-text="确认删除" btn-type="primary" @delete="handleDelete" />
+            <CommonConfirm :loading="loading" btn-text="确认删除" btn-type="primary" @ok="handleDelete" />
           </div>
         </a-alert>
       </a-form>

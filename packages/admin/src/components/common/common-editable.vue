@@ -39,11 +39,11 @@ function handleValueChange(val: string) {
 
 <template>
   <span>
-    <span v-if="!isEdit" flex="~ v-center" gap="1">
+    <span v-if="!isEdit" class="flex-(inline v-center) gap-1">
       {{ value }}
 
       <CommonIcon
-        name="ph:pencil-simple-line"
+        name="mingcute:edit"
         class="text-$color-text-3 hover:text-$color-text-2 cursor-pointer"
         @click="isEdit = true"
       />

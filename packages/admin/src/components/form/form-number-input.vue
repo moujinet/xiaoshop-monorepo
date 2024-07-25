@@ -3,8 +3,12 @@ defineOptions({
   name: 'FormNumberInput',
 })
 
+const props = defineProps<{
+  showZero?: boolean
+}>()
+
 function formatter(value: string) {
-  return value === '0' ? '' : value
+  return !props.showZero && value === '0' ? '' : value
 }
 </script>
 

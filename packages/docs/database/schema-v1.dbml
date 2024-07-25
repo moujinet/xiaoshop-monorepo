@@ -1,0 +1,1505 @@
+project XiaoShop {
+  note: '''
+  # XiaoShop Database
+  '''
+
+  database_type: 'MySQL'
+}
+
+
+// ------
+// APP -> ASSETS 素材管理
+// ------
+
+table "app_asset" {
+  note: '''
+### 素材信息表
+
+------
+
+#### 素材类型
+
+- 字段: `type`
+- 类型: `IAssetType`
+
+| 描述   | 值      | 字典               |
+|--------|---------|--------------------|
+| `图片` | `image` | `ASSET_TYPE_IMAGE` |
+| `视频` | `video` | `ASSET_TYPE_VIDEO` |
+| `图标` | `icon`  | `ASSET_TYPE_ICON`  |
+  '''
+
+  id "int unsigned" [pk, increment]
+  group_id "int unsigned" [default: 0, ref: - app_asset_group.id, note: '素材分组']
+  type varchar(32) [not null, default: '', note: '素材类型']
+  name varchar(200) [not null, default: '', note: '文件名称']
+  path varchar(200) [not null, default: '', note: '文件路径']
+  size "int unsigned" [default: 0, note: '文件大小']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "app_asset_group" {
+  note: '''
+### 素材分组表
+
+------
+
+#### 素材类型
+
+- 字段: `type`
+- 类型: `IAssetType`
+
+| 描述   | 值      | 字典               |
+|--------|---------|--------------------|
+| `图片` | `image` | `ASSET_TYPE_IMAGE` |
+| `视频` | `video` | `ASSET_TYPE_VIDEO` |
+| `图标` | `icon`  | `ASSET_TYPE_ICON`  |
+  '''
+
+  id "int unsigned" [pk, increment]
+  parent_id "int unsigned" [default: 0, note: '上级分组编号']
+  type varchar(32) [not null, default: '', note: '素材类型']
+  name varchar(32) [not null, default: '', note: '分组名称']
+  enable_compress char [not null, default: '', note: '启用图片压缩 (N:否 Y:是)']
+  enable_watermark char [not null, default: '', note: '启用图片水印 (N:否 Y:是)']
+  enable_thumbnail char [not null, default: '', note: '启用图片缩略图 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+
+// ------
+// SHOP -> GOODS 商品管理
+// ------
+
+table "shop_goods" {
+  note: '''
+### 商品信息表
+
+------
+
+#### 商品 - 状态
+
+- 字段: `status`
+- 类型: `IGoodsStatus`
+
+| 描述   | 值         | 字典                    |
+|--------|------------|-------------------------|
+| `在售` | `in_stock` | `GOODS_STATUS_IN_STOCK` |
+| `仓库` | `stocked`  | `GOODS_STATUS_STOCKED`  |
+| `预警` | `warning`  | `GOODS_STATUS_WARNING`  |
+| `售韾` | `sold_out` | `GOODS_STATUS_SOLD_OUT` |
+| `草稿` | `draft`    | `GOODS_STATUS_DRAFT`    |
+
+------
+
+#### 商品 - 类型
+
+- 字段: `type`
+- 类型: `IGoodsType`
+
+| 描述       | 值        | 字典                 |
+|------------|-----------|----------------------|
+| `实物商品` | `entity`  | `GOODS_TYPE_ENTITY`  |
+| `虚拟商品` | `virtual` | `GOODS_TYPE_VIRTUAL` |
+| `电子卡密` | `card`    | `GOODS_TYPE_CARD`    |
+
+------
+
+#### 商品 - 来源
+
+- 字段: `source`
+- 类型: `IGoodsSource`
+
+| 描述       | 值        | 字典                   |
+|------------|-----------|------------------------|
+| `手动创建` | `manual`  | `GOODS_SOURCE_MANUAL`  |
+| `批量导入` | `import`  | `GOODS_SOURCE_IMPORT`  |
+| `商品采集` | `clawer`  | `GOODS_SOURCE_CLAWER`  |
+| `云链同步` | `connect` | `GOODS_SOURCE_CONNECT` |
+
+------
+
+#### 商品 - 库存扣减方式
+
+- 字段: `stock_deduct_mode`
+- 类型: `IGoodsStockDeductMode`
+
+| 描述   | 值      | 字典                            |
+|--------|---------|---------------------------------|
+| `下单` | `order` | `GOODS_STOCK_DEDUCT_MODE_ORDER` |
+| `付款` | `paid`  | `GOODS_STOCK_DEDUCT_MODE_PAID`  |
+
+------
+
+#### 商品 - 配送方式
+
+- 字段: `logistics_delivery_modes`
+- 类型: `ILogisticsDeliveryMode`
+
+| 描述       | 值        | 字典                              |
+|------------|-----------|-----------------------------------|
+| `无须物流` | `none`    | `LOGISTICS_DELIVERY_MODE_NONE`    |
+| `快递发货` | `express` | `LOGISTICS_DELIVERY_MODE_EXPRESS` |
+| `到店自提` | `self`    | `LOGISTICS_DELIVERY_MODE_SELF`    |
+| `同城配送` | `local`   | `LOGISTICS_DELIVERY_MODE_LOCAL`   |
+
+------
+
+#### 商品 - 物流费用支付方式
+
+- 字段: `logistics_freight_charge_mode`
+- 类型: `IGoodsLogisticsFreightChargeMode`
+
+| 描述       | 值         | 字典                                           |
+|------------|------------|------------------------------------------------|
+| `统一运费` | `std`      | `GOODS_LOGISTICS_FREIGHT_CHARGE_MODE_STD`      |
+| `运费模板` | `template` | `GOODS_LOGISTICS_FREIGHT_CHARGE_MODE_TEMPLATE` |
+| `运费到付` | `COD`      | `GOODS_LOGISTICS_FREIGHT_CHARGE_MODE_COD`      |
+
+------
+
+#### 商品 - 退货运费承担方
+
+- 字段: `logistics_back_freight_by`
+- 类型: `IGoodsLogisticsBackFreightBy`
+
+| 描述               | 值       | 字典                                     |
+|--------------------|----------|------------------------------------------|
+| `商家承担退费运费` | `seller` | `GOODS_LOGISTICS_BACK_FREIGHT_BY_SELLER` |
+| `买家承担退货运费` | `buyer`  | `GOODS_LOGISTICS_BACK_FREIGHT_BY_BUYER`  |
+
+------
+
+#### 商品 - 上架方式
+
+- 字段: `publish_mode`
+- 类型: `IGoodsPublishMode`
+
+| 描述                 | 值       | 字典                        |
+|----------------------|----------|-----------------------------|
+| `立即上架`           | `direct` | `GOODS_PUBLISH_MODE_DIRECT` |
+| `自定义上架`         | `auto`   | `GOODS_PUBLISH_MODE_AUTO`   |
+| `暂不售卖, 放入仓库` | `stock`  | `GOODS_PUBLISH_MODE_STOCK`  |
+
+------
+
+#### 商品 - 购买按钮类型
+
+- 字段: `buy_btn_name_type`
+- 类型: `IGoodsBuyBtnType`
+
+| 描述         | 值        | 字典                         |
+|--------------|-----------|------------------------------|
+| `默认名称`   | `default` | `GOODS_BUY_BTN_TYPE_DEFAULT` |
+| `自定义名称` | `custom`  | `GOODS_BUY_BTN_TYPE_CUSTOM`  |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  status varchar(32) [not null, default: '', note: '商品状态']
+  type varchar(32) [not null, default: '', note: '商品类型']
+  source varchar(32) [not null, default: '', note: '商品来源']
+  video_id "int unsigned" [default: 0, note: '视频素材编号', ref: - app_asset.id]
+  name varchar(100) [not null, default: '', note: '商品名称']
+  share_desc varchar(36) [not null, default: '', note: '分享描述']
+  slogan varchar(60) [not null, default: '', note: '商品卖点']
+  tag_id "int unsigned" [default: 0, note: '标签编号', ref: - shop_goods_tag.id]
+  group_id "int unsigned" [default: 0, note: '分组编号', ref: - shop_goods_group.id]
+  brand_id "int unsigned" [default: 0, note: '品牌编号', ref: - shop_goods_brand.id]
+  attribute_template_id "int unsigned" [default: 0, note: '商品参数模板编号', ref: - shop_goods_attribute_template.id]
+  attributes text [note: '商品参数(JSON)']
+  unit varchar(8) [not null, default: '', note: '商品单位']
+  enable_purchase_limits char [not null, default: '', note: '是否开启限购 (N:否 Y:是)']
+  purchase_max_qty "int unsigned" [default: 0, note: '限购数量']
+  purchase_min_qty "int unsigned" [default: 0, note: '起售数量']
+  stock_deduct_mode varchar(32) [not null, default: '', note: '库存扣减方式']
+  enable_vip_discount char [not null, default: '', note: '是否开启会员折扣 (N:否 Y:是)']
+  logistics_delivery_modes text [note: '商品配送方式 (JSON)']
+  logistics_freight_calc_mode varchar(32) [not null, default: '', note: '商品物流费用方式']
+  logistics_freight "float unsigned" [default: 0, note: '商品物流费用']
+  logistics_freight_template_id "int unsigned" [default: 0, note: '商品运费模板编号', ref: - manage_logistics_freight_template.id]
+  logistics_back_freight_by varchar(32) [not null, default: '', note: '商品退货运费承担方']
+  publish_mode varchar(32) [not null, default: '', note: '商品上架方式']
+  auto_in_stock_time "int unsigned" [default: 0, note: '自定义上架时间']
+  buy_btn_name_type varchar(32) [not null, default: '', note: '商品购买按钮类型']
+  buy_btn_name varchar(32) [not null, default: '', note: '商品购买按钮名称']
+  detail text [note: '商品详情']
+  sort "int unsigned" [ default: 1, note: '商品排序']
+  is_deleted char [not null, default: '', note: '是否删除 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+  updated_time datetime [default: null,  note: '更新时间']
+  deleted_time datetime [default: null,  note: '删除时间']
+  in_stock_time datetime [default: null,  note: '上架时间']
+  stocked_time datetime [default: null,  note: '下架时间']
+  sold_out_time datetime [default: null,  note: '售韾时间']
+}
+
+table "shop_goods_rating" {
+  note: '''
+### 商品评价表
+
+------
+
+#### 商品 - 评价 - 综合评级
+
+- 字段: `overall_grade`
+- 类型: `IGoodsRatingGrade`
+
+| 描述   | 值       | 字典                        |
+|--------|----------|-----------------------------|
+| `好评` | `high`   | `GOODS_RAGING_GRADE_HIGH`   |
+| `中评` | `normal` | `GOODS_RAGING_GRADE_NORMAL` |
+| `差评` | `low`    | `GOODS_RAGING_GRADE_LOW`    |
+  '''
+
+  id "int unsigned" [pk, increment]
+  goods_id "int unsigned" [default: 0, note: '商品编号', ref: - shop_goods.id]
+  overall_grade varchar(32) [not null, default: '', note: '综合评级']
+  overall_goods_score "int unsigned" [ default: 0, note: '商品评分']
+  overall_service_score "int unsigned" [ default: 0, note: '服务评分']
+  overall_logistics_score "int unsigned" [ default: 0, note: '物流评分']
+}
+
+table "shop_goods_sku" {
+  note: '''
+### 商品 SKU 表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  sku_code varchar(32) [not null, default: '', note: '商品编码']
+  name varchar(100) [not null, default: '', note: '商品名称']
+  image_id "int unsigned" [not null, default: 0, note: 'SKU 图片编号', ref: - app_asset.id]
+  price "float unsigned" [not null, default: 0, note: '商品价格']
+  original_price "float unsigned" [not null, default: 0, note: '商品原价']
+  cost_price "float unsigned" [not null, default: 0, note: '商品成本价']
+  stock "float unsigned" [not null, default: 0, note: '商品库存']
+  alert_stock "float unsigned" [not null, default: 0, note: '商品预警库存']
+  weight "float unsigned" [not null, default: 0, note: '商品重量']
+  volume "float unsigned" [not null, default: 0, note: '商品体积']
+  sales "int unsigned" [not null, default: 0, note: '商品销量']
+  views "int unsigned" [not null, default: 0, note: '商品浏览量']
+  favorites "int unsigned" [not null, default: 0, note: '商品收藏量']
+}
+
+table "shop_goods_sku_spec" {
+  note: '''
+### 商品 SKU 规格表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  sku_id "int unsigned" [not null, default: 0, note: '商品 SKU 编号', ref: - shop_goods_sku.id]
+  spec_name_id "int unsigned" [not null, default: 0, note: '商品 SKU 规格名编号', ref: - shop_goods_sku_spec_name.id]
+  spec_value_id "int unsigned" [not null, default: 0, note: '商品 SKU 规格值编号', ref: - shop_goods_sku_spec_value.id]
+}
+
+table "shop_goods_sku_spec_name" {
+  note: '''
+### 商品 SKU 规格表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  name varchar(32) [not null, default: '', note: '规格名 (如: 颜色)']
+}
+
+table "shop_goods_sku_spec_value" {
+  note: '''
+### 商品 SKU 规格值表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  spec_name_id "int unsigned" [not null, default: 0, note: '商品 SKU 规格编号', ref: - shop_goods_sku_spec_name.id]
+  value varchar(32) [not null, default: '', note: '规格值 (如: 红色)']
+}
+
+table "shop_goods_category" {
+  note: '''
+### 商品分类表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  parent_id "int unsigned" [default: 0, note: '上级分类编号']
+  image_id "int unsigned" [default: 0, note: '分类图片编号', ref: - app_asset.id]
+  name varchar(32) [not null, default: '', note: '分类名称']
+  sort "int unsigned" [default: 1, note: '分类排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_group" {
+  note: '''
+### 商品分组表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '分组名称']
+  sort "int unsigned" [default: 1, note: '分组排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_tag" {
+  note: '''
+### 商品标签表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '标签名称']
+  sort "int unsigned" [default: 1, note: '标签排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_brand" {
+  note: '''
+### 商品品牌表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '品牌名称']
+  logo_id "int unsigned" [default: 0, note: '品牌LOGO', ref: - app_asset.id]
+  desc varchar(200) [not null, default: '', note: '品牌介绍']
+  sort "int unsigned" [default: 1, note: '品牌排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_service" {
+  note: '''
+### 商品服务表
+
+------
+
+#### 商品 - 服务类型
+
+- 字段: `type`
+- 类型: `IGoodsServiceType`
+
+| 描述       | 值           | 字典                            |
+|------------|--------------|---------------------------------|
+| `服务保障` | `protection` | `GOODS_SERVICE_TYPE_PROTECTION` |
+| `附加服务` | `service`    | `GOODS_SERVICE_TYPE_SERVICE`    |
+  '''
+
+  id "int unsigned" [pk, increment]
+  type varchar(32) [not null, default: '', note: '服务类型']
+  name varchar(32) [not null, default: '', note: '服务名称']
+  icon_id "int unsigned" [default: 0, note: '服务图标', ref: - app_asset.id]
+  desc varchar(200) [not null, default: '', note: '服务介绍']
+  price "float unsigned" [default: 0, note: '服务价格']
+  sort "int unsigned" [default: 1, note: '服务排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_attribute_template" {
+  note: '''
+### 商品参数模板表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '模板名称']
+  desc varchar(200) [not null, default: '', note: '模板介绍']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_goods_attribute_template_option" {
+  note: '''
+### 商品参数模板参数选项表
+
+------
+
+#### 商品 - 参数模板参数类型
+
+- 字段: `type`
+- 类型: `IGoodsAttributeOption`
+
+| 描述   | 值         | 字典                              |
+|--------|------------|-----------------------------------|
+| `文本` | `input`    | `GOODS_ATTRIBUTE_OPTION_INPUT`    |
+| `单选` | `radio`    | `GOODS_ATTRIBUTE_OPTION_RADIO`    |
+| `多选` | `checkbox` | `GOODS_ATTRIBUTE_OPTION_CHECKBOX` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  template_id "int unsigned" [not null, default: 0, note: '商品参数模板编号', ref: - shop_goods_attribute_template.id]
+  name varchar(32) [not null, default: '', note: '模板参数名称']
+  type varchar(32) [not null, default: '', note: '模板参数类型']
+  options text [note: '模板参数选项 (JSON)']
+  default_value text [note: '模板参数默认值 (JSON)']
+}
+
+table "shop_goods_has_image" {
+  note: '''
+### 商品图片中间表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  asset_id "int unsigned" [not null, default: 0, note: '图片素材编号', ref: - app_asset.id]
+  sort "int unsigned" [not null, default: 1, note: '显示排序']
+}
+
+table "shop_goods_has_category" {
+  note: '''
+### 商品所属分类中间表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  category_id "int unsigned" [not null, default: 0, note: '商品分类编号', ref: - shop_goods_category.id]
+}
+
+table "shop_goods_has_service" {
+  note: '''
+### 商品服务中间表
+
+------
+
+#### 商品 - 服务类型
+
+- 字段: `service_type`
+- 类型: `IGoodsServiceType`
+
+| 描述       | 值           | 字典                            |
+|------------|--------------|---------------------------------|
+| `服务保障` | `protection` | `GOODS_SERVICE_TYPE_PROTECTION` |
+| `附加服务` | `service`    | `GOODS_SERVICE_TYPE_SERVICE`    |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  service_id "int unsigned" [not null, default: 0, note: '商品服务编号', ref: - shop_goods_service.id]
+  service_type varchar(32) [not null, default: '', note: '商品服务类型']
+}
+
+// ------
+// SHOP -> MEMBER 会员管理
+// ------
+
+table "shop_member" {
+  note: '''
+### 会员信息表
+
+------
+
+#### 会员 - 状态
+
+- 字段: `status`
+- 类型: `IMemberStatus`
+
+| 描述   | 值        | 字典                    |
+|--------|-----------|-------------------------|
+| `正常` | `normal`  | `MEMBER_STATUS_NORMAL`  |
+| `屏蔽` | `blocked` | `MEMBER_STATUS_BLOCKED` |
+
+------
+
+#### 会员 - 注册来源 `IMemberSource`
+
+- 字段: `source`
+- 类型: `IMemberSource`
+
+| 描述          | 值          | 字典                      |
+|---------------|-------------|---------------------------|
+| `网站`        | `web`       | `MEMBER_SOURCE_WEB`       |
+| `H5`          | `h5`        | `MEMBER_SOURCE_H5`        |
+| `iOS APP`     | `ios`       | `MEMBER_SOURCE_IOS`       |
+| `Android APP` | `android`   | `MEMBER_SOURCE_ANDROID`   |
+| `微信公众号`  | `wechat_oa` | `MEMBER_SOURCE_WECHAT_OA` |
+| `微信小程序`  | `wechat_mp` | `MEMBER_SOURCE_WECHAT_MP` |
+| `后台创建`    | `manual`    | `MEMBER_SOURCE_MANUAL`    |
+| `批量导入`    | `import`    | `MEMBER_SOURCE_IMPORT`    |
+
+------
+
+#### 会员 - 性别
+
+- 字段: `gender`
+- 类型: `IMemberGender`
+
+| 描述   | 值        | 字典                    |
+|--------|-----------|-------------------------|
+| `保密` | `unknown` | `MEMBER_GENDER_UNKNOWN` |
+| `先生` | `male`    | `MEMBER_GENDER_MALE`    |
+| `女士` | `female`  | `MEMBER_GENDER_FEMALE`  |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  status varchar(32) [not null, default: '', note: '会员状态']
+  group_id "int unsigned" [not null, default: 0, note: '会员群体编号', ref: - shop_member_group.id]
+  tag_id "int unsigned" [not null, default: 0, note: '会员标签编号', ref: - shop_member_tag.id]
+  card_id "int unsigned" [not null, default: 0, note: '会员卡编号', ref: - shop_member_card.id]
+  card_no varchar(16) [not null, default: '', note: '会员卡号']
+  avatar varchar(128) [not null, default: '', note: '会员头像']
+  username varchar(32) [not null, default: '', note: '会员账号']
+  nickname varchar(16) [not null, default: '', note: '会员昵称']
+  mobile varchar(16) [not null, default: '', note: '会员手机']
+  password varchar(256) [not null, default: '', note: '会员密码']
+  salt varchar(32) [not null, default: '', note: '会员密码盐值']
+  source varchar(32) [not null, default: '', note: '注册来源']
+  birthday "int unsigned" [not null, default: 0, note: '会员生日']
+  gender varchar(32) [not null, default: '', note: '会员性别']
+  location varchar(32) [not null, default: '', note: '注册城市 (`,` 分割)']
+  is_online char [not null, default: '', note: '是否在线 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+  updated_time datetime [default: null, note: '更新时间']
+  last_login_time datetime [default: null, note: '最近登录时间']
+}
+
+table "shop_member_token" {
+  note: '''
+### 会员口令表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  token varchar(64) [not null, default: '', note: '会员口令']
+  expires "int unsigned" [not null, default: 0, note: '口令过期时间']
+  created_time datetime [default: null, note: '创建时间']
+  refresh_time datetime [default: null, note: '刷新时间']
+}
+
+table "shop_member_account" {
+  note: '''
+### 会员账户表
+
+------
+
+#### 会员 - 账户标识
+
+- 字段: `key`
+- 类型: `IMemberAccountKey`
+
+| 描述       | 值             | 字典                          |
+|------------|----------------|-------------------------------|
+| `订单数`   | `orders`       | `MEMBER_ACCOUNT_ORDERS`       |
+| `订单金额` | `order_amount` | `MEMBER_ACCOUNT_ORDER_AMOUNT` |
+| `成长值`   | `exp`          | `MEMBER_ACCOUNT_EXP`          |
+| `积分`     | `points`       | `MEMBER_ACCOUNT_POINTS`       |
+| `余额`     | `balance`      | `MEMBER_ACCOUNT_BALANCE`      |
+| `签到`     | `sign_in`      | `MEMBER_ACCOUNT_SIGN_IN`      |
+| `红包`     | `red_packet`   | `MEMBER_ACCOUNT_RED_PACKET`   |
+| `优惠券`   | `coupon`       | `MEMBER_ACCOUNT_COUPON`       |
+
+------
+
+#### 会员 - 账户状态
+
+- 字段: `status`
+- 类型: `IMemberAccountStatus`
+
+| 描述   | 值        | 字典                            |
+|--------|-----------|---------------------------------|
+| `启用` | `enable`  | `MEMBER_ACCOUNT_STATUS_ENABLE`  |
+| `停用` | `disable` | `MEMBER_ACCOUNT_STATUS_DISABLE` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  key varchar(32) [not null, default: '', note: '账户标识']
+  status varchar(32) [not null, default: '', note: '账户状态']
+  name varchar(32) [not null, default: '', note: '账户名']
+  value "float unsigned" [not null, default: 0, note: '账户值']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_member_card" {
+  note: '''
+### 会员卡信息表
+
+------
+
+#### 会员 - 卡类型
+
+- 字段: `type`
+- 类型: `IMemberCardType`
+
+| 描述         | 值       | 字典                      |
+|--------------|----------|---------------------------|
+| `会员等级`   | `level`  | `MEMBER_CARD_TYPE_LEVEL`  |
+| `超级会员卡` | `custom` | `MEMBER_CARD_TYPE_CUSTOM` |
+
+------
+
+#### 会员 - 卡状态
+
+- 字段: `status`
+- 类型: `IMemberCardStatus`
+
+| 描述   | 值        | 字典                         |
+|--------|-----------|------------------------------|
+| `启用` | `enable`  | `MEMBER_CARD_STATUS_ENABLE`  |
+| `停用` | `disable` | `MEMBER_CARD_STATUS_DISABLE` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  type varchar(32) [not null, default: '', note: '会员卡类型']
+  status varchar(32) [not null, default: '', note: '会员卡状态']
+  key varchar(32) [not null, default: '', note: '会员卡标识']
+  name varchar(32) [not null, default: '', note: '会员卡名称']
+  desc varchar(64) [not null, default: '', note: '会员卡描述']
+  styles text [not null, default: '', note: '会员卡样式 (JSON)']
+  need_exp "int unsigned" [not null, default: 0, note: '所需成长值']
+  discount "float unsigned" [not null, default: 0, note: '会员折扣']
+  points_ratio "float unsigned" [not null, default: 0, note: '获得积分倍率']
+  is_free_shipping char [not null, default: '', note: '是否包邮 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_member_card_plan" {
+  note: '''
+### 会员卡套餐表
+
+------
+
+#### 会员 - 卡套餐类型
+
+- 字段: `type`
+- 类型: `IMemberCardPlanType`
+
+| 描述   | 值       | 字典                           |
+|--------|----------|--------------------------------|
+| `次数` | `times`  | `MEMBER_CARD_PLAN_TYPE_TIMES`  |
+| `天数` | `days`   | `MEMBER_CARD_PLAN_TYPE_DAYS`   |
+| `月数` | `months` | `MEMBER_CARD_PLAN_TYPE_MONTHS` |
+| `年数` | `years`  | `MEMBER_CARD_PLAN_TYPE_YEARS`  |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  card_id "int unsigned" [not null, default: 0, note: '会员卡编号', ref: - shop_member_card.id]
+  type varchar(32) [not null, default: '', note: '套餐类型']
+  duration "int unsigned" [not null, default: 0, note: '有效期']
+  price "float unsigned" [not null, default: 0, note: '价格']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_member_card_expires" {
+  note: '''
+### 会员卡有效期表
+
+------
+
+#### 会员 - 卡套餐状态
+
+- 字段: `status`
+- 类型: `IMemberCardPlanStatus`
+
+| 描述   | 值        | 字典                              |
+|--------|-----------|-----------------------------------|
+| `正常` | `normal`  | `MEMBER_CARD_PLAN_STATUS_NORMAL`  |
+| `过期` | `expired` | `MEMBER_CARD_PLAN_STATUS_EXPIRED` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  plan_id "int unsigned" [not null, default: 0, note: '会员套餐编号', ref: - shop_member_card_plan.id]
+  status varchar(32) [not null, default: '', note: '会员卡套餐状态']
+  created_time datetime [default: null, note: '创建时间']
+  due_time datetime [default: null, note: '到期时间']
+}
+
+table "shop_member_group" {
+  note: '''
+### 会员群体表
+
+------
+
+#### 会员 - 群体筛选条件操作符
+
+- 字段: `conditions.operator`
+- 类型: `IMemberGroupCondOperator`
+
+| 描述   | 值        | 字典                                |
+|--------|-----------|-------------------------------------|
+| `包含` | `in`      | `MEMBER_GROUP_COND_OPERATOR_IN`     |
+| `排除` | `not_in`  | `MEMBER_GROUP_COND_OPERATOR_NOT_IN` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  name varchar(32) [not null, default: '', note: '群体名称']
+  desc varchar(256) [not null, default: '', note: '群体描述']
+  conditions text [not null, default: '', note: '群体条件设置 (JSON)']
+  total "int unsigned" [not null, default: 0, note: '群体人数']
+  created_time datetime [default: null, note: '创建时间']
+  updated_time datetime [default: null, note: '更新时间']
+  refresh_time datetime [default: null, note: '刷新时间']
+}
+
+table "shop_member_tag" {
+  note: '''
+### 会员标签表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  name varchar(32) [not null, default: '', note: '标签名称']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_member_address" {
+  note: '''
+### 会员地址表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  contact_name varchar(16) [not null, default: '', note: '联系人']
+  mobile varchar(16) [not null, default: '', note: '联系人手机']
+  location varchar(32) [not null, default: '', note: '城市 (`,` 分割)']
+  address varchar(64) [not null, default: '', note: '详细地址']
+  is_default "tinyint(1) unsigned" [not null, default: 0, note: '是否默认 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+  updated_time datetime [default: null, note: '更新时间']
+}
+
+table "shop_member_points_rule" {
+  note: '''
+### 会员积分规则表
+
+------
+
+#### 会员 - 积分规则标识
+
+- 字段: `key`
+- 类型: `IMemberPointsRuleKey`
+
+| 描述       | 值          | 字典                           |
+|------------|-------------|--------------------------------|
+| `注册奖励` | `register`  | `MEMBER_POINTS_RULE_REGISTER`  |
+| `消费奖励` | `ordering`  | `MEMBER_POINTS_RULE_ORDERING`  |
+| `生日有礼` | `birthday`  | `MEMBER_POINTS_RULE_BIRTHDAY`  |
+| `签到奖励` | `sign_in`   | `MEMBER_POINTS_RULE_SIGN_IN`   |
+| `积分抵现` | `deduction` | `MEMBER_POINTS_RULE_DEDUCTION` |
+
+------
+
+#### 会员 - 积分规则状态
+
+- 字段: `status`
+- 类型: `IMemberPointsRuleStatus`
+
+| 描述   | 值        | 字典                                |
+|--------|-----------|-------------------------------------|
+| `启用` | `enable`  | `MEMBER_POINTS_RULE_STATUS_ENABLE`  |
+| `停用` | `disable` | `MEMBER_POINTS_RULE_STATUS_DISABLE` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  key varchar(32) [not null, default: '', note: '规则标识']
+  status varchar(32) [not null, default: '', note: '规则状态']
+  name varchar(16) [not null, default: '', note: '规则名称']
+  desc varchar(64) [not null, default: '', note: '规则描述']
+  icon varchar(32) [not null, default: '', note: '规则图标']
+  options text [not null, default: '', note: '规则配置 (JSON)']
+}
+
+table "shop_member_log" {
+  note: '''
+### 会员日志表
+
+------
+
+#### 会员 - 日志类型
+
+- 字段: `type`
+- 类型: `IMemberLogType`
+
+| 描述       | 值         | 字典                       |
+|------------|------------|----------------------------|
+| `常规操作` | `operate`  | `MEMBER_LOG_TYPE_OPERATE`  |
+| `浏览商品` | `visit`    | `MEMBER_LOG_TYPE_VISIT`    |
+| `收藏商品` | `favorite` | `MEMBER_LOG_TYPE_FAVORITE` |
+| `积分变动` | `points`   | `MEMBER_LOG_TYPE_POINTS`   |
+
+------
+
+#### 日志来源
+
+- 字段: `source`
+- 类型: `IMemberSource`
+
+| 描述          | 值          | 字典                      |
+|---------------|-------------|---------------------------|
+| `网站`        | `web`       | `MEMBER_SOURCE_WEB`       |
+| `H5`          | `h5`        | `MEMBER_SOURCE_H5`        |
+| `iOS APP`     | `ios`       | `MEMBER_SOURCE_IOS`       |
+| `Android APP` | `android`   | `MEMBER_SOURCE_ANDROID`   |
+| `微信公众号`  | `wechat_oa` | `MEMBER_SOURCE_WECHAT_OA` |
+| `微信小程序`  | `wechat_mp` | `MEMBER_SOURCE_WECHAT_MP` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  type varchar(32) [not null, default: '', note: '日志类型']
+  source varchar(32) [not null, default: '', note: '日志来源']
+  action varchar(32) [not null, default: '', note: '日志操作']
+  content varchar(256) [not null, default: '', note: '日志内容']
+  extra text [not null, default: '', note: '额外信息 (JSON)']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_member_logoff" {
+  note: '''
+### 会员注销申请表
+
+------
+
+#### 会员 - 注销状态
+
+- 字段: `status`
+- 类型: `IMemberLogoffStatus`
+
+| 描述     | 值         | 字典                            |
+|----------|------------|---------------------------------|
+| `待审核` | `pending`  | `MEMBER_LOGOFF_STATUS_PENDING`  |
+| `已通过` | `approved` | `MEMBER_LOGOFF_STATUS_APPROVED` |
+| `已拒绝` | `rejected` | `MEMBER_LOGOFF_STATUS_REJECTED` |
+| `已注销` | `logoff`   | `MEMBER_LOGOFF_STATUS_LOGOFF`   |
+
+------
+
+#### 注销来源
+
+- 字段: `source`
+- 类型: `IMemberSource`
+
+| 描述          | 值          | 字典                      |
+|---------------|-------------|---------------------------|
+| `网站`        | `web`       | `MEMBER_SOURCE_WEB`       |
+| `H5`          | `h5`        | `MEMBER_SOURCE_H5`        |
+| `iOS APP`     | `ios`       | `MEMBER_SOURCE_IOS`       |
+| `Android APP` | `android`   | `MEMBER_SOURCE_ANDROID`   |
+| `微信公众号`  | `wechat_oa` | `MEMBER_SOURCE_WECHAT_OA` |
+| `微信小程序`  | `wechat_mp` | `MEMBER_SOURCE_WECHAT_MP` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  username varchar(32) [not null, default: '', note: '会员账号']
+  nickname varchar(16) [not null, default: '', note: '会员昵称']
+  mobile varchar(12) [not null, default: '', note: '会员手机']
+  reason varchar(64) [not null, default: '', note: '注销原因']
+  status varchar(32) [not null, default: '', note: '注销状态']
+  source varchar(32) [not null, default: '', note: '注销来源']
+  created_time datetime [default: null, note: '创建时间']
+  logoffed_time datetime [default: null, note: '注销时间']
+}
+
+// ------
+// SHOP -> ORDER 订单管理
+// ------
+
+table "shop_order" {
+  note: '''
+### 订单信息表
+
+------
+
+#### 订单 - 类型
+
+- 字段: `type`
+- 类型: `IOrderType`
+
+| 描述       | 值        | 字典                 |
+|------------|-----------|----------------------|
+| `普通订单` | `normal`  | `ORDER_TYPE_NORMAL`  |
+| `云链订单` | `connect` | `ORDER_TYPE_CONNECT` |
+
+------
+
+#### 订单 - 状态
+
+- 字段: `status`
+- 类型: `IOrderStatus`
+
+| 描述     | 值          | 字典                     |
+|----------|-------------|--------------------------|
+| `待付款` | `pending`   | `ORDER_STATUS_PENDING`   |
+| `待发货` | `paid`      | `ORDER_STATUS_PAID`      |
+| `待收货` | `delivered` | `ORDER_STATUS_DELIVERED` |
+| `待评价` | `received`  | `ORDER_STATUS_RECEIVEd`  |
+| `已完成` | `finished`  | `ORDER_STATUS_FINISHEd`  |
+| `已关闭` | `closed`    | `ORDER_STATUS_CLOSED`    |
+| `已退款` | `refunded`  | `ORDER_STATUS_REFUNDEd`  |
+| `已删除` | `deleted`   | `ORDER_STATUS_DELETED`   |
+
+------
+
+#### 订单 - 来源
+
+- 字段: `source`
+- 类型: `IOrderSource`
+
+| 描述          | 值          | 字典                     |
+|---------------|-------------|--------------------------|
+| `微信小程序`  | `wechat_mp` | `ORDER_SOURCE_WECHAT_MP` |
+| `H5`          | `h5`        | `ORDER_SOURCE_H5`        |
+| `微信公众号`  | `wechat_oa` | `ORDER_SOURCE_WECHAT_OA` |
+| `代客下单`    | `agency`    | `ORDER_SOURCE_AGENCY`    |
+| `网站`        | `web`       | `ORDER_SOURCE_WEB`       |
+| `iOS APP`     | `ios`       | `ORDER_SOURCE_IOS`       |
+| `Android APP` | `android`   | `ORDER_SOURCE_ANDROID`   |
+  '''
+
+  id varchar(16) [pk, not null, default: '', note: '订单号']
+  type varchar(32) [not null, default: '', note: '订单类型']
+  status varchar(32) [not null, default: '', note: '订单状态']
+  source varchar(32) [not null, default: '', note: '订单来源']
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  amount "float unsigned" [not null, default: 0, note: '订单总金额']
+  qty "int unsigned" [not null, default: 0, note: '订单商品总数']
+  remark varchar(256) [not null, default: '', note: '订单备注']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_order_payment" {
+  note: '''
+### 订单支付信息表
+
+------
+
+#### 订单 - 支付状态
+
+- 字段: `status`
+- 类型: `IOrderPaymentStatus`
+
+| 描述     | 值        | 字典                           |
+|----------|-----------|--------------------------------|
+| `待付款` | `pending` | `ORDER_PAYMENT_STATUS_PENDING` |
+| `已付款` | `paid`    | `ORDER_PAYMENT_STATUS_PAID`    |
+| `已关闭` | `close`   | `ORDER_PAYMENT_STATUS_CLOSE`   |
+
+------
+
+#### 订单 - 支付方式
+
+- 字段: `type`
+- 类型: `IOrderPaymentType`
+
+| 描述       | 值        | 字典                         |
+|------------|-----------|------------------------------|
+| `微信支付` | `wechat`  | `ORDER_PAYMENT_TYPE_WECHAT`  |
+| `支付宝`   | `alipay`  | `ORDER_PAYMENT_TYPE_ALIPAY`  |
+| `余额`     | `balance` | `ORDER_PAYMENT_TYPE_BALANCE` |
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  status varchar(32) [not null, default: '', note: '支付状态']
+  type varchar(32) [not null, default: '', note: '支付方式']
+  order_amount "float unsigned" [not null, default: 0, note: '订单金额']
+  alter_order_amount "float unsigned" [not null, default: 0, note: '订单改价']
+  deduction_amount "float unsigned" [not null, default: 0, note: '抵扣金额']
+  discount_amount "float unsigned" [not null, default: 0, note: '折扣金额']
+  coupon_amount "float unsigned" [not null, default: 0, note: '优惠券金额']
+  freight_amount "float unsigned" [not null, default: 0, note: '运费金额']
+  payment_amount "float unsigned" [not null, default: 0, note: '实际支付金额']
+  created_time datetime [default: null, note: '创建时间']
+  alter_time datetime [default: null, note: '改价时间']
+  paid_time datetime [default: null, note: '付款时间']
+}
+
+table "shop_order_delivery" {
+  note: '''
+### 订单物流发货信息表
+
+------
+
+#### 订单 - 发货状态
+
+- 字段: `status`
+- 类型: `ILogisticsDeliveryStatus`
+
+| 描述     | 值          | 字典                                  |
+|----------|-------------|---------------------------------------|
+| `待发货` | `pending`   | `LOGISTICS_DELIVERY_STATUS_PENDING`   |
+| `已发货` | `delivered` | `LOGISTICS_DELIVERY_STATUS_DELIVERED` |
+| `已收货` | `received`  | `LOGISTICS_DELIVERY_STATUS_RECEIVED`  |
+
+------
+
+#### 订单 - 发货类型
+
+- 字段: `type`
+- 类型: `ILogisticsDeliveryType`
+
+| 描述   | 值         | 字典                               |
+|--------|------------|------------------------------------|
+| `发货` | `delivery` | `LOGISTICS_DELIVERY_TYPE_DELIVERY` |
+| `退货` | `return`   | `LOGISTICS_DELIVERY_TYPE_RETURN`   |
+| `换货` | `replace`  | `LOGISTICS_DELIVERY_TYPE_REPLACE`  |
+
+------
+
+#### 订单 - 发货方式
+
+- 字段: `mode`
+- 类型: `ILogisticsDeliveryMode`
+
+| 描述       | 值        | 字典                              |
+|------------|-----------|-----------------------------------|
+| `无须物流` | `none`    | `LOGISTICS_DELIVERY_MODE_NONE`    |
+| `快递发货` | `express` | `LOGISTICS_DELIVERY_MODE_EXPRESS` |
+| `到店自提` | `self`    | `LOGISTICS_DELIVERY_MODE_SELF`    |
+| `同城配送` | `local`   | `LOGISTICS_DELIVERY_MODE_LOCAL`   |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  status varchar(32) [not null, default: '', note: '发货状态']
+  type varchar(32) [not null, default: '', note: '发货类型']
+  mode varchar(32) [not null, default: '', note: '发货方式']
+  logistics_company_id "int unsigned" [not null, default: 0, note: '物流公司']
+  logistics_no varchar(32) [not null, default: '', note: '物流单号']
+  sender varchar(16) [not null, default: 0, note: '寄件人']
+  sender_mobile varchar(16) [not null, default: 0, note: '寄件手机号']
+  sender_location varchar(16) [not null, default: 0, note: '寄件地区']
+  sender_address varchar(64) [not null, default: 0, note: '寄件地址']
+  receiver varchar(16) [not null, default: 0, note: '收货人']
+  receiver_mobile varchar(16) [not null, default: 0, note: '收货人手机']
+  receiver_location varchar(16) [not null, default: 0, note: '收货地区']
+  receiver_address varchar(64) [not null, default: 0, note: '收货地址']
+}
+
+table "shop_order_delivery_batch" {
+  note: '''
+### 订单批量发货信息表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  staff_id "int unsigned" [not null, default: 0, note: '员工编号']
+  total "int unsigned" [not null, default: 0, note: '订单总数']
+  success "int unsigned" [not null, default: 0, note: '成功数']
+  failed "int unsigned" [not null, default: 0, note: '失败数']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "shop_order_goods" {
+  note: '''
+### 订单商品信息表
+
+------
+
+#### 订单 - 商品状态
+
+- 字段: `status`
+- 类型: `IOrderGoodsStatus`
+
+| 描述     | 值          | 字典                           |
+|----------|-------------|--------------------------------|
+| `待付款` | `pending`   | `ORDER_GOODS_STATUS_PENDING`   |
+| `待发货` | `paid`      | `ORDER_GOODS_STATUS_PAID`      |
+| `已发货` | `delivered` | `ORDER_GOODS_STATUS_DELIVERED` |
+| `已收货` | `received`  | `ORDER_GOODS_STATUS_RECEIVED`  |
+| `已完成` | `finished`  | `ORDER_GOODS_STATUS_FINISHED`  |
+| `待退货` | `returning` | `ORDER_GOODS_STATUS_RETURNING` |
+| `已退货` | `returned`  | `ORDER_GOODS_STATUS_RETURNED`  |
+| `待退款` | `refunding` | `ORDER_GOODS_STATUS_REFUNDING` |
+| `已退款` | `refunded`  | `ORDER_GOODS_STATUS_REFUNDED`  |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  delivery_id "int unsigned" [not null, default: 0, note: '物流发货编号', ref: - shop_order_delivery.id]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  sku_id "int unsigned" [not null, default: 0, note: '商品 SKU 编号', ref: - shop_goods_sku.id]
+  sku_code varchar(32) [not null, default: '', note: '商品 SKU 编码']
+  image_id "int unsigned" [not null, default: 0, note: '商品图片编号', ref: - app_asset.id]
+  status varchar(32) [not null, default: '', note: '订单商品状态']
+  name varchar(100) [not null, default: '', note: '商品名称']
+  specs text [not null, default: '', note: '商品 SKU 规格 (JSON)']
+  price "float unsigned" [not null, default: 0, note: '商品价格']
+  qty "int unsigned" [not null, default: 0, note: '商品数量']
+  created_time datetime [default: null, note: '创建时间']
+  received_time datetime [default: null, note: '收货时间']
+  returned_time datetime [default: null, note: '退货时间']
+  replaced_time datetime [default: null, note: '换货时间']
+}
+
+table "shop_order_payment_discount" {
+  note: '''
+### 订单支付折扣信息表
+
+------
+
+#### 订单 - 支付 - 折扣类型
+
+- 字段: `type`
+- 类型: `IOrderPaymentDiscountType`
+
+| 描述       | 值          | 字典                                    |
+|------------|-------------|-----------------------------------------|
+| `会员权益` | `privilege` | `ORDER_PAYMENT_DISCOUNT_TYPE_PRIVILEGE` |
+| `优惠活动` | `promotion` | `ORDER_PAYMENT_DISCOUNT_TYPE_PROMOTION` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  payment_id "int unsigned" [not null, default: 0, note: '订单支付编号', ref: - shop_order_payment.id]
+  type varchar(32) [not null, default: '', note: '折扣类型']
+  discount_amount "float unsigned" [not null, default: 0, note: '折扣金额']
+  order_goods_id text [not null, default: '', note: '订单商品 (JSON)']
+}
+
+table "shop_order_payment_deduction" {
+  note: '''
+### 订单支付抵扣信息表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  payment_id "int unsigned" [not null, default: 0, note: '订单支付编号', ref: - shop_order_payment.id]
+  points "int unsigned" [not null, default: 0, note: '抵扣积分']
+  ratio "float unsigned" [not null, default: 0, note: '抵扣比例']
+  deduction_amount "float unsigned" [not null, default: 0, note: '抵扣金额']
+}
+
+table "shop_order_payment_coupon" {
+  note: '''
+### 订单支付优惠券信息表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  payment_id "int unsigned" [not null, default: 0, note: '订单支付编号', ref: - shop_order_payment.id]
+}
+
+table "shop_order_refund" {
+  note: '''
+### 订单退换货信息表
+
+------
+
+#### 订单 - 退换货 - 类型
+
+- 字段: `type`
+- 类型: `IOrderRefundType`
+
+| 描述           | 值       | 字典                       |
+|----------------|----------|----------------------------|
+| `买家申请售后` | `apply`  | `ORDER_REFUND_TYPE_APPLY`  |
+| `商家主动退款` | `refund` | `ORDER_REFUND_TYPE_REFUND` |
+
+------
+
+#### 订单 - 退换货 - 处理状态
+
+- 字段: `status`
+- 类型: `IOrderRefundStatus`
+
+| 描述     | 值           | 字典                             |
+|----------|--------------|----------------------------------|
+| `无售后` | `none`       | `ORDER_REFUND_STATUS_NONE`       |
+| `处理中` | `processing` | `ORDER_REFUND_STATUS_PROCESSING` |
+| `已结束` | `finished`   | `ORDER_REFUND_STATUS_FINISHED`   |
+
+------
+
+#### 订单 - 退换货 - 处理阶段
+
+- 字段: `stage`
+- 类型: `IOrderRefundStage`
+
+| 描述         | 值                 | 字典                                  |
+|--------------|--------------------|---------------------------------------|
+| `待审核`     | `pending`          | `ORDER_REFUND_STAGE_PENDING`          |
+| `待买家退货` | `approved`         | `ORDER_REFUND_STAGE_APPROVED`         |
+| `待商家收货` | `sending`          | `ORDER_REFUND_STAGE_SENDING`          |
+| `待商家退款` | `received`         | `ORDER_REFUND_STAGE_RECEIVED`         |
+| `已拒绝`     | `rejected`         | `ORDER_REFUND_STAGE_REJECTED`         |
+| `已退款`     | `refunded`         | `ORDER_REFUND_STAGE_REFUNDED`         |
+| `待商家发货` | `seller-pending`   | `ORDER_REFUND_STAGE_SELLER_PENDING`   |
+| `待买家收货` | `seller-sending`   | `ORDER_REFUND_STAGE_SELLER_SENDING`   |
+| `已换货`     | `buyer-received`   | `ORDER_REFUND_STAGE_BUYER_RECEIVED`   |
+| `已部分退款` | `partial-refunded` | `ORDER_REFUND_STAGE_PARTIAL_REFUNDED` |
+
+------
+
+#### 订单 - 退换货 - 退款方式
+
+- 字段: `mode`
+- 类型: `IOrderRefundMode`
+
+| 描述       | 值        | 字典                        |
+|------------|-----------|-----------------------------|
+| `退货退款` | `refund`  | `ORDER_REFUND_MODE_REFUND`  |
+| `换货`     | `replace` | `ORDER_REFUND_MODE_REPLACE` |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  type varchar(32) [not null, default: '', note: '退款类型']
+  status varchar(32) [not null, default: '', note: '处理状态']
+  stage varchar(32) [not null, default: '', note: '处理阶段']
+  mode varchar(32) [not null, default: '', note: '退款方式']
+  order_goods_id text [not null, default: '', note: '退款订单商品 (JSON)']
+  qty "int unsigned" [not null, default: 0, note: '退款商品数量']
+  amount "float unsigned" [not null, default: 0, note: '退款金额']
+  reason varchar(32) [not null, default: '', note: '退款原因']
+  message varchar(100) [not null, default: '', note: '退款说明']
+  reject_resaon varchar(32) [not null, default: '', note: '拒绝原因']
+  reject_message varchar(32) [not null, default: '', note: '拒绝说明']
+  created_time datetime [default: null, note: '申请时间']
+  approved_time datetime [default: null, note: '受理时间']
+  rejected_time datetime [default: null, note: '拒绝时间']
+  refunded_time datetime [default: null, note: '退款时间']
+}
+
+table "shop_order_refund_attachment" {
+  note: '''
+### 订单退换货凭证附件表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  refund_id "int unsigned" [not null, default: 0, note: '退款单号', ref: - shop_order_refund.id]
+  name varchar(256) [not null, default: '', note: '附件名称']
+  path varchar(256) [not null, default: '', note: '附件路径']
+}
+
+table "shop_order_comment" {
+  note: '''
+### 订单商品评价表
+
+------
+
+#### 订单 - 商品评价 - 审核状态
+
+- 字段: `audit_status`
+- 类型: `IOrderCommentAuditStatus`
+
+| 描述     | 值         | 字典                                  |
+|----------|------------|---------------------------------------|
+| `待审核` | `pending`  | `ORDER_COMMENT_AUDIT_STATUS_PENDING`  |
+| `已通过` | `approved` | `ORDER_COMMENT_AUDIT_STATUS_APPROVED` |
+| `已拒绝` | `rejected` | `ORDER_COMMENT_AUDIT_STATUS_REJECTED` |
+
+------
+
+#### 订单 - 商品评价 - 综合评级
+
+- 字段: `grade`
+- 类型: `IGoodsRatingGrade`
+
+| 描述   | 值       | 字典                        |
+|--------|----------|-----------------------------|
+| `好评` | `high`   | `GOODS_RAGING_GRADE_HIGH`   |
+| `中评` | `normal` | `GOODS_RAGING_GRADE_NORMAL` |
+| `差评` | `low`    | `GOODS_RAGING_GRADE_LOW`    |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  goods_id "int unsigned" [not null, default: 0, note: '商品编号', ref: - shop_goods.id]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  audit_status varchar(32) [not null, default: '', note: '审核状态']
+  grade varchar(8) [not null, default: '', note: '综合评级']
+  goods_score "int unsigned" [not null, default: 0, note: '商品评分']
+  service_score "int unsigned" [not null, default: 0, note: '服务评分']
+  logistics_score "int unsigned" [not null, default: 0, note: '物流评分']
+  content text [not null, default: '', note: '评价内容']
+  reply text [not null, default: '', note: '回复内容']
+  is_commented "tinyint(1) unsigned" [not null, default: 0, note: '是否评价 (N:否 Y:是)']
+  is_replied "tinyint(1) unsigned" [not null, default: 0, note: '是否回复 (N:否 Y:是)']
+  created_time datetime [default: null, note: '评价时间']
+  replied_time datetime [default: null, note: '回复时间']
+}
+
+table "shop_order_comment_attachment" {
+  note: '''
+### 订单商品评价附件表
+
+------
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  comment_id "int unsigned" [not null, default: 0, note: '评价编号', ref: - shop_order_comment.id]
+  name varchar(256) [not null, default: '', note: '附件名称']
+  path varchar(256) [not null, default: '', note: '附件路径']
+}
+
+table "shop_order_log" {
+  note: '''
+### 订单日志表
+
+------
+
+#### 订单 - 日志类型
+
+- 字段: `type`
+- 类型: `IOrderLogType`
+
+| 描述                   | 值                       | 字典                                    |
+|------------------------|--------------------------|-----------------------------------------|
+| `买家下单`             | `order`                  | `ORDER_LOG_TYPE_ORDER`                  |
+| `买家付款`             | `payment`                | `ORDER_LOG_TYPE_PAYMENT`                |
+| `商家发货`             | `delivered`              | `ORDER_LOG_TYPE_DELIVERED`              |
+| `买家收货`             | `receive`                | `ORDER_LOG_TYPE_RECEIVE`                |
+| `交易完成`             | `finish`                 | `ORDER_LOG_TYPE_FINISH`                 |
+| `买家申请售后`         | `refund_apply`           | `ORDER_LOG_TYPE_REFUND_APPLY`           |
+| `商家处理售后`         | `refund_approval`        | `ORDER_LOG_TYPE_REFUND_APPROVAL`        |
+| `买家退货, 商品已寄出` | `buyer_returns`          | `ORDER_LOG_TYPE_BUYER_RETURNS`          |
+| `商家已收货`           | `seller_receive`         | `ORDER_LOG_TYPE_SELLER_RECEIVE`         |
+| `商家重新发货`         | `seller_delivered_again` | `ORDER_LOG_TYPE_SELLER_DELIVERED_AGAIN` |
+| `买家收货`             | `buyer_receive`          | `ORDER_LOG_TYPE_BUYER_RECEIVE`          |
+| `商家退款`             | `seller_refunds`         | `ORDER_LOG_TYPE_SELLER_REFUNDS`         |
+| `售后结束`             | `refund_finish`          | `ORDER_LOG_TYPE_REFUND_FINISH`          |
+  '''
+
+  id "int unsigned" [pk, not null, increment]
+  order_id char(16) [not null, default: '', note: '订单号', ref: - shop_order.id]
+  member_id "int unsigned" [not null, default: 0, note: '会员编号', ref: - shop_member.id]
+  type varchar(32) [not null, default: '', note: '日志类型']
+  action varchar(128) [not null, default: '', note: '日志动作']
+  content varchar(256) [not null, default: '', note: '日志内容']
+  extra text [not null, default: '', note: '扩展信息 (JSON)']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+
+// ------
+// MANAGE -> AREA 地区管理
+// ------
+
+table "manage_area" {
+  note: '''
+### 地区管理表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  province_id "int unsigned" [default: 0, note: '省级地区编号']
+  city_id "int unsigned" [default: 0, note: '市级地区编号']
+  name varchar(64) [not null, default: '', note: '地区名称']
+  short_name varchar(16) [not null, default: '', note: '地区简称']
+  code varchar(6) [not null, default: '', note: '邮政编码']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+// ------
+// MANAGE -> LOGISTICS 物流发货管理
+// ------
+
+table "manage_logistics_company" {
+  note: '''
+### 物流公司管理表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '公司名称']
+  desc varchar(64) [not null, default: '', note: '公司介绍']
+  url varchar(32) [not null, default: '', note: '公司官网']
+  sort "int unsigned" [not null, default: 1, note: '排序']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "manage_logistics_freight_template" {
+  note: '''
+### 物流运费模板表
+
+------
+
+#### 运费计算方式
+
+- 字段: `calc_mode`
+- 类型: `ILogisticsFreightTemplateCalcMode`
+
+| 描述         | 值       | 字典                                          |
+|--------------|----------|-----------------------------------------------|
+| `按重量计费` | `weight` | `LOGISTICS_FREIGHT_TEMPLATE_CALC_MODE_WEIGHT` |
+| `按体积计费` | `volume` | `LOGISTICS_FREIGHT_TEMPLATE_CALC_MODE_VOLUME` |
+| `按件计费`   | `count`  | `LOGISTICS_FREIGHT_TEMPLATE_CALC_MODE_COUNT`  |
+  '''
+
+  id "int unsigned" [pk, increment]
+  name varchar(32) [not null, default: '', note: '模板名称']
+  calc_mode varchar(32) [not null, default: '', note: '运费计算方式']
+  enable_free_rules char [not null, default: '', note: '启用包邮地区 (N:否 Y:是)']
+  created_time datetime [default: null, note: '创建时间']
+}
+
+table "manage_logistics_freight_template_rule" {
+  note: '''
+### 物流运费模板规则表
+
+------
+
+#### 物流运费模板规则类型
+
+- 字段: `type`
+- 类型: `ILogisticsFreightTemplateRuleType`
+
+| 描述   | 值       | 字典                                          |
+|--------|----------|-----------------------------------------------|
+| `常规` | `normal` | `LOGISTICS_FREIGHT_TEMPLATE_RULE_TYPE_NORMAL` |
+| `免费` | `free`   | `LOGISTICS_FREIGHT_TEMPLATE_RULE_TYPE_FREE`   |
+  '''
+
+  id "int unsigned" [pk, increment]
+  template_id "int unsigned" [default: 0, note: '运费模板编号', ref: - manage_logistics_freight_template.id]
+  type varchar(32) [not null, default: '', note: '规则类型']
+  areas text [note: '规则区域 (JSON)']
+  first "int unsigned" [default: 0, note: '首重']
+  first_price "float unsigned" [default: 0, note: '首重费用']
+  continue "int unsigned" [default: 0, note: '续重']
+  continue_price "float unsigned" [default: 0, note: '续重费用']
+}
+
+
+// ------
+// MANAGE -> SETTINGS 系统设置
+// ------
+
+table "manage_settings" {
+  note: '''
+### 系统设置表
+
+------
+  '''
+
+  id "int unsigned" [pk, increment]
+  key varchar(64) [not null, default: '', note: '设置键']
+  value varchar(512) [not null, default: '', note: '设置值']
+}

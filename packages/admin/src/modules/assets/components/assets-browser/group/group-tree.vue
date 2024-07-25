@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import AssetsBrowserGroupEditModal from './group-edit-modal.vue'
-
-import type { IAssetType } from '@/assets/types'
-import { fetchAssetGroupTree } from '@/assets/apis/group'
+import type { IAssetType } from '@xiaoshop/schema'
+import AssetsBrowserGroupEditModal from '@/assets/components/assets-browser/group/group-edit-modal.vue'
+import { fetchAssetGroupTree } from '@/assets/apis'
 
 defineOptions({
   name: 'AssetsBrowserGroupTree',
@@ -12,6 +11,8 @@ const props = defineProps<{
   type: IAssetType
   height: number
 }>()
+
+const emit = defineEmits(['loaded'])
 
 const currentGroupId = defineModel('currentGroup', {
   type: Array as PropType<number[]>,
@@ -30,6 +31,8 @@ function refresh() {
     if (res && res.length > 0) {
       currentGroupId.value = [res[0].id]
       currentGroupName.value = res[0].name
+
+      emit('loaded')
     }
   })
 }
@@ -76,7 +79,7 @@ defineExpose({
       </a-button>
     </AssetsBrowserGroupEditModal>
 
-    <div flex="auto" class="w-full mt-4">
+    <div class="flex-auto w-full mt-4">
       <a-spin
         class="w-full"
         :loading="loading"
@@ -93,9 +96,9 @@ defineExpose({
             show-line
           >
             <template #switcher-icon="node, { isLeaf, selected }">
-              <CommonIcon v-if="!isLeaf" name="ph:caret-down" />
-              <CommonIcon v-if="isLeaf && selected" name="ph:folder-open" :active="selected" font="size-16px" />
-              <CommonIcon v-if="isLeaf && !selected" name="ph:folder" font="size-16px" />
+              <CommonIcon v-if="!isLeaf" name="mingcute:down" />
+              <CommonIcon v-if="isLeaf && selected" name="mingcute:folder-open" :active="selected" class="text-16px" />
+              <CommonIcon v-if="isLeaf && !selected" name="mingcute:folder" class="text-16px" />
             </template>
           </a-tree>
         </a-scrollbar>

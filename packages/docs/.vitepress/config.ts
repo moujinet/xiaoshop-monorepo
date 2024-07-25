@@ -31,8 +31,9 @@ export default defineConfig({
         text: '文档',
         items: [
           { text: '开发文档', link: '/docs/' },
-          { text: '数据字典', link: '/dbs/' },
+          { text: '数据字典', link: 'https://dbdocs.io/luoyi/XiaoShop' },
           { text: '使用手册', link: '/manual/' },
+          { text: '术语表', link: '/glossary' },
         ],
       },
       { text: 'API', link: '/api/' },

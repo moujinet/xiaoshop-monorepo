@@ -12,7 +12,7 @@ defineProps<{
 
 <template>
   <div class="form-group">
-    <div class="form-group__header">
+    <div v-if="title || $slots.title" class="form-group__header">
       <CommonGroupTitle>
         <template #default>
           <slot name="title">
@@ -39,6 +39,7 @@ defineProps<{
     <div
       class="form-group__body"
       :class="{
+        'is-auto': !title,
         'is-mini': size === 'mini',
         'is-small': size === 'small',
         'is-medium': size === 'medium',
@@ -64,6 +65,10 @@ defineProps<{
 
   &__body {
     padding: var(--page-padding) 0;
+
+    &.is-auto {
+      padding: 0;
+    }
 
     &.is-mini {
       .arco-form-item-content {

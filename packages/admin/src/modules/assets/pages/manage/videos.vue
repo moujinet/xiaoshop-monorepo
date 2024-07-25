@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { AssetTypeEnum } from '@xiaoshop/schema'
 import { AssetsBrowserLayoutPanel } from '@/assets/components'
 
 defineOptions({
@@ -8,6 +9,6 @@ defineOptions({
 
 <template>
   <CommonContainer>
-    <AssetsBrowserLayoutPanel type="video" />
+    <AssetsBrowserLayoutPanel :type="AssetTypeEnum.VIDEO" />
   </CommonContainer>
 </template>

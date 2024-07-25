@@ -1,4 +1,4 @@
-import type { IGoodsBrand } from '@/goods/types'
+import type { IGoodsBrand, IGoodsBrandDict } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -15,13 +15,26 @@ export function fetchGoodsBrandList(): IUseRequestReturn<IGoodsBrand[]> {
 }
 
 /**
+ * 获取商品品牌字典列表
+ *
+ * @api get /goods/brand/dict/list
+ * @returns IUseRequestReturn<IGoodsBrandDict[]>
+ */
+export function fetchGoodsBrandDictList(): IUseRequestReturn<IGoodsBrandDict[]> {
+  return useRequest<IGoodsBrandDict[]>({
+    method: 'get',
+    url: '/goods/brand/dict/list',
+  })
+}
+
+/**
  * 获取商品品牌详情
  *
  * @api get /goods/brand/detail
- * @param id number
+ * @param id IGoodsBrand['id']
  * @returns IUseRequestReturn<IGoodsBrand>
  */
-export function fetchGoodsBrandDetail(id: number): IUseRequestReturn<IGoodsBrand> {
+export function fetchGoodsBrandDetail(id: IGoodsBrand['id']): IUseRequestReturn<IGoodsBrand> {
   return useRequest<IGoodsBrand>({
     method: 'get',
     url: '/goods/brand/detail',
@@ -72,10 +85,10 @@ export function updateGoodsBrand(
  * 删除商品品牌
  *
  * @api delete /goods/brand/delete
- * @param id number
+ * @param id IGoodsBrand['id']
  * @returns Promise<any>
  */
-export function deleteGoodsBrand(id: number): Promise<any> {
+export function deleteGoodsBrand(id: IGoodsBrand['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
     url: '/goods/brand/delete',

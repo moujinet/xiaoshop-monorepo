@@ -73,3 +73,183 @@ body {
     width: 100%;
   }
 }
+
+/* table || grid */
+.common-grid {
+  display: grid;
+  place-items: center stretch;
+
+  &__col {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-border-1);
+  }
+
+  &__header {
+    color: var(--color-text-2);
+    background: var(--color-fill-1);
+    border-bottom: 1px solid var(--color-border-1);
+    padding: 6px 12px;
+  }
+}
+
+.is-colorful {
+  &.is-red {
+    color: rgb(var(--red-6));
+    border-color: rgb(var(--red-6));
+    background-color: rgb(var(--red-1));
+  }
+
+  &.is-orangered {
+    color: rgb(var(--orangered-6));
+    border-color: rgb(var(--orangered-6));
+    background-color: rgb(var(--orangered-1));
+  }
+
+  &.is-orange {
+    color: rgb(var(--orange-6));
+    border-color: rgb(var(--orange-6));
+    background-color: rgb(var(--orange-1));
+  }
+
+  &.is-gold {
+    color: rgb(var(--gold-6));
+    border-color: rgb(var(--gold-6));
+    background-color: rgb(var(--gold-1));
+  }
+
+  &.is-lime {
+    color: rgb(var(--lime-6));
+    border-color: rgb(var(--lime-6));
+    background-color: rgb(var(--lime-1));
+  }
+
+  &.is-green {
+    color: rgb(var(--green-6));
+    border-color: rgb(var(--green-6));
+    background-color: rgb(var(--green-1));
+  }
+
+  &.is-cyan {
+    color: rgb(var(--cyan-6));
+    border-color: rgb(var(--cyan-6));
+    background-color: rgb(var(--cyan-1));
+  }
+
+  &.is-blue {
+    color: rgb(var(--blue-6));
+    border-color: rgb(var(--blue-6));
+    background-color: rgb(var(--blue-1));
+  }
+
+  &.is-arcoblue {
+    color: rgb(var(--arcoblue-6));
+    border-color: rgb(var(--arcoblue-6));
+    background-color: rgb(var(--arcoblue-1));
+  }
+
+  &.is-purple {
+    color: rgb(var(--purple-6));
+    border-color: rgb(var(--purple-6));
+    background-color: rgb(var(--purple-1));
+  }
+
+  &.is-pinkpurple {
+    color: rgb(var(--pinkpurple-6));
+    border-color: rgb(var(--pinkpurple-6));
+    background-color: rgb(var(--pinkpurple-1));
+  }
+
+  &.is-magenta {
+    color: rgb(var(--magenta-6));
+    border-color: rgb(var(--magenta-6));
+    background-color: rgb(var(--magenta-1));
+  }
+
+  &.is-gray {
+    color: rgb(var(--gray-6));
+    border-color: rgb(var(--gray-6));
+    background-color: rgb(var(--gray-1));
+  }
+
+  &.is-fill {
+    &.is-red {
+      color: rgb(var(--red-1));
+      border-color: rgb(var(--red-6));
+      background-color: rgb(var(--red-6));
+    }
+
+    &.is-orangered {
+      color: rgb(var(--orangered-1));
+      border-color: rgb(var(--orangered-6));
+      background-color: rgb(var(--orangered-6));
+    }
+
+    &.is-orange {
+      color: rgb(var(--orange-1));
+      border-color: rgb(var(--orange-6));
+      background-color: rgb(var(--orange-6));
+    }
+
+    &.is-gold {
+      color: rgb(var(--gold-1));
+      border-color: rgb(var(--gold-6));
+      background-color: rgb(var(--gold-6));
+    }
+
+    &.is-lime {
+      color: rgb(var(--lime-1));
+      border-color: rgb(var(--lime-6));
+      background-color: rgb(var(--lime-6));
+    }
+
+    &.is-green {
+      color: rgb(var(--green-1));
+      border-color: rgb(var(--green-6));
+      background-color: rgb(var(--green-6));
+    }
+
+    &.is-cyan {
+      color: rgb(var(--cyan-1));
+      border-color: rgb(var(--cyan-6));
+      background-color: rgb(var(--cyan-6));
+    }
+
+    &.is-blue {
+      color: rgb(var(--blue-1));
+      border-color: rgb(var(--blue-6));
+      background-color: rgb(var(--blue-6));
+    }
+
+    &.is-arcoblue {
+      color: rgb(var(--arcoblue-1));
+      border-color: rgb(var(--arcoblue-6));
+      background-color: rgb(var(--arcoblue-6));
+    }
+
+    &.is-purple {
+      color: rgb(var(--purple-1));
+      border-color: rgb(var(--purple-6));
+      background-color: rgb(var(--purple-6));
+    }
+
+    &.is-pinkpurple {
+      color: rgb(var(--pinkpurple-1));
+      border-color: rgb(var(--pinkpurple-6));
+      background-color: rgb(var(--pinkpurple-6));
+    }
+
+    &.is-magenta {
+      color: rgb(var(--magenta-1));
+      border-color: rgb(var(--magenta-6));
+      background-color: rgb(var(--magenta-6));
+    }
+
+    &.is-gray {
+      color: rgb(var(--gray-1));
+      border-color: rgb(var(--gray-6));
+      background-color: rgb(var(--gray-6));
+    }
+  }
+}

@@ -6,8 +6,8 @@ defineOptions({
 const greeting = getGreeting()
 
 const usermenus = [
-  { name: '个人资料', icon: 'ph:user', url: '' },
-  { name: '退出登录', icon: 'ph:sign-out', url: '' },
+  { name: '个人资料', icon: 'mingcute:user-1', url: '' },
+  { name: '退出登录', icon: 'mingcute:exit', url: '' },
 ]
 </script>
 
@@ -15,7 +15,7 @@ const usermenus = [
   <a-dropdown position="br">
     <div class="layout-header__usermenus">
       {{ greeting }}, Administrator
-      <CommonIcon name="ph:caret-down" />
+      <CommonIcon name="mingcute:down" />
     </div>
     <template #content>
       <a-doption v-for="(item, index) in usermenus" :key="index" :value="item.url">

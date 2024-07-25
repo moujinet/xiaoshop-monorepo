@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import LogoSVG from '~/assets/images/logo.svg'
-
 defineOptions({
   name: 'LayoutFooter',
 })
@@ -11,7 +9,7 @@ const { version } = useApp()
 <template>
   <a-layout-footer class="layout-footer">
     <div class="layout-footer__copyright">
-      <LogoSVG class="layout-footer__copyright--logo" />
+      <IconImageLogo class="layout-footer__copyright--logo" />
       &copy; {{ new Date().getFullYear() }} XiaoShop All Rights Reserved.
     </div>
 

@@ -2,7 +2,7 @@ export default defineModule({
   id: 'assets',
   space: 'app',
   name: '素材',
-  icon: 'ph:images',
+  icon: 'mingcute:photo-album',
   desc: '设计素材',
   version: '1.0.0',
   sort: 99,
@@ -10,7 +10,7 @@ export default defineModule({
     {
       id: 'manage',
       name: '素材管理',
-      icon: 'ph:mountains',
+      icon: 'mingcute:mountain-2',
       children: [
         {
           id: 'images',
@@ -47,8 +47,9 @@ export default defineModule({
     {
       id: 'settings',
       name: '模块设置',
-      icon: 'ph:gear-six',
+      icon: 'mingcute:settings-6',
       children: [
+        { id: 'upload', name: '上传设置' },
         { id: 'images', name: '图片处理' },
         { id: 'cloud', name: '云存储' },
       ],

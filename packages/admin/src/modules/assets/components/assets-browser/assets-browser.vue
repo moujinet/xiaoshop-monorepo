@@ -1,11 +1,9 @@
 <script lang="ts" setup>
+import { ASSET_TYPES, AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
 import { VueDraggable } from 'vue-draggable-plus'
 
-import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
-
-import { ASSET_TYPES } from '@/assets/constants'
-import type { IAssetSnapshot, IAssetType } from '@/assets/types'
-import { AssetsBrowserImage } from '@/assets/components'
+import { AssetsBrowserPreviewer } from '@/assets/components'
+import AssetsBrowserLayoutModal from '@/assets/components/assets-browser/layout/layout-modal.vue'
 
 defineOptions({
   name: 'AssetsBrowser',
@@ -17,16 +15,16 @@ const props = withDefaults(defineProps<{
   limit?: number
   disable?: boolean
 }>(), {
-  type: 'image',
+  type: AssetTypeEnum.IMAGE,
   limit: 1,
 })
 
-const file = defineModel<IAssetSnapshot | undefined>('file', {
-  type: Object,
-  default: undefined,
+const file = defineModel<string>('file', {
+  type: String,
+  default: '',
 })
 
-const fileList = defineModel<IAssetSnapshot[]>('fileList', {
+const fileList = defineModel<string[]>('fileList', {
   type: Array,
   default: () => [],
 })
@@ -36,21 +34,21 @@ const triggerIcon = ASSET_TYPES.find(type => type.value === props.type)?.icon ||
 const computedFileList = computed(() => {
   return props.limit > 1
     ? unref(fileList)
-    : (file.value !== undefined ? [unref(file)] : []) as IAssetSnapshot[]
+    : (file.value !== '' ? [unref(file)] : []) as string[]
 })
 
-const defaultSelected = ref<IAssetSnapshot[]>([])
+const defaultSelected = ref<string[]>([])
 
-function handleSubmit(assets: IAssetSnapshot[]) {
+function handleSubmit(assets: string[]) {
   if (props.limit === 1)
     file.value = assets[0]
   else
     fileList.value = [...assets]
 }
 
-function handleDelete(asset: IAssetSnapshot) {
+function handleDelete(asset: string) {
   if (props.limit === 1)
-    file.value = undefined
+    file.value = ''
   else
     fileList.value.splice(fileList.value.indexOf(asset), 1)
 }
@@ -75,10 +73,11 @@ watch(
         class="assets-browser__preview"
         ghost-class="is-ghost"
       >
-        <AssetsBrowserImage
+        <AssetsBrowserPreviewer
           v-for="asset in computedFileList"
-          :key="asset.id"
+          :key="asset"
           :asset="asset"
+          :type="type"
           editable
           @delete="handleDelete"
         />
@@ -99,10 +98,11 @@ watch(
     </template>
 
     <template v-else>
-      <AssetsBrowserImage
+      <AssetsBrowserPreviewer
         v-for="asset in computedFileList"
-        :key="asset.id"
+        :key="asset"
         :asset="asset"
+        :type="type"
         editable
         @delete="handleDelete"
       />
