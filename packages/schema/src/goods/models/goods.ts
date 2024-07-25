@@ -368,4 +368,18 @@ export type IGoodsDetailInfo = Pick<
 /**
  * 商品分页列表
  */
-export type IGoodsListItem = IGoods
+export type IGoodsListItem = Pick<
+  IGoods,
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'name'
+  | 'images'
+  | 'tag'
+  | 'group'
+  | 'price'
+  | 'stock'
+  | 'sales'
+  | 'sort'
+  | 'updatedTime'
+>
