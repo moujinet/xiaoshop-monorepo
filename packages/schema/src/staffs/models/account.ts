@@ -67,6 +67,10 @@ export interface IStaffAccount {
    */
   createdTime: string
   /**
+   * 更新日期
+   */
+  updatedTime: string
+  /**
    * 最后登录日期
    */
   lastLoginTime: string

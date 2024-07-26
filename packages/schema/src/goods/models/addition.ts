@@ -1,7 +1,7 @@
 /**
  * 商品附加服务
  */
-export interface IGoodsAdditional {
+export interface IGoodsAddition {
   /**
    * 附加服务编号
    */
@@ -39,14 +39,9 @@ export interface IGoodsAdditional {
 /**
  * 商品附加服务字典
  */
-export type IGoodsAdditionalDict = Pick<IGoodsAdditional, 'id' | 'name' | 'price'>
-
-/**
- * 商品附加服务信息
- */
-export type IGoodsAdditionalInfo = Pick<IGoodsAdditional, 'id' | 'name' | 'price' | 'icon'>
+export type IGoodsAdditionDict = Pick<IGoodsAddition, 'id' | 'name' | 'icon' | 'price'>
 
 /**
  * 商品附加服务列表
  */
-export type IGoodsAdditionalListItem = Omit<IGoodsAdditional, 'sort' | 'createdTime'>
+export type IGoodsAdditionListItem = Omit<IGoodsAddition, 'sort' | 'createdTime'>

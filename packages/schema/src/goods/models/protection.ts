@@ -35,12 +35,7 @@ export interface IGoodsProtection {
 /**
  * 商品服务保障字典信息
  */
-export type IGoodsProtectionDict = Pick<IGoodsProtection, 'id' | 'name'>
-
-/**
- * 商品服务保障信息
- */
-export type IGoodsProtectionInfo = Pick<IGoodsProtection, 'id' | 'name' | 'icon'>
+export type IGoodsProtectionDict = Pick<IGoodsProtection, 'id' | 'name' | 'icon'>
 
 /**
  * 商品服务保障列表

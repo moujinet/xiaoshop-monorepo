@@ -9,7 +9,7 @@
  * - `DELIVERED` - 已发货
  * - `RECEIVED` - 已收货
  */
-export enum LogisticsDeliveryStatusEnum {
+export enum LogisticsDeliveryStatus {
   PENDING = 'pending',
   DELIVERED = 'delivered',
   RECEIVED = 'received',
@@ -21,9 +21,9 @@ export enum LogisticsDeliveryStatusEnum {
  * @see {@link ILogisticsDeliveryStatus}
  */
 export const LOGISTICS_DELIVERY_STATUSES = [
-  { label: '待发货', value: LogisticsDeliveryStatusEnum.PENDING, color: 'orange' },
-  { label: '已发货', value: LogisticsDeliveryStatusEnum.DELIVERED, color: 'blue' },
-  { label: '已收货', value: LogisticsDeliveryStatusEnum.RECEIVED, color: 'gray' },
+  { label: '待发货', value: LogisticsDeliveryStatus.PENDING, color: 'orange' },
+  { label: '已发货', value: LogisticsDeliveryStatus.DELIVERED, color: 'blue' },
+  { label: '已收货', value: LogisticsDeliveryStatus.RECEIVED, color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -37,7 +37,7 @@ export const LOGISTICS_DELIVERY_STATUSES = [
  * - `RETURN` - 退货
  * - `REPLACE` - 换货
  */
-export enum LogisticsDeliveryTypeEnum {
+export enum LogisticsDeliveryType {
   DELIVERY = 'delivery',
   RETURN = 'return',
   REPLACE = 'replace',
@@ -49,9 +49,9 @@ export enum LogisticsDeliveryTypeEnum {
  * @see {@link ILogisticsDeliveryType}
  */
 export const LOGISTICS_DELIVERY_TYPES = [
-  { label: '发货', value: LogisticsDeliveryTypeEnum.DELIVERY },
-  { label: '退货', value: LogisticsDeliveryTypeEnum.RETURN },
-  { label: '换货', value: LogisticsDeliveryTypeEnum.REPLACE },
+  { label: '发货', value: LogisticsDeliveryType.DELIVERY },
+  { label: '退货', value: LogisticsDeliveryType.RETURN },
+  { label: '换货', value: LogisticsDeliveryType.REPLACE },
 ]
 
 // -----------------------------------------------
@@ -66,7 +66,7 @@ export const LOGISTICS_DELIVERY_TYPES = [
  * - `SELF` - 到店自提
  * - `LOCAL` - 同城配送
  */
-export enum LogisticsDeliveryModeEnum {
+export enum LogisticsDeliveryMode {
   NONE = 'none',
   EXPRESS = 'express',
   SELF = 'self',
@@ -79,10 +79,10 @@ export enum LogisticsDeliveryModeEnum {
  * @see {@link ILogisticsDeliveryMode}
  */
 export const LOGISTICS_DELIVERY_MODES = [
-  { label: '无需发货', value: LogisticsDeliveryModeEnum.NONE },
-  { label: '物流快递', value: LogisticsDeliveryModeEnum.EXPRESS },
-  { label: '到店自提', value: LogisticsDeliveryModeEnum.SELF },
-  { label: '同城配送', value: LogisticsDeliveryModeEnum.LOCAL },
+  { label: '无需发货', value: LogisticsDeliveryMode.NONE },
+  { label: '物流快递', value: LogisticsDeliveryMode.EXPRESS },
+  { label: '到店自提', value: LogisticsDeliveryMode.SELF },
+  { label: '同城配送', value: LogisticsDeliveryMode.LOCAL },
 ]
 
 // -----------------------------------------------
@@ -96,7 +96,7 @@ export const LOGISTICS_DELIVERY_MODES = [
  * - `VOLUME` - 按体积计费
  * - `COUNT` - 按件计费
  */
-export enum LogisticsFreightTemplateCalcModeEnum {
+export enum LogisticsFreightTemplateCalcMode {
   WEIGHT = 'weight',
   VOLUME = 'volume',
   COUNT = 'count',
@@ -108,7 +108,7 @@ export enum LogisticsFreightTemplateCalcModeEnum {
  * @see {@link ILogisticsFreightTemplateCalcMode}
  */
 export const LOGISTICS_FREIGHT_TEMPLATE_CALC_MODES = [
-  { label: '按重量计费', name: '重', unit: 'kg', value: LogisticsFreightTemplateCalcModeEnum.WEIGHT },
-  { label: '按体积计费', name: '体积', unit: 'm<sup>3</sup>', value: LogisticsFreightTemplateCalcModeEnum.VOLUME },
-  { label: '按件计费', name: '件', unit: '件', value: LogisticsFreightTemplateCalcModeEnum.COUNT },
+  { label: '按重量计费', name: '重', unit: 'kg', value: LogisticsFreightTemplateCalcMode.WEIGHT },
+  { label: '按体积计费', name: '体积', unit: 'm<sup>3</sup>', value: LogisticsFreightTemplateCalcMode.VOLUME },
+  { label: '按件计费', name: '件', unit: '件', value: LogisticsFreightTemplateCalcMode.COUNT },
 ]

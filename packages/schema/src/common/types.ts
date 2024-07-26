@@ -1,4 +1,4 @@
-import type { EnabledEnum } from '@/common/constants'
+import type { Enabled } from '@/common/constants'
 
 /**
  * 启用状态
@@ -6,7 +6,7 @@ import type { EnabledEnum } from '@/common/constants'
  * - `YES`: 启用
  * - `NO`: 停用
  */
-export type IEnabled = EnabledEnum
+export type IEnabled = typeof Enabled[keyof typeof Enabled]
 
 /**
  * 地区字典

@@ -1,6 +1,6 @@
 import type {
-  StaffAccountStatusEnum,
-  StaffLogTypeEnum,
+  StaffAccountStatus,
+  StaffLogType,
 } from '@/staffs/constants'
 
 /**
@@ -10,9 +10,9 @@ import type {
  * - `LOCK`: 锁定
  * - `EXIT`: 离职
  *
- * @see {@link StaffAccountStatusEnum}
+ * @see {@link StaffAccountStatus}
  */
-export type IStaffAccountStatus = StaffAccountStatusEnum
+export type IStaffAccountStatus = typeof StaffAccountStatus[keyof typeof StaffAccountStatus]
 
 /**
  * 员工日志 - 类型
@@ -20,6 +20,6 @@ export type IStaffAccountStatus = StaffAccountStatusEnum
  * - `LOGIN`: 登录登出
  * - `OPERATE`: 操作日志
  *
- * @see {@link StaffLogTypeEnum}
+ * @see {@link StaffLogType}
  */
-export type IStaffLogType = StaffLogTypeEnum
+export type IStaffLogType = typeof StaffLogType[keyof typeof StaffLogType]

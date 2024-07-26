@@ -1,12 +1,11 @@
-import type { AssetTypeEnum } from '@/assets/constants'
+import type { AssetType } from '@/assets/constants'
 
 /**
  * 素材类型
  *
  * - `IMAGE`: 图片
  * - `VIDEO`: 视频
- * - `ICON`: 图标
  *
- * @see {@link AssetTypeEnum}
+ * @see {@link AssetType}
  */
-export type IAssetType = AssetTypeEnum
+export type IAssetType = typeof AssetType[keyof typeof AssetType]

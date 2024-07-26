@@ -6,15 +6,13 @@
  * 枚举: 商品状态
  *
  * - `IN_STOCK`: 在售
- * - `stocked`: 仓库
- * - `STOCKED`: 预警
+ * - `STOCKED`: 仓库
  * - `SOLD_OUT`: 售罄
  * - `DRAFT`: 草稿
  */
-export enum GoodsStatusEnum {
+export enum GoodsStatus {
   IN_STOCK = 'in_stock',
   STOCKED = 'stocked',
-  WARNING = 'warning',
   SOLD_OUT = 'sold_out',
   DRAFT = 'draft',
 }
@@ -25,11 +23,10 @@ export enum GoodsStatusEnum {
  * @see {@link IGoodsStatus}
  */
 export const GOODS_STATUSES = [
-  { value: GoodsStatusEnum.IN_STOCK, label: '在售', color: 'blue' },
-  { value: GoodsStatusEnum.STOCKED, label: '仓库', color: 'cyan' },
-  { value: GoodsStatusEnum.WARNING, label: '预警', color: 'red' },
-  { value: GoodsStatusEnum.SOLD_OUT, label: '售韾', color: 'cyan' },
-  { value: GoodsStatusEnum.DRAFT, label: '草稿', color: 'gray' },
+  { value: GoodsStatus.IN_STOCK, label: '在售', color: 'blue' },
+  { value: GoodsStatus.STOCKED, label: '仓库', color: 'cyan' },
+  { value: GoodsStatus.SOLD_OUT, label: '售韾', color: 'orange' },
+  { value: GoodsStatus.DRAFT, label: '草稿', color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -43,7 +40,7 @@ export const GOODS_STATUSES = [
  * - `VIRTUAL`: 虚拟商品
  * - `CARD`: 电子卡密
  */
-export enum GoodsTypeEnum {
+export enum GoodsType {
   ENTITY = 'entity',
   VIRTUAL = 'virtual',
   CARD = 'card',
@@ -55,9 +52,9 @@ export enum GoodsTypeEnum {
  * @see {@link IGoodsType}
  */
 export const GOODS_TYPES = [
-  { value: GoodsTypeEnum.ENTITY, label: '实物商品', desc: '需要物流', color: 'blue' },
-  { value: GoodsTypeEnum.VIRTUAL, label: '虚拟商品', desc: '无需物流)', color: 'purple' },
-  { value: GoodsTypeEnum.CARD, label: '电子卡密', desc: '无需物流', color: 'gray' },
+  { value: GoodsType.ENTITY, label: '实物商品', desc: '需要物流', color: 'blue' },
+  { value: GoodsType.VIRTUAL, label: '虚拟商品', desc: '无需物流)', color: 'purple' },
+  { value: GoodsType.CARD, label: '电子卡密', desc: '无需物流', color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -72,7 +69,7 @@ export const GOODS_TYPES = [
  * - `CLAWER`: 采集
  * - `CONNECT`: 云链
  */
-export enum GoodsSourceEnum {
+export enum GoodsSource {
   MANUAL = 'manual',
   IMPORT = 'import',
   CLAWER = 'clawer',
@@ -85,10 +82,10 @@ export enum GoodsSourceEnum {
  * @see {@link IGoodsSource}
  */
 export const GOODS_SOURCES = [
-  { label: '手动创建', value: GoodsSourceEnum.MANUAL, color: 'blue', icon: 'mingcute:file-check' },
-  { label: '后台导入', value: GoodsSourceEnum.IMPORT, color: 'cyan', icon: 'mingcute:upload-3' },
-  { label: '商品采集', value: GoodsSourceEnum.CLAWER, color: 'green', icon: 'mingcute:download-3' },
-  { label: '云链同步', value: GoodsSourceEnum.CONNECT, color: 'orange', icon: 'mingcute:refresh-2' },
+  { label: '手动创建', value: GoodsSource.MANUAL, color: 'blue', icon: 'mingcute:file-check' },
+  { label: '后台导入', value: GoodsSource.IMPORT, color: 'cyan', icon: 'mingcute:upload-3' },
+  { label: '商品采集', value: GoodsSource.CLAWER, color: 'green', icon: 'mingcute:download-3' },
+  { label: '云链同步', value: GoodsSource.CONNECT, color: 'orange', icon: 'mingcute:refresh-2' },
 ]
 
 // -----------------------------------------------
@@ -101,7 +98,7 @@ export const GOODS_SOURCES = [
  * - `ORDER`: 拍下减库存
  * - `PAID`: 付款减库存
  */
-export enum GoodsStockDeductModeEnum {
+export enum GoodsInventoryDeductMode {
   ORDER = 'order',
   PAID = 'paid',
 }
@@ -109,11 +106,11 @@ export enum GoodsStockDeductModeEnum {
 /**
  * 字典: 商品库存扣减方式
  *
- * @see {@link IGoodsStockDeductMode}
+ * @see {@link IGoodsInventoryDeductMode}
  */
-export const GOODS_STOCK_DEDUCT_MODES = [
-  { value: GoodsStockDeductModeEnum.ORDER, label: '拍下减库存' },
-  { value: GoodsStockDeductModeEnum.PAID, label: '付款减库存' },
+export const GOODS_INVENTORY_DEDUCT_MODES = [
+  { value: GoodsInventoryDeductMode.ORDER, label: '拍下减库存' },
+  { value: GoodsInventoryDeductMode.PAID, label: '付款减库存' },
 ]
 
 // -----------------------------------------------
@@ -127,7 +124,7 @@ export const GOODS_STOCK_DEDUCT_MODES = [
  * - `TEMPLATE`: 模板
  * - `COD`: 货到付款
  */
-export enum GoodsLogisticsFreightChargeModeEnum {
+export enum GoodsFreightChargeMode {
   STD = 'std',
   TEMPLATE = 'template',
   COD = 'cod',
@@ -136,12 +133,12 @@ export enum GoodsLogisticsFreightChargeModeEnum {
 /**
  * 字典: 商品运费支付方式
  *
- * @see {@link IGoodsLogisticsFreightChargeMode}
+ * @see {@link IGoodsFreightChargeMode}
  */
-export const GOODS_LOGISTICS_FREIGHT_CHARGE_MODES = [
-  { value: GoodsLogisticsFreightChargeModeEnum.STD, label: '统一运费' },
-  { value: GoodsLogisticsFreightChargeModeEnum.TEMPLATE, label: '运费模板' },
-  { value: GoodsLogisticsFreightChargeModeEnum.COD, label: '运费到付' },
+export const GOODS_FREIGHT_CHARGE_MODES = [
+  { value: GoodsFreightChargeMode.STD, label: '统一运费' },
+  { value: GoodsFreightChargeMode.TEMPLATE, label: '运费模板' },
+  { value: GoodsFreightChargeMode.COD, label: '运费到付' },
 ]
 
 // -----------------------------------------------
@@ -154,7 +151,7 @@ export const GOODS_LOGISTICS_FREIGHT_CHARGE_MODES = [
  * - `SELLER`: 卖家
  * - `BUYER`: 买家
  */
-export enum GoodsLogisticsBackFreightByEnum {
+export enum GoodsReturnsFreightBy {
   SELLER = 'seller',
   BUYER = 'buyer',
 }
@@ -162,11 +159,11 @@ export enum GoodsLogisticsBackFreightByEnum {
 /**
  * 字典: 商品退货运费承担方
  *
- * @see {@link IGoodsLogisticsBackFreightBy}
+ * @see {@link IGoodsReturnsFreightBy}
  */
-export const GOODS_LOGISTICS_BACK_FREIGHT_BYS = [
-  { value: GoodsLogisticsBackFreightByEnum.SELLER, label: '商家承担退费运费' },
-  { value: GoodsLogisticsBackFreightByEnum.BUYER, label: '买家承担退货运费' },
+export const GOODS_RETURNS_FREIGHT_BYS = [
+  { value: GoodsReturnsFreightBy.SELLER, label: '商家承担退费运费' },
+  { value: GoodsReturnsFreightBy.BUYER, label: '买家承担退货运费' },
 ]
 
 // -----------------------------------------------
@@ -178,12 +175,12 @@ export const GOODS_LOGISTICS_BACK_FREIGHT_BYS = [
  *
  * - `DIRECT`: 立即上架
  * - `AUTO`: 自定义上架
- * - `STOCK`: 暂不售卖, 放入仓库
+ * - `STOCKED`: 暂不售卖, 放入仓库
  */
-export enum GoodsPublishModeEnum {
+export enum GoodsPublishMode {
   DIRECT = 'direct',
   AUTO = 'auto',
-  STOCK = 'stock',
+  STOCKED = 'stocked',
 }
 
 /**
@@ -192,9 +189,9 @@ export enum GoodsPublishModeEnum {
  * @see {@link IGoodsPublishMode}
  */
 export const GOODS_PUBLISH_MODES = [
-  { value: GoodsPublishModeEnum.DIRECT, label: '立即上架' },
-  { value: GoodsPublishModeEnum.AUTO, label: '自定义上架' },
-  { value: GoodsPublishModeEnum.STOCK, label: '暂不售卖, 放入仓库' },
+  { value: GoodsPublishMode.DIRECT, label: '立即上架' },
+  { value: GoodsPublishMode.AUTO, label: '自定义上架' },
+  { value: GoodsPublishMode.STOCKED, label: '暂不售卖, 放入仓库' },
 ]
 
 // -----------------------------------------------
@@ -207,7 +204,7 @@ export const GOODS_PUBLISH_MODES = [
  * - `DEFAULT`: 默认名称
  * - `CUSTOM`: 自定义名称
  */
-export enum GoodsBuyBtnTypeEnum {
+export enum GoodsBuyBtnType {
   DEFAULT = 'default',
   CUSTOM = 'custom',
 }
@@ -218,8 +215,8 @@ export enum GoodsBuyBtnTypeEnum {
  * @see {@link IGoodsBuyBtnType}
  */
 export const GOODS_BUY_BTN_TYPES = [
-  { value: GoodsBuyBtnTypeEnum.DEFAULT, label: '默认名称' },
-  { value: GoodsBuyBtnTypeEnum.CUSTOM, label: '自定义名称' },
+  { value: GoodsBuyBtnType.DEFAULT, label: '默认名称' },
+  { value: GoodsBuyBtnType.CUSTOM, label: '自定义名称' },
 ]
 
 // -----------------------------------------------
@@ -233,7 +230,7 @@ export const GOODS_BUY_BTN_TYPES = [
  * - `RADIO`: 单选框
  * - `INPUT`: 文本
  */
-export enum GoodsAttributeOptionTypeEnum {
+export enum GoodsAttributeOptionType {
   CHECKBOX = 'checkbox',
   RADIO = 'radio',
   INPUT = 'input',
@@ -245,9 +242,9 @@ export enum GoodsAttributeOptionTypeEnum {
  * @see {@link IGoodsAttributeOptionType}
  */
 export const GOODS_ATTRIBUTE_OPTION_TYPES = [
-  { value: GoodsAttributeOptionTypeEnum.INPUT, label: '文本', color: 'gray' },
-  { value: GoodsAttributeOptionTypeEnum.RADIO, label: '单选', color: 'cyan' },
-  { value: GoodsAttributeOptionTypeEnum.CHECKBOX, label: '多选', color: 'arcoblue' },
+  { value: GoodsAttributeOptionType.INPUT, label: '文本', color: 'gray' },
+  { value: GoodsAttributeOptionType.RADIO, label: '单选', color: 'cyan' },
+  { value: GoodsAttributeOptionType.CHECKBOX, label: '多选', color: 'arcoblue' },
 ]
 
 // -----------------------------------------------
@@ -261,7 +258,7 @@ export const GOODS_ATTRIBUTE_OPTION_TYPES = [
  * - `NORMAL`: 中评
  * - `LOW`: 差评
  */
-export enum GoodsRatingGradeEnum {
+export enum GoodsRatingGrade {
   HIGH = 'high',
   NORMAL = 'normal',
   LOW = 'low',
@@ -273,7 +270,7 @@ export enum GoodsRatingGradeEnum {
  * @see {@link IGoodsRatingGrade}
  */
 export const GOODS_RATING_GRADES = [
-  { value: GoodsRatingGradeEnum.HIGH, label: '好评', color: 'gold', icon: 'mingcute:emoji-2' },
-  { value: GoodsRatingGradeEnum.NORMAL, label: '中评', color: 'blue', icon: 'mingcute:emoji' },
-  { value: GoodsRatingGradeEnum.LOW, label: '差评', color: 'red', icon: 'mingcute:angry' },
+  { value: GoodsRatingGrade.HIGH, label: '好评', color: 'gold', icon: 'mingcute:emoji-2' },
+  { value: GoodsRatingGrade.NORMAL, label: '中评', color: 'blue', icon: 'mingcute:emoji' },
+  { value: GoodsRatingGrade.LOW, label: '差评', color: 'red', icon: 'mingcute:angry' },
 ]

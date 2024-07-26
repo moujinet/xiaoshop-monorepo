@@ -7,12 +7,10 @@
  *
  * - `IMAGE`: 图片
  * - `VIDEO`: 视频
- * - `ICON`: 图标
  */
-export enum AssetTypeEnum {
+export enum AssetType {
   IMAGE = 'image',
   VIDEO = 'video',
-  ICON = 'icon',
 }
 
 /**
@@ -21,7 +19,6 @@ export enum AssetTypeEnum {
  * @see {@link IAssetType}
  */
 export const ASSET_TYPES = [
-  { value: AssetTypeEnum.IMAGE, label: '图片', icon: 'mingcute:pic', accept: 'image/png,image/jpg,image/jpeg,image/gif' },
-  { value: AssetTypeEnum.VIDEO, label: '视频', icon: 'mingcute:video', accept: 'video/mp4' },
-  { value: AssetTypeEnum.ICON, label: '图标', icon: 'mingcute:add', accept: 'image/png,image/gif' },
+  { value: AssetType.IMAGE, label: '图片', icon: 'mingcute:pic', accept: 'image/png,image/jpg,image/jpeg,image/gif' },
+  { value: AssetType.VIDEO, label: '视频', icon: 'mingcute:video', accept: 'video/mp4' },
 ]

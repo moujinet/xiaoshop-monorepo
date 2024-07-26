@@ -33,11 +33,11 @@ export interface ILogisticsCompany {
 }
 
 /**
- * 物流公司列表
- */
-export type ILogisticsCompanyListItem = Omit<ILogisticsCompany, 'desc' | 'createdTime'>
-
-/**
  * 字典: 物流公司
  */
 export type ILogisticsCompanyDict = Pick<ILogisticsCompany, 'id' | 'name'>
+
+/**
+ * 物流公司列表
+ */
+export type ILogisticsCompanyListItem = Omit<ILogisticsCompany, 'desc' | 'createdTime'>

@@ -1,14 +1,14 @@
 import type {
-  GoodsAttributeOptionTypeEnum,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsBackFreightByEnum,
-  GoodsLogisticsFreightChargeModeEnum,
-  GoodsPublishModeEnum,
-  GoodsRatingGradeEnum,
-  GoodsSourceEnum,
-  GoodsStatusEnum,
-  GoodsStockDeductModeEnum,
-  GoodsTypeEnum,
+  GoodsAttributeOptionType,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
+  GoodsInventoryDeductMode,
+  GoodsPublishMode,
+  GoodsRatingGrade,
+  GoodsReturnsFreightBy,
+  GoodsSource,
+  GoodsStatus,
+  GoodsType,
 } from '@/goods/constants'
 
 /**
@@ -16,13 +16,12 @@ import type {
  *
  * - `IN_STOCK`: 在售
  * - `STOCKED`: 仓库
- * - `WARNING`: 预警
  * - `SOLD_OUT`: 售韾
  * - `DRAFT`: 草稿
  *
- * @see {@link GoodsStatusEnum}
+ * @see {@link GoodsStatus}
  */
-export type IGoodsStatus = GoodsStatusEnum
+export type IGoodsStatus = typeof GoodsStatus[keyof typeof GoodsStatus]
 
 /**
  * 商品 - 商品类型
@@ -31,9 +30,9 @@ export type IGoodsStatus = GoodsStatusEnum
  * - `VIRTUAL`: 虚拟商品
  * - `CARD`: 电子卡密
  *
- * @see {@link GoodsTypeEnum}
+ * @see {@link GoodsType}
  */
-export type IGoodsType = GoodsTypeEnum
+export type IGoodsType = typeof GoodsType[keyof typeof GoodsType]
 
 /**
  * 商品 - 商品来源
@@ -43,9 +42,9 @@ export type IGoodsType = GoodsTypeEnum
  * - `IMPORT`: 后台导入
  * - `MANUAL`: 手动创建
  *
- * @see {@link GoodsSourceEnum}
+ * @see {@link GoodsSource}
  */
-export type IGoodsSource = GoodsSourceEnum
+export type IGoodsSource = typeof GoodsSource[keyof typeof GoodsSource]
 
 /**
  * 商品 - 库存扣减方式
@@ -53,9 +52,9 @@ export type IGoodsSource = GoodsSourceEnum
  * - `ORDER`: 拍下减库存
  * - `PAID`: 付款减库存
  *
- * @see {@link GoodsStockDeductModeEnum}
+ * @see {@link GoodsInventoryDeductMode}
  */
-export type IGoodsStockDeductMode = GoodsStockDeductModeEnum
+export type IGoodsInventoryDeductMode = typeof GoodsInventoryDeductMode[keyof typeof GoodsInventoryDeductMode]
 
 /**
  * 商品 - 运费支付方式
@@ -64,9 +63,9 @@ export type IGoodsStockDeductMode = GoodsStockDeductModeEnum
  * - `TEMPLATE`: 运费模板
  * - `COD`: 运费到付
  *
- * @see {@link GoodsLogisticsFreightChargeModeEnum}
+ * @see {@link GoodsFreightChargeMode}
  */
-export type IGoodsLogisticsFreightChargeMode = GoodsLogisticsFreightChargeModeEnum
+export type IGoodsFreightChargeMode = typeof GoodsFreightChargeMode[keyof typeof GoodsFreightChargeMode]
 
 /**
  * 商品 - 退货运费承担方
@@ -74,9 +73,9 @@ export type IGoodsLogisticsFreightChargeMode = GoodsLogisticsFreightChargeModeEn
  * - `SELLER`: `商家承担退费运费`
  * - `BUYER`: `买家承担退货运费`
  *
- * @see {@link GoodsLogisticsBackFreightByEnum}
+ * @see {@link GoodsReturnsFreightBy}
  */
-export type IGoodsLogisticsBackFreightBy = GoodsLogisticsBackFreightByEnum
+export type IGoodsReturnsFreightBy = typeof GoodsReturnsFreightBy[keyof typeof GoodsReturnsFreightBy]
 
 /**
  * 商品 - 上架模式
@@ -85,9 +84,9 @@ export type IGoodsLogisticsBackFreightBy = GoodsLogisticsBackFreightByEnum
  * - `AUTO`: 自定义上架
  * - `STOCK`: 暂不售卖, 放入仓库
  *
- * @see {@link GoodsPublishModeEnum}
+ * @see {@link GoodsPublishMode}
  */
-export type IGoodsPublishMode = GoodsPublishModeEnum
+export type IGoodsPublishMode = typeof GoodsPublishMode[keyof typeof GoodsPublishMode]
 
 /**
  * 商品 - 购买按钮类型
@@ -95,9 +94,9 @@ export type IGoodsPublishMode = GoodsPublishModeEnum
  * - `DEFAULT`: 默认名称
  * - `CUSTOM`: 自定义名称
  *
- * @see {@link GoodsBuyBtnTypeEnum}
+ * @see {@link GoodsBuyBtnType}
  */
-export type IGoodsBuyBtnType = GoodsBuyBtnTypeEnum
+export type IGoodsBuyBtnType = typeof GoodsBuyBtnType[keyof typeof GoodsBuyBtnType]
 
 /**
  * 商品 - 参数模板参数类型
@@ -108,7 +107,7 @@ export type IGoodsBuyBtnType = GoodsBuyBtnTypeEnum
  *
  * @see {@link GOODS_ATTRIBUTE_OPTION_TYPES}
  */
-export type IGoodsAttributeOptionType = GoodsAttributeOptionTypeEnum
+export type IGoodsAttributeOptionType = typeof GoodsAttributeOptionType[keyof typeof GoodsAttributeOptionType]
 
 /**
  * 商品评价综合评级
@@ -117,6 +116,6 @@ export type IGoodsAttributeOptionType = GoodsAttributeOptionTypeEnum
  * - `GOODS_RATING_GRADE_NORMAL`: 中评
  * - `GOODS_RATING_GRADE_LOW`: 差评
  *
- * @see {@link GoodsRatingGradeEnum}
+ * @see {@link GoodsRatingGrade}
  */
-export type IGoodsRatingGrade = GoodsRatingGradeEnum
+export type IGoodsRatingGrade = typeof GoodsRatingGrade[keyof typeof GoodsRatingGrade]

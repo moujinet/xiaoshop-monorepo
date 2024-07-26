@@ -1,8 +1,8 @@
 import type {
-  LogisticsDeliveryModeEnum,
-  LogisticsDeliveryStatusEnum,
-  LogisticsDeliveryTypeEnum,
-  LogisticsFreightTemplateCalcModeEnum,
+  LogisticsDeliveryMode,
+  LogisticsDeliveryStatus,
+  LogisticsDeliveryType,
+  LogisticsFreightTemplateCalcMode,
 } from '@/logistics/constants'
 
 /**
@@ -12,9 +12,9 @@ import type {
  * - `DELIVERED`: 已发货
  * - `RECEIVED`: 已收货
  *
- * @see {@link LogisticsDeliveryStatusEnum}
+ * @see {@link LogisticsDeliveryStatus}
  */
-export type ILogisticsDeliveryStatus = LogisticsDeliveryStatusEnum
+export type ILogisticsDeliveryStatus = typeof LogisticsDeliveryStatus[keyof typeof LogisticsDeliveryStatus]
 
 /**
  * 物流发货类型
@@ -23,9 +23,9 @@ export type ILogisticsDeliveryStatus = LogisticsDeliveryStatusEnum
  * - `RETURN`: 退货
  * - `REPLACE`: 换货
  *
- * @see {@link LogisticsDeliveryTypeEnum}
+ * @see {@link LogisticsDeliveryType}
  */
-export type ILogisticsDeliveryType = LogisticsDeliveryTypeEnum
+export type ILogisticsDeliveryType = typeof LogisticsDeliveryType[keyof typeof LogisticsDeliveryType]
 
 /**
  * 物流发货方式
@@ -35,9 +35,9 @@ export type ILogisticsDeliveryType = LogisticsDeliveryTypeEnum
  * - `SELF`: 到店自提
  * - `LOCAL`: 同城配送
  *
- * @see {@link LogisticsDeliveryModeEnum}
+ * @see {@link LogisticsDeliveryMode}
  */
-export type ILogisticsDeliveryMode = LogisticsDeliveryModeEnum
+export type ILogisticsDeliveryMode = typeof LogisticsDeliveryMode[keyof typeof LogisticsDeliveryMode]
 
 /**
  * 物流 - 运费计算方式
@@ -46,6 +46,6 @@ export type ILogisticsDeliveryMode = LogisticsDeliveryModeEnum
  * - `VOLUME` - 按体积计费
  * - `COUNT` - 按件计费
  *
- * @see {@link LogisticsFreightTemplateCalcModeEnum}
+ * @see {@link LogisticsFreightTemplateCalcMode}
  */
-export type ILogisticsFreightTemplateCalcMode = LogisticsFreightTemplateCalcModeEnum
+export type ILogisticsFreightTemplateCalcMode = typeof LogisticsFreightTemplateCalcMode[keyof typeof LogisticsFreightTemplateCalcMode]

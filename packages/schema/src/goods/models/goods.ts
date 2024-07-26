@@ -2,23 +2,22 @@ import type { IEnabled } from '@/common'
 import type { ILogisticsDeliveryMode, ILogisticsFreightTemplate } from '@/logistics'
 import type {
   IGoodsBuyBtnType,
-  IGoodsLogisticsBackFreightBy,
-  IGoodsLogisticsFreightChargeMode,
+  IGoodsFreightChargeMode,
+  IGoodsInventoryDeductMode,
   IGoodsPublishMode,
   IGoodsRatingGrade,
+  IGoodsReturnsFreightBy,
   IGoodsSource,
   IGoodsStatus,
-  IGoodsStockDeductMode,
   IGoodsType,
 } from '@/goods/types'
 import type {
-  IGoodsAdditionalInfo,
+  IGoodsAdditionDict,
   IGoodsAttribute,
-  IGoodsAttributeTemplate,
   IGoodsBrandDict,
   IGoodsCategoryDict,
   IGoodsGroupDict,
-  IGoodsProtectionInfo,
+  IGoodsProtectionDict,
   IGoodsTagDict,
 } from '@/goods/models'
 
@@ -87,11 +86,11 @@ export interface IGoods {
   /**
    * 库存
    */
-  stock: number
+  inventory: number
   /**
-   * 预警库存
+   * 预警库存数
    */
-  alertStock: number
+  inventoryEarlyWarning: number
   /**
    * 重量
    */
@@ -123,35 +122,35 @@ export interface IGoods {
   /**
    * 库存扣减方式
    *
-   * @see {@link IGoodsStockDeductMode}
+   * @see {@link IGoodsInventoryDeductMode}
    */
-  stockDeductMode: IGoodsStockDeductMode
+  inventoryDeductMode: IGoodsInventoryDeductMode
   /**
    * 发货方式
    *
    * @see {@link ILogisticsDeliveryMode}
    */
-  logisticsDeliveryModes: ILogisticsDeliveryMode[]
+  deliveryModes: ILogisticsDeliveryMode[]
   /**
    * 运费计算方式
    *
-   * @see {@link IGoodsLogisticsFreightChargeMode}
+   * @see {@link IGoodsFreightChargeMode}
    */
-  logisticsFreightChargeMode: IGoodsLogisticsFreightChargeMode
+  freightChargeMode: IGoodsFreightChargeMode
   /**
    * 统一运费
    */
-  logisticsFreight: number
+  freight: number
   /**
    * 运费模板编号
    */
-  logisticsFreightTemplateId: ILogisticsFreightTemplate['id']
+  freightTemplateId: ILogisticsFreightTemplate['id']
   /**
    * 退货运费承担方
    *
-   * @see {@link IGoodsLogisticsBackFreightBy}
+   * @see {@link IGoodsReturnsFreightBy}
    */
-  logisticsBackFreightBy: IGoodsLogisticsBackFreightBy
+  returnsFreightBy: IGoodsReturnsFreightBy
   /**
    * 发布方式
    *
@@ -209,9 +208,13 @@ export interface IGoods {
    */
   overallLogisticsScore: number
   /**
-   * 商品参数模板编号
+   * 是否已删除
    */
-  attributeTemplateId: IGoodsAttributeTemplate['id']
+  isDeleted: IEnabled
+  /**
+   * 是否预警
+   */
+  isWarning: IEnabled
   /**
    * 商品参数
    *
@@ -245,15 +248,15 @@ export interface IGoods {
   /**
    * 商品服务保障
    *
-   * @see {@link IGoodsProtectionInfo}
+   * @see {@link IGoodsProtectionDict}
    */
-  protections: IGoodsProtectionInfo[]
+  protections: IGoodsProtectionDict[]
   /**
    * 商品附加服务
    *
-   * @see {@link IGoodsAdditionalInfo}
+   * @see {@link IGoodsAdditionDict}
    */
-  additions: IGoodsAdditionalInfo[]
+  additions: IGoodsAdditionDict[]
   /**
    * 创建时间
    */
@@ -298,13 +301,12 @@ export type IGoodsBasicInfo = Pick<
   | 'brand'
   | 'protections'
   | 'additions'
-  | 'attributeTemplateId'
   | 'attributes'
-  | 'logisticsDeliveryModes'
-  | 'logisticsFreight'
-  | 'logisticsFreightTemplateId'
-  | 'logisticsFreightChargeMode'
-  | 'logisticsBackFreightBy'
+  | 'deliveryModes'
+  | 'freight'
+  | 'freightTemplateId'
+  | 'freightChargeMode'
+  | 'returnsFreightBy'
   | 'publishMode'
   | 'autoInStockAt'
   | 'buyBtnNameType'
@@ -329,30 +331,30 @@ export type IGoodsBasicInfoFormData = Omit<
 /**
  * 商品库存信息
  */
-export type IGoodsStockInfo = Pick<
+export type IGoodsInventoryInfo = Pick<
   IGoods,
   | 'id'
   | 'skuCode'
   | 'price'
   | 'originalPrice'
   | 'costPrice'
-  | 'stock'
-  | 'alertStock'
+  | 'inventory'
+  | 'inventoryEarlyWarning'
   | 'weight'
   | 'volume'
   | 'unit'
   | 'enablePurchaseLimits'
   | 'purchaseMinQty'
   | 'purchaseMaxQty'
-  | 'stockDeductMode'
+  | 'inventoryDeductMode'
   | 'enableVipDiscount'
 >
 
 /**
  * 商品库存信息表单
  */
-export type IGoodsStockInfoFormData = Omit<
-  IGoodsStockInfo,
+export type IGoodsInventoryInfoFormData = Omit<
+  IGoodsInventoryInfo,
   'id'
 >
 
@@ -378,7 +380,7 @@ export type IGoodsListItem = Pick<
   | 'tag'
   | 'group'
   | 'price'
-  | 'stock'
+  | 'inventory'
   | 'sales'
   | 'sort'
   | 'updatedTime'
@@ -390,11 +392,11 @@ export type IGoodsListItem = Pick<
 export type IGoodsBatchUpdateFormData = Partial<
   Pick<
     IGoods,
-    | 'logisticsDeliveryModes'
-    | 'logisticsFreight'
-    | 'logisticsFreightTemplateId'
-    | 'logisticsFreightChargeMode'
-    | 'logisticsBackFreightBy'
+    | 'deliveryModes'
+    | 'freight'
+    | 'freightTemplateId'
+    | 'freightChargeMode'
+    | 'returnsFreightBy'
     | 'enablePurchaseLimits'
     | 'purchaseMinQty'
     | 'purchaseMaxQty'

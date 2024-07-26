@@ -30,6 +30,10 @@ export interface IStaffPosition {
    * 创建日期
    */
   createdTime: string
+  /**
+   * 更新日期
+   */
+  updatedTime: string
 }
 
 /**

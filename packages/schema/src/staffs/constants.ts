@@ -9,7 +9,7 @@
  * - `LOCK`: 锁定
  * - `EXIT`: 离职
  */
-export enum StaffAccountStatusEnum {
+export enum StaffAccountStatus {
   NORMAL = 'normal',
   LOCK = 'lock',
   EXIT = 'exit',
@@ -21,9 +21,9 @@ export enum StaffAccountStatusEnum {
  * @see {@link IStaffAccountStatus}
  */
 export const STAFF_ACCOUNT_STATUSES = [
-  { label: '正常', value: StaffAccountStatusEnum.NORMAL, color: 'blue' },
-  { label: '锁定', value: StaffAccountStatusEnum.LOCK, color: 'orange' },
-  { label: '离职', value: StaffAccountStatusEnum.EXIT, color: 'red' },
+  { label: '正常', value: StaffAccountStatus.NORMAL, color: 'blue' },
+  { label: '锁定', value: StaffAccountStatus.LOCK, color: 'orange' },
+  { label: '离职', value: StaffAccountStatus.EXIT, color: 'red' },
 ]
 
 // -----------------------------------------------
@@ -36,7 +36,7 @@ export const STAFF_ACCOUNT_STATUSES = [
  * - `LOGIN`: 登录登出
  * - `OPERATE`: 操作日志
  */
-export enum StaffLogTypeEnum {
+export enum StaffLogType {
   LOGIN = 'login',
   OPERATE = 'operate',
 }
@@ -47,6 +47,6 @@ export enum StaffLogTypeEnum {
  * @see {@link IStaffLogType}
  */
 export const STAFF_LOG_TYPES = [
-  { label: '登录日志', value: StaffLogTypeEnum.LOGIN, color: 'orange' },
-  { label: '操作日志', value: StaffLogTypeEnum.OPERATE, color: 'arcoblue' },
+  { label: '登录日志', value: StaffLogType.LOGIN, color: 'orange' },
+  { label: '操作日志', value: StaffLogType.OPERATE, color: 'arcoblue' },
 ]

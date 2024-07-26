@@ -86,11 +86,11 @@ export interface ILogisticsFreightTemplateFreeRule {
 }
 
 /**
- * 物流运费模板列表
- */
-export type ILogisticsFreightTemplateListItem = Omit<ILogisticsFreightTemplate, 'rules' | 'freeRules' | 'createdTime'>
-
-/**
  * 物流运费模板字典
  */
 export type ILogisticsFreightTemplateDict = Pick<ILogisticsFreightTemplate, 'id' | 'name'>
+
+/**
+ * 物流运费模板列表
+ */
+export type ILogisticsFreightTemplateListItem = Omit<ILogisticsFreightTemplate, 'rules' | 'freeRules' | 'createdTime'>
