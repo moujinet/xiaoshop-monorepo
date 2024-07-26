@@ -208,6 +208,10 @@ export interface IGoods {
    */
   overallLogisticsScore: number
   /**
+   * 是否为多规格商品
+   */
+  isMultiSkus: IEnabled
+  /**
    * 是否已删除
    */
   isDeleted: IEnabled
@@ -334,6 +338,7 @@ export type IGoodsBasicInfoFormData = Omit<
 export type IGoodsInventoryInfo = Pick<
   IGoods,
   | 'id'
+  | 'isMultiSkus'
   | 'skuCode'
   | 'price'
   | 'originalPrice'
@@ -375,6 +380,9 @@ export type IGoodsListItem = Pick<
   | 'id'
   | 'status'
   | 'source'
+  | 'type'
+  | 'skuCode'
+  | 'isMultiSkus'
   | 'name'
   | 'images'
   | 'tag'
