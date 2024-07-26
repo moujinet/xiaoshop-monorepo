@@ -15,7 +15,6 @@ db:
     password: '123456'
     database: 'xiaoshop'
     charset: 'utf8mb4'
-    timezone: '+08:00'
     logging: false
     logger: 'advanced-console'
     synchronize: false

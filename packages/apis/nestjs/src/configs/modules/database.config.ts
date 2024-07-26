@@ -9,10 +9,11 @@ export class DatabaseConfigService implements TypeOrmOptionsFactory {
   ) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const configs = this.config.get<TypeOrmModuleOptions>('db.mysql')
+    const configs = this.config.get('db.mysql')
 
     return {
       ...configs,
+      timezone: '+08:00',
       keepConnectionAlive: true,
       entities: [
         `${__dirname}/**/entity{.ts,.js}`,
