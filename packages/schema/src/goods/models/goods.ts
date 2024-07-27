@@ -352,6 +352,7 @@ export type IGoodsInventoryInfo = Pick<
   | 'weight'
   | 'volume'
   | 'unit'
+  | 'sales'
   | 'enablePurchaseLimits'
   | 'purchaseMinQty'
   | 'purchaseMaxQty'
