@@ -19,7 +19,7 @@ export class GoodsScheduler {
     try {
       const goodsIds = await this.goods.updateSoldOutGoods()
 
-      if (goodsIds)
+      if (goodsIds.length > 0)
         this.logger.debug('下架售馨商品', goodsIds)
     }
     catch (e) {
@@ -35,7 +35,7 @@ export class GoodsScheduler {
     try {
       const goodsIds = await this.goods.updateInventoryEarlyWarning()
 
-      if (goodsIds)
+      if (goodsIds.length > 0)
         this.logger.debug('库存预警', goodsIds)
     }
     catch (e) {
@@ -49,10 +49,9 @@ export class GoodsScheduler {
   @Cron(CronExpression.EVERY_HOUR)
   async handleAutoInStock() {
     try {
-      // ------------------------------- 自动上架 -------------------------------- //
       const goodsIds = await this.goods.updateAutoInStockGoods()
 
-      if (goodsIds)
+      if (goodsIds.length > 0)
         this.logger.debug('自动上架', goodsIds)
     }
     catch (e) {
