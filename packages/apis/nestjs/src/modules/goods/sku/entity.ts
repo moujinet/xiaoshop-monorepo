@@ -4,9 +4,6 @@ import { Goods } from '@/goods/manage/entity'
 
 @Entity('shop_goods_sku', {
   comment: '商品 SKU 表',
-  orderBy: {
-    id: 'ASC',
-  },
 })
 @Index('idx_shop_goods_sku', ['skuCode'], { unique: true })
 export class GoodsSku implements IGoodsSku {
@@ -22,7 +19,7 @@ export class GoodsSku implements IGoodsSku {
   @Column({ type: 'varchar', length: 100, nullable: false, default: '', comment: '商品名称' })
   name: string
 
-  @Column({ type: 'simple-json', comment: '商品规格' })
+  @Column({ type: 'simple-json', default: null, comment: '商品规格' })
   specs: IGoodsSkuSpec[]
 
   @Column({ type: 'float', unsigned: true, default: 0, comment: '商品价格' })
@@ -35,10 +32,10 @@ export class GoodsSku implements IGoodsSku {
   costPrice: number
 
   @Column({ type: 'int', unsigned: true, default: 0, comment: '商品库存' })
-  stock: number
+  inventory: number
 
-  @Column({ name: 'alert_stock', type: 'int', unsigned: true, default: 0, comment: '预警库存' })
-  alertStock: number
+  @Column({ name: 'inventory_early_warning', type: 'int', unsigned: true, default: 0, comment: '预警库存' })
+  inventoryEarlyWarning: number
 
   @Column({ type: 'float', unsigned: true, default: 0, comment: '商品重量' })
   weight: number
@@ -48,12 +45,6 @@ export class GoodsSku implements IGoodsSku {
 
   @Column({ type: 'int', unsigned: true, default: 0, comment: '商品销量' })
   sales: number
-
-  @Column({ type: 'int', unsigned: true, default: 0, comment: '商品浏览量' })
-  views: number
-
-  @Column({ type: 'int', unsigned: true, default: 0, comment: '商品收藏量' })
-  favorites: number
 
   @ManyToOne(() => Goods, { createForeignKeyConstraints: false })
   @JoinColumn()

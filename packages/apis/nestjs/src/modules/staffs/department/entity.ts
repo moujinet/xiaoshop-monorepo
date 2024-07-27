@@ -1,14 +1,10 @@
 import type { IStaffDepartment } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('manage_staff_department', {
   comment: '组织部门表',
-  orderBy: {
-    sort: 'ASC',
-    createdTime: 'DESC',
-  },
 })
-@Index('idx_manage_staff_department', ['sort', 'createdTime'])
+@Index('idx_manage_staff_department', ['sort', 'updatedTime'])
 export class Department implements IStaffDepartment {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_department' })
   id: number
@@ -27,4 +23,7 @@ export class Department implements IStaffDepartment {
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string
+
+  @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
+  updatedTime: string
 }

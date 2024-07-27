@@ -3,10 +3,6 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 
 @Entity('shop_goods_protection', {
   comment: '商品保障服务表',
-  orderBy: {
-    sort: 'ASC',
-    updatedTime: 'DESC',
-  },
 })
 @Index('idx_shop_goods_protection', ['sort', 'updatedTime'])
 export class GoodsProtection implements IGoodsProtection {

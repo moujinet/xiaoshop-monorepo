@@ -1,14 +1,10 @@
 import type { IStaffRole } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('manage_staff_role', {
   comment: '员工角色表',
-  orderBy: {
-    sort: 'ASC',
-    createdTime: 'DESC',
-  },
 })
-@Index('idx_manage_staff_role', ['sort', 'createdTime'])
+@Index('idx_manage_staff_role', ['sort', 'updatedTime'])
 export class Role implements IStaffRole {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_role' })
   id: number
@@ -19,7 +15,7 @@ export class Role implements IStaffRole {
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '角色描述' })
   desc: string
 
-  @Column({ type: 'simple-json', comment: '角色权限' })
+  @Column({ type: 'simple-json', default: null, comment: '角色权限' })
   permissions: string[]
 
   @Column({ type: 'int', unsigned: true, default: 1, comment: '排序' })
@@ -27,4 +23,7 @@ export class Role implements IStaffRole {
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string
+
+  @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
+  updatedTime: string
 }

@@ -23,6 +23,9 @@ export class DepartmentResponse implements IStaffDepartment {
 
   @ApiProperty({ type: 'datetime', description: '创建日期' })
   readonly createdTime: string
+
+  @ApiProperty({ type: 'datetime', description: '更新日期' })
+  readonly updatedTime: string
 }
 
 /**

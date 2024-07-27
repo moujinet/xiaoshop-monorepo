@@ -1,5 +1,5 @@
 import type { IAsset, IAssetGroupInfo, IAssetListItem, IAssetType } from '@xiaoshop/schema'
-import { AssetTypeEnum } from '@xiaoshop/schema'
+import { AssetType } from '@xiaoshop/schema'
 import { ApiProperty, OmitType } from '@nestjs/swagger'
 
 /**
@@ -12,7 +12,7 @@ export class AssetResponse implements IAsset {
   @ApiProperty({ description: '素材分组', example: { id: 1, name: '图片', enableCompress: 'Y', enableWatermark: 'Y', enableThumbnail: 'Y' } })
   readonly group: IAssetGroupInfo
 
-  @ApiProperty({ description: '素材类型', enum: AssetTypeEnum, example: AssetTypeEnum.IMAGE })
+  @ApiProperty({ description: '素材类型', enum: AssetType, example: AssetType.IMAGE })
   readonly type: IAssetType
 
   @ApiProperty({ description: '文件名称', example: 'image.png' })

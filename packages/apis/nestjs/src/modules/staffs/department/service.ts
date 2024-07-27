@@ -22,7 +22,12 @@ export class DepartmentService {
    */
   async findList(): Promise<IStaffDepartment[]> {
     try {
-      return await this.repository.find()
+      return await this.repository.find({
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
+      })
     }
     catch (e) {
       throw new FailedException('获取组织部门列表', e.message)
@@ -42,6 +47,10 @@ export class DepartmentService {
         select: ['id', 'name'],
         where: {
           parentId: 0,
+        },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
         },
       })
     }

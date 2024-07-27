@@ -29,7 +29,7 @@
     "@nestjs/schedule": "^4.1.0",
     "@nestjs/swagger": "^7.4.0",
     "@nestjs/typeorm": "^10.0.2",
-    "@scalar/nestjs-api-reference": "^0.3.118",
+    "@scalar/nestjs-api-reference": "^0.3.119",
     "bcrypt": "^5.1.1",
     "bull": "^4.15.1",
     "cache-manager": "^5.7.3",

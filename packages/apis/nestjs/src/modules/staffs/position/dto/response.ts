@@ -24,6 +24,9 @@ export class PositionResponse implements IStaffPosition {
 
   @ApiProperty({ type: 'datetime', description: '创建日期' })
   readonly createdTime: string
+
+  @ApiProperty({ type: 'datetime', description: '创建日期' })
+  readonly updatedTime: string
 }
 
 /**

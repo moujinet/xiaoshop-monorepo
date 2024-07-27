@@ -22,7 +22,12 @@ export class GoodsGroupService {
    */
   async findList(): Promise<IGoodsGroup[]> {
     try {
-      return await this.repository.find()
+      return await this.repository.find({
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
+      })
     }
     catch (e) {
       throw new FailedException('获取商品分组列表', e.message)
@@ -40,6 +45,10 @@ export class GoodsGroupService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

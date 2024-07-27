@@ -1,5 +1,5 @@
 import {
-  EnabledEnum,
+  Enabled,
   type IEnabled,
   type IGoodsSpec,
   type IGoodsSpecValue,
@@ -44,7 +44,7 @@ export class GoodsSpecPayload implements IGoodsSpec {
   @Type(() => GoodsSpecValuePayload)
   readonly values: IGoodsSpecValue[]
 
-  @ApiProperty({ enum: EnabledEnum, description: '启用图片', example: example.enableImage })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ enum: Enabled, description: '启用图片', example: example.enableImage })
+  @IsEnum(Enabled)
   readonly enableImage: IEnabled
 }

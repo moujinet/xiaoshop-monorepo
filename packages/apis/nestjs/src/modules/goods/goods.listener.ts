@@ -1,10 +1,10 @@
 import { OnEvent } from '@nestjs/event-emitter'
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import {
-  GoodsCloneEvent,
+  GoodsCopyEvent,
   GoodsInStockEvent,
+  GoodsInventoryEarlyWarningEvent,
   GoodsSoldOutEvent,
-  GoodsStockWarnEvent,
 } from '@/goods/goods.events'
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsSkuService } from '@/goods/sku/service'
@@ -25,12 +25,12 @@ export class GoodsListener {
     private readonly sku: GoodsSkuService,
   ) {}
 
-  @OnEvent(GoodsCloneEvent.eventName)
-  async handleGoodsClone(payload: GoodsCloneEvent) {
+  @OnEvent(GoodsCopyEvent.name)
+  async handleGoodsClone(payload: GoodsCopyEvent) {
     this.logger.debug('复制商品至草稿')
 
     try {
-      const goodsId = await this.goods.cloneToDraft(payload.id)
+      const goodsId = await this.goods.copyToDraft(payload.id)
       const specs = await this.spec.cloneTo(payload.id, goodsId)
       await this.sku.cloneTo(payload.id, goodsId, specs)
     }
@@ -39,19 +39,19 @@ export class GoodsListener {
     }
   }
 
-  @OnEvent(GoodsSoldOutEvent.eventName)
+  @OnEvent(GoodsSoldOutEvent.name)
   async handleGoodsSoldOut(payload: GoodsSoldOutEvent) {
     // TODO: 后台消息推送
     this.logger.debug('售罄商品', payload.id)
   }
 
-  @OnEvent(GoodsStockWarnEvent.eventName)
-  async handleGoodsStockWarn(payload: GoodsStockWarnEvent) {
+  @OnEvent(GoodsInventoryEarlyWarningEvent.name)
+  async handleGoodsStockWarn(payload: GoodsInventoryEarlyWarningEvent) {
     // TODO: 后台消息推送
     this.logger.debug('库存预警', payload.id)
   }
 
-  @OnEvent(GoodsInStockEvent.eventName)
+  @OnEvent(GoodsInStockEvent.name)
   async handleGoodsInStock(payload: GoodsInStockEvent) {
     // TODO: 后台消息推送
     this.logger.debug('商品上架', payload.id)

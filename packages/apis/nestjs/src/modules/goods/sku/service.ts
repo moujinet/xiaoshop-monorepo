@@ -29,6 +29,9 @@ export class GoodsSkuService {
         where: {
           goods: { id: goodsId },
         },
+        order: {
+          id: 'ASC',
+        },
       })
     }
     catch (e) {
@@ -63,13 +66,10 @@ export class GoodsSkuService {
         goodsSku.price = sku.price || 0
         goodsSku.originalPrice = sku.originalPrice || 0
         goodsSku.costPrice = sku.costPrice || 0
-        goodsSku.stock = sku.stock || 0
-        goodsSku.alertStock = sku.alertStock || 0
+        goodsSku.inventory = sku.inventory || 0
+        goodsSku.inventoryEarlyWarning = sku.inventoryEarlyWarning || 0
         goodsSku.weight = sku.weight || 0
         goodsSku.volume = sku.volume || 0
-        goodsSku.views = 0
-        goodsSku.sales = 0
-        goodsSku.favorites = 0
         goodsSku.specs = sku.specs
 
         skus.push(goodsSku)
@@ -113,13 +113,11 @@ export class GoodsSkuService {
           goodsSku.price = sku.price || 0
           goodsSku.originalPrice = sku.originalPrice || 0
           goodsSku.costPrice = sku.costPrice || 0
-          goodsSku.stock = sku.stock || 0
-          goodsSku.alertStock = sku.alertStock || 0
+          goodsSku.inventory = sku.inventory || 0
+          goodsSku.inventoryEarlyWarning = sku.inventoryEarlyWarning || 0
           goodsSku.weight = sku.weight || 0
           goodsSku.volume = sku.volume || 0
-          goodsSku.views = 0
           goodsSku.sales = 0
-          goodsSku.favorites = 0
 
           goodsSku.specs = []
 

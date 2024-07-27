@@ -1,17 +1,15 @@
-import type {
-  IEnabled,
-  ILogisticsFreightTemplate,
-  ILogisticsFreightTemplateCalcMode,
-  ILogisticsFreightTemplateFreeRule,
-  ILogisticsFreightTemplateNormalRule,
+import {
+  type IEnabled,
+  type ILogisticsFreightTemplate,
+  type ILogisticsFreightTemplateCalcMode,
+  type ILogisticsFreightTemplateFreeRule,
+  type ILogisticsFreightTemplateNormalRule,
+  LogisticsFreightTemplateCalcMode,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('manage_logistics_freight_template', {
   comment: '物流运费模板表',
-  orderBy: {
-    updatedTime: 'DESC',
-  },
 })
 export class LogisticsFreightTemplate implements ILogisticsFreightTemplate {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_logistics_freight_template' })
@@ -20,16 +18,16 @@ export class LogisticsFreightTemplate implements ILogisticsFreightTemplate {
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '模板名称' })
   name: string
 
-  @Column({ name: 'calc_mode', type: 'varchar', length: 32, nullable: false, default: '', comment: '运费计算方式' })
+  @Column({ name: 'calc_mode', type: 'varchar', length: 32, nullable: false, default: LogisticsFreightTemplateCalcMode.COUNT, comment: '运费计算方式' })
   calcMode: ILogisticsFreightTemplateCalcMode
 
-  @Column({ type: 'simple-json', comment: '运费规则 (JSON)' })
+  @Column({ type: 'simple-json', default: null, comment: '运费规则 (JSON)' })
   rules: ILogisticsFreightTemplateNormalRule[]
 
   @Column({ name: 'enable_free_rules', type: 'char', nullable: false, default: '', comment: '启用包邮地区 (N:否 Y:是)' })
   enableFreeRules: IEnabled
 
-  @Column({ name: 'free_rules', type: 'simple-json', comment: '包邮规则 (JSON)' })
+  @Column({ name: 'free_rules', type: 'simple-json', default: null, comment: '包邮规则 (JSON)' })
   freeRules: ILogisticsFreightTemplateFreeRule[]
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })

@@ -3,11 +3,6 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 
 @Entity('shop_goods_category', {
   comment: '商品分类表',
-  orderBy: {
-    sort: 'ASC',
-    parentId: 'ASC',
-    updatedTime: 'DESC',
-  },
 })
 @Index('idx_shop_goods_category', ['sort', 'parentId', 'updatedTime'])
 export class GoodsCategory implements IGoodsCategory {

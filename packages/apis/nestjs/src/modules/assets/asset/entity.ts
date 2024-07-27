@@ -1,12 +1,9 @@
-import type { IAsset, IAssetGroupInfo, IAssetType } from '@xiaoshop/schema'
+import { AssetType, type IAsset, type IAssetGroupInfo, type IAssetType } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { AssetGroup } from '@/assets/group/entity'
 
 @Entity('app_assets', {
   comment: '素材信息表',
-  orderBy: {
-    createdTime: 'DESC',
-  },
 })
 @Index('idx_app_asset', ['type', 'name'])
 export class Asset implements IAsset {
@@ -17,7 +14,7 @@ export class Asset implements IAsset {
   @JoinColumn()
   group: IAssetGroupInfo
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '素材类型' })
+  @Column({ type: 'varchar', length: 32, nullable: false, default: AssetType.IMAGE, comment: '素材类型' })
   type: IAssetType
 
   @Column({ type: 'varchar', length: 200, nullable: false, default: '', comment: '文件名称' })

@@ -1,4 +1,4 @@
-import { AssetTypeEnum, EnabledEnum, type IAssetType } from '@xiaoshop/schema'
+import { AssetType, Enabled, type IAssetType } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator'
 
@@ -10,8 +10,8 @@ export class AssetGroupPayload {
   @IsNumber()
   readonly parentId: number
 
-  @ApiProperty({ enum: AssetTypeEnum, description: '素材类型', default: AssetTypeEnum.IMAGE })
-  @IsEnum(AssetTypeEnum)
+  @ApiProperty({ enum: AssetType, description: '素材类型', default: AssetType.IMAGE })
+  @IsEnum(AssetType)
   @IsNotEmpty()
   @IsString()
   readonly type: IAssetType
@@ -22,21 +22,21 @@ export class AssetGroupPayload {
   @IsString()
   readonly name: string
 
-  @ApiProperty({ enum: EnabledEnum, description: '启用图片压缩', default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ enum: Enabled, description: '启用图片压缩', default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
-  readonly enableCompress: EnabledEnum
+  readonly enableCompress: Enabled
 
-  @ApiProperty({ enum: EnabledEnum, description: '启用图片水印', default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ enum: Enabled, description: '启用图片水印', default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
-  readonly enableWatermark: EnabledEnum
+  readonly enableWatermark: Enabled
 
-  @ApiProperty({ enum: EnabledEnum, description: '启用图片缩略图', default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ enum: Enabled, description: '启用图片缩略图', default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
-  readonly enableThumbnail: EnabledEnum
+  readonly enableThumbnail: Enabled
 }

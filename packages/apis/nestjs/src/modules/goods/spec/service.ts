@@ -1,4 +1,4 @@
-import { EnabledEnum, type IGoodsSpec } from '@xiaoshop/schema'
+import { Enabled, type IGoodsSpec } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable } from '@nestjs/common'
@@ -28,6 +28,9 @@ export class GoodsSpecService {
       return await this.repository.find({
         where: {
           goods: { id: goodsId },
+        },
+        order: {
+          id: 'ASC',
         },
       })
     }
@@ -59,7 +62,7 @@ export class GoodsSpecService {
         goodsSpec.id = spec.id || nanoid()
         goodsSpec.goods = goods
         goodsSpec.name = spec.name
-        goodsSpec.enableImage = spec.enableImage || EnabledEnum.NO
+        goodsSpec.enableImage = spec.enableImage || Enabled.NO
         goodsSpec.values = spec.values || []
 
         specs.push(goodsSpec)
@@ -94,7 +97,7 @@ export class GoodsSpecService {
           goodsSpec.id = nanoid()
           goodsSpec.goods = goods
           goodsSpec.name = spec.name
-          goodsSpec.enableImage = spec.enableImage || EnabledEnum.NO
+          goodsSpec.enableImage = spec.enableImage || Enabled.NO
           goodsSpec.values = spec.values || []
 
           specs.push(goodsSpec)

@@ -3,10 +3,6 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 @Entity('manage_logistics_company', {
   comment: '物流公司管理表',
-  orderBy: {
-    sort: 'ASC',
-    updatedTime: 'DESC',
-  },
 })
 export class LogisticsCompany implements ILogisticsCompany {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_logistics_company' })

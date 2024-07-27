@@ -1,12 +1,12 @@
 import {
-  EnabledEnum,
+  Enabled,
   type IEnabled,
   type IStaffAccountProfile,
   type IStaffAccountStatus,
   type IStaffDepartmentDict,
   type IStaffPositionDict,
   type IStaffRoleInfo,
-  StaffAccountStatusEnum,
+  StaffAccountStatus,
 } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -21,10 +21,10 @@ export class AccountResponse implements IStaffAccountProfile {
   @ApiProperty({ description: '员工 ID' })
   readonly id: number
 
-  @ApiProperty({ description: '是否管理员', enum: EnabledEnum, default: EnabledEnum.NO })
+  @ApiProperty({ description: '是否管理员', enum: Enabled, default: Enabled.NO })
   readonly isAdmin: IEnabled
 
-  @ApiProperty({ description: '员工状态', enum: StaffAccountStatusEnum, default: StaffAccountStatusEnum.NORMAL })
+  @ApiProperty({ description: '员工状态', enum: StaffAccountStatus, default: StaffAccountStatus.NORMAL })
   readonly status: IStaffAccountStatus
 
   @ApiProperty({ description: '员工账号', example: example.username })
@@ -38,6 +38,9 @@ export class AccountResponse implements IStaffAccountProfile {
 
   @ApiProperty({ type: 'datetime', description: '创建时间' })
   readonly createdTime: string
+
+  @ApiProperty({ type: 'datetime', description: '更新时间' })
+  readonly updatedTime: string
 
   @ApiProperty({ type: 'datetime', description: '最后登录时间' })
   readonly lastLoginTime: string

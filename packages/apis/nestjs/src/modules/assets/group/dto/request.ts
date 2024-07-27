@@ -1,4 +1,4 @@
-import { AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
+import { AssetType, type IAssetType } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsString } from 'class-validator'
 
@@ -6,8 +6,8 @@ import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsString } from 'class-va
  * 获取素材分组请求 DTO
  */
 export class GetAssetGroupListRequest {
-  @ApiProperty({ description: '素材类型', enum: AssetTypeEnum, default: AssetTypeEnum.IMAGE })
-  @IsEnum(AssetTypeEnum)
+  @ApiProperty({ description: '素材类型', enum: AssetType, default: AssetType.IMAGE })
+  @IsEnum(AssetType)
   @IsNotEmpty()
   @IsString()
   readonly type: IAssetType

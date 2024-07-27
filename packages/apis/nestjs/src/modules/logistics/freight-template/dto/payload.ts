@@ -1,8 +1,8 @@
 import {
-  EnabledEnum,
+  Enabled,
   type IEnabled,
   type ILogisticsFreightTemplateCalcMode,
-  LogisticsFreightTemplateCalcModeEnum,
+  LogisticsFreightTemplateCalcMode,
 } from '@xiaoshop/schema'
 import { Type } from 'class-transformer'
 import { ApiProperty } from '@nestjs/swagger'
@@ -74,8 +74,8 @@ export class FreightTemplatePayload {
   @IsString()
   name: string
 
-  @ApiProperty({ description: '运费计算方式', enum: LogisticsFreightTemplateCalcModeEnum, default: LogisticsFreightTemplateCalcModeEnum.COUNT })
-  @IsEnum(LogisticsFreightTemplateCalcModeEnum)
+  @ApiProperty({ description: '运费计算方式', enum: LogisticsFreightTemplateCalcMode, default: LogisticsFreightTemplateCalcMode.COUNT })
+  @IsEnum(LogisticsFreightTemplateCalcMode)
   @IsNotEmpty()
   calcMode: ILogisticsFreightTemplateCalcMode
 
@@ -84,13 +84,13 @@ export class FreightTemplatePayload {
   @Type(() => FreightTemplateNormalRulePayload)
   rules: FreightTemplateNormalRulePayload[]
 
-  @ApiProperty({ description: '启用包邮地区', enum: EnabledEnum, default: EnabledEnum.NO })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ description: '启用包邮地区', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   enableFreeRules: IEnabled
 
   @ApiProperty({ type: [FreightTemplateFreeRulePayload], description: '包邮规则' })
-  @ValidateIf(o => o.enableFreeRules === EnabledEnum.YES)
+  @ValidateIf(o => o.enableFreeRules === Enabled.YES)
   @ValidateNested()
   @Type(() => FreightTemplateFreeRulePayload)
   freeRules: FreightTemplateFreeRulePayload[]

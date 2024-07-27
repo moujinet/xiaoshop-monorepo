@@ -1,26 +1,26 @@
-import type { IGoodsAdditional, IGoodsAdditionalDict, IGoodsAdditionalListItem } from '@xiaoshop/schema'
+import type { IGoodsAddition, IGoodsAdditionDict, IGoodsAdditionListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { GoodsAdditional } from '@/goods/additional/entity'
-import { GoodsAdditionalPayload } from '@/goods/additional/dto'
+import { GoodsAddition } from '@/goods/addition/entity'
+import { GoodsAdditionPayload } from '@/goods/addition/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()
-export class GoodsAdditionalService {
+export class GoodsAdditionService {
   constructor(
-    @InjectRepository(GoodsAdditional)
-    private readonly repository: Repository<GoodsAdditional>,
+    @InjectRepository(GoodsAddition)
+    private readonly repository: Repository<GoodsAddition>,
   ) {}
 
   /**
    * 获取商品附加服务列表
    *
    * @throws FailedException
-   * @returns Promise<IGoodsAdditionalListItem[]>
-   * @see {@link IGoodsAdditionalListItem}
+   * @returns Promise<IGoodsAdditionListItem[]>
+   * @see {@link IGoodsAdditionListItem}
    */
-  async findList(): Promise<IGoodsAdditionalListItem[]> {
+  async findList(): Promise<IGoodsAdditionListItem[]> {
     try {
       return await this.repository.find({
         select: {
@@ -29,7 +29,11 @@ export class GoodsAdditionalService {
           desc: true,
           icon: true,
           price: true,
-          createdTime: true,
+          updatedTime: true,
+        },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
         },
       })
     }
@@ -42,13 +46,17 @@ export class GoodsAdditionalService {
    * 获取商品附加服务字典列表
    *
    * @throws FailedException
-   * @returns Promise<IGoodsAdditionalDict[]>
-   * @see {@link IGoodsAdditionalDict}
+   * @returns Promise<IGoodsAdditionDict[]>
+   * @see {@link IGoodsAdditionDict}
    */
-  async findDictList(): Promise<IGoodsAdditionalDict[]> {
+  async findDictList(): Promise<IGoodsAdditionDict[]> {
     try {
       return await this.repository.find({
-        select: ['id', 'name', 'price'],
+        select: ['id', 'name', 'icon', 'price'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -62,10 +70,10 @@ export class GoodsAdditionalService {
    * @param id number
    * @throws NotFoundException
    * @throws FailedException
-   * @returns Promise<IGoodsAdditional>
-   * @see {@link IGoodsAdditional}
+   * @returns Promise<IGoodsAddition>
+   * @see {@link IGoodsAddition}
    */
-  async findDetail(id: number): Promise<IGoodsAdditional> {
+  async findDetail(id: number): Promise<IGoodsAddition> {
     try {
       const detail = await this.repository.findOne({
         where: {
@@ -86,12 +94,12 @@ export class GoodsAdditionalService {
   /**
    * 创建商品附加服务
    *
-   * @param data GoodsAdditionalPayload
+   * @param data GoodsAdditionPayload
    * @throws ExistsException
    * @throws FailedException
-   * @see {@link GoodsAdditionalPayload}
+   * @see {@link GoodsAdditionPayload}
    */
-  async create(data: GoodsAdditionalPayload) {
+  async create(data: GoodsAdditionPayload) {
     try {
       const exists = await this.repository.existsBy({
         name: data.name,
@@ -100,7 +108,7 @@ export class GoodsAdditionalService {
       if (exists)
         throw new ExistsException(`商品附加服务 [${data.name}] `)
 
-      const service = new GoodsAdditional()
+      const service = new GoodsAddition()
 
       service.name = data.name
       service.desc = data.desc || ''
@@ -119,13 +127,13 @@ export class GoodsAdditionalService {
    * 更新商品附加服务
    *
    * @param id number
-   * @param data GoodsAdditionalPayload
+   * @param data GoodsAdditionPayload
    * @throws NotFoundException
    * @throws ExistsException
    * @throws FailedException
-   * @see {@link GoodsAdditionalPayload}
+   * @see {@link GoodsAdditionPayload}
    */
-  async update(id: number, data: GoodsAdditionalPayload) {
+  async update(id: number, data: GoodsAdditionPayload) {
     try {
       const founded = await this.repository.existsBy({ id })
 
@@ -140,7 +148,7 @@ export class GoodsAdditionalService {
       if (exists)
         throw new ExistsException(`商品附加服务 [${data.name}] `)
 
-      const service = new GoodsAdditional()
+      const service = new GoodsAddition()
 
       service.id = id
       service.name = data.name

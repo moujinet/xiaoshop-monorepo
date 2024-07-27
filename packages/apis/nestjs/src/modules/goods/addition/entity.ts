@@ -1,16 +1,12 @@
-import type { IGoodsAdditional } from '@xiaoshop/schema'
+import type { IGoodsAddition } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('shop_goods_additional', {
+@Entity('shop_goods_addition', {
   comment: '商品附加服务表',
-  orderBy: {
-    sort: 'ASC',
-    updatedTime: 'DESC',
-  },
 })
-@Index('idx_shop_goods_additional', ['sort', 'updatedTime'])
-export class GoodsAdditional implements IGoodsAdditional {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_additional' })
+@Index('idx_shop_goods_addition', ['sort', 'updatedTime'])
+export class GoodsAddition implements IGoodsAddition {
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_addition' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '服务名称' })

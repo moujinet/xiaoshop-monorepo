@@ -13,10 +13,10 @@ import {
   GoodsBasicInfoResponse,
   GoodsDetailInfoResponse,
   GoodsDetailPayload,
+  GoodsInventoryInfoPayload,
+  GoodsInventoryInfoResponse,
   GoodsPageListResponse,
   GoodsResponse,
-  GoodsStockInfoPayload,
-  GoodsStockInfoResponse,
 } from '@/goods/manage/dto'
 import {
   ApiAnyResponse,
@@ -32,7 +32,7 @@ import {
   NotFoundException,
 } from '~/common/exception'
 import { GoodsService } from '@/goods/manage/service'
-import { GoodsCloneEvent } from '@/goods/goods.events'
+import { GoodsCopyEvent } from '@/goods/goods.events'
 
 @ApiTags('商品信息')
 @Controller('goods')
@@ -77,12 +77,12 @@ export class GoodsController {
   @ApiOperation({
     summary: '获取「商品」价格库存信息',
   })
-  @ApiObjectResponse(GoodsStockInfoResponse)
+  @ApiObjectResponse(GoodsInventoryInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
-  @Get('detail/stock')
-  async stockInfo(@Query() query: GetGoodsRequest) {
-    return this.service.findStockInfo(query.id)
+  @Get('detail/inventory')
+  async InventoryInfo(@Query() query: GetGoodsRequest) {
+    return this.service.findInventoryInfo(query.id)
   }
 
   @ApiOperation({
@@ -140,12 +140,12 @@ export class GoodsController {
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品」信息已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品」信息不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
-  @Put('stock/update')
-  async updateStockInfo(
+  @Put('inventory/update')
+  async updateInventoryInfo(
     @Query() query: GetGoodsRequest,
-    @Body() data: GoodsStockInfoPayload,
+    @Body() data: GoodsInventoryInfoPayload,
   ) {
-    return this.service.updateStockInfo(query.id, data)
+    return this.service.updateInventoryInfo(query.id, data)
   }
 
   @ApiOperation({
@@ -173,9 +173,7 @@ export class GoodsController {
     if (!this.service.isExists(data.id))
       throw new NotFoundException(`商品 [${data.id}] `)
 
-    this.eventEmitter.emit(
-      GoodsCloneEvent.eventName,
-      new GoodsCloneEvent(data.id),
+    this.eventEmitter.emit(GoodsCopyEvent.name, new GoodsCopyEvent(data.id),
     )
   }
 

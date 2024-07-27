@@ -54,6 +54,8 @@ export class AssetService {
         entity.orWhere('entity.group.id = :groupId', { groupId: query.groupId })
       }
 
+      entity.orderBy('entity.id', 'DESC')
+
       return await useQueryPagination<IAsset>(entity, query.page || 1, query.pagesize || 10)
     }
     catch (e) {

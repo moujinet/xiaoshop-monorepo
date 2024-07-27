@@ -35,6 +35,10 @@ export class GoodsCategoryService {
           updatedTime: true,
         },
         where,
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -56,6 +60,10 @@ export class GoodsCategoryService {
         where: {
           parentId: 0,
         },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -75,8 +83,9 @@ export class GoodsCategoryService {
       return await this.repository.find({
         select: ['id', 'parentId', 'name'],
         order: {
-          parentId: 'ASC',
           sort: 'ASC',
+          parentId: 'ASC',
+          updatedTime: 'DESC',
         },
       })
     }

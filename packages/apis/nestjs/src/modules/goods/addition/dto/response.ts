@@ -1,11 +1,11 @@
-import type { IGoodsAdditional, IGoodsAdditionalDict, IGoodsAdditionalListItem } from '@xiaoshop/schema'
+import type { IGoodsAddition, IGoodsAdditionDict, IGoodsAdditionListItem } from '@xiaoshop/schema'
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
 import { example } from './example'
 
 /**
  * 商品附加服务 响应 DTO
  */
-export class GoodsAdditionalResponse implements IGoodsAdditional {
+export class GoodsAdditionResponse implements IGoodsAddition {
   @ApiProperty({ description: '商品附加服务 ID', example: 1 })
   readonly id: number
 
@@ -34,13 +34,13 @@ export class GoodsAdditionalResponse implements IGoodsAdditional {
 /**
  * 商品附加服务列表 响应 DTO
  */
-export class GoodsAdditionalListResponse
-  extends OmitType(GoodsAdditionalResponse, ['sort', 'createdTime'])
-  implements IGoodsAdditionalListItem {}
+export class GoodsAdditionListResponse
+  extends OmitType(GoodsAdditionResponse, ['sort', 'createdTime'])
+  implements IGoodsAdditionListItem {}
 
 /**
  * 商品附加服务字典 响应 DTO
  */
-export class GoodsAdditionalDictResponse
-  extends PickType(GoodsAdditionalResponse, ['id', 'name', 'price'])
-  implements IGoodsAdditionalDict {}
+export class GoodsAdditionDictResponse
+  extends PickType(GoodsAdditionResponse, ['id', 'name', 'icon', 'price'])
+  implements IGoodsAdditionDict {}

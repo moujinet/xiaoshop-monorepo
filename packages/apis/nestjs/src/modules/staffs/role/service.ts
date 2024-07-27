@@ -25,7 +25,9 @@ export class RoleService {
   async findPages(query: GetRolePagesRequest): Promise<IApiPaginationData<IStaffRole>> {
     try {
       return await useQueryPagination<IStaffRole>(
-        this.repository.createQueryBuilder('entity'),
+        this.repository.createQueryBuilder('entity')
+          .orderBy('entity.sort', 'ASC')
+          .addOrderBy('entity.updatedTime', 'DESC'),
         query.page || 1,
         query.pagesize || 10,
       )
@@ -46,6 +48,10 @@ export class RoleService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

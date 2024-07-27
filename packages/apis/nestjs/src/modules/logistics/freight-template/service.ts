@@ -1,4 +1,4 @@
-import { EnabledEnum, type ILogisticsFreightTemplate, ILogisticsFreightTemplateDict, ILogisticsFreightTemplateListItem } from '@xiaoshop/schema'
+import { Enabled, type ILogisticsFreightTemplate, ILogisticsFreightTemplateDict, ILogisticsFreightTemplateListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -24,6 +24,9 @@ export class LogisticsFreightTemplateService {
     try {
       return await this.repository.find({
         select: ['id', 'name', 'calcMode', 'enableFreeRules', 'updatedTime'],
+        order: {
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -42,6 +45,9 @@ export class LogisticsFreightTemplateService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -97,7 +103,7 @@ export class LogisticsFreightTemplateService {
       if (data.rules.length === 0)
         throw new BadRequestException('运费地区 [rules] 不能为空')
 
-      if (data.enableFreeRules === EnabledEnum.YES && data.freeRules.length === 0)
+      if (data.enableFreeRules === Enabled.YES && data.freeRules.length === 0)
         throw new BadRequestException('包邮地区 [freeRules] 不能为空')
 
       const template = new LogisticsFreightTemplate()
@@ -143,7 +149,7 @@ export class LogisticsFreightTemplateService {
       if (data.rules.length === 0)
         throw new BadRequestException('运费地区不能为空')
 
-      if (data.enableFreeRules === EnabledEnum.YES && data.freeRules.length === 0)
+      if (data.enableFreeRules === Enabled.YES && data.freeRules.length === 0)
         throw new BadRequestException('包邮地区不能为空')
 
       const template = new LogisticsFreightTemplate()

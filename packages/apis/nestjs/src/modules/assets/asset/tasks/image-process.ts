@@ -1,5 +1,5 @@
 import { Job } from 'bull'
-import { EnabledEnum } from '@xiaoshop/schema'
+import { Enabled } from '@xiaoshop/schema'
 import { Inject, Logger } from '@nestjs/common'
 import { Process, Processor } from '@nestjs/bull'
 import type { IAssetImageProcessJob } from '@/assets/interface'
@@ -33,9 +33,9 @@ export class AssetsTaskImageProcess {
       // 全局开启，则根据上传素材分组开启，否则不开启
       const settings = await this.settings.moduleSettings()
 
-      settings['image.compress.enable'] = settings['image.compress.enable'] === true && enableCompress === EnabledEnum.YES
-      settings['image.thumbnail.enable'] = settings['image.thumbnail.enable'] === true && enableThumbnail === EnabledEnum.YES
-      settings['image.watermark.enable'] = settings['image.watermark.enable'] === true && enableWatermark === EnabledEnum.YES
+      settings['image.compress.enable'] = settings['image.compress.enable'] === true && enableCompress === Enabled.YES
+      settings['image.thumbnail.enable'] = settings['image.thumbnail.enable'] === true && enableThumbnail === Enabled.YES
+      settings['image.watermark.enable'] = settings['image.watermark.enable'] === true && enableWatermark === Enabled.YES
 
       // 压缩
       if (settings['image.compress.enable']) {

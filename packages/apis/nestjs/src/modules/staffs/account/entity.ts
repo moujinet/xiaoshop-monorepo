@@ -1,28 +1,26 @@
-import type {
-  IEnabled,
-  IStaffAccount,
-  IStaffAccountStatus,
-  IStaffDepartmentDict,
-  IStaffPositionDict,
-  IStaffRoleInfo,
+import {
+  Enabled,
+  type IEnabled,
+  type IStaffAccount,
+  type IStaffAccountStatus,
+  type IStaffDepartmentDict,
+  type IStaffPositionDict,
+  type IStaffRoleInfo,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Role } from '@/staffs/role/entity'
 import { Position } from '@/staffs/position/entity'
 import { Department } from '@/staffs/department/entity'
 
 @Entity('manage_staff_account', {
   comment: '员工账号表',
-  orderBy: {
-    lastLoginTime: 'DESC',
-  },
 })
 @Index('idx_manage_staff_account', ['status', 'username', 'mobile', 'lastLoginTime'])
 export class Account implements IStaffAccount {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_account' })
   id: number
 
-  @Column({ name: 'is_admin', type: 'varchar', length: 32, nullable: false, default: '', comment: '是否管理员 (N: 否 Y: 是)' })
+  @Column({ name: 'is_admin', type: 'char', length: 1, nullable: false, default: Enabled.NO, comment: '是否管理员 (N: 否 Y: 是)' })
   isAdmin: IEnabled
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '员工状态' })
@@ -45,6 +43,9 @@ export class Account implements IStaffAccount {
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string
+
+  @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
+  updatedTime: string
 
   @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
   lastLoginTime: string

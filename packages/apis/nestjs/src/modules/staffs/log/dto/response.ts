@@ -2,7 +2,7 @@ import {
   type IStaffAccountInfo,
   type IStaffLogExtra,
   type IStaffLogType,
-  StaffLogTypeEnum,
+  StaffLogType,
 } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -13,7 +13,7 @@ export class StaffLogResponse {
   @ApiProperty({ description: '日志 ID', example: 1 })
   readonly id: number
 
-  @ApiProperty({ description: '日志类型', enum: StaffLogTypeEnum, example: example.type })
+  @ApiProperty({ description: '日志类型', enum: StaffLogType, example: example.type })
   readonly type: IStaffLogType
 
   @ApiProperty({ type: AccountInfoPayload, description: '操作员工', example: example.staff })

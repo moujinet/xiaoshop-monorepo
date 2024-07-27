@@ -39,5 +39,5 @@ export class GoodsProtectionListResponse
  * 商品保障服务字典
  */
 export class GoodsProtectionDictResponse
-  extends PickType(GoodsProtectionResponse, ['id', 'name'])
+  extends PickType(GoodsProtectionResponse, ['id', 'name', 'icon'])
   implements IGoodsProtectionDict {}

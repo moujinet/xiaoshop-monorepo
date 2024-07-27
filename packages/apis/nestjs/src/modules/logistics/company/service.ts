@@ -24,6 +24,10 @@ export class LogisticsCompanyService {
     try {
       return await this.repository.find({
         select: ['id', 'name', 'url', 'sort', 'updatedTime'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

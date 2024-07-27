@@ -30,6 +30,10 @@ export class GoodsProtectionService {
           icon: true,
           updatedTime: true,
         },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -47,7 +51,11 @@ export class GoodsProtectionService {
   async findDictList(): Promise<IGoodsProtectionDict[]> {
     try {
       return await this.repository.find({
-        select: ['id', 'name'],
+        select: ['id', 'name', 'icon'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

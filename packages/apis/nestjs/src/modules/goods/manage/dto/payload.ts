@@ -2,30 +2,30 @@ import { Type } from 'class-transformer'
 import { ApiProperty, IntersectionType, OmitType } from '@nestjs/swagger'
 import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator'
 import {
-  EnabledEnum,
-  GoodsAttributeOptionTypeEnum,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsBackFreightByEnum,
-  GoodsLogisticsFreightChargeModeEnum,
-  GoodsPublishModeEnum,
-  GoodsSourceEnum,
-  GoodsStockDeductModeEnum,
-  GoodsTypeEnum,
+  Enabled,
+  GoodsAttributeOptionType,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
+  GoodsInventoryDeductMode,
+  GoodsPublishMode,
+  GoodsReturnsFreightBy,
+  GoodsSource,
+  GoodsType,
   type IEnabled,
   type IGoodsAttribute,
   type IGoodsAttributeOptionType,
   type IGoodsBasicInfoFormData,
   type IGoodsBuyBtnType,
-  type IGoodsLogisticsBackFreightBy,
-  type IGoodsLogisticsFreightChargeMode,
+  type IGoodsFreightChargeMode,
+  type IGoodsInventoryDeductMode,
+  type IGoodsInventoryInfoFormData,
   type IGoodsPublishMode,
+  type IGoodsReturnsFreightBy,
   type IGoodsSource,
   type IGoodsSpec,
-  type IGoodsStockDeductMode,
-  type IGoodsStockInfoFormData,
   type IGoodsType,
   type ILogisticsDeliveryMode,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 import { example } from './example'
 import { GoodsSkuPayload } from '@/goods/sku/dto'
@@ -36,8 +36,8 @@ import { nanoid } from '~/utils'
  * 商品参数 - 选项 DTO
  */
 export class GoodsAttributePayload implements IGoodsAttribute {
-  @ApiProperty({ description: '商品参数类型', enum: GoodsAttributeOptionTypeEnum, example: example.attributes[0].type })
-  @IsEnum(GoodsAttributeOptionTypeEnum)
+  @ApiProperty({ description: '商品参数类型', enum: GoodsAttributeOptionType, example: example.attributes[0].type })
+  @IsEnum(GoodsAttributeOptionType)
   readonly type: IGoodsAttributeOptionType
 
   @ApiProperty({ description: '商品参数名称', example: example.attributes[0].name })
@@ -60,13 +60,13 @@ export class GoodsAttributePayload implements IGoodsAttribute {
  * 商品基本信息 DTO
  */
 export class GoodsBasicInfoPayload implements IGoodsBasicInfoFormData {
-  @ApiProperty({ required: false, description: '商品状态', enum: GoodsTypeEnum, example: example.type })
-  @IsEnum(GoodsTypeEnum)
+  @ApiProperty({ required: false, description: '商品类型', enum: GoodsType, example: example.type })
+  @IsEnum(GoodsType)
   @IsOptional()
   readonly type: IGoodsType
 
-  @ApiProperty({ required: false, description: '商品来源', enum: GoodsSourceEnum, example: example.source })
-  @IsEnum(GoodsSourceEnum)
+  @ApiProperty({ required: false, description: '商品来源', enum: GoodsSource, example: example.source })
+  @IsEnum(GoodsSource)
   @IsOptional()
   readonly source: IGoodsSource
 
@@ -125,54 +125,49 @@ export class GoodsBasicInfoPayload implements IGoodsBasicInfoFormData {
   @IsOptional()
   readonly additionIds: number[]
 
-  @ApiProperty({ required: false, description: '商品参数模板 ID', example: 1 })
-  @IsNumber()
-  @IsOptional()
-  readonly attributeTemplateId: number
-
   @ApiProperty({ required: false, type: [GoodsAttributePayload], description: '商品参数', example: example.attributes })
   @Type(() => GoodsAttributePayload)
   @IsOptional()
   readonly attributes: IGoodsAttribute[]
 
-  @ApiProperty({ required: false, type: [String], enum: LogisticsDeliveryModeEnum, description: '商品配送方式', example: example.deliveryModes })
-  @IsEnum(LogisticsDeliveryModeEnum, { each: true })
+  @ApiProperty({ required: false, type: [String], enum: LogisticsDeliveryMode, description: '商品配送方式', example: example.deliveryModes })
+  @IsEnum(LogisticsDeliveryMode, { each: true })
   @IsOptional()
-  readonly logisticsDeliveryModes: ILogisticsDeliveryMode[]
+  readonly deliveryModes: ILogisticsDeliveryMode[]
 
   @ApiProperty({ required: false, description: '商品物流运费', example: example.freight })
   @IsNumber()
   @IsOptional()
-  readonly logisticsFreight: number
+  readonly freight: number
 
   @ApiProperty({ required: false, description: '商品物流运费模板', example: example.freightTemplateId })
   @IsNumber()
   @IsOptional()
-  readonly logisticsFreightTemplateId: number
+  readonly freightTemplateId: number
 
-  @ApiProperty({ required: false, description: '商品物流费用计算方式', enum: GoodsLogisticsFreightChargeModeEnum, example: example.freightChargeMode })
-  @IsEnum(GoodsLogisticsFreightChargeModeEnum)
+  @ApiProperty({ required: false, description: '商品物流费用计算方式', enum: GoodsFreightChargeMode, example: example.freightChargeMode })
+  @IsEnum(GoodsFreightChargeMode)
   @IsOptional()
-  readonly logisticsFreightChargeMode: IGoodsLogisticsFreightChargeMode
+  readonly freightChargeMode: IGoodsFreightChargeMode
 
-  @ApiProperty({ required: false, description: '商品退货运费承担方', enum: GoodsLogisticsBackFreightByEnum, example: example.backFreightBy })
-  @IsEnum(GoodsLogisticsBackFreightByEnum)
+  @ApiProperty({ required: false, description: '商品退货运费承担方', enum: GoodsReturnsFreightBy, example: example.backFreightBy })
+  @IsEnum(GoodsReturnsFreightBy)
   @IsOptional()
-  readonly logisticsBackFreightBy: IGoodsLogisticsBackFreightBy
+  readonly returnsFreightBy: IGoodsReturnsFreightBy
 
-  @ApiProperty({ required: false, description: '商品上架方式', enum: GoodsPublishModeEnum, example: example.publishMode })
-  @IsEnum(GoodsPublishModeEnum)
+  @ApiProperty({ required: false, description: '商品上架方式', enum: GoodsPublishMode, example: example.publishMode })
+  @IsEnum(GoodsPublishMode)
   @IsOptional()
   readonly publishMode: IGoodsPublishMode
 
   @ApiProperty({ required: false, description: '自定义上架时间', example: example.autoInStockAt })
-  @ValidateIf(o => o.publishMode === GoodsPublishModeEnum.AUTO)
+  @ValidateIf(o => o.publishMode === GoodsPublishMode.AUTO)
   @IsDateString()
   @IsOptional()
   readonly autoInStockAt: string
 
-  @ApiProperty({ required: false, description: '商品购买按钮类型', enum: GoodsBuyBtnTypeEnum, example: example.buyBtnNameType })
-  @IsEnum(GoodsBuyBtnTypeEnum)
+  @ApiProperty({ required: false, description: '商品购买按钮类型', enum: GoodsBuyBtnType, example: example.buyBtnNameType })
+  @IsEnum(GoodsBuyBtnType)
   @IsOptional()
   readonly buyBtnNameType: IGoodsBuyBtnType
 
@@ -185,7 +180,12 @@ export class GoodsBasicInfoPayload implements IGoodsBasicInfoFormData {
 /**
  * 商品价格库存信息 DTO
  */
-export class GoodsStockInfoPayload implements IGoodsStockInfoFormData {
+export class GoodsInventoryInfoPayload implements IGoodsInventoryInfoFormData {
+  @ApiProperty({ required: false, description: '是否多规格商品', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
+  @IsOptional()
+  readonly isMultiSkus: IEnabled
+
   @ApiProperty({ required: false, description: 'SKU 编码', example: example.skuCode })
   @IsString()
   @IsOptional()
@@ -209,12 +209,12 @@ export class GoodsStockInfoPayload implements IGoodsStockInfoFormData {
   @ApiProperty({ required: false, description: '商品库存', example: example.stock })
   @IsNumber()
   @IsOptional()
-  readonly stock: number
+  readonly inventory: number
 
   @ApiProperty({ required: false, description: '预警库存', example: example.alertStock })
   @IsNumber()
   @IsOptional()
-  readonly alertStock: number
+  readonly inventoryEarlyWarning: number
 
   @ApiProperty({ required: false, type: 'float', description: '商品重量', example: example.weight })
   @IsNumber()
@@ -231,8 +231,8 @@ export class GoodsStockInfoPayload implements IGoodsStockInfoFormData {
   @IsOptional()
   readonly unit: string
 
-  @ApiProperty({ required: false, description: '是否开启限购', enum: EnabledEnum, default: EnabledEnum.NO })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ required: false, description: '是否开启限购', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsOptional()
   readonly enablePurchaseLimits: IEnabled
 
@@ -246,13 +246,13 @@ export class GoodsStockInfoPayload implements IGoodsStockInfoFormData {
   @IsOptional()
   readonly purchaseMaxQty: number
 
-  @ApiProperty({ required: false, description: '库存扣减方式', enum: GoodsStockDeductModeEnum, example: example.stockDeductMode })
-  @IsEnum(GoodsStockDeductModeEnum)
+  @ApiProperty({ required: false, description: '库存扣减方式', enum: GoodsInventoryDeductMode, example: example.stockDeductMode })
+  @IsEnum(GoodsInventoryDeductMode)
   @IsOptional()
-  readonly stockDeductMode: IGoodsStockDeductMode
+  readonly inventoryDeductMode: IGoodsInventoryDeductMode
 
-  @ApiProperty({ required: false, description: '是否开启会员折扣', enum: EnabledEnum, default: EnabledEnum.NO })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ required: false, description: '是否开启会员折扣', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsOptional()
   readonly enableVipDiscount: IEnabled
 }
@@ -290,11 +290,11 @@ export class BatchUpdateGoodsData
       'slogan',
       'video',
       'images',
-      'attributeTemplateId',
       'attributes',
     ] as const),
-    OmitType(GoodsStockInfoPayload, [
+    OmitType(GoodsInventoryInfoPayload, [
       'skuCode',
+      'isMultiSkus',
     ] as const),
   ) {}
 

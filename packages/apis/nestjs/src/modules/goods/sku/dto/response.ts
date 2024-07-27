@@ -32,10 +32,10 @@ export class GoodsSkuResponse implements IGoodsSku {
   readonly costPrice: number
 
   @ApiProperty({ description: 'SKU 库存', example: example.stock })
-  readonly stock: number
+  readonly inventory: number
 
   @ApiProperty({ description: 'SKU 预警库存', example: example.alertStock })
-  readonly alertStock: number
+  readonly inventoryEarlyWarning: number
 
   @ApiProperty({ type: 'float', description: 'SKU 重量', example: example.weight })
   readonly weight: number
@@ -45,10 +45,4 @@ export class GoodsSkuResponse implements IGoodsSku {
 
   @ApiProperty({ description: 'SKU 销量', example: example.sales })
   readonly sales: number
-
-  @ApiProperty({ description: 'SKU 浏览量', example: example.views })
-  readonly views: number
-
-  @ApiProperty({ description: 'SKU 收藏量', example: example.favorites })
-  readonly favorites: number
 }

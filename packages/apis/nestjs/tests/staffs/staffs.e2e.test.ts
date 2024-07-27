@@ -1,6 +1,6 @@
 import type { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
-import { EnabledEnum, StaffAccountStatusEnum } from '@xiaoshop/schema'
+import { Enabled, StaffAccountStatus } from '@xiaoshop/schema'
 import { EXCEPTION_EXISTS, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { createNestApplication, truncateTable } from '~~/tests/application'
 import { StaffsModule } from '@/staffs/staffs.module'
@@ -424,8 +424,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.YES,
-          status: StaffAccountStatusEnum.NORMAL,
+          isAdmin: Enabled.YES,
+          status: StaffAccountStatus.NORMAL,
         })
         .expect(200)
 
@@ -439,8 +439,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 
@@ -458,8 +458,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.YES,
-          status: StaffAccountStatusEnum.NORMAL,
+          isAdmin: Enabled.YES,
+          status: StaffAccountStatus.NORMAL,
         })
         .expect(200)
 
@@ -504,8 +504,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 
@@ -523,8 +523,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 
@@ -542,8 +542,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 
@@ -561,8 +561,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 
@@ -580,8 +580,8 @@ describe('Staffs Module', () => {
           roleIds: [2],
           departmentId: 2,
           positionId: 2,
-          isAdmin: EnabledEnum.NO,
-          status: StaffAccountStatusEnum.EXIT,
+          isAdmin: Enabled.NO,
+          status: StaffAccountStatus.EXIT,
         })
         .expect(200)
 

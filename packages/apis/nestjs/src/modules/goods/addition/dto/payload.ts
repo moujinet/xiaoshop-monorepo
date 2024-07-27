@@ -5,7 +5,7 @@ import { example } from './example'
 /**
  * 商品附加服务 DTO
  */
-export class GoodsAdditionalPayload {
+export class GoodsAdditionPayload {
   @ApiProperty({ description: '服务名称', example: example.name })
   @MaxLength(32)
   @IsNotEmpty()

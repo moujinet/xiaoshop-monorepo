@@ -1,6 +1,6 @@
 import { Queue } from 'bull'
 import { InjectQueue } from '@nestjs/bull'
-import { AssetTypeEnum } from '@xiaoshop/schema'
+import { AssetType } from '@xiaoshop/schema'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Inject, ParseFilePipeBuilder, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common'
@@ -83,7 +83,7 @@ export class AssetController {
       })
 
       // 图片处理队列
-      if (options.type === AssetTypeEnum.IMAGE) {
+      if (options.type === AssetType.IMAGE) {
         await this.queue.add(
           ASSET_PROCESSOR_IMAGE,
           {

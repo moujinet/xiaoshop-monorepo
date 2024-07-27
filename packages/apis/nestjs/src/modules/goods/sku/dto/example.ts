@@ -1,7 +1,6 @@
-import type { IGoodsSku } from '@xiaoshop/schema'
 import { nanoNumber, nanoid } from '~/utils/nanoid'
 
-export const example: IGoodsSku = {
+export const example = {
   id: nanoid(),
   skuCode: nanoNumber(),
   name: '商品名称',

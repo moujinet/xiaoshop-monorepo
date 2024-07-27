@@ -30,7 +30,11 @@ export class SettingsService {
    */
   async findList(): Promise<ISettings[]> {
     try {
-      return await this.repository.find()
+      return await this.repository.find({
+        order: {
+          key: 'ASC',
+        },
+      })
     }
     catch (e) {
       throw new FailedException('获取系统设置', e.message)

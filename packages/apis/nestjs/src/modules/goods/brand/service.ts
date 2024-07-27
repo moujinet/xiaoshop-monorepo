@@ -30,6 +30,10 @@ export class GoodsBrandService {
           logo: true,
           updatedTime: true,
         },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -48,6 +52,10 @@ export class GoodsBrandService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

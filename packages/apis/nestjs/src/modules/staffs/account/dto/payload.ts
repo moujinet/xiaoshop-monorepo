@@ -1,9 +1,9 @@
 import {
-  EnabledEnum,
+  Enabled,
   type IEnabled,
   type IStaffAccountInfo,
   type IStaffAccountStatus,
-  StaffAccountStatusEnum,
+  StaffAccountStatus,
 } from '@xiaoshop/schema'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { IsEnum, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
@@ -48,13 +48,13 @@ export class RegisterAccountPayload {
   @IsOptional()
   readonly positionId: number
 
-  @ApiProperty({ description: '是否管理员', enum: EnabledEnum, default: EnabledEnum.NO })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ description: '是否管理员', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   readonly isAdmin: IEnabled
 
-  @ApiProperty({ description: '员工状态', enum: StaffAccountStatusEnum, default: StaffAccountStatusEnum.NORMAL })
-  @IsEnum(StaffAccountStatusEnum)
+  @ApiProperty({ description: '员工状态', enum: StaffAccountStatus, default: StaffAccountStatus.NORMAL })
+  @IsEnum(StaffAccountStatus)
   @IsNotEmpty()
   readonly status: IStaffAccountStatus
 }

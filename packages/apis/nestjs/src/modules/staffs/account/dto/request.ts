@@ -1,4 +1,4 @@
-import { type IStaffAccountStatus, StaffAccountStatusEnum } from '@xiaoshop/schema'
+import { type IStaffAccountStatus, StaffAccountStatus } from '@xiaoshop/schema'
 import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -33,8 +33,8 @@ export class GetAccountPagesRequest extends PaginationQueryDto {
   @IsOptional()
   readonly mobile: string
 
-  @ApiProperty({ required: false, description: '员工状态', enum: StaffAccountStatusEnum, example: StaffAccountStatusEnum.NORMAL })
-  @IsEnum(StaffAccountStatusEnum)
+  @ApiProperty({ required: false, description: '员工状态', enum: StaffAccountStatus, example: StaffAccountStatus.NORMAL })
+  @IsEnum(StaffAccountStatus)
   @IsOptional()
   readonly status: IStaffAccountStatus
 }

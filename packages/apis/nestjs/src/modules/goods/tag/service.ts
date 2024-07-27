@@ -29,6 +29,10 @@ export class GoodsTagService {
           sort: true,
           updatedTime: true,
         },
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -47,6 +51,10 @@ export class GoodsTagService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          sort: 'ASC',
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

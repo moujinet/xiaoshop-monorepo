@@ -24,6 +24,9 @@ export class GoodsAttributeTemplateService {
     try {
       return await this.repository.find({
         select: ['id', 'name', 'desc', 'updatedTime'],
+        order: {
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {
@@ -42,6 +45,9 @@ export class GoodsAttributeTemplateService {
     try {
       return await this.repository.find({
         select: ['id', 'name'],
+        order: {
+          updatedTime: 'DESC',
+        },
       })
     }
     catch (e) {

@@ -3,23 +3,23 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Between, Brackets, FindOptionsWhere, In, LessThanOrEqual, Like, Not, Repository } from 'typeorm'
 import {
-  EnabledEnum,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsBackFreightByEnum,
-  GoodsLogisticsFreightChargeModeEnum,
-  GoodsPublishModeEnum,
-  GoodsRatingGradeEnum,
-  GoodsSourceEnum,
-  GoodsStatusEnum,
-  GoodsStockDeductModeEnum,
-  GoodsTypeEnum,
+  Enabled,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
+  GoodsInventoryDeductMode,
+  GoodsPublishMode,
+  GoodsRatingGrade,
+  GoodsReturnsFreightBy,
+  GoodsSource,
+  GoodsStatus,
+  GoodsType,
   type IApiPaginationData,
   type IGoods,
   type IGoodsBasicInfo,
   type IGoodsDetailInfo,
+  type IGoodsInventoryInfo,
   type IGoodsListItem,
-  type IGoodsStockInfo,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 import {
   BatchUpdateGoodsData,
@@ -27,7 +27,7 @@ import {
   GetGoodsPagesRequest,
   GoodsBasicInfoPayload,
   GoodsDetailPayload,
-  GoodsStockInfoPayload,
+  GoodsInventoryInfoPayload,
 } from '@/goods/manage/dto'
 import {
   ExistsException,
@@ -38,9 +38,9 @@ import {
   GoodsCreateEvent,
   GoodsDeleteEvent,
   GoodsInStockEvent,
+  GoodsInventoryEarlyWarningEvent,
   GoodsRestoreEvent,
   GoodsSoldOutEvent,
-  GoodsStockWarnEvent,
   GoodsStockedEvent,
   GoodsUpdateEvent,
 } from '@/goods/goods.events'
@@ -49,7 +49,7 @@ import { GoodsTag } from '@/goods/tag/entity'
 import { GoodsBrand } from '@/goods/brand/entity'
 import { GoodsGroup } from '@/goods/group/entity'
 import { GoodsCategory } from '@/goods/category/entity'
-import { GoodsAdditional } from '@/goods/additional/entity'
+import { GoodsAddition } from '@/goods/addition/entity'
 import { GoodsProtection } from '@/goods/protection/entity'
 import { nanoNumber, nanoid, unique } from '~/utils'
 
@@ -72,7 +72,7 @@ export class GoodsService {
   async findPages(query: GetGoodsPagesRequest): Promise<IApiPaginationData<IGoodsListItem>> {
     try {
       const where: FindOptionsWhere<Goods> = {
-        isDeleted: EnabledEnum.NO,
+        isDeleted: Enabled.NO,
       }
 
       if (query.status)
@@ -104,9 +104,9 @@ export class GoodsService {
         where.price = Between(Number(min), Number(max))
       }
 
-      if (query.stock) {
-        const [min, max] = query.stock.split(',')
-        where.stock = Between(Number(min), Number(max))
+      if (query.inventory) {
+        const [min, max] = query.inventory.split(',')
+        where.inventory = Between(Number(min), Number(max))
       }
 
       if (query.sales) {
@@ -137,12 +137,15 @@ export class GoodsService {
           id: true,
           status: true,
           source: true,
+          type: true,
+          isMultiSkus: true,
+          skuCode: true,
           name: true,
           images: true,
           tag: { id: true, name: true },
           group: { id: true, name: true },
           price: true,
-          stock: true,
+          inventory: true,
           sales: true,
           sort: true,
           updatedTime: true,
@@ -188,17 +191,8 @@ export class GoodsService {
           brand: { id: true, name: true },
           group: { id: true, name: true },
           tag: { id: true, name: true },
-          additions: {
-            id: true,
-            name: true,
-            price: true,
-            icon: true,
-          },
-          protections: {
-            id: true,
-            name: true,
-            icon: true,
-          },
+          additions: { id: true, name: true, price: true, icon: true },
+          protections: { id: true, name: true, icon: true },
         },
         where: {
           id,
@@ -210,6 +204,9 @@ export class GoodsService {
           tag: true,
           additions: true,
           protections: true,
+        },
+        order: {
+          id: 'ASC',
         },
       })
 
@@ -236,18 +233,18 @@ export class GoodsService {
       const goods = await this.repository.findOne({
         select: {
           id: true,
+          type: true,
           video: true,
           images: true,
           name: true,
           shareDesc: true,
           slogan: true,
-          attributeTemplateId: true,
           attributes: true,
-          logisticsDeliveryModes: true,
-          logisticsFreight: true,
-          logisticsFreightTemplateId: true,
-          logisticsFreightChargeMode: true,
-          logisticsBackFreightBy: true,
+          deliveryModes: true,
+          freight: true,
+          freightTemplateId: true,
+          freightChargeMode: true,
+          returnsFreightBy: true,
           publishMode: true,
           autoInStockAt: true,
           buyBtnNameType: true,
@@ -256,17 +253,8 @@ export class GoodsService {
           brand: { id: true, name: true },
           group: { id: true, name: true },
           tag: { id: true, name: true },
-          additions: {
-            id: true,
-            name: true,
-            price: true,
-            icon: true,
-          },
-          protections: {
-            id: true,
-            name: true,
-            icon: true,
-          },
+          additions: { id: true, name: true, price: true, icon: true },
+          protections: { id: true, name: true, icon: true },
         },
         where: {
           id,
@@ -278,9 +266,6 @@ export class GoodsService {
           tag: true,
           additions: true,
           protections: true,
-        },
-        order: {
-          id: 'DESC',
         },
       })
 
@@ -298,28 +283,30 @@ export class GoodsService {
    * 获取商品库存信息
    *
    * @param id string
-   * @returns Promise<IGoodsStockInfo>
+   * @returns Promise<IGoodsInventoryInfo>
    * @throws NotFoundException
    * @throws FailedException
    */
-  async findStockInfo(id: string): Promise<IGoodsStockInfo> {
+  async findInventoryInfo(id: string): Promise<IGoodsInventoryInfo> {
     try {
       const goods = await this.repository.findOne({
         select: {
           id: true,
+          type: true,
+          isMultiSkus: true,
           skuCode: true,
           price: true,
           originalPrice: true,
           costPrice: true,
-          stock: true,
-          alertStock: true,
+          inventory: true,
+          inventoryEarlyWarning: true,
           weight: true,
           volume: true,
           unit: true,
           enablePurchaseLimits: true,
           purchaseMinQty: true,
           purchaseMaxQty: true,
-          stockDeductMode: true,
+          inventoryDeductMode: true,
           enableVipDiscount: true,
         },
         where: {
@@ -376,7 +363,7 @@ export class GoodsService {
   async isExists(id: string): Promise<boolean> {
     return this.repository.existsBy({
       id,
-      isDeleted: EnabledEnum.NO,
+      isDeleted: Enabled.NO,
     })
   }
 
@@ -389,8 +376,8 @@ export class GoodsService {
   async countWarningGoods(): Promise<number> {
     try {
       return await this.repository.countBy({
-        status: GoodsStatusEnum.WARNING,
-        isDeleted: EnabledEnum.NO,
+        isDeleted: Enabled.NO,
+        isWarning: Enabled.YES,
       })
     }
     catch (e) {
@@ -409,8 +396,8 @@ export class GoodsService {
   async createBasicInfo(data: GoodsBasicInfoPayload): Promise<CreateGoodsResponse> {
     try {
       const exists = await this.repository.existsBy({
+        isDeleted: Enabled.NO,
         name: data.name,
-        isDeleted: EnabledEnum.NO,
       })
 
       if (exists)
@@ -419,25 +406,24 @@ export class GoodsService {
       const goods = new Goods()
 
       goods.id = nanoid()
-      goods.type = data.type || GoodsTypeEnum.ENTITY
-      goods.source = data.source || GoodsSourceEnum.MANUAL
+      goods.type = data.type || GoodsType.ENTITY
+      goods.source = data.source || GoodsSource.MANUAL
       goods.video = data.video || ''
       goods.images = data.images || []
       goods.name = data.name
       goods.shareDesc = data.shareDesc || ''
       goods.slogan = data.slogan || ''
-      goods.attributeTemplateId = data.attributeTemplateId || 0
       goods.attributes = data.attributes || []
-      goods.logisticsDeliveryModes = data.logisticsDeliveryModes || [LogisticsDeliveryModeEnum.EXPRESS]
-      goods.logisticsFreight = data.logisticsFreight || 0
-      goods.logisticsFreightTemplateId = data.logisticsFreightTemplateId || 0
-      goods.logisticsFreightChargeMode = data.logisticsFreightChargeMode || GoodsLogisticsFreightChargeModeEnum.TEMPLATE
-      goods.logisticsBackFreightBy = data.logisticsBackFreightBy || GoodsLogisticsBackFreightByEnum.BUYER
-      goods.publishMode = data.publishMode || GoodsPublishModeEnum.DIRECT
+      goods.deliveryModes = data.deliveryModes || [LogisticsDeliveryMode.EXPRESS]
+      goods.freight = data.freight || 0
+      goods.freightTemplateId = data.freightTemplateId || 0
+      goods.freightChargeMode = data.freightChargeMode || GoodsFreightChargeMode.TEMPLATE
+      goods.returnsFreightBy = data.returnsFreightBy || GoodsReturnsFreightBy.BUYER
+      goods.publishMode = data.publishMode || GoodsPublishMode.DIRECT
       goods.autoInStockAt = data.autoInStockAt || null
-      goods.buyBtnNameType = data.buyBtnNameType || GoodsBuyBtnTypeEnum.DEFAULT
+      goods.buyBtnNameType = data.buyBtnNameType || GoodsBuyBtnType.DEFAULT
       goods.buyBtnName = data.buyBtnName || ''
-      goods.status = GoodsStatusEnum.DRAFT
+      goods.status = GoodsStatus.DRAFT
 
       // Tag
       if (data.tagId) {
@@ -490,11 +476,11 @@ export class GoodsService {
       goods.protections = protections || []
 
       // Additions
-      const additions: GoodsAdditional[] = []
+      const additions: GoodsAddition[] = []
 
       if (data.additionIds && data.additionIds.length > 0) {
         for (const additionId of data.additionIds) {
-          const additional = new GoodsAdditional()
+          const additional = new GoodsAddition()
 
           additional.id = additionId
           additions.push(additional)
@@ -505,10 +491,10 @@ export class GoodsService {
 
       const res = await this.repository.save(goods)
 
-      this.eventEmitter.emit(
-        GoodsCreateEvent.eventName,
-        new GoodsCreateEvent(res.id),
-      )
+      if (!res.id)
+        throw new FailedException('创建商品基本信息')
+
+      this.eventEmitter.emitAsync(GoodsCreateEvent.name, new GoodsCreateEvent(res.id))
 
       return {
         id: res.id,
@@ -537,8 +523,8 @@ export class GoodsService {
 
       const exists = await this.repository.existsBy({
         id: Not(id),
+        isDeleted: Enabled.NO,
         name: data.name,
-        isDeleted: EnabledEnum.NO,
       })
 
       if (exists)
@@ -592,10 +578,10 @@ export class GoodsService {
           goods.protections = protections || []
         }
         else if (key === 'additionIds' && data.additionIds && data.additionIds.length) {
-          const additions: GoodsAdditional[] = []
+          const additions: GoodsAddition[] = []
 
           for (const additionId of data.additionIds) {
-            const additional = new GoodsAdditional()
+            const additional = new GoodsAddition()
 
             additional.id = additionId
             additions.push(additional)
@@ -608,16 +594,22 @@ export class GoodsService {
         }
       })
 
-      goods.status = data.publishMode === GoodsPublishModeEnum.DIRECT
-        ? GoodsStatusEnum.IN_STOCK
-        : GoodsStatusEnum.STOCKED
+      goods.status = data.publishMode === GoodsPublishMode.DIRECT
+        ? GoodsStatus.IN_STOCK
+        : GoodsStatus.STOCKED
+
+      const now = (new Date()).toISOString()
+
+      goods.updatedTime = now
+
+      if (goods.status === GoodsStatus.IN_STOCK) {
+        goods.inStockTime = now
+      }
+      else if (goods.status === GoodsStatus.STOCKED) {
+        goods.stockedTime = now
+      }
 
       await this.repository.save(goods)
-
-      this.eventEmitter.emit(
-        GoodsUpdateEvent.eventName,
-        new GoodsUpdateEvent(id),
-      )
     }
     catch (e) {
       throw new FailedException('更新商品基本信息', e.message, e.status)
@@ -628,12 +620,12 @@ export class GoodsService {
    * 更新商品价格库存信息
    *
    * @param id string
-   * @param data GoodsStockInfoPayload
+   * @param data GoodsInventoryInfoPayload
    * @throws NotFoundException
    * @throws FailedException
    * @throws ExistsException
    */
-  async updateStockInfo(id: string, data: GoodsStockInfoPayload): Promise<void> {
+  async updateInventoryInfo(id: string, data: GoodsInventoryInfoPayload): Promise<void> {
     try {
       const founded = await this.repository.existsBy({ id })
 
@@ -644,7 +636,7 @@ export class GoodsService {
         const exists = await this.repository.existsBy({
           id: Not(id),
           skuCode: data.skuCode,
-          isDeleted: EnabledEnum.NO,
+          isDeleted: Enabled.NO,
         })
 
         if (exists)
@@ -655,21 +647,31 @@ export class GoodsService {
 
       goods.id = id
       goods.skuCode = data.skuCode || nanoNumber()
+      goods.isMultiSkus = data.isMultiSkus || Enabled.NO
       goods.price = data.price || 0
       goods.originalPrice = data.originalPrice || 0
       goods.costPrice = data.costPrice || 0
-      goods.stock = data.stock || 0
-      goods.alertStock = data.alertStock || 0
+      goods.inventory = data.inventory || 0
+      goods.inventoryEarlyWarning = data.inventoryEarlyWarning || 0
       goods.weight = data.weight || 0
       goods.volume = data.volume || 0
       goods.unit = data.unit || ''
-      goods.enablePurchaseLimits = data.enablePurchaseLimits || EnabledEnum.NO
+      goods.enablePurchaseLimits = data.enablePurchaseLimits || Enabled.NO
       goods.purchaseMinQty = data.purchaseMinQty || 1
       goods.purchaseMaxQty = data.purchaseMaxQty || 0
-      goods.stockDeductMode = data.stockDeductMode || GoodsStockDeductModeEnum.PAID
-      goods.enableVipDiscount = data.enableVipDiscount || EnabledEnum.NO
+      goods.inventoryDeductMode = data.inventoryDeductMode || GoodsInventoryDeductMode.ORDER
+      goods.enableVipDiscount = data.enableVipDiscount || Enabled.NO
 
       await this.repository.save(goods)
+
+      this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id))
+
+      if (goods.status === GoodsStatus.STOCKED) {
+        this.eventEmitter.emitAsync(GoodsStockedEvent.name, new GoodsStockedEvent(id))
+      }
+      else if (goods.status === GoodsStatus.IN_STOCK) {
+        this.eventEmitter.emitAsync(GoodsInStockEvent.name, new GoodsInStockEvent(id))
+      }
     }
     catch (e) {
       throw new FailedException('更新商品价格库存信息', e.message, e.status)
@@ -779,10 +781,10 @@ export class GoodsService {
           goods.protections = protections || []
         }
         else if (key === 'additionIds' && data.additionIds && data.additionIds.length) {
-          const additions: GoodsAdditional[] = []
+          const additions: GoodsAddition[] = []
 
           for (const additionId of data.additionIds) {
-            const additional = new GoodsAdditional()
+            const additional = new GoodsAddition()
 
             additional.id = additionId
             additions.push(additional)
@@ -795,39 +797,13 @@ export class GoodsService {
         }
       }
 
+      goods.updatedTime = (new Date()).toISOString()
+
       await this.repository.update({ id: In(ids) }, goods)
 
-      if (goods.status) {
-        if (goods.status === GoodsStatusEnum.IN_STOCK) {
-          this.eventEmitter.emit(
-            GoodsInStockEvent.eventName,
-            new GoodsInStockEvent(ids.join(',')),
-          )
-        }
-        else if (goods.status === GoodsStatusEnum.STOCKED) {
-          this.eventEmitter.emit(
-            GoodsStockedEvent.eventName,
-            new GoodsStockedEvent(ids.join(',')),
-          )
-        }
-        else if (goods.status === GoodsStatusEnum.SOLD_OUT) {
-          this.eventEmitter.emit(
-            GoodsSoldOutEvent.eventName,
-            new GoodsSoldOutEvent(ids.join(',')),
-          )
-        }
-        else if (goods.status === GoodsStatusEnum.WARNING) {
-          this.eventEmitter.emit(
-            GoodsStockWarnEvent.eventName,
-            new GoodsStockWarnEvent(ids.join(',')),
-          )
-        }
+      for (const id of ids) {
+        this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id))
       }
-
-      this.eventEmitter.emit(
-        GoodsUpdateEvent.eventName,
-        new GoodsUpdateEvent(ids.join(',')),
-      )
     }
     catch (e) {
       throw new FailedException('批量更新商品', e.message, e.status)
@@ -840,7 +816,7 @@ export class GoodsService {
    * @param id string
    * @returns Promise<string>
    */
-  async cloneToDraft(id: string): Promise<string> {
+  async copyToDraft(id: string): Promise<string> {
     try {
       const goods = await this.findDetail(id)
 
@@ -850,9 +826,9 @@ export class GoodsService {
       goods.id = nanoid()
       goods.name = `(复制) ${goods.name}`
       goods.skuCode = nanoNumber()
-      goods.status = GoodsStatusEnum.DRAFT
-      goods.source = GoodsSourceEnum.MANUAL
-      goods.overallGrade = GoodsRatingGradeEnum.HIGH
+      goods.status = GoodsStatus.DRAFT
+      goods.source = GoodsSource.MANUAL
+      goods.overallGrade = GoodsRatingGrade.HIGH
       goods.overallGoodsScore = 5
       goods.overallServiceScore = 5
       goods.overallLogisticsScore = 5
@@ -919,11 +895,11 @@ export class GoodsService {
       goods.protections = protections || []
 
       // Additions
-      const additions: GoodsAdditional[] = []
+      const additions: GoodsAddition[] = []
 
       if (goods.additions && goods.additions.length > 0) {
         for (const addition of goods.additions) {
-          const additional = new GoodsAdditional()
+          const additional = new GoodsAddition()
 
           additional.id = addition.id
           additions.push(additional)
@@ -933,6 +909,11 @@ export class GoodsService {
       goods.additions = additions || []
 
       const res = await this.repository.save(goods)
+
+      if (!res.id)
+        throw new FailedException('复制商品至草稿')
+
+      this.eventEmitter.emitAsync(GoodsCreateEvent.name, new GoodsCreateEvent(res.id))
 
       return res.id
     }
@@ -952,8 +933,9 @@ export class GoodsService {
       const goodsIds = await this.repository.find({
         select: ['id'],
         where: {
-          status: GoodsStatusEnum.IN_STOCK,
-          stock: LessThanOrEqual(0),
+          isDeleted: Enabled.NO,
+          status: GoodsStatus.IN_STOCK,
+          inventory: LessThanOrEqual(0),
         },
       })
 
@@ -961,16 +943,19 @@ export class GoodsService {
         await this.repository.update({
           id: In(goodsIds.map(item => item.id)),
         }, {
-          status: GoodsStatusEnum.SOLD_OUT,
+          soldOutTime: (new Date()).toISOString(),
+          status: GoodsStatus.SOLD_OUT,
         })
 
-        this.eventEmitter.emit(
-          GoodsSoldOutEvent.eventName,
-          new GoodsSoldOutEvent(goodsIds.map(item => item.id).join(',')),
-        )
+        for (const id of goodsIds) {
+          this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id.id))
+          this.eventEmitter.emitAsync(GoodsSoldOutEvent.name, new GoodsSoldOutEvent(id.id))
+        }
+
+        return goodsIds.map(item => item.id)
       }
 
-      return goodsIds.map(item => item.id)
+      return []
     }
     catch (e) {
       throw new FailedException('下架售罄商品', e.message)
@@ -983,17 +968,17 @@ export class GoodsService {
    * @returns Promise<string[]>
    * @throws FailedException
    */
-  async updateStockWarnGoods(): Promise<string[]> {
+  async updateInventoryEarlyWarning(): Promise<string[]> {
     try {
       const goodsIds = await this.repository.createQueryBuilder('goods')
         .innerJoinAndSelect('shop_goods_sku', 'sku', 'sku.goodsId = goods.id')
         .select(['goods.id'])
-        .where('goods.status = :status', { status: GoodsStatusEnum.IN_STOCK })
-        .andWhere('goods.isDeleted = :isDelete', { isDelete: EnabledEnum.NO })
+        .andWhere('goods.isDeleted = :isDelete', { isDelete: Enabled.NO })
+        .andWhere('goods.status = :status', { status: GoodsStatus.IN_STOCK })
         .andWhere(
           new Brackets((qb) => {
-            qb.where('sku.stock <= sku.alertStock')
-              .orWhere('goods.stock <= goods.alertStock')
+            qb.where('sku.inventory <= sku.inventoryEarlyWarning')
+              .orWhere('goods.inventory <= goods.inventoryEarlyWarning')
           }),
         )
         .getRawMany()
@@ -1005,13 +990,15 @@ export class GoodsService {
         await this.repository.update({
           id: In(goodsIds),
         }, {
-          status: GoodsStatusEnum.WARNING,
+          isWarning: Enabled.YES,
         })
 
-        this.eventEmitter.emit(
-          GoodsStockWarnEvent.eventName,
-          new GoodsStockWarnEvent(goodsIds.join(',')),
-        )
+        for (const id of goodsIds) {
+          this.eventEmitter.emitAsync(
+            GoodsInventoryEarlyWarningEvent.name,
+            new GoodsInventoryEarlyWarningEvent(id),
+          )
+        }
       }
 
       return goodsIds
@@ -1032,9 +1019,9 @@ export class GoodsService {
       const results = await this.repository.find({
         select: ['id', 'autoInStockAt'],
         where: {
-          status: In([GoodsStatusEnum.IN_STOCK, GoodsStatusEnum.DRAFT]),
-          publishMode: GoodsPublishModeEnum.AUTO,
-          isDeleted: EnabledEnum.NO,
+          isDeleted: Enabled.NO,
+          status: GoodsStatus.STOCKED,
+          publishMode: GoodsPublishMode.AUTO,
         },
       })
 
@@ -1045,15 +1032,16 @@ export class GoodsService {
 
           if (date >= now) {
             await this.repository.update(goods.id, {
-              status: GoodsStatusEnum.IN_STOCK,
+              stockedTime: now.toISOString(),
+              status: GoodsStatus.IN_STOCK,
             })
+
+            this.eventEmitter.emitAsync(
+              GoodsInStockEvent.name,
+              new GoodsInStockEvent(goods.id),
+            )
           }
         }
-
-        this.eventEmitter.emit(
-          GoodsInStockEvent.eventName,
-          new GoodsInStockEvent(results.map(goods => goods.id).join(',')),
-        )
       }
 
       return results.map(goods => goods.id)
@@ -1074,13 +1062,13 @@ export class GoodsService {
       await this.repository.update(
         { id },
         {
-          isDeleted: EnabledEnum.YES,
-          deletedTime: (new Date()).toString(),
+          isDeleted: Enabled.YES,
+          deletedTime: (new Date()).toISOString(),
         },
       )
 
-      this.eventEmitter.emit(
-        GoodsDeleteEvent.eventName,
+      this.eventEmitter.emitAsync(
+        GoodsDeleteEvent.name,
         new GoodsDeleteEvent(id),
       )
     }
@@ -1100,13 +1088,12 @@ export class GoodsService {
       await this.repository.update(
         { id },
         {
-          isDeleted: EnabledEnum.NO,
-          deletedTime: null,
+          isDeleted: Enabled.NO,
         },
       )
 
-      this.eventEmitter.emit(
-        GoodsRestoreEvent.eventName,
+      this.eventEmitter.emitAsync(
+        GoodsRestoreEvent.name,
         new GoodsRestoreEvent(id),
       )
     }
@@ -1127,18 +1114,20 @@ export class GoodsService {
       await this.repository.update(
         {
           id: In(ids),
-          isDeleted: EnabledEnum.NO,
+          isDeleted: Enabled.NO,
         },
         {
-          isDeleted: EnabledEnum.YES,
-          deletedTime: (new Date()).toString(),
+          isDeleted: Enabled.YES,
+          deletedTime: (new Date()).toISOString(),
         },
       )
 
-      this.eventEmitter.emit(
-        GoodsDeleteEvent.eventName,
-        new GoodsDeleteEvent(ids.join(',')),
-      )
+      for (const id of ids) {
+        this.eventEmitter.emitAsync(
+          GoodsDeleteEvent.name,
+          new GoodsDeleteEvent(id),
+        )
+      }
     }
     catch (e) {
       throw new FailedException('批量删除商品', e.message)
@@ -1157,18 +1146,19 @@ export class GoodsService {
       await this.repository.update(
         {
           id: In(ids),
-          isDeleted: EnabledEnum.YES,
+          isDeleted: Enabled.YES,
         },
         {
-          isDeleted: EnabledEnum.NO,
-          deletedTime: null,
+          isDeleted: Enabled.NO,
         },
       )
 
-      this.eventEmitter.emit(
-        GoodsRestoreEvent.eventName,
-        new GoodsRestoreEvent(ids.join(',')),
-      )
+      for (const id of ids) {
+        this.eventEmitter.emitAsync(
+          GoodsRestoreEvent.name,
+          new GoodsRestoreEvent(id),
+        )
+      }
     }
     catch (e) {
       throw new FailedException('批量恢复商品', e.message)

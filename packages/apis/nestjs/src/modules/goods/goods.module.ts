@@ -29,9 +29,9 @@ import { GoodsTag } from '@/goods/tag/entity'
 import { GoodsTagService } from '@/goods/tag/service'
 import { GoodsTagController } from '@/goods/tag/controller'
 
-import { GoodsAdditional } from '@/goods/additional/entity'
-import { GoodsAdditionalService } from '@/goods/additional/service'
-import { GoodsAdditionalController } from '@/goods/additional/controller'
+import { GoodsAddition } from '@/goods/addition/entity'
+import { GoodsAdditionService } from '@/goods/addition/service'
+import { GoodsAdditionController } from '@/goods/addition/controller'
 
 import { GoodsProtection } from '@/goods/protection/entity'
 import { GoodsProtectionService } from '@/goods/protection/service'
@@ -66,7 +66,7 @@ import { SettingsModule } from '@/settings/settings.module'
       GoodsBrand,
       GoodsGroup,
       GoodsTag,
-      GoodsAdditional,
+      GoodsAddition,
       GoodsProtection,
       Goods,
       GoodsSku,
@@ -82,7 +82,7 @@ import { SettingsModule } from '@/settings/settings.module'
     GoodsBrandController,
     GoodsCategoryController,
     GoodsGroupController,
-    GoodsAdditionalController,
+    GoodsAdditionController,
     GoodsProtectionController,
     GoodsTagController,
   ],
@@ -92,7 +92,7 @@ import { SettingsModule } from '@/settings/settings.module'
     GoodsBrandService,
     GoodsCategoryService,
     GoodsGroupService,
-    GoodsAdditionalService,
+    GoodsAdditionService,
     GoodsProtectionService,
     GoodsTagService,
     GoodsService,

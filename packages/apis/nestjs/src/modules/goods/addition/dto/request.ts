@@ -4,7 +4,7 @@ import { IsNumber, IsNumberString } from 'class-validator'
 /**
  * 获取商品服务请求 DTO
  */
-export class GetGoodsAdditionalRequest {
+export class GetGoodsAdditionRequest {
   @ApiProperty({ description: '商品服务 ID', example: 1 })
   @IsNumberString()
   readonly id: number
@@ -13,7 +13,7 @@ export class GetGoodsAdditionalRequest {
 /**
  * 删除商品参数请求 DTO
  */
-export class DeleteGoodsAdditionalRequest {
+export class DeleteGoodsAdditionRequest {
   @ApiProperty({ description: '商品服务 ID', example: 1 })
   @IsNumber()
   readonly id: number

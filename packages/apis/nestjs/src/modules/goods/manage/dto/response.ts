@@ -1,39 +1,39 @@
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import {
-  EnabledEnum,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsBackFreightByEnum,
-  GoodsLogisticsFreightChargeModeEnum,
-  GoodsPublishModeEnum,
-  GoodsRatingGradeEnum,
-  GoodsSourceEnum,
-  GoodsStatusEnum,
-  GoodsStockDeductModeEnum,
-  GoodsTypeEnum,
+  Enabled,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
+  GoodsInventoryDeductMode,
+  GoodsPublishMode,
+  GoodsRatingGrade,
+  GoodsReturnsFreightBy,
+  GoodsSource,
+  GoodsStatus,
+  GoodsType,
   type IEnabled,
   type IGoods,
-  type IGoodsAdditionalInfo,
+  type IGoodsAdditionDict,
   type IGoodsAttribute,
   type IGoodsBasicInfo,
   type IGoodsBrandDict,
   type IGoodsBuyBtnType,
   type IGoodsCategoryDict,
   type IGoodsDetailInfo,
+  type IGoodsFreightChargeMode,
   type IGoodsGroupDict,
-  IGoodsListItem,
-  type IGoodsLogisticsBackFreightBy,
-  type IGoodsLogisticsFreightChargeMode,
-  type IGoodsProtectionInfo,
+  type IGoodsInventoryDeductMode,
+  type IGoodsInventoryInfo,
+  type IGoodsListItem,
+  type IGoodsProtectionDict,
   type IGoodsPublishMode,
   type IGoodsRatingGrade,
+  type IGoodsReturnsFreightBy,
   type IGoodsSource,
   type IGoodsStatus,
-  type IGoodsStockDeductMode,
-  type IGoodsStockInfo,
   type IGoodsTagDict,
   type IGoodsType,
   type ILogisticsDeliveryMode,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 import { example } from './example'
 import { nanoid } from '~/utils'
@@ -53,13 +53,13 @@ export class GoodsResponse implements IGoods {
   @ApiProperty({ description: '商品 ID', example: nanoid() })
   readonly id: string
 
-  @ApiProperty({ description: '商品类型', enum: GoodsTypeEnum, example: example.type })
+  @ApiProperty({ description: '商品类型', enum: GoodsType, example: example.type })
   readonly type: IGoodsType
 
-  @ApiProperty({ description: '商品状态', enum: GoodsStatusEnum, example: example.status })
+  @ApiProperty({ description: '商品状态', enum: GoodsStatus, example: example.status })
   readonly status: IGoodsStatus
 
-  @ApiProperty({ description: '商品来源', enum: GoodsSourceEnum, example: example.source })
+  @ApiProperty({ description: '商品来源', enum: GoodsSource, example: example.source })
   readonly source: IGoodsSource
 
   @ApiProperty({ description: '商品视频', example: example.video })
@@ -90,10 +90,10 @@ export class GoodsResponse implements IGoods {
   readonly costPrice: number
 
   @ApiProperty({ description: '商品库存', example: example.stock })
-  readonly stock: number
+  readonly inventory: number
 
   @ApiProperty({ description: '预警库存', example: example.alertStock })
-  readonly alertStock: number
+  readonly inventoryEarlyWarning: number
 
   @ApiProperty({ type: 'float', description: '商品重量', example: example.weight })
   readonly weight: number
@@ -110,37 +110,37 @@ export class GoodsResponse implements IGoods {
   @ApiProperty({ description: '起购数量', example: example.purchaseMinQty })
   readonly purchaseMinQty: number
 
-  @ApiProperty({ description: '库存扣减方式', enum: GoodsStockDeductModeEnum, example: example.stockDeductMode })
-  readonly stockDeductMode: IGoodsStockDeductMode
+  @ApiProperty({ description: '库存扣减方式', enum: GoodsInventoryDeductMode, example: example.stockDeductMode })
+  readonly inventoryDeductMode: IGoodsInventoryDeductMode
 
-  @ApiProperty({ description: '是否开启会员折扣', enum: EnabledEnum, default: EnabledEnum.NO })
+  @ApiProperty({ description: '是否开启会员折扣', enum: Enabled, default: Enabled.NO })
   readonly enableVipDiscount: IEnabled
 
-  @ApiProperty({ description: '是否开启限购', enum: EnabledEnum, default: EnabledEnum.NO })
+  @ApiProperty({ description: '是否开启限购', enum: Enabled, default: Enabled.NO })
   readonly enablePurchaseLimits: IEnabled
 
-  @ApiProperty({ type: [String], enum: LogisticsDeliveryModeEnum, description: '商品配送方式', example: example.deliveryModes })
-  readonly logisticsDeliveryModes: ILogisticsDeliveryMode[]
+  @ApiProperty({ type: [String], enum: LogisticsDeliveryMode, description: '商品配送方式', example: example.deliveryModes })
+  readonly deliveryModes: ILogisticsDeliveryMode[]
 
-  @ApiProperty({ description: '商品物流费用计算方式', enum: GoodsLogisticsFreightChargeModeEnum, example: example.freightChargeMode })
-  readonly logisticsFreightChargeMode: IGoodsLogisticsFreightChargeMode
+  @ApiProperty({ description: '商品物流费用计算方式', enum: GoodsFreightChargeMode, example: example.freightChargeMode })
+  readonly freightChargeMode: IGoodsFreightChargeMode
 
   @ApiProperty({ description: '商品物流运费', example: example.freight })
-  readonly logisticsFreight: number
+  readonly freight: number
 
   @ApiProperty({ description: '商品物流运费模板', example: example.freightTemplateId })
-  readonly logisticsFreightTemplateId: number
+  readonly freightTemplateId: number
 
-  @ApiProperty({ description: '商品退货运费承担方', enum: GoodsLogisticsBackFreightByEnum, example: example.backFreightBy })
-  readonly logisticsBackFreightBy: IGoodsLogisticsBackFreightBy
+  @ApiProperty({ description: '商品退货运费承担方', enum: GoodsReturnsFreightBy, example: example.backFreightBy })
+  readonly returnsFreightBy: IGoodsReturnsFreightBy
 
-  @ApiProperty({ description: '商品上架方式', enum: GoodsPublishModeEnum, example: example.publishMode })
+  @ApiProperty({ description: '商品上架方式', enum: GoodsPublishMode, example: example.publishMode })
   readonly publishMode: IGoodsPublishMode
 
   @ApiProperty({ description: '自定义上架时间', example: example.autoInStockAt })
   readonly autoInStockAt: string
 
-  @ApiProperty({ description: '商品购买按钮类型', enum: GoodsBuyBtnTypeEnum, example: example.buyBtnNameType })
+  @ApiProperty({ description: '商品购买按钮类型', enum: GoodsBuyBtnType, example: example.buyBtnNameType })
   readonly buyBtnNameType: IGoodsBuyBtnType
 
   @ApiProperty({ description: '商品购买按钮类型', example: example.buyBtnName })
@@ -162,10 +162,10 @@ export class GoodsResponse implements IGoods {
   readonly categories: IGoodsCategoryDict[]
 
   @ApiProperty({ description: '服务保障', example: example.protectionsDict })
-  readonly protections: IGoodsProtectionInfo[]
+  readonly protections: IGoodsProtectionDict[]
 
   @ApiProperty({ description: '附加服务', example: example.additionsDict })
-  readonly additions: IGoodsAdditionalInfo[]
+  readonly additions: IGoodsAdditionDict[]
 
   @ApiProperty({ description: '商品参数模板 ID', example: 1 })
   readonly attributeTemplateId: number
@@ -185,7 +185,7 @@ export class GoodsResponse implements IGoods {
   @ApiProperty({ description: '商品收藏量', example: 0 })
   readonly favorites: number
 
-  @ApiProperty({ description: '综合评级', enum: GoodsRatingGradeEnum })
+  @ApiProperty({ description: '综合评级', enum: GoodsRatingGrade })
   readonly overallGrade: IGoodsRatingGrade
 
   @ApiProperty({ description: '商品评分' })
@@ -196,6 +196,15 @@ export class GoodsResponse implements IGoods {
 
   @ApiProperty({ description: '物流评分' })
   readonly overallLogisticsScore: number
+
+  @ApiProperty({ description: '是否为多规格商品', enum: Enabled, default: Enabled.NO })
+  readonly isMultiSkus: IEnabled
+
+  @ApiProperty({ description: '是否已删除', enum: Enabled, default: Enabled.NO })
+  readonly isDeleted: IEnabled
+
+  @ApiProperty({ description: '是否预警', enum: Enabled, default: Enabled.NO })
+  readonly isWarning: IEnabled
 
   @ApiProperty({ description: '创建时间' })
   readonly createdTime: string
@@ -234,13 +243,12 @@ export class GoodsBasicInfoResponse
     'brand',
     'protections',
     'additions',
-    'attributeTemplateId',
     'attributes',
-    'logisticsDeliveryModes',
-    'logisticsFreight',
-    'logisticsFreightTemplateId',
-    'logisticsFreightChargeMode',
-    'logisticsBackFreightBy',
+    'deliveryModes',
+    'freight',
+    'freightTemplateId',
+    'freightChargeMode',
+    'returnsFreightBy',
     'publishMode',
     'autoInStockAt',
     'buyBtnNameType',
@@ -251,25 +259,27 @@ export class GoodsBasicInfoResponse
 /**
  * 商品库存信息响应
  */
-export class GoodsStockInfoResponse
+export class GoodsInventoryInfoResponse
   extends PickType(GoodsResponse, [
     'id',
+    'type',
+    'isMultiSkus',
     'skuCode',
     'price',
     'originalPrice',
     'costPrice',
-    'stock',
-    'alertStock',
+    'inventory',
+    'inventoryEarlyWarning',
     'weight',
     'volume',
     'unit',
     'enablePurchaseLimits',
     'purchaseMinQty',
     'purchaseMaxQty',
-    'stockDeductMode',
+    'inventoryDeductMode',
     'enableVipDiscount',
   ] as const)
-  implements IGoodsStockInfo {}
+  implements IGoodsInventoryInfo {}
 
 /**
  * 商品详情响应
@@ -287,14 +297,17 @@ export class GoodsDetailInfoResponse
 export class GoodsPageListResponse
   extends PickType(GoodsResponse, [
     'id',
+    'type',
     'status',
     'source',
+    'isMultiSkus',
+    'skuCode',
     'name',
     'images',
     'tag',
     'group',
     'price',
-    'stock',
+    'inventory',
     'sales',
     'sort',
     'updatedTime',

@@ -1,4 +1,4 @@
-import { type IStaffLogType, StaffLogTypeEnum } from '@xiaoshop/schema'
+import { type IStaffLogType, StaffLogType } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsMobilePhone, IsOptional, IsString } from 'class-validator'
 import { example } from './example'
@@ -8,8 +8,8 @@ import { PaginationQueryDto } from '~/common'
  * 获取员工操作日志分页请求 DTO
  */
 export class GetStaffLogPagesRequest extends PaginationQueryDto {
-  @ApiProperty({ required: false, description: '日志类型', enum: StaffLogTypeEnum, example: example.type })
-  @IsEnum(StaffLogTypeEnum)
+  @ApiProperty({ required: false, description: '日志类型', enum: StaffLogType, example: example.type })
+  @IsEnum(StaffLogType)
   @IsOptional()
   readonly type: IStaffLogType
 

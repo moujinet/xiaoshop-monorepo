@@ -15,7 +15,7 @@ const tables = [
   'shop_goods_spec',
   'shop_goods_sku',
   'shop_goods_attribute_template',
-  'shop_goods_additional',
+  'shop_goods_addition',
   'shop_goods_protection',
 
   // Middle Tables
@@ -860,11 +860,11 @@ describe('Goods Module', () => {
     })
   })
 
-  // Goods Service - Additional
-  describe('Goods Service Additional', () => {
-    it('Create Goods Additional Service', async () => {
+  // Goods Service - Addition
+  describe('Goods Service Addition', () => {
+    it('Create Goods Addition Service', async () => {
       const { body } = await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '服务',
           desc: '介绍',
@@ -877,9 +877,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(0)
     })
 
-    it('Update Goods Additional Service', async () => {
+    it('Update Goods Addition Service', async () => {
       const { body } = await request(app.getHttpServer())
-        .put('/goods/additional/update?id=1')
+        .put('/goods/addition/update?id=1')
         .send({
           name: '服务 (修改)',
           desc: '介绍',
@@ -892,9 +892,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(0)
     })
 
-    it('Update Goods Additional Service Throw NotFoundException', async () => {
+    it('Update Goods Addition Service Throw NotFoundException', async () => {
       const { body } = await request(app.getHttpServer())
-        .put('/goods/additional/update?id=2')
+        .put('/goods/addition/update?id=2')
         .send({
           name: '服务',
           desc: '介绍',
@@ -907,9 +907,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(EXCEPTION_NOT_FOUND)
     })
 
-    it('Update Goods Additional Service Throw ExistsException', async () => {
+    it('Update Goods Addition Service Throw ExistsException', async () => {
       await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '服务',
           desc: '介绍',
@@ -920,7 +920,7 @@ describe('Goods Module', () => {
         .expect(200)
 
       const { body } = await request(app.getHttpServer())
-        .put('/goods/additional/update?id=1')
+        .put('/goods/addition/update?id=1')
         .send({
           name: '服务',
           desc: '介绍',
@@ -933,9 +933,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(EXCEPTION_EXISTS)
     })
 
-    it('Create Goods Additional Service Throw BadRequestException', async () => {
+    it('Create Goods Addition Service Throw BadRequestException', async () => {
       const { body } = await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: 123,
           desc: '介绍',
@@ -948,9 +948,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(EXCEPTION_BAD_REQUEST)
     })
 
-    it('Create Goods Additional Service Throw ExistsException', async () => {
+    it('Create Goods Addition Service Throw ExistsException', async () => {
       const { body } = await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '服务',
           desc: '介绍',
@@ -963,42 +963,42 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(EXCEPTION_EXISTS)
     })
 
-    it('Goods Additional Service Detail', async () => {
+    it('Goods Addition Service Detail', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/goods/additional/detail?id=1')
+        .get('/goods/addition/detail?id=1')
         .expect(200)
 
       expect(body.data.name).toEqual('服务 (修改)')
     })
 
-    it('Goods Additional Service Detail Throw NotFoundException', async () => {
+    it('Goods Addition Service Detail Throw NotFoundException', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/goods/additional/detail?id=3')
+        .get('/goods/addition/detail?id=3')
         .expect(200)
 
       expect(body.code).toEqual(EXCEPTION_NOT_FOUND)
     })
 
-    it('Goods Additional Service List', async () => {
+    it('Goods Addition Service List', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/goods/additional/list')
+        .get('/goods/addition/list')
         .expect(200)
 
       expect(body.data.length).toEqual(2)
     })
 
-    it('Goods Additional Service Dict List', async () => {
+    it('Goods Addition Service Dict List', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/goods/additional/dict/list')
+        .get('/goods/addition/dict/list')
         .expect(200)
 
       expect(body.data.length).toEqual(2)
-      expect(Object.keys(body.data[0]).length).toEqual(3)
+      expect(Object.keys(body.data[0]).length).toEqual(4)
     })
 
-    it('Delete Goods Additional Service', async () => {
+    it('Delete Goods Addition Service', async () => {
       const { body } = await request(app.getHttpServer())
-        .delete('/goods/additional/delete')
+        .delete('/goods/addition/delete')
         .send({
           id: 1,
         })
@@ -1007,9 +1007,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(0)
     })
 
-    it('Create Goods Additional Service Without Icon', async () => {
+    it('Create Goods Addition Service Without Icon', async () => {
       const { body } = await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '服务 (无图)',
           desc: '介绍',
@@ -1021,9 +1021,9 @@ describe('Goods Module', () => {
       expect(body.code).toEqual(0)
     })
 
-    it('Create Goods Additional Service With Icon Is Empty', async () => {
+    it('Create Goods Addition Service With Icon Is Empty', async () => {
       const { body } = await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '服务 (无图) 1',
           desc: '介绍',
@@ -1163,7 +1163,7 @@ describe('Goods Module', () => {
         .expect(200)
 
       expect(body.data.length).toEqual(2)
-      expect(Object.keys(body.data[0]).length).toEqual(2)
+      expect(Object.keys(body.data[0]).length).toEqual(3)
     })
 
     it('Delete Goods Protection Service', async () => {
@@ -1393,9 +1393,9 @@ describe('Goods Module', () => {
         .expect(200)
     })
 
-    it('Init Goods Additional Service', async () => {
+    it('Init Goods Addition Service', async () => {
       await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '测试附加服务 1',
           desc: '测试附加服务介绍',
@@ -1406,7 +1406,7 @@ describe('Goods Module', () => {
         .expect(200)
 
       await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '测试附加服务 2',
           desc: '测试附加服务介绍',
@@ -1417,7 +1417,7 @@ describe('Goods Module', () => {
         .expect(200)
 
       await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '测试附加服务 3',
           desc: '测试附加服务介绍',
@@ -1428,7 +1428,7 @@ describe('Goods Module', () => {
         .expect(200)
 
       await request(app.getHttpServer())
-        .post('/goods/additional/create')
+        .post('/goods/addition/create')
         .send({
           name: '测试附加服务 4',
           desc: '测试附加服务介绍',
@@ -1463,7 +1463,6 @@ describe('Goods Module', () => {
           brandId: 1,
           protectionIds: [1, 2, 3],
           additionIds: [1, 2, 3],
-          attributeTemplateId: 1,
           attributes: [
             {
               type: 'radio',
@@ -1477,13 +1476,13 @@ describe('Goods Module', () => {
               ],
             },
           ],
-          logisticsDeliveryModes: [
+          deliveryModes: [
             'express',
           ],
-          logisticsFreight: 0,
-          logisticsFreightTemplateId: 0,
-          logisticsFreightChargeMode: 'template',
-          logisticsBackFreightBy: 'buyer',
+          freight: 0,
+          freightTemplateId: 0,
+          freightChargeMode: 'template',
+          returnsFreightBy: 'buyer',
           publishMode: 'direct',
           autoInStockAt: null,
           buyBtnNameType: 'default',
@@ -1496,23 +1495,24 @@ describe('Goods Module', () => {
       _goodsId = body.data.id
     })
 
-    it('Update Goods Stock Info', async () => {
+    it('Update Goods Inventory Info', async () => {
       const { body } = await request(app.getHttpServer())
-        .put(`/goods/stock/update?id=${_goodsId}`)
+        .put(`/goods/inventory/update?id=${_goodsId}`)
         .send({
+          isMultiSkus: 'N',
           skuCode: '123123',
           price: 99,
           originalPrice: 168,
           costPrice: 46,
-          stock: 1000,
-          alertStock: 50,
+          inventory: 1000,
+          inventoryEarlyWarning: 50,
           weight: 0.25,
           volume: 0.037,
           unit: '件',
           enablePurchaseLimits: 'N',
           purchaseMinQty: 1,
           purchaseMaxQty: 0,
-          stockDeductMode: 'order',
+          inventoryDeductMode: 'order',
           enableVipDiscount: 'N',
         })
         .expect(200)
@@ -1563,8 +1563,8 @@ describe('Goods Module', () => {
             price: 199,
             originalPrice: 299,
             costPrice: 99,
-            stock: 1000,
-            alertStock: 10,
+            inventory: 1000,
+            inventoryEarlyWarning: 10,
             weight: 0.2,
             volume: 0.01,
           },
@@ -1581,8 +1581,8 @@ describe('Goods Module', () => {
             price: 199,
             originalPrice: 299,
             costPrice: 99,
-            stock: 1000,
-            alertStock: 10,
+            inventory: 1000,
+            inventoryEarlyWarning: 10,
             weight: 0.2,
             volume: 0.01,
           },
@@ -1630,7 +1630,7 @@ describe('Goods Module', () => {
 
       expect(body.data.name).toEqual('商品名称')
       expect(body.data.tag.id).toEqual(1)
-      expect(body.data.stockDeductMode).toEqual('order')
+      expect(body.data.inventoryDeductMode).toEqual('order')
     })
 
     it('Fetch Goods Basic Info', async () => {
@@ -1641,12 +1641,12 @@ describe('Goods Module', () => {
       expect(body.data.name).toEqual('商品名称')
     })
 
-    it('Fetch Goods Stock Info', async () => {
+    it('Fetch Goods Inventory Info', async () => {
       const { body } = await request(app.getHttpServer())
-        .get(`/goods/detail/stock?id=${_goodsId}`)
+        .get(`/goods/detail/inventory?id=${_goodsId}`)
         .expect(200)
 
-      expect(body.data.stock).toEqual(1000)
+      expect(body.data.inventory).toEqual(1000)
     })
 
     it('Fetch Goods Detail Info', async () => {
@@ -1749,7 +1749,7 @@ describe('Goods Module', () => {
         GoodsModule,
       ]).compile()
 
-      const result = await module.get<GoodsService>(GoodsService).updateStockWarnGoods()
+      const result = await module.get<GoodsService>(GoodsService).updateInventoryEarlyWarning()
 
       expect(result).toEqual([])
     })

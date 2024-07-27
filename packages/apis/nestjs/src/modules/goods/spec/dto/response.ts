@@ -1,4 +1,4 @@
-import { EnabledEnum, type IEnabled, type IGoodsSpec, type IGoodsSpecValue } from '@xiaoshop/schema'
+import { Enabled, type IEnabled, type IGoodsSpec, type IGoodsSpecValue } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
 import { nanoid } from '~/utils'
@@ -16,6 +16,6 @@ export class GoodsSpecResponse implements IGoodsSpec {
   @ApiProperty({ description: '规格值', example: example.values })
   readonly values: IGoodsSpecValue[]
 
-  @ApiProperty({ enum: EnabledEnum, description: '启用图片', example: example.enableImage })
+  @ApiProperty({ enum: Enabled, description: '启用图片', example: example.enableImage })
   readonly enableImage: IEnabled
 }

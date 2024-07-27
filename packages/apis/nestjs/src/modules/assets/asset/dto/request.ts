@@ -1,4 +1,4 @@
-import { AssetTypeEnum, IAssetType } from '@xiaoshop/schema'
+import { AssetType, IAssetType } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, MaxLength } from 'class-validator'
 import { PaginationQueryDto } from '~/common'
@@ -7,8 +7,8 @@ import { PaginationQueryDto } from '~/common'
  * 查询素材分页列表请求 DTO
  */
 export class GetAssetPagesRequest extends PaginationQueryDto {
-  @ApiProperty({ description: '素材类型', enum: AssetTypeEnum, default: AssetTypeEnum.IMAGE })
-  @IsEnum(AssetTypeEnum)
+  @ApiProperty({ description: '素材类型', enum: AssetType, default: AssetType.IMAGE })
+  @IsEnum(AssetType)
   @IsNotEmpty()
   @IsString()
   readonly type: IAssetType

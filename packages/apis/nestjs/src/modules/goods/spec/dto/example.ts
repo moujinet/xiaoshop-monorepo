@@ -1,4 +1,4 @@
-import { EnabledEnum } from '@xiaoshop/schema'
+import { Enabled } from '@xiaoshop/schema'
 
 export const example = {
   name: '颜色',
@@ -12,5 +12,5 @@ export const example = {
       image: 'http://xiao.shop/image.png',
     },
   ],
-  enableImage: EnabledEnum.YES,
+  enableImage: Enabled.YES,
 }

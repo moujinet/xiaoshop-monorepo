@@ -58,6 +58,8 @@ export class StaffLogService {
         })
       }
 
+      entity.orderBy('entity.createdTime', 'DESC')
+
       return await useQueryPagination<IStaffLog>(entity, query.page || 1, query.pagesize || 10)
     }
     catch (e) {

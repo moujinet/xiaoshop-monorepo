@@ -1,5 +1,5 @@
 import {
-  GoodsAttributeOptionTypeEnum,
+  GoodsAttributeOptionType,
   type IGoodsAttributeOptionType,
   type IGoodsAttributeTemplateOption,
 } from '@xiaoshop/schema'
@@ -17,8 +17,8 @@ export class GoodsAttributeTemplateOptionPayload implements IGoodsAttributeTempl
   @IsNotEmpty()
   readonly name: string
 
-  @ApiProperty({ enum: GoodsAttributeOptionTypeEnum, description: '商品参数选项类型', example: example.options[0].type })
-  @IsEnum(GoodsAttributeOptionTypeEnum)
+  @ApiProperty({ enum: GoodsAttributeOptionType, description: '商品参数选项类型', default: GoodsAttributeOptionType.INPUT })
+  @IsEnum(GoodsAttributeOptionType)
   @IsNotEmpty()
   @IsString()
   readonly type: IGoodsAttributeOptionType

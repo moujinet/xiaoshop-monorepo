@@ -70,12 +70,12 @@ export class GoodsSkuPayload implements IGoodsSkuFormData {
   @ApiProperty({ required: false, description: '商品库存', example: example.stock })
   @IsNumber()
   @IsOptional()
-  readonly stock: number
+  readonly inventory: number
 
   @ApiProperty({ required: false, description: '预警库存', example: example.alertStock })
   @IsNumber()
   @IsOptional()
-  readonly alertStock: number
+  readonly inventoryEarlyWarning: number
 
   @ApiProperty({ required: false, type: 'float', description: '商品重量', example: example.weight })
   @IsNumber()

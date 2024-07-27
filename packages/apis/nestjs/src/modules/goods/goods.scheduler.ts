@@ -17,13 +17,26 @@ export class GoodsScheduler {
   @Cron(CronExpression.EVERY_10_MINUTES)
   async handleSoldOutGoods() {
     try {
-      // ------------------------------ 下架售馨商品 ------------------------------- //
-      const soldOutGoodsIds = await this.goods.updateSoldOutGoods()
-      this.logger.debug('下架售馨商品', soldOutGoodsIds)
+      const goodsIds = await this.goods.updateSoldOutGoods()
 
-      // ------------------------------- 库存预警 -------------------------------- //
-      const stockWarnGoodsIds = await this.goods.updateStockWarnGoods()
-      this.logger.debug('库存预警', stockWarnGoodsIds)
+      if (goodsIds)
+        this.logger.debug('下架售馨商品', goodsIds)
+    }
+    catch (e) {
+      this.logger.error(e.message)
+    }
+  }
+
+  /**
+   * 库存预警 (每 30 分钟执行一次)
+   */
+  @Cron(CronExpression.EVERY_30_MINUTES)
+  async handleInventoryEarlyWarning() {
+    try {
+      const goodsIds = await this.goods.updateInventoryEarlyWarning()
+
+      if (goodsIds)
+        this.logger.debug('库存预警', goodsIds)
     }
     catch (e) {
       this.logger.error(e.message)
@@ -37,8 +50,10 @@ export class GoodsScheduler {
   async handleAutoInStock() {
     try {
       // ------------------------------- 自动上架 -------------------------------- //
-      const inStockGoodsIds = await this.goods.updateAutoInStockGoods()
-      this.logger.debug('自动上架', inStockGoodsIds)
+      const goodsIds = await this.goods.updateAutoInStockGoods()
+
+      if (goodsIds)
+        this.logger.debug('自动上架', goodsIds)
     }
     catch (e) {
       this.logger.error(e.message)

@@ -72,6 +72,9 @@ export class AccountService {
       if (query.status)
         entity.andWhere('entity.status = :status', { status: query.status })
 
+      entity.orderBy('entity.isAdmin', 'DESC')
+      entity.addOrderBy('entity.lastLoginTime', 'DESC')
+
       return await useQueryPagination<IStaffAccountProfile>(entity, query.page || 1, query.pagesize || 10)
     }
     catch (e) {

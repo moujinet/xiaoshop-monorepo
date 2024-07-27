@@ -1,6 +1,6 @@
 import {
-  AssetTypeEnum,
-  EnabledEnum,
+  AssetType,
+  Enabled,
   type IAssetType,
   type IAssetUploadOptions,
   type IEnabled,
@@ -31,26 +31,26 @@ export class UploadAssetImageOptionsPayload implements IAssetUploadOptions {
   @IsNumberString()
   readonly groupId: string
 
-  @ApiProperty({ description: '素材类型', enum: AssetTypeEnum, default: AssetTypeEnum.IMAGE })
-  @IsEnum(AssetTypeEnum)
+  @ApiProperty({ description: '素材类型', enum: AssetType, default: AssetType.IMAGE })
+  @IsEnum(AssetType)
   @IsNotEmpty()
   @IsString()
   readonly type: IAssetType
 
-  @ApiProperty({ description: '是否开启压缩', enum: EnabledEnum, default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ description: '是否开启压缩', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
   readonly enableCompress: IEnabled
 
-  @ApiProperty({ description: '是否开启缩略图', enum: EnabledEnum, default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ description: '是否开启缩略图', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
   readonly enableThumbnail: IEnabled
 
-  @ApiProperty({ description: '是否开启水印', enum: EnabledEnum, default: EnabledEnum.YES })
-  @IsEnum(EnabledEnum)
+  @ApiProperty({ description: '是否开启水印', enum: Enabled, default: Enabled.NO })
+  @IsEnum(Enabled)
   @IsNotEmpty()
   @IsString()
   readonly enableWatermark: IEnabled
@@ -65,8 +65,8 @@ export class UploadAssetVideoOptionsPayload {
   @IsNumberString()
   readonly groupId: string
 
-  @ApiProperty({ description: '素材类型', enum: AssetTypeEnum, default: AssetTypeEnum.IMAGE })
-  @IsEnum(AssetTypeEnum)
+  @ApiProperty({ description: '素材类型', enum: AssetType, default: AssetType.IMAGE })
+  @IsEnum(AssetType)
   @IsNotEmpty()
   @IsString()
   readonly type: IAssetType

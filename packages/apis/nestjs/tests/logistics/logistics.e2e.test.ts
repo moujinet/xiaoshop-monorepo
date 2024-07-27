@@ -15,8 +15,6 @@ describe('Logistics Module', () => {
 
     await truncateTable([
       'manage_logistics_company',
-      'manage_logistics_freight_template_rule_free',
-      'manage_logistics_freight_template_rule_normal',
       'manage_logistics_freight_template',
     ])
   })

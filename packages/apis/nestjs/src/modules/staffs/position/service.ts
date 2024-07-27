@@ -38,6 +38,8 @@ export class PositionService {
       if (query.name)
         entity.andWhere('entity.name LIKE :name', { name: `%${query.name}%` })
 
+      entity.orderBy('entity.updatedTime', 'DESC')
+
       return await useQueryPagination<IStaffPosition>(entity, query.page || 1, query.pagesize || 10)
     }
     catch (e) {
