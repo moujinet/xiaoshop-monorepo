@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class UploadSettings1722062636550 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
+    await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES
       ('upload.maxFileSizeImage', '2500'),
       ('upload.maxFileSizeVideo', '10000'),
-      ('upload.customDomain', ''),
+      ('upload.customDomain', 'http://localhost:3003/upload'),
       ('upload.storage.aliyun.enable', '0'),
       ('upload.storage.aliyun.accessKeyID', ''),
       ('upload.storage.aliyun.accessKeySecret', ''),
