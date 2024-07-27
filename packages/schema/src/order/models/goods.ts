@@ -1,4 +1,4 @@
-import type { IGoodsInfo, IGoodsSkuSpec } from '@/goods/models'
+import type { IGoodsDict, IGoodsSkuSpec } from '@/goods/models'
 import type { IOrderDeliveryInfo } from '@/order/models'
 import type { IOrderGoodsStatus } from '@/order/types'
 
@@ -73,6 +73,6 @@ export type IOrderGoodsDeliveryInfo = IOrderGoods & {
 /**
  * 订单 - 商品 - 信息
  *
- * @see {@link IGoodsInfo}
+ * @see {@link IGoodsDict}
  */
-export type IOrderGoodsRelatedInfo = Pick<IGoodsInfo, 'id' | 'type' | 'status'>
+export type IOrderGoodsRelatedInfo = Pick<IGoodsDict, 'id' | 'type' | 'status'>

@@ -1,17 +1,17 @@
 import type {
-  MemberAccountKeyEnum,
-  MemberAccountStatusEnum,
-  MemberCardPlanTypeEnum,
-  MemberCardTypeEnum,
-  MemberGenderEnum,
-  MemberGroupCondKeyEnum,
-  MemberGroupCondOperatorEnum,
-  MemberLogTypeEnum,
-  MemberLogoutStatusEnum,
-  MemberPointsOperatorEnum,
-  MemberPointsRuleKeyEnum,
-  MemberSourceEnum,
-  MemberStatusEnum,
+  MemberAccountKey,
+  MemberAccountStatus,
+  MemberCardPlanType,
+  MemberCardType,
+  MemberGender,
+  MemberGroupCondKey,
+  MemberGroupCondOperator,
+  MemberLogType,
+  MemberLogoutStatus,
+  MemberPointsOperator,
+  MemberPointsRuleKey,
+  MemberSource,
+  MemberStatus,
 } from '@/member/constants'
 
 /**
@@ -20,9 +20,9 @@ import type {
  * - `NORMAL`: 正常
  * - `BLOCKED`: 冻结
  *
- * @see {@link MemberStatusEnum}
+ * @see {@link MemberStatus}
  */
-export type IMemberStatus = MemberStatusEnum
+export type IMemberStatus = typeof MemberStatus[keyof typeof MemberStatus]
 
 /**
  * 会员 - 注册来源
@@ -36,9 +36,9 @@ export type IMemberStatus = MemberStatusEnum
  * - `WECHAT_MP`: 微信小程序
  * - `WECHAT_OA`: 微信公众号
  *
- * @see {@link MemberSourceEnum}
+ * @see {@link MemberSource}
  */
-export type IMemberSource = MemberSourceEnum
+export type IMemberSource = typeof MemberSource[keyof typeof MemberSource]
 
 /**
  * 会员 - 性别
@@ -47,9 +47,9 @@ export type IMemberSource = MemberSourceEnum
  * - `MALE`: 先生
  * - `FEMALE`: 女士
  *
- * @see {@link MemberGenderEnum}
+ * @see {@link MemberGender}
  */
-export type IMemberGender = MemberGenderEnum
+export type IMemberGender = typeof MemberGender[keyof typeof MemberGender]
 
 /**
  * 会员账户 - 状态
@@ -57,9 +57,9 @@ export type IMemberGender = MemberGenderEnum
  * - `ENABLE`: 启用
  * - `DISABLE`: 禁用
  *
- * @see {@link MemberAccountStatusEnum}
+ * @see {@link MemberAccountStatus}
  */
-export type IMemberAccountStatus = MemberAccountStatusEnum
+export type IMemberAccountStatus = typeof MemberAccountStatus[keyof typeof MemberAccountStatus]
 
 /**
  * 会员账户 - 标识
@@ -73,9 +73,9 @@ export type IMemberAccountStatus = MemberAccountStatusEnum
  * - `RED_PACKET`: 红包
  * - `COUPON`: 优惠券
  *
- * @see {@link MemberAccountKeyEnum}
+ * @see {@link MemberAccountKey}
  */
-export type IMemberAccountKey = MemberAccountKeyEnum
+export type IMemberAccountKey = typeof MemberAccountKey[keyof typeof MemberAccountKey]
 
 /**
  * 会员卡 - 类型
@@ -83,9 +83,9 @@ export type IMemberAccountKey = MemberAccountKeyEnum
  * - `LEVEL`: 会员卡
  * - `CUSTOM`: 自定义
  *
- * @see {@link MemberCardTypeEnum}
+ * @see {@link MemberCardType}
  */
-export type IMemberCardType = MemberCardTypeEnum
+export type IMemberCardType = typeof MemberCardType[keyof typeof MemberCardType]
 
 /**
  * 会员卡 - 套餐类型
@@ -95,9 +95,9 @@ export type IMemberCardType = MemberCardTypeEnum
  * - `MONTHS`: 按月
  * - `YEARS`: 按年
  *
- * @see {@link MemberCardPlanTypeEnum}
+ * @see {@link MemberCardPlanType}
  */
-export type IMemberCardPlanType = MemberCardPlanTypeEnum
+export type IMemberCardPlanType = typeof MemberCardPlanType[keyof typeof MemberCardPlanType]
 
 /**
  * 会员积分 - 变更类型
@@ -106,9 +106,9 @@ export type IMemberCardPlanType = MemberCardPlanTypeEnum
  * - `DEDUCT`: 扣除
  * - `SET`: 设置
  *
- * @see {@link MemberPointsOperatorEnum}
+ * @see {@link MemberPointsOperator}
  */
-export type IMemberPointsOperator = MemberPointsOperatorEnum
+export type IMemberPointsOperator = typeof MemberPointsOperator[keyof typeof MemberPointsOperator]
 
 /**
  * 会员积分规则 - 标识
@@ -119,9 +119,9 @@ export type IMemberPointsOperator = MemberPointsOperatorEnum
  * - `SIGN_IN`: 签到奖励
  * - `DEDUCTION`: 积分抵扣
  *
- * @see {@link MemberPointsRuleKeyEnum}
+ * @see {@link MemberPointsRuleKey}
  */
-export type IMemberPointsRuleKey = MemberPointsRuleKeyEnum
+export type IMemberPointsRuleKey = typeof MemberPointsRuleKey[keyof typeof MemberPointsRuleKey]
 
 /**
  * 会员群体 - 筛选条件 - 操作符
@@ -129,9 +129,9 @@ export type IMemberPointsRuleKey = MemberPointsRuleKeyEnum
  * - `IN`: 包含
  * - `NOT_IN`: 排除
  *
- * @see {@link MemberGroupCondOperatorEnum}
+ * @see {@link MemberGroupCondOperator}
  */
-export type IMemberGroupCondOperator = MemberGroupCondOperatorEnum
+export type IMemberGroupCondOperator = typeof MemberGroupCondOperator[keyof typeof MemberGroupCondOperator]
 
 /**
  * 会员群体 - 筛选条件
@@ -147,9 +147,9 @@ export type IMemberGroupCondOperator = MemberGroupCondOperatorEnum
  * - `ORDER_COUNT`: 订单数
  * - `ORDER_AMOUNT`: 订单金额
  *
- * @see {@link MemberGroupCondKeyEnum}
+ * @see {@link MemberGroupCondKey}
  */
-export type IMemberGroupCondKey = MemberGroupCondKeyEnum
+export type IMemberGroupCondKey = typeof MemberGroupCondKey[keyof typeof MemberGroupCondKey]
 
 /**
  * 会员注销申请 - 状态
@@ -157,9 +157,9 @@ export type IMemberGroupCondKey = MemberGroupCondKeyEnum
  * - `PENDING`: 待处理
  * - `LOGOUT`: 已注销
  *
- * @see {@link MemberLogoutStatusEnum}
+ * @see {@link MemberLogoutStatus}
  */
-export type IMemberLogoutStatus = MemberLogoutStatusEnum
+export type IMemberLogoutStatus = typeof MemberLogoutStatus[keyof typeof MemberLogoutStatus]
 
 /**
  * 会员日志 - 类型
@@ -169,6 +169,6 @@ export type IMemberLogoutStatus = MemberLogoutStatusEnum
  * - `FAVORITE`: 收藏商品
  * - `POINTS`: 积分变动
  *
- * @see {@link MemberLogTypeEnum}
+ * @see {@link MemberLogType}
  */
-export type IMemberLogType = MemberLogTypeEnum
+export type IMemberLogType = typeof MemberLogType[keyof typeof MemberLogType]

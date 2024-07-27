@@ -8,7 +8,7 @@
  * - `NORMAL`: 正常
  * - `BLOCKED`: 冻结
  */
-export enum MemberStatusEnum {
+export enum MemberStatus {
   NORMAL = 'normal',
   BLOCKED = 'blocked',
 }
@@ -19,8 +19,8 @@ export enum MemberStatusEnum {
  * @see {@link IMemberStatus}
  */
 export const MEMBER_STATUSES = [
-  { label: '正常', value: MemberStatusEnum.NORMAL, color: 'green' },
-  { label: '冻结', value: MemberStatusEnum.BLOCKED, color: 'gray' },
+  { label: '正常', value: MemberStatus.NORMAL, color: 'green' },
+  { label: '冻结', value: MemberStatus.BLOCKED, color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -39,7 +39,7 @@ export const MEMBER_STATUSES = [
  * - `APP_ANDROID`: Android APP
  * - `APP_IOS`: iOS APP
  */
-export enum MemberSourceEnum {
+export enum MemberSource {
   WECHAT_MP = 'wechat_mp',
   WECHAT_OA = 'wechat_oa',
   H5 = 'h5',
@@ -56,14 +56,14 @@ export enum MemberSourceEnum {
  * @see {@link IMemberSource}
  */
 export const MEMBER_SOURCES = [
-  { label: '微信小程序', value: MemberSourceEnum.WECHAT_MP, color: 'gray', icon: 'mingcute:wechat-miniprogram' },
-  { label: '微信公众号', value: MemberSourceEnum.WECHAT_OA, color: 'green', icon: 'mingcute:wechat' },
-  { label: 'H5', value: MemberSourceEnum.H5, color: 'blue', icon: 'mingcute:cellphone' },
-  { label: '后台创建', value: MemberSourceEnum.MANUAL, color: 'blue', icon: 'mingcute:layout' },
-  { label: '批量导入', value: MemberSourceEnum.IMPORT, color: 'blue', icon: 'mingcute:upload-3' },
-  { label: '网站', value: MemberSourceEnum.WEB, color: 'blue', icon: 'mingcute:laptop' },
-  { label: 'iOS APP', value: MemberSourceEnum.APP_IOS, color: 'gray', icon: 'mingcute:apple' },
-  { label: 'Android APP', value: MemberSourceEnum.APP_ANDROID, color: 'cyan', icon: 'mingcute:android-2' },
+  { label: '微信小程序', value: MemberSource.WECHAT_MP, color: 'gray', icon: 'mingcute:wechat-miniprogram' },
+  { label: '微信公众号', value: MemberSource.WECHAT_OA, color: 'green', icon: 'mingcute:wechat' },
+  { label: 'H5', value: MemberSource.H5, color: 'blue', icon: 'mingcute:cellphone' },
+  { label: '后台创建', value: MemberSource.MANUAL, color: 'blue', icon: 'mingcute:layout' },
+  { label: '批量导入', value: MemberSource.IMPORT, color: 'blue', icon: 'mingcute:upload-3' },
+  { label: '网站', value: MemberSource.WEB, color: 'blue', icon: 'mingcute:laptop' },
+  { label: 'iOS APP', value: MemberSource.APP_IOS, color: 'gray', icon: 'mingcute:apple' },
+  { label: 'Android APP', value: MemberSource.APP_ANDROID, color: 'cyan', icon: 'mingcute:android-2' },
 ]
 
 // -----------------------------------------------
@@ -77,7 +77,7 @@ export const MEMBER_SOURCES = [
  * - `MALE`: 先生
  * - `FEMALE`: 女士
  */
-export enum MemberGenderEnum {
+export enum MemberGender {
   UNKNOWN = 'unknown',
   MALE = 'male',
   FEMALE = 'female',
@@ -89,9 +89,9 @@ export enum MemberGenderEnum {
  * @see {@link IMemberGender}
  */
 export const MEMBER_GENDERS = [
-  { label: '保密', value: MemberGenderEnum.UNKNOWN, color: 'gray', icon: '' },
-  { label: '先生', value: MemberGenderEnum.MALE, color: 'blue', icon: 'mingcute:male' },
-  { label: '女士', value: MemberGenderEnum.FEMALE, color: 'red', icon: 'mingcute:female' },
+  { label: '保密', value: MemberGender.UNKNOWN, color: 'gray', icon: '' },
+  { label: '先生', value: MemberGender.MALE, color: 'blue', icon: 'mingcute:male' },
+  { label: '女士', value: MemberGender.FEMALE, color: 'red', icon: 'mingcute:female' },
 ]
 
 // -----------------------------------------------
@@ -104,7 +104,7 @@ export const MEMBER_GENDERS = [
  * - `ENABLE`: 启用
  * - `DISABLE`: 停用
  */
-export enum MemberAccountStatusEnum {
+export enum MemberAccountStatus {
   ENABLE = 'enable',
   DISABLE = 'disable',
 }
@@ -115,8 +115,8 @@ export enum MemberAccountStatusEnum {
  * @see {@link IMemberAccountStatus}
  */
 export const MEMBER_ACCOUNT_STATUSES = [
-  { label: '启用', value: MemberAccountStatusEnum.ENABLE, color: 'green' },
-  { label: '停用', value: MemberAccountStatusEnum.DISABLE, color: 'gray' },
+  { label: '启用', value: MemberAccountStatus.ENABLE, color: 'green' },
+  { label: '停用', value: MemberAccountStatus.DISABLE, color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -135,7 +135,7 @@ export const MEMBER_ACCOUNT_STATUSES = [
  * - `RED_PACKET`: 红包
  * - `COUPON`: 优惠券
  */
-export enum MemberAccountKeyEnum {
+export enum MemberAccountKey {
   ORDERS = 'orders',
   ORDER_AMOUNT = 'order_amount',
   EXP = 'exp',
@@ -152,14 +152,14 @@ export enum MemberAccountKeyEnum {
  * @see {@link IMemberAccountKey}
  */
 export const MEMBER_ACCOUNT_KEYS = [
-  { label: '订单数', value: MemberAccountKeyEnum.ORDERS },
-  { label: '消费金额', value: MemberAccountKeyEnum.ORDER_AMOUNT },
-  { label: '成长值', value: MemberAccountKeyEnum.EXP },
-  { label: '积分', value: MemberAccountKeyEnum.POINTS },
-  { label: '余额', value: MemberAccountKeyEnum.BALANCE },
-  { label: '签到', value: MemberAccountKeyEnum.SIGN_IN },
-  { label: '红包', value: MemberAccountKeyEnum.RED_PACKET },
-  { label: '优惠券', value: MemberAccountKeyEnum.COUPON },
+  { label: '订单数', value: MemberAccountKey.ORDERS },
+  { label: '消费金额', value: MemberAccountKey.ORDER_AMOUNT },
+  { label: '成长值', value: MemberAccountKey.EXP },
+  { label: '积分', value: MemberAccountKey.POINTS },
+  { label: '余额', value: MemberAccountKey.BALANCE },
+  { label: '签到', value: MemberAccountKey.SIGN_IN },
+  { label: '红包', value: MemberAccountKey.RED_PACKET },
+  { label: '优惠券', value: MemberAccountKey.COUPON },
 ]
 
 // -----------------------------------------------
@@ -172,7 +172,7 @@ export const MEMBER_ACCOUNT_KEYS = [
  * - `LEVEL`: 会员等级
  * - `CUSTOM`: 超级会员卡
  */
-export enum MemberCardTypeEnum {
+export enum MemberCardType {
   LEVEL = 'level',
   CUSTOM = 'custom',
 }
@@ -183,8 +183,8 @@ export enum MemberCardTypeEnum {
  * @see {@link IMemberCardType}
  */
 export const MEMBER_CARD_TYPES = [
-  { label: '会员等级', value: MemberCardTypeEnum.LEVEL },
-  { label: '超级会员卡', value: MemberCardTypeEnum.CUSTOM },
+  { label: '会员等级', value: MemberCardType.LEVEL },
+  { label: '超级会员卡', value: MemberCardType.CUSTOM },
 ]
 
 // -----------------------------------------------
@@ -199,7 +199,7 @@ export const MEMBER_CARD_TYPES = [
  * - `MONTHS`: 月数
  * - `YEARS`: 年数
  */
-export enum MemberCardPlanTypeEnum {
+export enum MemberCardPlanType {
   TIMES = 'times',
   DAYS = 'days',
   MONTHS = 'months',
@@ -212,10 +212,10 @@ export enum MemberCardPlanTypeEnum {
  * @see {@link IMemberCardPlanType}
  */
 export const MEMBER_CARD_PLAN_TYPES = [
-  { label: '次数', unit: '次', value: MemberCardPlanTypeEnum.TIMES },
-  { label: '天数', unit: '天', value: MemberCardPlanTypeEnum.DAYS },
-  { label: '月数', unit: '月', value: MemberCardPlanTypeEnum.MONTHS },
-  { label: '年数', unit: '年', value: MemberCardPlanTypeEnum.YEARS },
+  { label: '次数', unit: '次', value: MemberCardPlanType.TIMES },
+  { label: '天数', unit: '天', value: MemberCardPlanType.DAYS },
+  { label: '月数', unit: '月', value: MemberCardPlanType.MONTHS },
+  { label: '年数', unit: '年', value: MemberCardPlanType.YEARS },
 ]
 
 // -----------------------------------------------
@@ -236,7 +236,7 @@ export const MEMBER_CARD_PLAN_TYPES = [
  * - `ORDER_COUNT`: 累计订单数
  * - `ORDER_AMOUNT`: 累计订单金额
  */
-export enum MemberGroupCondKeyEnum {
+export enum MemberGroupCondKey {
   CARD = 'card',
   TAG = 'tag',
   GENDER = 'gender',
@@ -255,16 +255,16 @@ export enum MemberGroupCondKeyEnum {
  * @see {@link IMemberGroupCondKey}
  */
 export const MEMBER_GROUP_COND_KEYS = [
-  { label: '会员等级', value: MemberGroupCondKeyEnum.CARD },
-  { label: '会员标签', value: MemberGroupCondKeyEnum.TAG },
-  { label: '会员性别', value: MemberGroupCondKeyEnum.GENDER },
-  { label: '会员生日', value: MemberGroupCondKeyEnum.BIRTHDAY },
-  { label: '注册时间', value: MemberGroupCondKeyEnum.CREATED_TIME },
-  { label: '当前积分', value: MemberGroupCondKeyEnum.POINTS },
-  { label: '当前成长值', value: MemberGroupCondKeyEnum.EXP },
-  { label: '累计签到数', value: MemberGroupCondKeyEnum.SIGN_IN },
-  { label: '累计订单数', value: MemberGroupCondKeyEnum.ORDER_COUNT },
-  { label: '累计订单金额', value: MemberGroupCondKeyEnum.ORDER_AMOUNT },
+  { label: '会员等级', value: MemberGroupCondKey.CARD },
+  { label: '会员标签', value: MemberGroupCondKey.TAG },
+  { label: '会员性别', value: MemberGroupCondKey.GENDER },
+  { label: '会员生日', value: MemberGroupCondKey.BIRTHDAY },
+  { label: '注册时间', value: MemberGroupCondKey.CREATED_TIME },
+  { label: '当前积分', value: MemberGroupCondKey.POINTS },
+  { label: '当前成长值', value: MemberGroupCondKey.EXP },
+  { label: '累计签到数', value: MemberGroupCondKey.SIGN_IN },
+  { label: '累计订单数', value: MemberGroupCondKey.ORDER_COUNT },
+  { label: '累计订单金额', value: MemberGroupCondKey.ORDER_AMOUNT },
 ]
 
 // -----------------------------------------------
@@ -277,7 +277,7 @@ export const MEMBER_GROUP_COND_KEYS = [
  * - `IN`: 包含
  * - `NOT_IN`: 排除
  */
-export enum MemberGroupCondOperatorEnum {
+export enum MemberGroupCondOperator {
   IN = 'in',
   NOT_IN = 'not_in',
 }
@@ -288,8 +288,8 @@ export enum MemberGroupCondOperatorEnum {
  * @see {@link IMemberGroupCondOperator}
  */
 export const MEMBER_GROUP_COND_OPERATORS = [
-  { label: '包含', value: MemberGroupCondOperatorEnum.IN },
-  { label: '排除', value: MemberGroupCondOperatorEnum.NOT_IN },
+  { label: '包含', value: MemberGroupCondOperator.IN },
+  { label: '排除', value: MemberGroupCondOperator.NOT_IN },
 ]
 
 // -----------------------------------------------
@@ -302,7 +302,7 @@ export const MEMBER_GROUP_COND_OPERATORS = [
  * - `PENDING`: 待处理
  * - `LOGOUT`: 已注销
  */
-export enum MemberLogoutStatusEnum {
+export enum MemberLogoutStatus {
   PENDING = 'pending',
   LOGOUT = 'logout',
 }
@@ -313,8 +313,8 @@ export enum MemberLogoutStatusEnum {
  * @see {@link IMemberLogoutStatus}
  */
 export const MEMBER_LOGOUT_STATUSES = [
-  { label: '待处理', value: MemberLogoutStatusEnum.PENDING, color: 'blue' },
-  { label: '已注销', value: MemberLogoutStatusEnum.LOGOUT, color: 'gray' },
+  { label: '待处理', value: MemberLogoutStatus.PENDING, color: 'blue' },
+  { label: '已注销', value: MemberLogoutStatus.LOGOUT, color: 'gray' },
 ]
 
 // -----------------------------------------------
@@ -328,7 +328,7 @@ export const MEMBER_LOGOUT_STATUSES = [
  * - `DEDUCT`: 扣除
  * - `SET`: 变更
  */
-export enum MemberPointsOperatorEnum {
+export enum MemberPointsOperator {
   ADD = 'add',
   DEDUCT = 'deduct',
   SET = 'set',
@@ -340,9 +340,9 @@ export enum MemberPointsOperatorEnum {
  * @see {@link IMemberPointsOperator}
  */
 export const MEMBER_POINTS_OPERATORS = [
-  { label: '增加', value: MemberPointsOperatorEnum.ADD },
-  { label: '扣除', value: MemberPointsOperatorEnum.DEDUCT },
-  { label: '变更', value: MemberPointsOperatorEnum.SET },
+  { label: '增加', value: MemberPointsOperator.ADD },
+  { label: '扣除', value: MemberPointsOperator.DEDUCT },
+  { label: '变更', value: MemberPointsOperator.SET },
 ]
 
 // -----------------------------------------------
@@ -358,7 +358,7 @@ export const MEMBER_POINTS_OPERATORS = [
  * - `SIGN_IN`: 签到奖励
  * - `DEDUCTION`: 积分抵现
  */
-export enum MemberPointsRuleKeyEnum {
+export enum MemberPointsRuleKey {
   REGISTER = 'register',
   ORDERING = 'ordering',
   BIRTHDAY = 'birthday',
@@ -372,11 +372,11 @@ export enum MemberPointsRuleKeyEnum {
  * @see {@link IMemberPointsRuleKey}
  */
 export const MEMBER_POINTS_RULE_KEYS = [
-  { label: '注册奖励', value: MemberPointsRuleKeyEnum.REGISTER },
-  { label: '消费奖励', value: MemberPointsRuleKeyEnum.ORDERING },
-  { label: '生日有礼', value: MemberPointsRuleKeyEnum.BIRTHDAY },
-  { label: '签到奖励', value: MemberPointsRuleKeyEnum.SIGN_IN },
-  { label: '积分抵现', value: MemberPointsRuleKeyEnum.DEDUCTION },
+  { label: '注册奖励', value: MemberPointsRuleKey.REGISTER },
+  { label: '消费奖励', value: MemberPointsRuleKey.ORDERING },
+  { label: '生日有礼', value: MemberPointsRuleKey.BIRTHDAY },
+  { label: '签到奖励', value: MemberPointsRuleKey.SIGN_IN },
+  { label: '积分抵现', value: MemberPointsRuleKey.DEDUCTION },
 ]
 
 // -----------------------------------------------
@@ -391,7 +391,7 @@ export const MEMBER_POINTS_RULE_KEYS = [
  * - `FAVORITE`: 收藏商品
  * - `POINTS`: 积分变动
  */
-export enum MemberLogTypeEnum {
+export enum MemberLogType {
   OPERATE = 'operate',
   VISIT = 'visit',
   FAVORITE = 'favorite',
@@ -404,8 +404,8 @@ export enum MemberLogTypeEnum {
  * @see {@link IMemberLogType}
  */
 export const MEMBER_LOG_TYPES = [
-  { label: '常规操作', value: MemberLogTypeEnum.OPERATE },
-  { label: '浏览商品', value: MemberLogTypeEnum.VISIT },
-  { label: '收藏商品', value: MemberLogTypeEnum.FAVORITE },
-  { label: '积分变动', value: MemberLogTypeEnum.POINTS },
+  { label: '常规操作', value: MemberLogType.OPERATE },
+  { label: '浏览商品', value: MemberLogType.VISIT },
+  { label: '收藏商品', value: MemberLogType.FAVORITE },
+  { label: '积分变动', value: MemberLogType.POINTS },
 ]

@@ -1,5 +1,6 @@
-import type { IAreaInfo, ILogisticsCompanyDict } from '@/settings/models'
-import type { ILogisticsDeliveryMode, ILogisticsDeliveryStatus, ILogisticsDeliveryType } from '@/settings/types'
+import type { IArea } from '@/common'
+import type { ILogisticsCompanyDict } from '@/logistics/models'
+import type { ILogisticsDeliveryMode, ILogisticsDeliveryStatus, ILogisticsDeliveryType } from '@/logistics/types'
 
 /**
  * 订单发货信息
@@ -48,9 +49,9 @@ export interface IOrderDelivery {
   /**
    * 发货地区
    *
-   * @see {@link IAreaInfo}
+   * @see {@link IArea}
    */
-  senderLocation: IAreaInfo[]
+  senderLocation: IArea[]
   /**
    * 发货地址
    */
@@ -66,9 +67,9 @@ export interface IOrderDelivery {
   /**
    * 收货地区
    *
-   * @see {@link IAreaInfo}
+   * @see {@link IArea}
    */
-  receiverLocation: IAreaInfo[]
+  receiverLocation: IArea[]
   /**
    * 收货地址
    */

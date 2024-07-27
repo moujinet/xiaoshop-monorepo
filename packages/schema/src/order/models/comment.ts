@@ -1,4 +1,4 @@
-import type { IGoodsInfo, IGoodsRatingGrade } from '@/goods'
+import type { IGoodsDict, IGoodsRatingGrade } from '@/goods'
 import type { IOrderCommentAuditStatus, IOrderInfo } from '@/order'
 
 /**
@@ -24,9 +24,9 @@ export interface IOrderComment {
   /**
    * 商品信息
    *
-   * @see {@link IGoodsInfo}
+   * @see {@link IGoodsDict}
    */
-  goods: IGoodsInfo
+  goods: IGoodsDict
   /**
    * 商品评价综合评级
    *

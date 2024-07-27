@@ -41,11 +41,11 @@ export interface IGoodsSku {
   /**
    * 库存
    */
-  stock: number
+  inventory: number
   /**
    * 预警库存
    */
-  alertStock: number
+  inventoryEarlyWarning: number
   /**
    * 重量
    */
@@ -58,14 +58,6 @@ export interface IGoodsSku {
    * 销量
    */
   sales: number
-  /**
-   * 浏览量
-   */
-  views: number
-  /**
-   * 收藏量
-   */
-  favorites: number
 }
 
 /**
@@ -89,12 +81,9 @@ export interface IGoodsSkuSpec {
 /**
  * 字典商品 SKU 信息
  */
-export type IGoodsSkuInfo = Pick<IGoodsSku, 'id' | 'skuCode' | 'name' | 'image' | 'specs' | 'price' | 'stock'>
+export type IGoodsSkuInfo = Pick<IGoodsSku, 'id' | 'skuCode' | 'name' | 'image' | 'specs' | 'price' | 'inventory'>
 
 /**
  * 商品 SKU 表单
  */
-export type IGoodsSkuFormData = Omit<
-  IGoodsSku,
-  'sales' | 'views' | 'favorites'
->
+export type IGoodsSkuFormData = Partial<IGoodsSku>

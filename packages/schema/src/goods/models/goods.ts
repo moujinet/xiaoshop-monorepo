@@ -1,5 +1,8 @@
 import type { IEnabled } from '@/common'
-import type { ILogisticsDeliveryMode, ILogisticsFreightTemplate } from '@/logistics'
+import type {
+  ILogisticsDeliveryMode,
+  ILogisticsFreightTemplate,
+} from '@/logistics'
 import type {
   IGoodsBuyBtnType,
   IGoodsFreightChargeMode,
@@ -338,6 +341,7 @@ export type IGoodsBasicInfoFormData = Omit<
 export type IGoodsInventoryInfo = Pick<
   IGoods,
   | 'id'
+  | 'type'
   | 'isMultiSkus'
   | 'skuCode'
   | 'price'
@@ -360,7 +364,7 @@ export type IGoodsInventoryInfo = Pick<
  */
 export type IGoodsInventoryInfoFormData = Omit<
   IGoodsInventoryInfo,
-  'id'
+  'id' | 'type'
 >
 
 /**
@@ -392,6 +396,26 @@ export type IGoodsListItem = Pick<
   | 'sales'
   | 'sort'
   | 'updatedTime'
+>
+
+/**
+ * 商品简要信息
+ */
+export type IGoodsDict = Pick<
+  IGoods,
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'type'
+  | 'skuCode'
+  | 'isMultiSkus'
+  | 'name'
+  | 'images'
+  | 'tag'
+  | 'group'
+  | 'price'
+  | 'inventory'
+  | 'sales'
 >
 
 /**
