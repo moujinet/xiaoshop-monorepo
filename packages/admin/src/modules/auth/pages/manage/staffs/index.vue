@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { TableColumnData } from '@arco-design/web-vue'
-import { EnabledEnum } from '@xiaoshop/schema'
+import { Enabled } from '@xiaoshop/schema'
 import { DEFAULT_PAGE_SIZE } from '~/constants/defaults'
 import { deleteAccount, fetchAccountPages } from '@/auth/apis'
 
@@ -170,7 +170,7 @@ function handleDepartmentChange(departmentId: number) {
               {{ role.name }}
             </a-tag>
           </template>
-          <template v-else-if="record.isAdmin === EnabledEnum.YES">
+          <template v-else-if="record.isAdmin === Enabled.YES">
             <CommonBadge icon="mingcute:incognito-mode" color="arcoblue" label="管理员" />
           </template>
           <template v-else>

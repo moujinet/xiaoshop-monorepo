@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { EnabledEnum, StaffAccountStatusEnum } from '@xiaoshop/schema'
+import { Enabled, StaffAccountStatus } from '@xiaoshop/schema'
 import { DepartmentSelector, PositionSelector, StaffRoleSelector, StaffStatusSelector } from '@/auth/components'
 
 import {
@@ -114,21 +114,21 @@ const { visible, handleModalOk } = useForm({
     form.name = ''
     form.mobile = ''
     form.password = ''
-    form.isAdmin = EnabledEnum.NO
-    form.status = StaffAccountStatusEnum.NORMAL
+    form.isAdmin = Enabled.NO
+    form.status = StaffAccountStatus.NORMAL
     form.roleIds = []
     form.departmentId = 0
     form.positionId = 0
   },
   onUpdate: () => {
-    if (form.isAdmin === EnabledEnum.YES) {
+    if (form.isAdmin === Enabled.YES) {
       form.roleIds = []
     }
 
     return updateAccount(props.id || 0, form)
   },
   onCreate: () => {
-    if (form.isAdmin === EnabledEnum.YES) {
+    if (form.isAdmin === Enabled.YES) {
       form.roleIds = []
     }
 
@@ -179,10 +179,10 @@ function handleDepartmentChange(departmentId: number) {
 
         <FormGroup title="角色信息">
           <a-form-item field="isAdmin" label="是否管理员" show-colon>
-            <a-switch v-model="form.isAdmin" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="是" unchecked-text="否" />
+            <a-switch v-model="form.isAdmin" :checked-value="Enabled.YES" :unchecked-value="Enabled.NO" checked-text="是" unchecked-text="否" />
           </a-form-item>
 
-          <a-form-item v-if="form.isAdmin === EnabledEnum.NO" field="roleIds" label="分配角色" show-colon>
+          <a-form-item v-if="form.isAdmin === Enabled.NO" field="roleIds" label="分配角色" show-colon>
             <div class="form-item">
               <StaffRoleSelector v-model="form.roleIds" placeholder="请分配角色" multiple />
             </div>

@@ -1,4 +1,4 @@
-import { type IStaffLog, StaffLogTypeEnum } from '@xiaoshop/schema'
+import { type IStaffLog, StaffLogType } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -16,7 +16,7 @@ export function fetchStaffLogPages(
     url: '/staffs/log/pages',
     params: {
       ...params,
-      type: StaffLogTypeEnum.LOGIN,
+      type: StaffLogType.LOGIN,
     },
   })
 }
