@@ -231,6 +231,11 @@ export class GoodsInventoryInfoPayload implements IGoodsInventoryInfoFormData {
   @IsOptional()
   readonly unit: string
 
+  @ApiProperty({ required: false, type: 'float', description: '商品销量', example: 0 })
+  @IsNumber()
+  @IsOptional()
+  readonly sales: number
+
   @ApiProperty({ required: false, description: '是否开启限购', enum: Enabled, default: Enabled.NO })
   @IsEnum(Enabled)
   @IsOptional()

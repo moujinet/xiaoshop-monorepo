@@ -273,6 +273,7 @@ export class GoodsInventoryInfoResponse
     'weight',
     'volume',
     'unit',
+    'sales',
     'enablePurchaseLimits',
     'purchaseMinQty',
     'purchaseMaxQty',
