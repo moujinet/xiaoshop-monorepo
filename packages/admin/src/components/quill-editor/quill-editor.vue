@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Quill from 'quill'
 import { watchOnce } from '@vueuse/core'
-import { AssetTypeEnum } from '@xiaoshop/schema'
+import { AssetType } from '@xiaoshop/schema'
 import AssetsBrowser from '@/assets/components/assets-browser'
 import 'quill/dist/quill.snow.css'
 
@@ -82,7 +82,7 @@ function handleUpdateContent() {
 
 function handleSelectImages() {
   AssetsBrowser.openModal({
-    type: AssetTypeEnum.IMAGE,
+    type: AssetType.IMAGE,
     limit: 20,
     onSelect: (images) => {
       const index = quill?.getSelection()?.index || 0
@@ -96,7 +96,7 @@ function handleSelectImages() {
 
 function handleSelectVideos() {
   AssetsBrowser.openModal({
-    type: AssetTypeEnum.VIDEO,
+    type: AssetType.VIDEO,
     limit: 1,
     onSelect: (videos) => {
       const index = quill?.getSelection()?.index || 0
