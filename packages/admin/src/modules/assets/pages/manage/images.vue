@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AssetTypeEnum } from '@xiaoshop/schema'
+import { AssetType } from '@xiaoshop/schema'
 import { AssetsBrowserLayoutPanel } from '@/assets/components'
 
 defineOptions({
@@ -9,6 +9,6 @@ defineOptions({
 
 <template>
   <CommonContainer>
-    <AssetsBrowserLayoutPanel :type="AssetTypeEnum.IMAGE" />
+    <AssetsBrowserLayoutPanel :type="AssetType.IMAGE" />
   </CommonContainer>
 </template>
