@@ -160,7 +160,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
 
     optimizeDeps: {
-      include: ['@arco-design/web-vue'],
+      include: [
+        'quill',
+        '@arco-design/web-vue',
+      ],
     },
 
     css: {
