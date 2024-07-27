@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { GOODS_TYPES, GoodsTypeEnum, type IGoodsType } from '@xiaoshop/schema'
+import { GOODS_TYPES, GoodsType, type IGoodsType } from '@xiaoshop/schema'
 
 defineOptions({
   name: 'GoodsTypeRadio',
@@ -12,7 +12,7 @@ const props = defineProps<{
 
 const modelValue = defineModel('value', {
   type: String as PropType<IGoodsType>,
-  default: GoodsTypeEnum.ENTITY,
+  default: GoodsType.ENTITY,
 })
 
 const route = useRoute()

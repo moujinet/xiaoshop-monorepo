@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { IGoodsAdditionalDict } from '@xiaoshop/schema'
-import { fetchGoodsAdditionalDictList } from '@/goods/apis'
+import type { IGoodsAdditionDict } from '@xiaoshop/schema'
+import { fetchGoodsAdditionDictList } from '@/goods/apis'
 
 defineOptions({
-  name: 'GoodsAdditionalCheckbox',
+  name: 'GoodsAdditionCheckbox',
 })
 
-const additions = ref<IGoodsAdditionalDict[]>([])
+const additions = ref<IGoodsAdditionDict[]>([])
 
 const {
   refreshData: loadData,
-} = fetchGoodsAdditionalDictList()
+} = fetchGoodsAdditionDictList()
 
 function refresh() {
   loadData().then((res) => {

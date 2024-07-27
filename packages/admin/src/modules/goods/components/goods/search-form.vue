@@ -30,10 +30,10 @@ const search = defineModel('search', {
     brandId: 0,
     tagId: 0,
     price: [],
-    stock: [],
+    inventory: [],
     sales: [],
     inStockTime: [],
-    soldOutTime: [],
+    stockedTime: [],
     createdTime: [],
     page: 1,
     pagesize: DEFAULT_PAGE_SIZE,
@@ -81,15 +81,15 @@ const search = defineModel('search', {
         </a-input-group>
       </a-form-item>
 
-      <a-form-item field="stock" label="商品库存" show-colon>
+      <a-form-item field="inventory" label="商品库存" show-colon>
         <a-input-group>
-          <FormNumberInput v-model="search.stock[0]" placeholder="起始库存" allow-clear>
+          <FormNumberInput v-model="search.inventory[0]" placeholder="起始库存" allow-clear>
             <template #suffix>
               <span>件</span>
             </template>
           </FormNumberInput>
 
-          <FormNumberInput v-model="search.stock[1]" placeholder="结束库存" allow-clear>
+          <FormNumberInput v-model="search.inventory[1]" placeholder="结束库存" allow-clear>
             <template #suffix>
               <span>件</span>
             </template>
@@ -117,8 +117,8 @@ const search = defineModel('search', {
         <a-range-picker v-model="search.inStockTime" />
       </a-form-item>
 
-      <a-form-item field="soldOutTime" label="下架时间" show-colon>
-        <a-range-picker v-model="search.soldOutTime" />
+      <a-form-item field="stockedTime" label="下架时间" show-colon>
+        <a-range-picker v-model="search.stockedTime" />
       </a-form-item>
 
       <a-form-item field="createdTime" label="发布时间" show-colon>

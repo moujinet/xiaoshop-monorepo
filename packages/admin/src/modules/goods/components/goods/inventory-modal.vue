@@ -1,21 +1,23 @@
 <script lang="ts" setup>
 import {
-  GoodsStockDeductModeEnum,
+  Enabled,
+  GoodsInventoryDeductMode,
   type IGoods,
+  type IGoodsSku,
   type IGoodsSkuFormData,
 } from '@xiaoshop/schema'
 
 import { GoodsSkuValuePopover } from '@/goods/components'
 
 import {
+  fetchGoodsInventoryInfo,
   fetchGoodsSkuList,
-  fetchGoodsStockInfo,
   updateGoodsSkus,
-  updateStockInfo,
+  updateInventoryInfo,
 } from '@/goods/apis'
 
 defineOptions({
-  name: 'GoodsStockModal',
+  name: 'GoodsInventoryModal',
 })
 
 const props = defineProps<{
@@ -26,10 +28,10 @@ const props = defineProps<{
 const emit = defineEmits(['success'])
 
 const { loading: skusLoading, data: skus, refreshData: loadSkus } = fetchGoodsSkuList(props.id)
-const { loading: stockLoading, data: stock, refreshData: loadStock } = fetchGoodsStockInfo(props.id)
+const { loading: inventoryLoading, data: inventory, refreshData: loadInventory } = fetchGoodsInventoryInfo(props.id)
 
 const visible = ref(false)
-const loading = computed(() => skusLoading.value && stockLoading.value)
+const loading = computed(() => skusLoading.value && inventoryLoading.value)
 const isMultiSku = computed(() => skus.value?.length > 0)
 
 const columns: {
@@ -39,15 +41,15 @@ const columns: {
   { key: 'price', label: '价格' },
   { key: 'originalPrice', label: '划线价' },
   { key: 'costPrice', label: '成本价' },
-  { key: 'stock', label: '库存' },
-  { key: 'alertStock', label: '预警库存' },
+  { key: 'inventory', label: '库存' },
+  { key: 'inventoryEarlyWarning', label: '预警库存' },
   { key: 'weight', label: '重量' },
   { key: 'volume', label: '体积' },
 ]
 
 watch(visible, () => {
   if (visible.value) {
-    loadStock()
+    loadInventory()
     loadSkus()
   }
 })
@@ -72,26 +74,27 @@ function handleSubmit(done: (closed: boolean) => void) {
     },
   })
 
-  if (!stock.value.stockDeductMode) {
-    stock.value.stockDeductMode = GoodsStockDeductModeEnum.ORDER
+  if (!inventory.value.inventoryDeductMode) {
+    inventory.value.inventoryDeductMode = GoodsInventoryDeductMode.ORDER
   }
 
   if (isMultiSku.value) {
-    if (skus.value.length > 0) {
-      stock.value.price = skus.value.map((sku: any) => sku.price).reduce((acc: number, cur: number) => Math.min(acc, cur), skus.value[0].price)
-      stock.value.stock = skus.value.map((sku: any) => sku.stock).reduce((acc: number, cur: number) => acc + cur, 0)
-    }
+    inventory.value.isMultiSkus = Enabled.YES
+    inventory.value.price = skus.value.map((sku: IGoodsSku) => sku.price).reduce((acc: number, cur: number) => Math.min(acc, cur), skus.value[0].price)
+    inventory.value.inventory = skus.value.map((sku: IGoodsSku) => sku.inventory).reduce((acc: number, cur: number) => acc + cur, 0)
+    inventory.value.sales = skus.value.map((sku: IGoodsSku) => sku.sales).reduce((acc: number, cur: number) => acc + cur, 0)
 
     updateGoodsSkus(props.id, skus.value)
       .then(() => {
-        updateStockInfo(props.id, omit(stock.value, ['id']))
+        updateInventoryInfo(props.id, omit(inventory.value, ['id']))
       })
       .finally(() => {
         message.success('成功修改商品库存')
       })
   }
   else {
-    updateStockInfo(props.id, omit(stock.value, ['id'])).then(() => {
+    inventory.value.isMultiSkus = Enabled.NO
+    updateInventoryInfo(props.id, omit(inventory.value, ['id'])).then(() => {
       message.success('成功修改商品库存')
     })
   }
@@ -143,14 +146,14 @@ function handleSubmit(done: (closed: boolean) => void) {
                 <FormPriceInput v-model="sku.costPrice" />
               </span>
               <span class="b-t-(1 solid $color-border-1) p-2">
-                <FormNumberInput v-model="sku.stock">
+                <FormNumberInput v-model="sku.inventory">
                   <template #suffix>
                     {{ props.unit || '件' }}
                   </template>
                 </FormNumberInput>
               </span>
               <span class="b-t-(1 solid $color-border-1) p-2">
-                <FormNumberInput v-model="sku.alertStock">
+                <FormNumberInput v-model="sku.inventoryEarlyWarning">
                   <template #suffix>
                     {{ props.unit || '件' }}
                   </template>
@@ -175,7 +178,7 @@ function handleSubmit(done: (closed: boolean) => void) {
         </template>
 
         <template v-else>
-          <div v-if="stock" class="grid-(~ cols-7)">
+          <div v-if="inventory" class="grid-(~ cols-7)">
             <template v-for="{ key, label } in columns" :key="key">
               <span class="flex-(~ v-center between) text-gray text-3 p-2">
                 <span>{{ label }}</span>
@@ -183,37 +186,37 @@ function handleSubmit(done: (closed: boolean) => void) {
             </template>
 
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormPriceInput v-model="stock.price" />
+              <FormPriceInput v-model="inventory.price" />
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormPriceInput v-model="stock.originalPrice" />
+              <FormPriceInput v-model="inventory.originalPrice" />
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormPriceInput v-model="stock.costPrice" />
+              <FormPriceInput v-model="inventory.costPrice" />
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormNumberInput v-model="stock.stock">
+              <FormNumberInput v-model="inventory.inventory">
                 <template #suffix>
                   {{ props.unit || '件' }}
                 </template>
               </FormNumberInput>
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormNumberInput v-model="stock.alertStock">
+              <FormNumberInput v-model="inventory.inventoryEarlyWarning">
                 <template #suffix>
                   {{ props.unit || '件' }}
                 </template>
               </FormNumberInput>
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormNumberInput v-model="stock.weight">
+              <FormNumberInput v-model="inventory.weight">
                 <template #suffix>
                   kg
                 </template>
               </FormNumberInput>
             </span>
             <span class="b-t-(1 solid $color-border-1) p-2">
-              <FormNumberInput v-model="stock.volume">
+              <FormNumberInput v-model="inventory.volume">
                 <template #suffix>
                   m<sup>3</sup>
                 </template>

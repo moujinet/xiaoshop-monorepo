@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { IGoodsAdditional } from '@xiaoshop/schema'
+import type { IGoodsAddition } from '@xiaoshop/schema'
 import { AssetsBrowser } from '@/assets/components'
 
 import {
-  createGoodsAdditional,
-  fetchGoodsAdditionalDetail,
-  updateGoodsAdditional,
+  createGoodsAddition,
+  fetchGoodsAdditionDetail,
+  updateGoodsAddition,
 } from '@/goods/apis'
 
 defineOptions({
-  name: 'GoodsAdditionalModal',
+  name: 'GoodsAdditionModal',
 })
 
 const props = defineProps<{
@@ -20,7 +20,7 @@ const emit = defineEmits(['success'])
 
 const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
-const form = reactive<IFormData<IGoodsAdditional>>({
+const form = reactive<IFormData<IGoodsAddition>>({
   name: '',
   icon: '',
   price: 0,
@@ -43,7 +43,7 @@ const rules: IFormRules = {
   ],
 }
 
-const { loading, refreshData } = fetchGoodsAdditionalDetail(props.id || 0)
+const { loading, refreshData } = fetchGoodsAdditionDetail(props.id || 0)
 
 const { visible, handleModalOk } = useForm({
   loading,
@@ -68,10 +68,10 @@ const { visible, handleModalOk } = useForm({
     form.sort = 1
   },
   onUpdate: () => {
-    return updateGoodsAdditional(props.id || 0, form)
+    return updateGoodsAddition(props.id || 0, form)
   },
   onCreate: () => {
-    return createGoodsAdditional(form)
+    return createGoodsAddition(form)
   },
   onDone: () => {
     emit('success')

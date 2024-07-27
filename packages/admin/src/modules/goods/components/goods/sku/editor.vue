@@ -33,8 +33,8 @@ const headers: {
   { label: '价格', key: 'price', required: true },
   { label: '划线价', key: 'originalPrice', required: false },
   { label: '成本价', key: 'costPrice', required: false },
-  { label: '库存', key: 'stock', required: false },
-  { label: '库存预警', key: 'alertStock', required: false },
+  { label: '库存', key: 'inventory', required: false },
+  { label: '库存预警', key: 'inventoryEarlyWarning', required: false },
   { label: '重量', key: 'weight', required: false },
   { label: '体积', key: 'volume', required: false },
 ]
@@ -79,8 +79,8 @@ watch(
             price: sku?.price || 0,
             originalPrice: sku?.originalPrice || 0,
             costPrice: sku?.costPrice || 0,
-            stock: sku?.stock || 0,
-            alertStock: sku?.alertStock || 0,
+            inventory: sku?.inventory || 0,
+            inventoryEarlyWarning: sku?.inventoryEarlyWarning || 0,
             weight: sku?.weight || 0,
             volume: sku?.volume || 0,
           })
@@ -115,7 +115,7 @@ function handleValueChange(key: keyof IGoodsSkuFormData, value: number) {
 
 <template>
   <div class="flex-(~ col) b-(~ solid $color-border-2) p-$page-padding-sm gap-$page-padding-sm w-full rounded">
-    <a-alert v-if="skus.filter(item => item.price <= 0).length > 0" type="error">
+    <a-alert v-if="skus.filter(item => (item.price || 0) <= 0).length > 0" type="error">
       请输入价格信息
     </a-alert>
 
@@ -164,14 +164,14 @@ function handleValueChange(key: keyof IGoodsSkuFormData, value: number) {
           <FormPriceInput v-model="sku.costPrice" size="small" />
         </div>
         <div>
-          <FormNumberInput v-model="sku.stock" size="small">
+          <FormNumberInput v-model="sku.inventory" size="small">
             <template #suffix>
               {{ unit }}
             </template>
           </FormNumberInput>
         </div>
         <div>
-          <FormNumberInput v-model="sku.alertStock" size="small">
+          <FormNumberInput v-model="sku.inventoryEarlyWarning" size="small">
             <template #suffix>
               {{ unit }}
             </template>
@@ -202,13 +202,13 @@ function handleValueChange(key: keyof IGoodsSkuFormData, value: number) {
         规格总数: {{ skus.length }}
       </span>
       <span>
-        库存总数: {{ skus.map(sku => sku.stock).reduce((a, b) => a + b, 0) }}
+        库存总数: {{ skus.map(sku => sku.inventory || 0).reduce((a, b) => a + b, 0) }}
       </span>
       <span>
-        平均价格: {{ skus.map(sku => sku.price).reduce((a, b) => a + b, 0) / skus.length }} 元
+        平均价格: {{ skus.map(sku => sku.price || 0).reduce((a, b) => a + b, 0) / skus.length }} 元
       </span>
       <span>
-        平均成本: {{ skus.map(sku => sku.costPrice).reduce((a, b) => a + b, 0) / skus.length }} 元
+        平均成本: {{ skus.map(sku => sku.costPrice || 0).reduce((a, b) => a + b, 0) / skus.length }} 元
       </span>
     </div>
   </div>

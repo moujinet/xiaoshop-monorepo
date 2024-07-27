@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { GoodsAdditionalModal } from '@/goods/components'
+import { GoodsAdditionModal } from '@/goods/components'
 
 import {
-  deleteGoodsAdditional,
-  fetchGoodsAdditionalList,
+  deleteGoodsAddition,
+  fetchGoodsAdditionList,
 } from '@/goods/apis'
 
 defineOptions({
@@ -18,7 +18,7 @@ const columns = [
   { title: '操作', slotName: 'actions', width: 100 },
 ]
 
-const { loading, data, refreshData } = fetchGoodsAdditionalList()
+const { loading, data, refreshData } = fetchGoodsAdditionList()
 
 refreshData()
 
@@ -29,7 +29,7 @@ function handleDelete(id: number) {
     },
   })
 
-  deleteGoodsAdditional(id)
+  deleteGoodsAddition(id)
     .then(() => {
       message.success('删除成功')
     })
@@ -42,11 +42,11 @@ function handleDelete(id: number) {
 <template>
   <CommonContainer flexible>
     <template #extra>
-      <GoodsAdditionalModal @success="refreshData">
+      <GoodsAdditionModal @success="refreshData">
         <a-button type="primary">
           创建附加服务
         </a-button>
-      </GoodsAdditionalModal>
+      </GoodsAdditionModal>
     </template>
 
     <CommonCard :loading="loading">
@@ -80,11 +80,11 @@ function handleDelete(id: number) {
 
         <template #actions="{ record }">
           <a-space>
-            <GoodsAdditionalModal :id="record.id" @success="refreshData">
+            <GoodsAdditionModal :id="record.id" @success="refreshData">
               <a-button type="text">
                 编辑
               </a-button>
-            </GoodsAdditionalModal>
+            </GoodsAdditionModal>
 
             <CommonConfirm @ok="handleDelete(record.id)" />
           </a-space>

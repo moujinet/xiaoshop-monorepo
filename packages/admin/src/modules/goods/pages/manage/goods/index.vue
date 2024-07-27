@@ -1,17 +1,23 @@
 <script lang="ts" setup>
 import {
   GOODS_STATUSES,
-  GOODS_TYPES,
-  GoodsStatusEnum,
-  GoodsTypeEnum,
+  GoodsStatus,
+  GoodsType,
   type IGoods,
 } from '@xiaoshop/schema'
-import type { TableColumnData } from '@arco-design/web-vue'
+import type { TableColumnData, TableExpandable } from '@arco-design/web-vue'
 import { DEFAULT_PAGE_SIZE } from '~/constants/defaults'
 import {
+  GoodsBatchSetupModal,
+  GoodsInfoBlock,
+  GoodsInventoryModal,
   GoodsSearchForm,
+  GoodsSkuExpandList,
 } from '@/goods/components'
 import {
+  batchSoftDelete,
+  batchUpdate,
+  copyToDraft,
   fetchGoodsPages,
 } from '@/goods/apis'
 
@@ -28,9 +34,8 @@ const expandedRowKeys = ref<Array<string | number>>([])
 
 const columns: TableColumnData[] = [
   { title: '商品信息', dataIndex: 'name', slotName: 'name' },
-  { title: '商品类型', dataIndex: 'type', slotName: 'type', width: 100 },
   { title: '价格', dataIndex: 'price', slotName: 'price', width: 100, align: 'right' },
-  { title: '库存', dataIndex: 'stock', slotName: 'stock', width: 100, align: 'right' },
+  { title: '库存', dataIndex: 'inventory', slotName: 'inventory', width: 100, align: 'right' },
   { title: '销量', dataIndex: 'sales', slotName: 'sales', width: 100, align: 'right' },
   { title: '排序', dataIndex: 'sort', slotName: 'sort', titleSlotName: 'sortTitle', width: 100, align: 'right' },
   { title: '更新时间', dataIndex: 'updatedTime', slotName: 'updatedTime', width: 140, align: 'right' },
@@ -48,10 +53,10 @@ const searchForm = reactive({
   brandId: 0,
   tagId: 0,
   price: [],
-  stock: [],
+  inventory: [],
   sales: [],
   inStockTime: [],
-  soldOutTime: [],
+  stockedTime: [],
   createdTime: [],
   page: 1,
   pagesize: DEFAULT_PAGE_SIZE,
@@ -67,46 +72,54 @@ const message = useMessage({
   },
 })
 
+const expandable = reactive<TableExpandable>({
+  expandedRowRender: (record) => {
+    return h(GoodsSkuExpandList, { id: record.id, unit: record.unit })
+  },
+})
+
 watch(
   () => route.query,
   () => {
     const formData = searchForm as Record<string, string | number | any[]>
 
-    Object.keys(route.query).forEach((key) => {
-      if (['type', 'status', 'keywordType', 'keyword'].includes(key))
-        formData[key] = route.query[key] as string
-      else if (['price', 'stock', 'sales'].includes(key))
-        formData[key] = (route.query[key] as string).split(',').map(Number)
-      else if (['inStockTime', 'soldOutTime', 'createdTime'].includes(key))
-        formData[key] = (route.query[key] as string).split(',')
-      else
-        formData[key] = Number(route.query[key] as string)
-    })
+    Object.keys(route.query)
+      .forEach((key) => {
+        if (['type', 'status', 'source', 'keywordType', 'keyword'].includes(key))
+          formData[key] = route.query[key] as string
+        else if (['price', 'inventory', 'sales'].includes(key))
+          formData[key] = (route.query[key] as string).split(',').map(Number)
+        else if (['inStockTime', 'stockedTime', 'createdTime'].includes(key))
+          formData[key] = (route.query[key] as string).split(',')
+        else
+          formData[key] = Number(route.query[key] as string)
+      })
 
     selectedKeys.value = []
     expandedRowKeys.value = []
-    refreshData(transformSearchQuery())
+
+    searchData()
   },
   { immediate: true },
 )
 
-function transformSearchQuery() {
+function searchData() {
   const formData = searchForm as Record<string, string | number | any[]>
   const search: Record<string, string> = {}
 
-  if (formData.keywordType && formData.keyword)
+  if (formData.keyword !== '')
     search[formData.keywordType as string] = formData.keyword as string
 
   Object.keys(formData)
     .filter(k => !['keyword', 'keywordType'].includes(k))
     .forEach((key) => {
-      if (['price', 'stock', 'sales', 'inStockTime', 'soldOutTime', 'createdTime'].includes(key))
+      if (['price', 'inventory', 'sales', 'inStockTime', 'stockedTime', 'createdTime'].includes(key))
         search[key] = (formData[key] as []).join(',')
       else
         search[key] = formData[key] as string
     })
 
-  return { ...removeEmpty(search, true, ['all']) }
+  refreshData({ ...removeEmpty(search, true, ['all']) })
 }
 
 function handleRefresh() {
@@ -116,11 +129,38 @@ function handleRefresh() {
   expandedRowKeys.value = []
 
   if (searchForm.page === 1)
-    refreshData(transformSearchQuery())
+    searchData()
+}
+
+function handleReset() {
+  searchForm.price = []
+  searchForm.inventory = []
+  searchForm.sales = []
+  searchForm.inStockTime = []
+  searchForm.stockedTime = []
+  searchForm.createdTime = []
+
+  handleSearch()
 }
 
 function handleSearch() {
-  router.replace({ query: { ...transformSearchQuery(), page: 1 } })
+  const formData = searchForm as Record<string, string | number | any[]>
+  const search: Record<string, string> = {}
+
+  Object.keys(formData)
+    .forEach((key) => {
+      if (['price', 'inventory', 'sales', 'inStockTime', 'stockedTime', 'createdTime'].includes(key))
+        search[key] = (formData[key] as []).join(',')
+      else
+        search[key] = formData[key] as string
+    })
+
+  router.replace({
+    query: {
+      ...removeEmpty(search, true, ['all']),
+      page: 1,
+    },
+  })
 }
 
 function handleTabsChange(status: string | number) {
@@ -135,43 +175,34 @@ function handlePageSizeChange(size: number) {
   router.replace({ query: { ...route.query, page: 1, size } })
 }
 
-function handleGoodsSortChange(id: number, sort: number) {
-  updateGoodsSort(id, sort)
+function handleGoodsSortChange(id: IGoods['id'], sort: number) {
+  batchUpdate([id], { sort })
     .then(() => {
       message.success('修改排序成功')
     })
 }
 
 function handleGoodsCopy(id: IGoods['id']) {
-  copyGoodsToDraft(id).then(() => {
-    searchForm.status = GoodsStatusEnum.DRAFT
+  copyToDraft(id).then(() => {
+    searchForm.status = GoodsStatus.DRAFT
     message.success('复制成功')
   })
 }
 
-/**
- * 批量删除
- */
 function handleBatchDelete(ids: IGoods['id'][]) {
-  batchDeleteGoods(ids).then(() => {
+  batchSoftDelete(ids).then(() => {
     message.success('删除成功')
   })
 }
 
-/**
- * 批量上架
- */
 function handleBatchInStock(ids: IGoods['id'][]) {
-  setGoodsInStock(ids).then(() => {
+  batchUpdate(ids, { status: GoodsStatus.IN_STOCK }).then(() => {
     message.success('上架成功')
   })
 }
 
-/**
- * 批量下架
- */
 function handleBatchSoldOut(ids: IGoods['id'][]) {
-  setGoodsSoldOut(ids).then(() => {
+  batchUpdate(ids, { status: GoodsStatus.STOCKED }).then(() => {
     message.success('下架成功')
   })
 }
@@ -183,7 +214,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
       <a-button
         v-permission="['shop.goods.manage.goods.create']"
         type="primary"
-        @click="$router.push({ path: '/goods/manage/goods/create', query: { type: GoodsTypeEnum.ENTITY } })"
+        @click="$router.push({ path: '/goods/manage/goods/create', query: { type: GoodsType.ENTITY } })"
       >
         发布商品
       </a-button>
@@ -197,7 +228,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               <a-tab-pane key="all" title="全部" />
               <a-tab-pane v-for="item in GOODS_STATUSES" :key="item.value">
                 <template #title>
-                  <a-badge :count="item.value === GoodsStatusEnum.WARNING ? alarms : 0" :offset="[6, -3]" dot>
+                  <a-badge :count="item.value === GoodsStatus.STOCKED ? alarms : 0" :offset="[6, -3]" dot>
                     {{ item.label }}
                   </a-badge>
                 </template>
@@ -215,7 +246,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               </CommonConfirm>
 
               <a-button
-                v-if="searchForm.status === GoodsStatusEnum.SOLD_OUT || searchForm.status === GoodsStatusEnum.DRAFT"
+                v-if="searchForm.status === GoodsStatus.SOLD_OUT || searchForm.status === GoodsStatus.DRAFT"
                 :disabled="selectedKeys.length === 0"
                 size="small"
                 @click="handleBatchInStock(selectedKeys)"
@@ -224,7 +255,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               </a-button>
 
               <a-button
-                v-if="searchForm.status === GoodsStatusEnum.IN_STOCK"
+                v-if="searchForm.status === GoodsStatus.IN_STOCK"
                 :disabled="selectedKeys.length === 0"
                 size="small"
                 @click="handleBatchSoldOut(selectedKeys)"
@@ -249,6 +280,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
         :columns="columns"
         :data="data && data.result"
         :bordered="false"
+        :expandable="expandable"
         :row-selection="{
           type: 'checkbox',
           showCheckedAll: true,
@@ -283,19 +315,15 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
         </template>
 
         <template #name="{ record }">
-          <GoodsInfoBadge :goods="record" />
-        </template>
-
-        <template #type="{ record }">
-          {{ GOODS_TYPES.find(item => item.value === record.type)?.label }}
+          <GoodsInfoBlock :goods="record" />
         </template>
 
         <template #price="{ record }">
           <CommonLabel :value="record.price" type="price" suffix="元" />
         </template>
 
-        <template #stock="{ record }">
-          {{ record.stock }} <small class="text-gray">{{ record.unit }}</small>
+        <template #inventory="{ record }">
+          {{ record.inventory }} <small class="text-gray">{{ record.unit }}</small>
         </template>
 
         <template #sales="{ record }">
@@ -325,23 +353,23 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
         <template #actions="{ record }">
           <a-button
-            v-if="record.status !== GoodsStatusEnum.IN_STOCK"
-            v-permission="['shop.goods.manage.goods.edit']"
+            v-if="record.status !== GoodsStatus.IN_STOCK"
+            v-permission="['shop.goods.manage.goods.update']"
             type="text"
-            @click="$router.push({ path: '/goods/manage/goods/edit', query: { id: record.id } })"
+            @click="$router.push({ path: '/goods/manage/goods/update', query: { id: record.id } })"
           >
             编辑
           </a-button>
 
-          <GoodsStockEditModal
-            v-if="$permission(['shop.goods.manage.goods.edit'])"
+          <GoodsInventoryModal
+            v-if="$permission(['shop.goods.manage.goods.update'])"
             :id="record.id"
             @success="handleRefresh"
           >
             <a-button type="text">
               库存
             </a-button>
-          </GoodsStockEditModal>
+          </GoodsInventoryModal>
 
           <a-dropdown :hide-on-select="false">
             <a-button type="text">
@@ -350,7 +378,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
             <template #content>
               <a-doption
-                v-if="record.status === GoodsStatusEnum.SOLD_OUT || record.status === GoodsStatusEnum.DRAFT"
+                v-if="record.status === GoodsStatus.SOLD_OUT || record.status === GoodsStatus.DRAFT"
                 v-permission="['shop.goods.manage.goods.in-stock']"
               >
                 <a-popconfirm
@@ -362,7 +390,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               </a-doption>
 
               <a-doption
-                v-if="record.status === GoodsStatusEnum.IN_STOCK"
+                v-if="record.status === GoodsStatus.IN_STOCK"
                 v-permission="['shop.goods.manage.goods.sold-out']"
               >
                 <a-popconfirm
@@ -400,7 +428,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
     </CommonCard>
 
     <template #header>
-      <GoodsSearchForm v-model:search="searchForm" @search="handleSearch" />
+      <GoodsSearchForm v-model:search="searchForm" @search="handleSearch" @reset="handleReset" />
     </template>
   </CommonContainer>
 </template>

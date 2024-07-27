@@ -3,10 +3,10 @@ import type {
   IGoodsBasicInfo,
   IGoodsBasicInfoFormData,
   IGoodsDetailInfo,
+  IGoodsInventoryInfo,
   IGoodsListItem,
   IGoodsSku,
   IGoodsSpec,
-  IGoodsStockInfo,
 } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
@@ -49,16 +49,16 @@ export function fetchGoodsBasicInfo(
 /**
  * 获取商品库存信息
  *
- * @api get /goods/detail/stock
+ * @api get /goods/detail/inventory
  * @param id IGoods['id']
- * @returns IUseRequestReturn<IGoodsStockInfo>
+ * @returns IUseRequestReturn<IGoodsInventoryInfo>
  */
-export function fetchGoodsStockInfo(
+export function fetchGoodsInventoryInfo(
   id: IGoods['id'],
-): IUseRequestReturn<IGoodsStockInfo> {
-  return useRequest<IGoodsStockInfo>({
+): IUseRequestReturn<IGoodsInventoryInfo> {
+  return useRequest<IGoodsInventoryInfo>({
     method: 'get',
-    url: '/goods/detail/stock',
+    url: '/goods/detail/inventory',
     params: {
       id,
     },
@@ -137,18 +137,18 @@ export function updateBasicInfo(
 /**
  * 更新商品库存信息
  *
- * @api put /goods/stock/update
+ * @api put /goods/inventory/update
  * @param id IGoods['id']
- * @param data IFormData<IGoodsStockInfo>
+ * @param data IFormData<IGoodsInventoryInfo>
  * @returns Promise<any>
  */
-export function updateStockInfo(
+export function updateInventoryInfo(
   id: IGoods['id'],
-  data: IFormData<IGoodsStockInfo>,
+  data: IFormData<IGoodsInventoryInfo>,
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/stock/update',
+    url: '/goods/inventory/update',
     data,
     params: {
       id,

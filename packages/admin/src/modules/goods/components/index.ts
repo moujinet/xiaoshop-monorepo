@@ -1,4 +1,4 @@
-export * from './additional'
+export * from './addition'
 export * from './attributes'
 export * from './brand'
 export * from './category'

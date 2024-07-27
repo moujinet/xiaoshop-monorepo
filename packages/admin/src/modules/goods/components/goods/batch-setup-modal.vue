@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import {
-  EnabledEnum,
+  Enabled,
   GOODS_BUY_BTN_TYPES,
-  GOODS_LOGISTICS_FREIGHT_CHARGE_MODES,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsFreightChargeModeEnum,
+  GOODS_FREIGHT_CHARGE_MODES,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
   type IGoods,
   type IGoodsBatchUpdateFormData,
 } from '@xiaoshop/schema'
 
 import {
-  GoodsAdditionalCheckbox,
+  GoodsAdditionCheckbox,
   GoodsBrandSelector,
   GoodsDeliveryModeCheckbox,
   GoodsGroupSelector,
@@ -130,21 +130,21 @@ function handleSubmit(done: any) {
                 </FormGroup>
 
                 <FormGroup v-if="selected.includes('additions')" title="附加服务">
-                  <GoodsAdditionalCheckbox v-model="formData.additionIds" />
+                  <GoodsAdditionCheckbox v-model="formData.additionIds" />
                 </FormGroup>
 
                 <FormGroup v-if="selected.includes('delivery')" title="配送方式">
-                  <GoodsDeliveryModeCheckbox v-model="formData.logisticsDeliveryModes" />
+                  <GoodsDeliveryModeCheckbox v-model="formData.deliveryModes" />
 
                   <CommonGroupTitle title="物流费用" class="my-6" />
-                  <a-form-item field="logisticsFreightChargeMode" label="物流费用" show-colon>
-                    <a-radio-group v-model="formData.logisticsFreightChargeMode" direction="vertical" :options="GOODS_LOGISTICS_FREIGHT_CHARGE_MODES" />
+                  <a-form-item field="freightChargeMode" label="物流费用" show-colon>
+                    <a-radio-group v-model="formData.freightChargeMode" direction="vertical" :options="GOODS_FREIGHT_CHARGE_MODES" />
                   </a-form-item>
 
                   <div class="mt-4 w-1/2">
-                    <template v-if="formData.logisticsFreightChargeMode === GoodsLogisticsFreightChargeModeEnum.COD">
-                      <a-form-item field="logisticsFreight" label="统一运费" show-colon>
-                        <FormNumberInput v-model="formData.logisticsFreight" placeholder="0.00">
+                    <template v-if="formData.freightChargeMode === GoodsFreightChargeMode.COD">
+                      <a-form-item field="freight" label="统一运费" show-colon>
+                        <FormNumberInput v-model="formData.freight" placeholder="0.00">
                           <template #suffix>
                             元
                           </template>
@@ -152,9 +152,9 @@ function handleSubmit(done: any) {
                       </a-form-item>
                     </template>
 
-                    <template v-if="formData.logisticsFreightChargeMode === GoodsLogisticsFreightChargeModeEnum.TEMPLATE">
+                    <template v-if="formData.freightChargeMode === GoodsFreightChargeMode.TEMPLATE">
                       <a-form-item field="logisticsFreightTemplateId" label="运费模板" show-colon>
-                        <GoodsLogisticsTemplateSelector v-model="formData.logisticsFreightTemplateId" />
+                        <GoodsLogisticsTemplateSelector v-model="formData.freightTemplateId" />
                       </a-form-item>
                     </template>
                   </div>
@@ -162,10 +162,10 @@ function handleSubmit(done: any) {
 
                 <FormGroup v-if="selected.includes('limit')" title="商品限购">
                   <a-form-item field="enablePurchaseLimits" label="商品限购" show-colon>
-                    <a-switch v-model="formData.enablePurchaseLimits" checked-text="启用" unchecked-text="关闭" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" />
+                    <a-switch v-model="formData.enablePurchaseLimits" checked-text="启用" unchecked-text="关闭" :checked-value="Enabled.YES" :unchecked-value="Enabled.NO" />
                   </a-form-item>
 
-                  <a-form-item v-if="formData.enablePurchaseLimits === EnabledEnum.YES" field="purchaseLimit" label="限购数量" show-colon>
+                  <a-form-item v-if="formData.enablePurchaseLimits === Enabled.YES" field="purchaseLimit" label="限购数量" show-colon>
                     <div class="form-item-xs">
                       <FormNumberInput v-model="formData.purchaseMaxQty">
                         <template #suffix>
@@ -191,7 +191,7 @@ function handleSubmit(done: any) {
                     <a-radio-group v-model="formData.buyBtnNameType" direction="vertical" :options="GOODS_BUY_BTN_TYPES" />
                   </a-form-item>
 
-                  <a-form-item v-if="formData.buyBtnNameType === GoodsBuyBtnTypeEnum.CUSTOM" field="buyButtonName" label="自定义按钮名称" show-colon>
+                  <a-form-item v-if="formData.buyBtnNameType === GoodsBuyBtnType.CUSTOM" field="buyButtonName" label="自定义按钮名称" show-colon>
                     <div class="form-item-xs">
                       <a-input v-model="formData.buyBtnName" placeholder="请输入 6 个字以内的按钮名称" :max-length="6" />
                     </div>

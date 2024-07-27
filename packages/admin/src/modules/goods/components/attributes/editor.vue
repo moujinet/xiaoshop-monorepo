@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { TableColumnData } from '@arco-design/web-vue'
-import { GoodsAttributeOptionTypeEnum, type IGoodsAttribute } from '@xiaoshop/schema'
+import { GoodsAttributeOptionType, type IGoodsAttribute } from '@xiaoshop/schema'
 import { GoodsAttributeTemplateSelector } from '@/goods/components'
 import { fetchGoodsAttributeTemplateDetail } from '@/goods/apis'
 
@@ -58,7 +58,7 @@ watch(
 
 function handleAddAttribute() {
   attributes.value.push({
-    type: GoodsAttributeOptionTypeEnum.INPUT,
+    type: GoodsAttributeOptionType.INPUT,
     name: '',
     options: [],
     values: [],
@@ -90,19 +90,19 @@ function handleAddAttribute() {
           </template>
 
           <template #options="{ record }">
-            <a-radio-group v-if="record.type === GoodsAttributeOptionTypeEnum.RADIO" v-model="record.values[0]">
+            <a-radio-group v-if="record.type === GoodsAttributeOptionType.RADIO" v-model="record.values[0]">
               <a-radio v-for="item in record.options" :key="item" :value="item">
                 {{ item }}
               </a-radio>
             </a-radio-group>
 
-            <a-checkbox-group v-if="record.type === GoodsAttributeOptionTypeEnum.CHECKBOX" v-model="record.values">
+            <a-checkbox-group v-if="record.type === GoodsAttributeOptionType.CHECKBOX" v-model="record.values">
               <a-checkbox v-for="item in record.options" :key="item" :value="item">
                 {{ item }}
               </a-checkbox>
             </a-checkbox-group>
 
-            <a-input v-if="record.type === GoodsAttributeOptionTypeEnum.INPUT" v-model="record.values[0]" />
+            <a-input v-if="record.type === GoodsAttributeOptionType.INPUT" v-model="record.values[0]" />
           </template>
 
           <template #actions="{ record }">

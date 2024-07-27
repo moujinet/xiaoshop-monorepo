@@ -1,22 +1,22 @@
 <script lang="ts" setup>
 import {
-  AssetTypeEnum,
+  AssetType,
   GOODS_BUY_BTN_TYPES,
-  GOODS_LOGISTICS_BACK_FREIGHT_BYS,
-  GOODS_LOGISTICS_FREIGHT_CHARGE_MODES,
+  GOODS_FREIGHT_CHARGE_MODES,
   GOODS_PUBLISH_MODES,
-  GoodsBuyBtnTypeEnum,
-  GoodsLogisticsBackFreightByEnum,
-  GoodsLogisticsFreightChargeModeEnum,
-  GoodsPublishModeEnum,
-  GoodsTypeEnum,
+  GOODS_RETURNS_FREIGHT_BYS,
+  GoodsBuyBtnType,
+  GoodsFreightChargeMode,
+  GoodsPublishMode,
+  GoodsReturnsFreightBy,
+  GoodsType,
   type IGoodsBasicInfoFormData,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 import { AssetsBrowser } from '@/assets/components'
 import {
-  GoodsAdditionalCheckbox,
-  GoodsAdditionalModal,
+  GoodsAdditionCheckbox,
+  GoodsAdditionModal,
   GoodsAttributesEditor,
   GoodsBrandModal,
   GoodsBrandSelector,
@@ -51,7 +51,7 @@ const protectionRef = ref()
 const templateRef = ref()
 
 const form = reactive<IGoodsBasicInfoFormData>({
-  type: GoodsTypeEnum.ENTITY,
+  type: GoodsType.ENTITY,
   name: '',
   video: '',
   images: [],
@@ -63,16 +63,15 @@ const form = reactive<IGoodsBasicInfoFormData>({
   brandId: 0,
   protectionIds: [],
   additionIds: [],
-  attributeTemplateId: 0,
   attributes: [],
-  logisticsDeliveryModes: [LogisticsDeliveryModeEnum.EXPRESS],
-  logisticsFreight: 0,
-  logisticsFreightTemplateId: 0,
-  logisticsFreightChargeMode: GoodsLogisticsFreightChargeModeEnum.TEMPLATE,
-  logisticsBackFreightBy: GoodsLogisticsBackFreightByEnum.SELLER,
-  publishMode: GoodsPublishModeEnum.STOCK,
+  deliveryModes: [LogisticsDeliveryMode.EXPRESS],
+  freight: 0,
+  freightTemplateId: 0,
+  freightChargeMode: GoodsFreightChargeMode.TEMPLATE,
+  returnsFreightBy: GoodsReturnsFreightBy.SELLER,
+  publishMode: GoodsPublishMode.STOCKED,
   autoInStockAt: '',
-  buyBtnNameType: GoodsBuyBtnTypeEnum.DEFAULT,
+  buyBtnNameType: GoodsBuyBtnType.DEFAULT,
   buyBtnName: '',
 })
 
@@ -99,13 +98,12 @@ watch(
         form.brandId = res.brand ? res.brand.id : 0
         form.additionIds = res.additions.map(addition => addition.id)
         form.protectionIds = res.protections.map(protection => protection.id)
-        form.attributeTemplateId = res.attributeTemplateId || 0
         form.attributes = res.attributes
-        form.logisticsDeliveryModes = res.logisticsDeliveryModes
-        form.logisticsFreight = res.logisticsFreight
-        form.logisticsFreightTemplateId = res.logisticsFreightTemplateId
-        form.logisticsFreightChargeMode = res.logisticsFreightChargeMode
-        form.logisticsBackFreightBy = res.logisticsBackFreightBy
+        form.deliveryModes = res.deliveryModes
+        form.freight = res.freight
+        form.freightTemplateId = res.freightTemplateId
+        form.freightChargeMode = res.freightChargeMode
+        form.returnsFreightBy = res.returnsFreightBy
         form.publishMode = res.publishMode
         form.autoInStockAt = res.autoInStockAt
         form.buyBtnNameType = res.buyBtnNameType
@@ -149,7 +147,7 @@ defineExpose({
       </a-form-item>
 
       <a-form-item field="video" label="商品视频" show-colon>
-        <AssetsBrowser v-model:file="form.video" :type="AssetTypeEnum.VIDEO" />
+        <AssetsBrowser v-model:file="form.video" :type="AssetType.VIDEO" />
 
         <template #extra>
           <div>必须上传 .mp4 视频格式</div>
@@ -224,14 +222,14 @@ defineExpose({
       </a-form-item>
 
       <a-form-item field="additionIds" label="附加服务" show-colon>
-        <GoodsAdditionalCheckbox ref="additionalRef" v-model="form.additionIds" />
+        <GoodsAdditionCheckbox ref="additionalRef" v-model="form.additionIds" />
 
         <template #extra>
-          <GoodsAdditionalModal @success="() => additionalRef.refresh()">
+          <GoodsAdditionModal @success="() => additionalRef.refresh()">
             <CommonLink type="primary">
               新建附加服务
             </CommonLink>
-          </GoodsAdditionalModal>
+          </GoodsAdditionModal>
         </template>
       </a-form-item>
 
@@ -249,44 +247,40 @@ defineExpose({
     </FormGroup>
 
     <!-- 商品参数 -->
-    <GoodsAttributesEditor
-      v-model:template-id="form.attributeTemplateId"
-      v-model:attributes="form.attributes"
-      :default-template-id="form.attributeTemplateId"
-    />
+    <GoodsAttributesEditor v-model:attributes="form.attributes" />
 
     <!-- 关联商品 -->
     <FormGroup title="关联商品" />
 
     <!-- 物流信息 -->
     <FormGroup title="物流信息">
-      <a-form-item field="logisticsDeliveryModes" label="配送方式" :rules="[{ required: true, message: '请选择配送方式' }]" show-colon>
-        <GoodsDeliveryModeCheckbox v-model="form.logisticsDeliveryModes" />
+      <a-form-item field="deliveryModes" label="配送方式" :rules="[{ required: true, message: '请选择配送方式' }]" show-colon>
+        <GoodsDeliveryModeCheckbox v-model="form.deliveryModes" />
       </a-form-item>
 
-      <a-form-item field="logisticsFreightChargeMode" label="物流费用" show-colon>
-        <a-radio-group v-model="form.logisticsFreightChargeMode" direction="vertical" :options="GOODS_LOGISTICS_FREIGHT_CHARGE_MODES" />
+      <a-form-item field="freightChargeMode" label="物流费用" show-colon>
+        <a-radio-group v-model="form.freightChargeMode" direction="vertical" :options="GOODS_FREIGHT_CHARGE_MODES" />
       </a-form-item>
 
       <a-form-item
-        v-if="form.logisticsFreightChargeMode === GoodsLogisticsFreightChargeModeEnum.STD"
-        field="logisticsFreight"
+        v-if="form.freightChargeMode === GoodsFreightChargeMode.STD"
+        field="freight"
         label="统一运费"
         show-colon
       >
         <div class="form-item-xs">
-          <FormPriceInput v-model="form.logisticsFreight" placeholder="0.00" />
+          <FormPriceInput v-model="form.freight" placeholder="0.00" />
         </div>
       </a-form-item>
 
       <a-form-item
-        v-if="form.logisticsFreightChargeMode === GoodsLogisticsFreightChargeModeEnum.TEMPLATE"
-        field="logisticsFreightTemplateId"
+        v-if="form.freightChargeMode === GoodsFreightChargeMode.TEMPLATE"
+        field="freightTemplateId"
         label="运费模板"
         show-colon
       >
         <div class="form-item-sm">
-          <GoodsLogisticsTemplateSelector ref="templateRef" v-model="form.logisticsFreightTemplateId" />
+          <GoodsLogisticsTemplateSelector ref="templateRef" v-model="form.freightTemplateId" />
         </div>
 
         <template #extra>
@@ -298,7 +292,7 @@ defineExpose({
         </template>
       </a-form-item>
 
-      <a-form-item v-if="form.logisticsFreightChargeMode === GoodsLogisticsFreightChargeModeEnum.COD">
+      <a-form-item v-if="form.freightChargeMode === GoodsFreightChargeMode.COD">
         <div class="form-item">
           <a-alert type="warning" title="提醒" closable>
             请谨慎选择, 「运费到付」会影响到买家付款时的运费, 这种情况下, 买家需要自行支付运费。
@@ -306,8 +300,8 @@ defineExpose({
         </div>
       </a-form-item>
 
-      <a-form-item field="logisticsBackFreightBy" label="退货运费" show-colon>
-        <a-radio-group v-model="form.logisticsBackFreightBy" direction="vertical" :options="GOODS_LOGISTICS_BACK_FREIGHT_BYS" />
+      <a-form-item field="returnsFreightBy" label="退货运费" show-colon>
+        <a-radio-group v-model="form.returnsFreightBy" direction="vertical" :options="GOODS_RETURNS_FREIGHT_BYS" />
 
         <template #extra>
           设置「商家承担退货运费」后，买家在退货时不需要支付运费，运费由物流公司向商家收取。
@@ -321,7 +315,7 @@ defineExpose({
         <a-radio-group v-model="form.publishMode" direction="vertical" :options="GOODS_PUBLISH_MODES" />
       </a-form-item>
 
-      <a-form-item v-if="form.publishMode === GoodsPublishModeEnum.AUTO" field="autoInStockAt" label="定时上架" show-colon>
+      <a-form-item v-if="form.publishMode === GoodsPublishMode.AUTO" field="autoInStockAt" label="定时上架" show-colon>
         <a-date-picker v-model="form.autoInStockAt" format="YYYY-MM-DD HH:mm" show-time />
 
         <template #extra>
@@ -333,7 +327,7 @@ defineExpose({
         <a-radio-group v-model="form.buyBtnNameType" direction="vertical" :options="GOODS_BUY_BTN_TYPES" />
       </a-form-item>
 
-      <a-form-item v-if="form.buyBtnNameType === GoodsBuyBtnTypeEnum.CUSTOM" field="buyButtonName" label="自定义按钮名称" show-colon>
+      <a-form-item v-if="form.buyBtnNameType === GoodsBuyBtnType.CUSTOM" field="buyButtonName" label="自定义按钮名称" show-colon>
         <div class="form-item-sm">
           <a-input v-model="form.buyBtnName" placeholder="请输入 6 个字以内的按钮名称" :max-length="6" />
         </div>

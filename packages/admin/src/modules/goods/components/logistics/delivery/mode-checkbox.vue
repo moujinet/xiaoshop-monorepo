@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   LOGISTICS_DELIVERY_MODES,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 
 defineOptions({
@@ -17,7 +17,7 @@ const settings = useSettings().getOptions(
 function isDisabled(value: string) {
   const key = `enable${titleCase(value)}`
 
-  return value !== LogisticsDeliveryModeEnum.NONE && !settings[key]
+  return value !== LogisticsDeliveryMode.NONE && !settings[key]
 }
 </script>
 

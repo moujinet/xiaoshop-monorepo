@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   GOODS_ATTRIBUTE_OPTION_TYPES,
-  GoodsAttributeOptionTypeEnum,
+  GoodsAttributeOptionType,
   type IGoodsAttributeTemplateOption,
 } from '@xiaoshop/schema'
 
@@ -18,7 +18,7 @@ const formRef = ref()
 const visible = ref(false)
 const form = reactive<IGoodsAttributeTemplateOption>({
   name: '',
-  type: GoodsAttributeOptionTypeEnum.INPUT,
+  type: GoodsAttributeOptionType.INPUT,
   options: [],
   defaultValue: [],
 })
@@ -42,7 +42,7 @@ watch(
     }
     else {
       form.name = ''
-      form.type = GoodsAttributeOptionTypeEnum.INPUT
+      form.type = GoodsAttributeOptionType.INPUT
       form.options = []
       form.defaultValue = []
     }
@@ -51,7 +51,7 @@ watch(
 )
 
 function handleTypeChange(type: any) {
-  if (type !== GoodsAttributeOptionTypeEnum.INPUT) {
+  if (type !== GoodsAttributeOptionType.INPUT) {
     form.options = form.options.length === 0 ? [''] : form.options
   }
 }

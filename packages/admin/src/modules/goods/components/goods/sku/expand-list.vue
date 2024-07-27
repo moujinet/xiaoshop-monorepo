@@ -34,7 +34,7 @@ if (!skus.value?.length) {
 
       <template v-for="sku in skus" :key="sku.id">
         <span class="p-2">
-          <a-tooltip v-if="sku.stock <= sku.alertStock" content="库存低于预警库存" mini>
+          <a-tooltip v-if="sku.inventory <= sku.inventoryEarlyWarning" content="库存低于预警库存" mini>
             <CommonIcon class="text-orange text-4" name="mingcute:alert" active />
           </a-tooltip>
         </span>
@@ -50,11 +50,11 @@ if (!skus.value?.length) {
         <span class="cell text-right">
           <CommonLabel :value="sku.costPrice" type="price" suffix="元" />
         </span>
-        <span class="cell text-right" :class="{ 'text-danger font-500': sku.stock <= sku.alertStock }">
-          <CommonLabel :value="sku.stock" type="number" :suffix="props.unit || '件'" />
+        <span class="cell text-right" :class="{ 'text-danger font-500': sku.inventory <= sku.inventoryEarlyWarning }">
+          <CommonLabel :value="sku.inventory" type="number" :suffix="props.unit || '件'" />
         </span>
-        <span class="cell text-right" :class="{ 'text-danger font-500': sku.stock <= sku.alertStock }">
-          <CommonLabel :value="sku.alertStock" type="number" :suffix="props.unit || '件'" />
+        <span class="cell text-right" :class="{ 'text-danger font-500': sku.inventory <= sku.inventoryEarlyWarning }">
+          <CommonLabel :value="sku.inventoryEarlyWarning" type="number" :suffix="props.unit || '件'" />
         </span>
         <span class="cell text-right">
           <CommonLabel :value="sku.weight" type="number" suffix="kg" />

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {
-  EnabledEnum,
+  Enabled,
   type ILogisticsFreightTemplate,
   LOGISTICS_FREIGHT_TEMPLATE_CALC_MODES,
-  LogisticsFreightTemplateCalcModeEnum,
+  LogisticsFreightTemplateCalcMode,
 } from '@xiaoshop/schema'
 
 import {
@@ -31,9 +31,9 @@ const formRef = ref()
 const isEdit = computed(() => !!props.id && props.id !== 0)
 const form = reactive<IFormData<ILogisticsFreightTemplate>>({
   name: '',
-  calcMode: LogisticsFreightTemplateCalcModeEnum.WEIGHT,
+  calcMode: LogisticsFreightTemplateCalcMode.WEIGHT,
   rules: [],
-  enableFreeRules: EnabledEnum.NO,
+  enableFreeRules: Enabled.NO,
   freeRules: [],
 })
 const rules: IFormRules = {
@@ -64,9 +64,9 @@ const { visible, handleModalOk } = useForm({
     }
 
     form.name = ''
-    form.calcMode = LogisticsFreightTemplateCalcModeEnum.WEIGHT
+    form.calcMode = LogisticsFreightTemplateCalcMode.WEIGHT
     form.rules = []
-    form.enableFreeRules = EnabledEnum.NO
+    form.enableFreeRules = Enabled.NO
     form.freeRules = []
   },
   onUpdate: () => {
@@ -121,12 +121,12 @@ const { visible, handleModalOk } = useForm({
         <a-form-item field="enableFreeRules" label="指定包邮" show-colon>
           <a-switch
             v-model="form.enableFreeRules"
-            :checked-value="EnabledEnum.YES"
-            :unchecked-value="EnabledEnum.NO"
+            :checked-value="Enabled.YES"
+            :unchecked-value="Enabled.NO"
           />
         </a-form-item>
 
-        <a-form-item v-if="form.enableFreeRules === EnabledEnum.YES" field="freeRules" label="包邮地区" show-colon>
+        <a-form-item v-if="form.enableFreeRules === Enabled.YES" field="freeRules" label="包邮地区" show-colon>
           <GoodsLogisticsTemplateFreeRuleEditor v-model="form.freeRules" />
         </a-form-item>
       </a-form>

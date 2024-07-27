@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { EnabledEnum, type IGoodsSpec } from '@xiaoshop/schema'
+import { Enabled, type IGoodsSpec } from '@xiaoshop/schema'
 import { AssetsBrowser } from '@/assets/components'
 
 defineOptions({
@@ -13,7 +13,7 @@ const specs = defineModel<IGoodsSpec[]>('modelValue', {
 })
 
 function handleEnableImage(val: any) {
-  specs.value[0].enableImage = val ? EnabledEnum.YES : EnabledEnum.NO
+  specs.value[0].enableImage = val ? Enabled.YES : Enabled.NO
 
   if (!val) {
     specs.value[0].values.forEach((item) => {
@@ -26,7 +26,7 @@ function handleAddSpec() {
   specs.value.push({
     id: '',
     name: '',
-    enableImage: EnabledEnum.NO,
+    enableImage: Enabled.NO,
     values: [],
   })
 }
@@ -57,7 +57,7 @@ function handleAddSpecValue(index: number) {
               <a-input v-model="spec.name" placeholder="规格名" />
             </div>
 
-            <a-checkbox v-if="index === 0" :default-checked="spec.enableImage === EnabledEnum.YES" @change="handleEnableImage">
+            <a-checkbox v-if="index === 0" :default-checked="spec.enableImage === Enabled.YES" @change="handleEnableImage">
               添加规格图片
             </a-checkbox>
           </div>
@@ -74,7 +74,7 @@ function handleAddSpecValue(index: number) {
               <template v-for="(val, i) in spec.values" :key="i">
                 <div class="flex-(~ col v-center) gap-2 w-20">
                   <a-input v-model="val.name" placeholder="值" />
-                  <AssetsBrowser v-if="spec.enableImage === EnabledEnum.YES" v-model:file="val.image" />
+                  <AssetsBrowser v-if="spec.enableImage === Enabled.YES" v-model:file="val.image" />
                   <CommonConfirm btn-size="mini" @ok="spec.values?.splice(i, 1)" />
                 </div>
               </template>

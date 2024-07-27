@@ -1,24 +1,24 @@
 <script lang="ts" setup>
 import {
-  EnabledEnum,
-  GOODS_STOCK_DEDUCT_MODES,
-  GoodsStockDeductModeEnum,
+  Enabled,
+  GOODS_INVENTORY_DEDUCT_MODES,
+  GoodsInventoryDeductMode,
+  type IGoodsInventoryInfoFormData,
   type IGoodsSku,
   type IGoodsSpec,
-  type IGoodsStockInfoFormData,
 } from '@xiaoshop/schema'
 import {
   GoodsSkuEditor,
   GoodsSkuSpecsEditor,
 } from '@/goods/components'
 import {
+  fetchGoodsInventoryInfo,
   fetchGoodsSkuList,
   fetchGoodsSpecList,
-  fetchGoodsStockInfo,
 } from '@/goods/apis'
 
 defineOptions({
-  name: 'GoodsStockInfoForm',
+  name: 'GoodsInventoryInfoForm',
   inheritAttrs: false,
 })
 
@@ -30,26 +30,28 @@ const loading = ref(false)
 const formRef = ref()
 const specs = ref<IGoodsSpec[]>([])
 const skus = ref<IGoodsSku[]>([])
-const stockInfo = reactive<IGoodsStockInfoFormData>({
+const inventoryInfo = reactive<IGoodsInventoryInfoFormData>({
+  isMultiSkus: Enabled.NO,
   skuCode: '',
   price: 0,
   originalPrice: 0,
   costPrice: 0,
-  stock: 0,
-  alertStock: 0,
+  inventory: 0,
+  inventoryEarlyWarning: 0,
   weight: 0,
   volume: 0,
+  sales: 0,
   unit: '件',
-  enablePurchaseLimits: EnabledEnum.YES,
+  enablePurchaseLimits: Enabled.YES,
   purchaseMinQty: 1,
   purchaseMaxQty: 0,
-  stockDeductMode: GoodsStockDeductModeEnum.ORDER,
-  enableVipDiscount: EnabledEnum.YES,
+  inventoryDeductMode: GoodsInventoryDeductMode.ORDER,
+  enableVipDiscount: Enabled.YES,
 })
 
 const { refreshData: loadGoodsSpecs } = fetchGoodsSpecList(props.id || '')
 const { refreshData: loadGoodsSkus } = fetchGoodsSkuList(props.id || '')
-const { refreshData: loadGoodsStock } = fetchGoodsStockInfo(props.id || '')
+const { refreshData: loadGoodsStock } = fetchGoodsInventoryInfo(props.id || '')
 
 watch(
   () => props.id,
@@ -74,20 +76,22 @@ watch(
     }
 
     if (result[2]) {
-      stockInfo.skuCode = result[2].skuCode || ''
-      stockInfo.price = result[2].price || 0
-      stockInfo.originalPrice = result[2].originalPrice || 0
-      stockInfo.costPrice = result[2].costPrice || 0
-      stockInfo.stock = result[2].stock || 0
-      stockInfo.alertStock = result[2].alertStock || 0
-      stockInfo.weight = result[2].weight || 0
-      stockInfo.volume = result[2].volume || 0
-      stockInfo.unit = result[2].unit || '件'
-      stockInfo.enablePurchaseLimits = result[2].enablePurchaseLimits || EnabledEnum.YES
-      stockInfo.purchaseMinQty = result[2].purchaseMinQty || 1
-      stockInfo.purchaseMaxQty = result[2].purchaseMaxQty || 0
-      stockInfo.stockDeductMode = result[2].stockDeductMode || GoodsStockDeductModeEnum.ORDER
-      stockInfo.enableVipDiscount = result[2].enableVipDiscount || EnabledEnum.YES
+      inventoryInfo.isMultiSkus = result[2].isMultiSkus || Enabled.NO
+      inventoryInfo.skuCode = result[2].skuCode || ''
+      inventoryInfo.price = result[2].price || 0
+      inventoryInfo.originalPrice = result[2].originalPrice || 0
+      inventoryInfo.costPrice = result[2].costPrice || 0
+      inventoryInfo.inventory = result[2].inventory || 0
+      inventoryInfo.inventoryEarlyWarning = result[2].inventoryEarlyWarning || 0
+      inventoryInfo.weight = result[2].weight || 0
+      inventoryInfo.volume = result[2].volume || 0
+      inventoryInfo.unit = result[2].unit || '件'
+      inventoryInfo.sales = result[2].sales || 0
+      inventoryInfo.enablePurchaseLimits = result[2].enablePurchaseLimits || Enabled.YES
+      inventoryInfo.purchaseMinQty = result[2].purchaseMinQty || 1
+      inventoryInfo.purchaseMaxQty = result[2].purchaseMaxQty || 0
+      inventoryInfo.inventoryDeductMode = result[2].inventoryDeductMode || GoodsInventoryDeductMode.ORDER
+      inventoryInfo.enableVipDiscount = result[2].enableVipDiscount || Enabled.YES
     }
 
     loading.value = false
@@ -97,12 +101,14 @@ watch(
 
 function getFormData() {
   if (skus.value.length > 0) {
-    stockInfo.price = skus.value.map((sku: any) => sku.price).reduce((acc: number, cur: number) => Math.min(acc, cur), skus.value[0].price)
-    stockInfo.stock = skus.value.map((sku: any) => sku.stock).reduce((acc: number, cur: number) => acc + cur, 0)
+    inventoryInfo.isMultiSkus = Enabled.YES
+    inventoryInfo.price = skus.value.map((sku: IGoodsSku) => sku.price).reduce((acc: number, cur: number) => Math.min(acc, cur), skus.value[0].price)
+    inventoryInfo.inventory = skus.value.map((sku: IGoodsSku) => sku.inventory).reduce((acc: number, cur: number) => acc + cur, 0)
+    inventoryInfo.sales = skus.value.map((sku: IGoodsSku) => sku.sales).reduce((acc: number, cur: number) => acc + cur, 0)
   }
 
   return {
-    stockInfo,
+    inventoryInfo,
     specs,
     skus,
   }
@@ -122,7 +128,7 @@ defineExpose({
   <a-spin :loading="loading" class="w-full">
     <a-form
       ref="formRef"
-      :model="stockInfo"
+      :model="inventoryInfo"
       :label-col-props="{ flex: '140px' }"
       :wrapper-col-props="{ flex: 1 }"
       scroll-to-first-error
@@ -138,13 +144,13 @@ defineExpose({
         </a-form-item>
 
         <a-form-item v-if="specs.length > 0" field="skus" label="规格明细" show-colon>
-          <GoodsSkuEditor v-model="skus" :specs="specs" :unit="stockInfo.unit" />
+          <GoodsSkuEditor v-model="skus" :specs="specs" :unit="inventoryInfo.unit" />
         </a-form-item>
 
         <template v-else>
           <a-form-item field="skuCode" label="商品编码" show-colon>
             <div class="form-item-xs">
-              <a-input v-model="stockInfo.skuCode" />
+              <a-input v-model="inventoryInfo.skuCode" />
             </div>
 
             <template #extra>
@@ -154,19 +160,19 @@ defineExpose({
 
           <a-form-item field="price" label="价格" show-colon>
             <div class="form-item-xs">
-              <FormPriceInput v-model="stockInfo.price" placeholder="0.00" />
+              <FormPriceInput v-model="inventoryInfo.price" placeholder="0.00" />
             </div>
           </a-form-item>
 
           <a-form-item field="originalPrice" label="划线价" show-colon>
             <div class="form-item-xs">
-              <FormPriceInput v-model="stockInfo.originalPrice" placeholder="0.00" />
+              <FormPriceInput v-model="inventoryInfo.originalPrice" placeholder="0.00" />
             </div>
           </a-form-item>
 
           <a-form-item field="costPrice" label="成本价" show-colon>
             <div class="form-item-xs">
-              <FormPriceInput v-model="stockInfo.costPrice" placeholder="0.00" />
+              <FormPriceInput v-model="inventoryInfo.costPrice" placeholder="0.00" />
             </div>
 
             <template #extra>
@@ -174,11 +180,11 @@ defineExpose({
             </template>
           </a-form-item>
 
-          <a-form-item field="stock" label="库存" show-colon>
+          <a-form-item field="inventory" label="库存" show-colon>
             <div class="form-item-xs">
-              <FormNumberInput v-model="stockInfo.stock">
+              <FormNumberInput v-model="inventoryInfo.inventory">
                 <template #suffix>
-                  {{ stockInfo.unit }}
+                  {{ inventoryInfo.unit }}
                 </template>
               </FormNumberInput>
             </div>
@@ -188,11 +194,11 @@ defineExpose({
             </template>
           </a-form-item>
 
-          <a-form-item field="alertStock" label="库存预警" show-colon>
+          <a-form-item field="inventoryEarlyWarning" label="库存预警" show-colon>
             <div class="form-item-xs">
-              <FormNumberInput v-model="stockInfo.alertStock">
+              <FormNumberInput v-model="inventoryInfo.inventoryEarlyWarning">
                 <template #suffix>
-                  {{ stockInfo.unit }}
+                  {{ inventoryInfo.unit }}
                 </template>
               </FormNumberInput>
             </div>
@@ -204,7 +210,7 @@ defineExpose({
 
           <a-form-item field="weight" label="重量" show-colon>
             <div class="form-item-xs">
-              <FormNumberInput v-model="stockInfo.weight">
+              <FormNumberInput v-model="inventoryInfo.weight">
                 <template #suffix>
                   kg
                 </template>
@@ -214,7 +220,7 @@ defineExpose({
 
           <a-form-item field="volume" label="体积" show-colon>
             <div class="form-item-xs">
-              <FormNumberInput v-model="stockInfo.volume">
+              <FormNumberInput v-model="inventoryInfo.volume">
                 <template #suffix>
                   m<sup>3</sup>
                 </template>
@@ -225,25 +231,25 @@ defineExpose({
 
         <a-form-item field="unit" label="商品单位" show-colon>
           <div class="form-item-xs">
-            <a-input v-model="stockInfo.unit" />
+            <a-input v-model="inventoryInfo.unit" />
           </div>
         </a-form-item>
 
         <a-form-item field="enablePurchaseLimits" label="商品限购" show-colon>
           <a-switch
-            v-model="stockInfo.enablePurchaseLimits"
+            v-model="inventoryInfo.enablePurchaseLimits"
             checked-text="启用"
             unchecked-text="关闭"
-            :checked-value="EnabledEnum.YES"
-            :unchecked-value="EnabledEnum.NO"
+            :checked-value="Enabled.YES"
+            :unchecked-value="Enabled.NO"
           />
         </a-form-item>
 
-        <a-form-item v-if="stockInfo.enablePurchaseLimits === EnabledEnum.YES" field="purchaseMaxQty" label="限购数量" show-colon>
+        <a-form-item v-if="inventoryInfo.enablePurchaseLimits === Enabled.YES" field="purchaseMaxQty" label="限购数量" show-colon>
           <div class="form-item-xs">
-            <FormNumberInput v-model="stockInfo.purchaseMaxQty">
+            <FormNumberInput v-model="inventoryInfo.purchaseMaxQty">
               <template #suffix>
-                {{ stockInfo.unit || '件' }}
+                {{ inventoryInfo.unit || '件' }}
               </template>
             </FormNumberInput>
           </div>
@@ -251,27 +257,27 @@ defineExpose({
 
         <a-form-item field="purchaseMinQty" label="起售数量" show-colon required>
           <div class="form-item-xs">
-            <FormNumberInput v-model="stockInfo.purchaseMinQty">
+            <FormNumberInput v-model="inventoryInfo.purchaseMinQty">
               <template #suffix>
-                {{ stockInfo.unit || '件' }}
+                {{ inventoryInfo.unit || '件' }}
               </template>
             </FormNumberInput>
           </div>
         </a-form-item>
 
-        <a-form-item field="stockDeductMode" label="库存扣减方式" show-colon required>
-          <a-radio-group v-model="stockInfo.stockDeductMode" direction="vertical" :options="GOODS_STOCK_DEDUCT_MODES" />
+        <a-form-item field="inventoryDeductMode" label="库存扣减方式" show-colon required>
+          <a-radio-group v-model="inventoryInfo.inventoryDeductMode" direction="vertical" :options="GOODS_INVENTORY_DEDUCT_MODES" />
 
           <template #extra>
-            <span v-if="stockInfo.stockDeductMode === GoodsStockDeductModeEnum.ORDER">买家提交订单，扣减库存数量，可能存在恶意占用库存风险。</span>
-            <span v-if="stockInfo.stockDeductMode === GoodsStockDeductModeEnum.PAID">买家支付成功，扣减库存数量，可能存在超卖风险。</span>
+            <span v-if="inventoryInfo.inventoryDeductMode === GoodsInventoryDeductMode.ORDER">买家提交订单，扣减库存数量，可能存在恶意占用库存风险。</span>
+            <span v-if="inventoryInfo.inventoryDeductMode === GoodsInventoryDeductMode.PAID">买家支付成功，扣减库存数量，可能存在超卖风险。</span>
           </template>
         </a-form-item>
 
         <a-form-item field="enableVipDiscount" label="会员折扣" show-colon>
           <a-checkbox
-            :default-checked="stockInfo.enableVipDiscount === EnabledEnum.YES"
-            @change="(val) => (stockInfo.enableVipDiscount = val ? EnabledEnum.YES : EnabledEnum.NO)"
+            :default-checked="inventoryInfo.enableVipDiscount === Enabled.YES"
+            @change="(val) => (inventoryInfo.enableVipDiscount = val ? Enabled.YES : Enabled.NO)"
           >
             参与会员折扣
           </a-checkbox>

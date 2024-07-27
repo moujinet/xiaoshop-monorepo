@@ -1,47 +1,47 @@
 import type {
-  IGoodsAdditional,
-  IGoodsAdditionalDict,
-  IGoodsAdditionalListItem,
+  IGoodsAddition,
+  IGoodsAdditionDict,
+  IGoodsAdditionListItem,
 } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取商品附加服务列表
  *
- * @api get /goods/additional/list
- * @returns IUseRequestReturn<IGoodsAdditionalListItem[]>
+ * @api get /goods/addition/list
+ * @returns IUseRequestReturn<IGoodsAdditionListItem[]>
  */
-export function fetchGoodsAdditionalList(): IUseRequestReturn<IGoodsAdditionalListItem[]> {
-  return useRequest<IGoodsAdditionalListItem[]>({
+export function fetchGoodsAdditionList(): IUseRequestReturn<IGoodsAdditionListItem[]> {
+  return useRequest<IGoodsAdditionListItem[]>({
     method: 'get',
-    url: '/goods/additional/list',
+    url: '/goods/addition/list',
   })
 }
 
 /**
  * 获取商品附加服务字典列表
  *
- * @api get /goods/additional/dict/list
- * @returns IUseRequestReturn<IGoodsAdditionalDict[]>
+ * @api get /goods/addition/dict/list
+ * @returns IUseRequestReturn<IGoodsAdditionDict[]>
  */
-export function fetchGoodsAdditionalDictList(): IUseRequestReturn<IGoodsAdditionalDict[]> {
-  return useRequest<IGoodsAdditionalDict[]>({
+export function fetchGoodsAdditionDictList(): IUseRequestReturn<IGoodsAdditionDict[]> {
+  return useRequest<IGoodsAdditionDict[]>({
     method: 'get',
-    url: '/goods/additional/dict/list',
+    url: '/goods/addition/dict/list',
   })
 }
 
 /**
  * 获取商品附加服务详情
  *
- * @api get /goods/additional/detail
- * @param id IGoodsAdditional['id']
- * @returns IUseRequestReturn<IGoodsAdditional>
+ * @api get /goods/addition/detail
+ * @param id IGoodsAddition['id']
+ * @returns IUseRequestReturn<IGoodsAddition>
  */
-export function fetchGoodsAdditionalDetail(id: IGoodsAdditional['id']): IUseRequestReturn<IGoodsAdditional> {
-  return useRequest<IGoodsAdditional>({
+export function fetchGoodsAdditionDetail(id: IGoodsAddition['id']): IUseRequestReturn<IGoodsAddition> {
+  return useRequest<IGoodsAddition>({
     method: 'get',
-    url: '/goods/additional/detail',
+    url: '/goods/addition/detail',
     params: {
       id,
     },
@@ -51,16 +51,16 @@ export function fetchGoodsAdditionalDetail(id: IGoodsAdditional['id']): IUseRequ
 /**
  * 创建商品附加服务
  *
- * @api post /goods/additional/create
- * @param data IFormData<IGoodsAdditional>
+ * @api post /goods/addition/create
+ * @param data IFormData<IGoodsAddition>
  * @returns Promise<any>
  */
-export function createGoodsAdditional(
-  data: IFormData<IGoodsAdditional>,
+export function createGoodsAddition(
+  data: IFormData<IGoodsAddition>,
 ): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/additional/create',
+    url: '/goods/addition/create',
     data,
   })
 }
@@ -68,18 +68,18 @@ export function createGoodsAdditional(
 /**
  * 更新商品附加服务
  *
- * @api put /goods/additional/update
- * @param id IGoodsAdditional['id']
- * @param data IFormData<IGoodsAdditional>
+ * @api put /goods/addition/update
+ * @param id IGoodsAddition['id']
+ * @param data IFormData<IGoodsAddition>
  * @returns Promise<any>
  */
-export function updateGoodsAdditional(
-  id: IGoodsAdditional['id'],
-  data: IFormData<IGoodsAdditional>,
+export function updateGoodsAddition(
+  id: IGoodsAddition['id'],
+  data: IFormData<IGoodsAddition>,
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/additional/update',
+    url: '/goods/addition/update',
     data,
     params: {
       id,
@@ -90,14 +90,14 @@ export function updateGoodsAdditional(
 /**
  * 删除商品附加服务
  *
- * @api delete /goods/additional/delete
- * @param id IGoodsAdditional['id']
+ * @api delete /goods/addition/delete
+ * @param id IGoodsAddition['id']
  * @returns Promise<any>
  */
-export function deleteGoodsAdditional(id: IGoodsAdditional['id']): Promise<any> {
+export function deleteGoodsAddition(id: IGoodsAddition['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/additional/delete',
+    url: '/goods/addition/delete',
     data: {
       id,
     },
