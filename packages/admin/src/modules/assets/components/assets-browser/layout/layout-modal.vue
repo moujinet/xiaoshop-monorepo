@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ASSET_TYPES, AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
+import { ASSET_TYPES, AssetType, type IAssetType } from '@xiaoshop/schema'
 import AssetsBrowserGroupTree from '../group/group-tree.vue'
 import AssetsBrowserListview from '../listview/listview.vue'
 
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
   width?: number
   height?: number
 }>(), {
-  type: AssetTypeEnum.IMAGE,
+  type: AssetType.IMAGE,
   limit: 1,
   width: 800,
   height: 520,

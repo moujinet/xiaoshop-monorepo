@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ASSET_TYPES, AssetTypeEnum, type IAsset } from '@xiaoshop/schema'
+import { ASSET_TYPES, AssetType, type IAsset } from '@xiaoshop/schema'
 import AssetsBrowserListviewDrawer from './listview-drawer.vue'
 
 defineOptions({
@@ -43,7 +43,7 @@ function handleSelect() {
         <CommonIcon name="mingcute:check" class="text-3" :inline="false" />
       </div>
 
-      <template v-if="asset.type === AssetTypeEnum.IMAGE || asset.type === AssetTypeEnum.ICON">
+      <template v-if="asset.type === AssetType.IMAGE">
         <CommonImage
           :src="asset.path"
           :preview="editable"

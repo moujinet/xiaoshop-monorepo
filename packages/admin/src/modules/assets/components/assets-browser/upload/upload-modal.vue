@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   ASSET_TYPES,
-  AssetTypeEnum,
+  AssetType,
   type IAssetType,
   type IEnabled,
 } from '@xiaoshop/schema'
@@ -47,11 +47,8 @@ const computedAccept = computed(() => {
 })
 
 const computedTips = computed(() => {
-  if (props.type === AssetTypeEnum.IMAGE) {
+  if (props.type === AssetType.IMAGE) {
     return `支持批量上传图片, 最多上传 10 张图片, 单张图片不超过 ${options.maxFileSizeImage / 1000}M (支持格式: jpg/png/gif)`
-  }
-  else if (props.type === AssetTypeEnum.ICON) {
-    return '支持批量上传图标'
   }
 
   return `视频文件不超过 ${options.maxFileSizeVideo / 1000}M (支持格式: mp4)`

@@ -32,16 +32,6 @@ export default defineModule({
             { id: '#group', name: '视频分组' },
           ],
         },
-        {
-          id: 'icons',
-          name: '图标素材',
-          children: [
-            { id: 'index', name: '图标列表' },
-            { id: '#upload', name: '上传图标' },
-            { id: '#delete', name: '删除图标' },
-            { id: '#group', name: '图标分组' },
-          ],
-        },
       ],
     },
     {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
+import { AssetType, type IAssetType } from '@xiaoshop/schema'
 import { DEFAULT_POSTER } from '~/constants/defaults'
 
 defineOptions({
@@ -20,7 +20,7 @@ const emit = defineEmits(['change', 'delete'])
 const preview = ref(false)
 
 const computedAsset = computed(() => {
-  if (props.type === AssetTypeEnum.VIDEO)
+  if (props.type === AssetType.VIDEO)
     return DEFAULT_POSTER
 
   return props.asset
@@ -36,7 +36,7 @@ const computedAsset = computed(() => {
       actionsLayout: ['zoomIn', 'zoomOut', 'originalSize'],
     }"
     :preview-visible="preview"
-    :is-local="type === AssetTypeEnum.VIDEO"
+    :is-local="type === AssetType.VIDEO"
     class="assets-browser-image"
     fit="contain"
     show-loader

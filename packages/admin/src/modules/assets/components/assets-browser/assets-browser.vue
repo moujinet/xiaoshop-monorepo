@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ASSET_TYPES, AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
+import { ASSET_TYPES, AssetType, type IAssetType } from '@xiaoshop/schema'
 import { VueDraggable } from 'vue-draggable-plus'
 
 import { AssetsBrowserPreviewer } from '@/assets/components'
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
   limit?: number
   disable?: boolean
 }>(), {
-  type: AssetTypeEnum.IMAGE,
+  type: AssetType.IMAGE,
   limit: 1,
 })
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ASSET_TYPES, AssetTypeEnum, EnabledEnum } from '@xiaoshop/schema'
+import { ASSET_TYPES, AssetType, Enabled } from '@xiaoshop/schema'
 import { deleteAsset, fetchAssetDetail } from '@/assets/apis'
 
 defineOptions({
@@ -51,14 +51,14 @@ function handleDelete() {
   >
     <a-spin :loading="loading">
       <div v-if="data" class="relative mb-4">
-        <template v-if="data.type === AssetTypeEnum.IMAGE || data.type === AssetTypeEnum.ICON">
+        <template v-if="data.type === AssetType.IMAGE">
           <CommonImage
             :src="data.path"
             :alt="data.name"
             :preview="false"
             fit="contain"
-            :width="data.type === AssetTypeEnum.IMAGE && '100%'"
-            :height="data.type === AssetTypeEnum.IMAGE && '100%'"
+            width="100%"
+            height="100%"
             show-loader
           />
         </template>
@@ -82,18 +82,18 @@ function handleDelete() {
         </a-descriptions-item>
         <template v-if="data.type === 'image'">
           <a-descriptions-item label="启用图片压缩">
-            <a-tag :color="data.group.enableCompress === EnabledEnum.YES ? 'arcoblue' : ''">
-              {{ data.group.enableCompress === EnabledEnum.YES ? '启用' : '关闭' }}
+            <a-tag :color="data.group.enableCompress === Enabled.YES ? 'arcoblue' : ''">
+              {{ data.group.enableCompress === Enabled.YES ? '启用' : '关闭' }}
             </a-tag>
           </a-descriptions-item>
           <a-descriptions-item label="启用缩略图">
-            <a-tag :color="data.group.enableThumbnail === EnabledEnum.YES ? 'arcoblue' : ''">
-              {{ data.group.enableThumbnail === EnabledEnum.YES ? '启用' : '关闭' }}
+            <a-tag :color="data.group.enableThumbnail === Enabled.YES ? 'arcoblue' : ''">
+              {{ data.group.enableThumbnail === Enabled.YES ? '启用' : '关闭' }}
             </a-tag>
           </a-descriptions-item>
           <a-descriptions-item label="启用水印">
-            <a-tag :color="data.group.enableWatermark === EnabledEnum.YES ? 'arcoblue' : ''">
-              {{ data.group.enableWatermark === EnabledEnum.YES ? '启用' : '关闭' }}
+            <a-tag :color="data.group.enableWatermark === Enabled.YES ? 'arcoblue' : ''">
+              {{ data.group.enableWatermark === Enabled.YES ? '启用' : '关闭' }}
             </a-tag>
           </a-descriptions-item>
         </template>

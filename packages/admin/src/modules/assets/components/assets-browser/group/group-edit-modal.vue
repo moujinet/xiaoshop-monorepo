@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
-  AssetTypeEnum,
-  EnabledEnum,
+  AssetType,
+  Enabled,
   type IAssetGroup,
   type IAssetType,
 } from '@xiaoshop/schema'
@@ -35,9 +35,9 @@ const form = reactive<IFormData<IAssetGroup>>({
   parentId: 0,
   name: '',
   type: props.type,
-  enableCompress: EnabledEnum.YES,
-  enableThumbnail: EnabledEnum.YES,
-  enableWatermark: EnabledEnum.YES,
+  enableCompress: Enabled.YES,
+  enableThumbnail: Enabled.YES,
+  enableWatermark: Enabled.YES,
 })
 
 const { loading, refreshData: refreshDetail } = fetchAssetGroupDetail(props.id || 0)
@@ -139,17 +139,17 @@ function handleDelete() {
           </div>
         </a-form-item>
 
-        <template v-if="type === AssetTypeEnum.IMAGE">
+        <template v-if="type === AssetType.IMAGE">
           <a-form-item field="enableCompress" label="启用图片压缩" show-colon>
-            <a-switch v-model="form.enableCompress" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableCompress" :checked-value="Enabled.YES" :unchecked-value="Enabled.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
 
           <a-form-item field="enableThumbnail" label="启用图片缩略图" show-colon>
-            <a-switch v-model="form.enableThumbnail" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableThumbnail" :checked-value="Enabled.YES" :unchecked-value="Enabled.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
 
           <a-form-item field="enableWatermark" label="启用水印" show-colon>
-            <a-switch v-model="form.enableWatermark" :checked-value="EnabledEnum.YES" :unchecked-value="EnabledEnum.NO" checked-text="启用" unchecked-text="关闭" />
+            <a-switch v-model="form.enableWatermark" :checked-value="Enabled.YES" :unchecked-value="Enabled.NO" checked-text="启用" unchecked-text="关闭" />
           </a-form-item>
         </template>
 

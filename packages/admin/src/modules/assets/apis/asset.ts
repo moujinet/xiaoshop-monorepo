@@ -1,4 +1,4 @@
-import { AssetTypeEnum, type IAsset, type IAssetInfo, type IAssetUploadOptions } from '@xiaoshop/schema'
+import { AssetType, type IAsset, type IAssetInfo, type IAssetUploadOptions } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -83,7 +83,7 @@ export function uploadAsset(
   data: IAssetUploadOptions,
   options: IUploadAssetOptions,
 ) {
-  const url = [AssetTypeEnum.IMAGE, AssetTypeEnum.ICON].includes(data.type)
+  const url = [AssetType.IMAGE].includes(data.type)
     ? '/assets/upload/image'
     : '/assets/upload/video'
 

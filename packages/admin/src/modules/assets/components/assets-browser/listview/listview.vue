@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ASSET_TYPES, EnabledEnum, type IAsset, type IAssetType, type IEnabled } from '@xiaoshop/schema'
+import { ASSET_TYPES, Enabled, type IAsset, type IAssetType, type IEnabled } from '@xiaoshop/schema'
 import AssetsBrowserGroupEditModal from '../group/group-edit-modal.vue'
 import AssetsBrowserUploadModal from '../upload/upload-modal.vue'
 import AssetsBrowserListviewCard from './listview-card.vue'
@@ -26,9 +26,9 @@ const props = withDefaults(defineProps<{
 }>(), {
   mode: 'select',
   limit: 1,
-  enableCompress: EnabledEnum.NO,
-  enableThumbnail: EnabledEnum.NO,
-  enableWatermark: EnabledEnum.NO,
+  enableCompress: Enabled.NO,
+  enableThumbnail: Enabled.NO,
+  enableWatermark: Enabled.NO,
 })
 
 const emit = defineEmits(['groupNameChanged', 'groupDelete', 'select'])

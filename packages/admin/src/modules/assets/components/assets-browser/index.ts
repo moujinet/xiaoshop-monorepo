@@ -1,4 +1,4 @@
-import { AssetTypeEnum, type IAssetType } from '@xiaoshop/schema'
+import { AssetType, type IAssetType } from '@xiaoshop/schema'
 import { createVNode, render } from 'vue'
 import AssetsBrowserLayoutModal from './layout/layout-modal.vue'
 
@@ -12,7 +12,7 @@ function openModal(options: IUseAssetsBrowserOpenOptions = {}) {
   let container: HTMLElement | null = document.createElement('div')
 
   const {
-    type = AssetTypeEnum.IMAGE,
+    type = AssetType.IMAGE,
     limit = 1,
     onSelect = () => {},
   } = options
