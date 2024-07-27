@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class UploadSettings1721566048207 implements MigrationInterface {
+export class UploadSettings1722062636550 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
       ('upload.maxFileSizeImage', '2500'),
