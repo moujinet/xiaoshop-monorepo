@@ -258,7 +258,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               </CommonConfirm>
 
               <a-button
-                v-if="searchForm.status === GoodsStatus.SOLD_OUT || searchForm.status === GoodsStatus.DRAFT"
+                v-if="searchForm.status === GoodsStatus.STOCKED"
                 :disabled="selectedKeys.length === 0"
                 size="small"
                 @click="handleBatchInStock(selectedKeys)"
@@ -390,27 +390,21 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
             <template #content>
               <a-doption
-                v-if="record.status === GoodsStatus.SOLD_OUT || record.status === GoodsStatus.DRAFT"
+                v-if="record.status === GoodsStatus.STOCKED"
                 v-permission="['shop.goods.manage.goods.in-stock']"
               >
-                <a-popconfirm
-                  content="确定要上架吗?"
-                  @ok="handleBatchInStock([record.id])"
-                >
+                <CommonConfirm confirm-type="info" btn-status="normal" confirm-ok-text="上架" @ok="handleBatchInStock([record.id])">
                   <span>上架</span>
-                </a-popconfirm>
+                </CommonConfirm>
               </a-doption>
 
               <a-doption
                 v-if="record.status === GoodsStatus.IN_STOCK"
                 v-permission="['shop.goods.manage.goods.sold-out']"
               >
-                <a-popconfirm
-                  content="确定要下架吗?"
-                  @ok="handleBatchSoldOut([record.id])"
-                >
+                <CommonConfirm confirm-type="info" btn-status="normal" confirm-ok-text="下架" @ok="handleBatchSoldOut([record.id])">
                   <span>下架</span>
-                </a-popconfirm>
+                </CommonConfirm>
               </a-doption>
 
               <a-doption @click="$router.push({ path: '/goods/manage/goods/history', query: { id: record.id } })">
@@ -420,12 +414,9 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
               <a-doption>评价</a-doption>
 
               <a-doption v-permission="['shop.goods.manage.goods.edit']">
-                <a-popconfirm
-                  content="确定要复制吗?"
-                  @ok="handleGoodsCopy(record.id)"
-                >
+                <CommonConfirm confirm-type="info" btn-status="normal" confirm-ok-text="复制" @ok="handleGoodsCopy(record.id)">
                   <span>复制</span>
-                </a-popconfirm>
+                </CommonConfirm>
               </a-doption>
 
               <a-doption v-permission="['shop.goods.manage.goods.delete']">

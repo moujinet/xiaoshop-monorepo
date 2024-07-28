@@ -196,30 +196,13 @@ export function copyToDraft(id: IGoods['id']) {
 }
 
 /**
- * 软删除商品
- *
- * @api delete /goods/delete/soft
- * @param id IGoods['id']
- * @returns Promise<any>
- */
-export function softDelete(id: IGoods['id']) {
-  return usePromiseRequest<any>({
-    method: 'delete',
-    url: '/goods/delete/soft',
-    data: {
-      id,
-    },
-  })
-}
-
-/**
  * 恢复已删除商品
  *
  * @api put /goods/delete/restore
  * @param id IGoods['id']
  * @returns Promise<any>
  */
-export function restore(id: IGoods['id']) {
+export function restoreGoods(id: IGoods['id']) {
   return usePromiseRequest<any>({
     method: 'put',
     url: '/goods/delete/restore',
@@ -262,23 +245,6 @@ export function batchSoftDelete(ids: IGoods['id'][]) {
   return usePromiseRequest<any>({
     method: 'delete',
     url: '/goods/batch/delete/soft',
-    data: {
-      ids,
-    },
-  })
-}
-
-/**
- * 批量恢复已删除商品
- *
- * @api put /goods/batch/delete/restore
- * @param ids IGoods['id'][]
- * @returns Promise<any>
- */
-export function batchRestore(ids: IGoods['id'][]) {
-  return usePromiseRequest<any>({
-    method: 'put',
-    url: '/goods/batch/delete/restore',
     data: {
       ids,
     },
