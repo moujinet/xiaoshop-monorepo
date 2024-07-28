@@ -152,6 +152,7 @@ export class GoodsService {
           sales: true,
           sort: true,
           updatedTime: true,
+          deletedTime: true,
         },
         relations: [
           'group',

@@ -312,5 +312,6 @@ export class GoodsPageListResponse
     'sales',
     'sort',
     'updatedTime',
+    'deletedTime',
   ] as const)
   implements IGoodsListItem {}
