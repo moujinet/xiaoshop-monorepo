@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   LOGISTICS_DELIVERY_MODES,
-  LogisticsDeliveryModeEnum,
+  LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 
 defineOptions({
@@ -17,7 +17,7 @@ const { loading, onUpdate } = updateOptions('logistics.deliveryMode', form)
   <CommonContainer>
     <CommonGrid>
       <CommonSwitchCard
-        v-if="LOGISTICS_DELIVERY_MODES.some(item => item.value === LogisticsDeliveryModeEnum.EXPRESS)"
+        v-if="LOGISTICS_DELIVERY_MODES.some(item => item.value === LogisticsDeliveryMode.EXPRESS)"
         v-model:enable="form.enableExpress"
         title="快递发货"
         icon="mingcute:truck"
@@ -39,7 +39,7 @@ const { loading, onUpdate } = updateOptions('logistics.deliveryMode', form)
       </CommonSwitchCard>
 
       <CommonSwitchCard
-        v-if="LOGISTICS_DELIVERY_MODES.some(item => item.value === LogisticsDeliveryModeEnum.SELF)"
+        v-if="LOGISTICS_DELIVERY_MODES.some(item => item.value === LogisticsDeliveryMode.SELF)"
         v-model:enable="form.enableSelf"
         title="到店自提"
         icon="mingcute:barcode"

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { TableColumnData } from '@arco-design/web-vue'
-import { EnabledEnum, LOGISTICS_FREIGHT_TEMPLATE_CALC_MODES } from '@xiaoshop/schema'
+import { Enabled, LOGISTICS_FREIGHT_TEMPLATE_CALC_MODES } from '@xiaoshop/schema'
 import { GoodsLogisticsTemplateModal } from '@/goods/components'
 import {
   deleteFreightTemplate,
@@ -64,8 +64,8 @@ function handleDelete(id: number) {
         </template>
 
         <template #enableFreeRules="{ record }">
-          <a-tag :color="record.enableFreeRules === EnabledEnum.YES ? 'green' : 'red'">
-            {{ record.enableFreeRules === EnabledEnum.YES ? '是' : '否' }}
+          <a-tag :color="record.enableFreeRules === Enabled.YES ? 'green' : 'red'">
+            {{ record.enableFreeRules === Enabled.YES ? '是' : '否' }}
           </a-tag>
         </template>
 

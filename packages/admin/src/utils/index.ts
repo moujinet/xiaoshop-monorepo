@@ -163,6 +163,9 @@ export function removeEmpty(
     if (isStrict && (obj[key] === 0 || obj[key] === '0' || obj[key] === false))
       delete obj[key]
 
+    if (isStrict && Array.isArray(obj[key]) && obj[key].length === 0)
+      delete obj[key]
+
     if (specials && specials.length > 0 && specials.includes(obj[key]))
       delete obj[key]
   })

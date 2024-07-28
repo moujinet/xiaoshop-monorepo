@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import {
-  GoodsFormStepEnum,
-  type IGoodsFormStep,
+import type {
+  IGoodsFormStep,
 } from '@/goods/types'
 
 defineOptions({
@@ -10,7 +9,7 @@ defineOptions({
 
 const props = defineProps<{
   steps: IGoodsFormStep[]
-  hidePager?: boolean
+  changeable?: boolean
 }>()
 
 const affixed = ref(false)
@@ -34,6 +33,13 @@ watch(
   },
   { immediate: true },
 )
+
+function handleStepClick(num: number) {
+  if (!props.changeable)
+    return
+
+  step.value = num
+}
 </script>
 
 <template>
@@ -44,7 +50,7 @@ watch(
           class="p-4 bg-$color-bg-2 select-none rounded-t"
           :class="{ 'shadow-lg': affixed }"
         >
-          <a-steps v-model:current="step" type="arrow" small>
+          <a-steps v-model:current="step" type="arrow" small :changeable="changeable" @change="(val) => handleStepClick(val)">
             <a-step v-for="s in steps" :key="s.step">
               {{ `${s.step}. ${s.name}` }}
             </a-step>
@@ -58,15 +64,7 @@ watch(
     <a-affix :offset-bottom="0">
       <div class="bg-$color-bg-2 flex-(~ v-center between) b-t-(~ solid $color-border-1) py-4">
         <div class="flex-(~ gap-4)">
-          <template v-if="hidePager === false">
-            <a-button v-if="step > GoodsFormStepEnum.BASIC" type="outline" size="large" @click="() => step -= 1">
-              上一步
-            </a-button>
-
-            <a-button v-if="step < GoodsFormStepEnum.DETAIL" type="outline" size="large" @click="() => step += 1">
-              下一步
-            </a-button>
-          </template>
+          <slot name="extra" />
         </div>
 
         <slot name="actions" />

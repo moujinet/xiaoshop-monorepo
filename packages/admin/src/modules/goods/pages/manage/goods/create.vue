@@ -18,7 +18,7 @@ const basicForm = ref()
 
 const steps: IGoodsFormStep[] = [
   { key: 'basic', name: '填写基本信息', step: GoodsFormStepEnum.BASIC },
-  { key: 'stock', name: '填写价格库存', step: GoodsFormStepEnum.STOCK },
+  { key: 'inventory', name: '填写价格库存', step: GoodsFormStepEnum.INVENTORY },
   { key: 'detail', name: '上传商品详情', step: GoodsFormStepEnum.DETAIL },
 ]
 
@@ -47,7 +47,7 @@ async function handleSubmit() {
         onClose: () => {
           router.push({
             path: '/goods/manage/goods/update',
-            query: { id: res.id, step: 'stock' },
+            query: { id: res.id, step: 'inventory' },
           })
         },
       })
@@ -60,7 +60,7 @@ async function handleSubmit() {
 
 <template>
   <CommonContainer flexible>
-    <GoodsStepCard v-model:step="step" :steps="steps" hide-pager>
+    <GoodsStepCard v-model:step="step" :steps="steps">
       <GoodsBasicInfoStepForm ref="basicForm" />
 
       <template #actions>

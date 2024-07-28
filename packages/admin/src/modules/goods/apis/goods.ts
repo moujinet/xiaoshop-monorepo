@@ -347,16 +347,21 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
  * @api put /goods/skus/update
  * @param id IGoods['id']
  * @param data IFormData<IGoodsSku>[]
+ * @param skuCode IGoodsSku['skuCode']
  * @returns Promise<any>
  */
 export function updateGoodsSkus(
   id: IGoods['id'],
   data: IFormData<IGoodsSku>[],
+  skuCode?: IGoodsSku['skuCode'],
 ) {
   return usePromiseRequest<any>({
     method: 'put',
     url: '/goods/skus/update',
-    data,
+    data: {
+      skuCode,
+      skus: data,
+    },
     params: {
       id,
     },

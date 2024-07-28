@@ -41,7 +41,6 @@ defineOptions({
 const props = defineProps<{
   id?: string
 }>()
-
 const formRef = ref()
 const tagRef = ref()
 const groupRef = ref()
@@ -49,6 +48,8 @@ const brandRef = ref()
 const additionalRef = ref()
 const protectionRef = ref()
 const templateRef = ref()
+
+const route = useRoute()
 
 const form = reactive<IGoodsBasicInfoFormData>({
   type: GoodsType.ENTITY,
@@ -80,7 +81,7 @@ const options = useSettings().getOptions('upload', {}, ['maxFileSizeImage', 'max
 const { refreshData } = fetchGoodsBasicInfo(props.id || '')
 
 watch(
-  () => props.id,
+  () => route.query,
   () => {
     if (!props.id)
       return
@@ -248,9 +249,6 @@ defineExpose({
 
     <!-- 商品参数 -->
     <GoodsAttributesEditor v-model:attributes="form.attributes" />
-
-    <!-- 关联商品 -->
-    <FormGroup title="关联商品" />
 
     <!-- 物流信息 -->
     <FormGroup title="物流信息">

@@ -26,6 +26,7 @@ const props = defineProps<{
   id?: string
 }>()
 
+const route = useRoute()
 const loading = ref(false)
 const formRef = ref()
 const specs = ref<IGoodsSpec[]>([])
@@ -51,10 +52,10 @@ const inventoryInfo = reactive<IGoodsInventoryInfoFormData>({
 
 const { refreshData: loadGoodsSpecs } = fetchGoodsSpecList(props.id || '')
 const { refreshData: loadGoodsSkus } = fetchGoodsSkuList(props.id || '')
-const { refreshData: loadGoodsStock } = fetchGoodsInventoryInfo(props.id || '')
+const { refreshData: loadGoodsInventory } = fetchGoodsInventoryInfo(props.id || '')
 
 watch(
-  () => props.id,
+  () => route.query,
   async () => {
     if (!props.id)
       return
@@ -64,7 +65,7 @@ watch(
     const result = await Promise.all([
       loadGoodsSpecs(),
       loadGoodsSkus(),
-      loadGoodsStock(),
+      loadGoodsInventory(),
     ])
 
     if (result[0].length > 0) {
@@ -143,21 +144,23 @@ defineExpose({
           </template>
         </a-form-item>
 
-        <a-form-item v-if="specs.length > 0" field="skus" label="规格明细" show-colon>
-          <GoodsSkuEditor v-model="skus" :specs="specs" :unit="inventoryInfo.unit" />
+        <template v-if="specs.length > 0">
+          <a-form-item field="skus" label="规格明细" show-colon>
+            <GoodsSkuEditor v-model="skus" :specs="specs" :unit="inventoryInfo.unit" />
+          </a-form-item>
+        </template>
+
+        <a-form-item field="skuCode" label="商品编码" show-colon>
+          <div class="form-item-xs">
+            <a-input v-model="inventoryInfo.skuCode" />
+          </div>
+
+          <template #extra>
+            如果您不输入商品编码，系统会自动生成
+          </template>
         </a-form-item>
 
-        <template v-else>
-          <a-form-item field="skuCode" label="商品编码" show-colon>
-            <div class="form-item-xs">
-              <a-input v-model="inventoryInfo.skuCode" />
-            </div>
-
-            <template #extra>
-              如果您不输入商品编码，系统会自动生成
-            </template>
-          </a-form-item>
-
+        <template v-if="specs.length === 0">
           <a-form-item field="price" label="价格" show-colon>
             <div class="form-item-xs">
               <FormPriceInput v-model="inventoryInfo.price" placeholder="0.00" />

@@ -205,10 +205,10 @@ function handleValueChange(key: keyof IGoodsSkuFormData, value: number) {
         库存总数: {{ skus.map(sku => sku.inventory || 0).reduce((a, b) => a + b, 0) }}
       </span>
       <span>
-        平均价格: {{ skus.map(sku => sku.price || 0).reduce((a, b) => a + b, 0) / skus.length }} 元
+        平均价格: {{ (skus.map(sku => sku.price || 0).reduce((a, b) => a + b, 0) / skus.length).toFixed(2) }} 元
       </span>
       <span>
-        平均成本: {{ skus.map(sku => sku.costPrice || 0).reduce((a, b) => a + b, 0) / skus.length }} 元
+        平均成本: {{ (skus.map(sku => sku.costPrice || 0).reduce((a, b) => a + b, 0) / skus.length).toFixed(2) }} 元
       </span>
     </div>
   </div>

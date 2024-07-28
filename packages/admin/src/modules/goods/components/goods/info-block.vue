@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IGoods, IGoodsBasicInfo, IGoodsDict, IGoodsListItem } from '@xiaoshop/schema'
+import type { IGoods, IGoodsDict, IGoodsListItem } from '@xiaoshop/schema'
 
 defineOptions({
   name: 'GoodsInfoBlock',
@@ -7,7 +7,7 @@ defineOptions({
 })
 
 defineProps<{
-  goods: IGoods | IGoodsDict | IGoodsBasicInfo | IGoodsListItem
+  goods: IGoods | IGoodsDict | IGoodsListItem
 }>()
 </script>
 

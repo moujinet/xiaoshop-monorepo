@@ -11,6 +11,7 @@ const props = defineProps<{
   id?: string
 }>()
 
+const route = useRoute()
 const formRef = ref()
 const form = reactive<IFormData<IGoodsDetailInfo>>({
   detail: '',
@@ -19,7 +20,7 @@ const form = reactive<IFormData<IGoodsDetailInfo>>({
 const { refreshData } = fetchGoodsContent(props.id || '')
 
 watch(
-  () => props.id,
+  () => route.query,
   () => {
     if (!props.id)
       return

@@ -15,7 +15,7 @@ defineOptions({
 
 const keywordTypes = [
   { label: '商品名称', value: 'name' },
-  { label: 'SKU 编码', value: 'sku' },
+  { label: '商品编码', value: 'skuCode' },
 ]
 
 const search = defineModel('search', {

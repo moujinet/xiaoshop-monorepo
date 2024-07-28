@@ -39,6 +39,9 @@ if (!skus.value?.length) {
           </a-tooltip>
         </span>
         <span class="cell">
+          <a-tooltip :content="`SKU 编码: ${sku.skuCode}`" mini>
+            <CommonIcon name="mingcute:information" class="text-$color-text-3 hover:text-$color-text-1" />
+          </a-tooltip>
           {{ sku.name }}
         </span>
         <span class="cell text-right">

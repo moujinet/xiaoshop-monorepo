@@ -1,6 +1,6 @@
 export enum GoodsFormStepEnum {
   BASIC = 1,
-  STOCK = 2,
+  INVENTORY = 2,
   DETAIL = 3,
   PUBLISH = 4,
 }

@@ -18,6 +18,7 @@ import {
   batchSoftDelete,
   batchUpdate,
   copyToDraft,
+  countGoodsWarning,
   fetchGoodsPages,
 } from '@/goods/apis'
 
@@ -120,6 +121,10 @@ function searchData() {
     })
 
   refreshData({ ...removeEmpty(search, true, ['all']) })
+
+  countGoodsWarning().then((res) => {
+    alarms.value = res
+  })
 }
 
 function handleRefresh() {
@@ -220,16 +225,23 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
       </a-button>
     </template>
 
+    <a-alert v-if="alarms > 0" title="售馨预警" type="warning" closable>
+      您有 {{ alarms }} 个商品即将售馨(或已经售馨), 请您及时<a-link @click="handleTabsChange('warning')">
+        处理
+      </a-link>, 避免造成不必要的损失。
+    </a-alert>
+
     <CommonCard>
       <template #extra>
         <a-affix :offset-top="133" @change="(val) => (isAffix = val)">
           <div class="pt-4 px-4" :class="{ 'bg-white pb-4 border-solid border-0 border-b-1 border-$color-border-2': isAffix }">
             <a-tabs v-model:active-key="searchForm.status" type="card" size="large" class="mb-4" hide-content @change="handleTabsChange">
               <a-tab-pane key="all" title="全部" />
-              <a-tab-pane v-for="item in GOODS_STATUSES" :key="item.value">
+              <a-tab-pane v-for="item in GOODS_STATUSES" :key="item.value" :title="item.label" />
+              <a-tab-pane key="warning">
                 <template #title>
-                  <a-badge :count="item.value === GoodsStatus.STOCKED ? alarms : 0" :offset="[6, -3]" dot>
-                    {{ item.label }}
+                  <a-badge :count="alarms" :offset="[6, -3]" dot>
+                    预警
                   </a-badge>
                 </template>
               </a-tab-pane>
@@ -309,7 +321,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
         <template #statusTitle>
           状态
-          <a-tooltip content="提示: 在售状态下的商品无法编辑, 需要先将商品下架, 再进行编辑" mini>
+          <a-tooltip content="提示: 「在售商品」无法编辑, 必须先将商品「下架」后, 才能进行「编辑」操作" mini>
             <CommonIcon name="mingcute:question" class="c-primary" active />
           </a-tooltip>
         </template>
