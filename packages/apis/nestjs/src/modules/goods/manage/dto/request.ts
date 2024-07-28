@@ -1,6 +1,7 @@
 import {
+  Enabled,
   GoodsSource,
-  GoodsStatus,
+  IEnabled,
   type IGoodsSource,
   type IGoodsStatus,
 } from '@xiaoshop/schema'
@@ -10,14 +11,27 @@ import { example } from './example'
 import { PaginationQueryDto } from '~/common'
 import { nanoid } from '~/utils'
 
+enum GoodsStatusAndWarning {
+  IN_STOCK = 'in_stock',
+  STOCKED = 'stocked',
+  SOLD_OUT = 'sold_out',
+  DRAFT = 'draft',
+  WARNING = 'warning',
+}
+
 /**
  * 获取商品分页列表请求 DTO
  */
 export class GetGoodsPagesRequest extends PaginationQueryDto {
-  @ApiProperty({ required: false, description: '商品状态', enum: GoodsStatus, example: example.status })
-  @IsEnum(GoodsStatus)
+  @ApiProperty({ required: false, description: '商品是否删除', enum: Enabled, example: 'N' })
+  @IsEnum(Enabled)
   @IsOptional()
-  readonly status: IGoodsStatus
+  readonly isDeleted: IEnabled
+
+  @ApiProperty({ required: false, description: '商品状态', enum: GoodsStatusAndWarning, example: example.status })
+  @IsEnum(GoodsStatusAndWarning)
+  @IsOptional()
+  readonly status: IGoodsStatus | 'warning'
 
   @ApiProperty({ required: false, description: '商品名称', example: example.name })
   @IsString()

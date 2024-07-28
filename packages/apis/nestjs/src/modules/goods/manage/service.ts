@@ -19,6 +19,7 @@ import {
   type IGoodsDetailInfo,
   type IGoodsInventoryInfo,
   type IGoodsListItem,
+  type IGoodsStatus,
   LogisticsDeliveryMode,
 } from '@xiaoshop/schema'
 import {
@@ -51,7 +52,7 @@ import { GoodsGroup } from '@/goods/group/entity'
 import { GoodsCategory } from '@/goods/category/entity'
 import { GoodsAddition } from '@/goods/addition/entity'
 import { GoodsProtection } from '@/goods/protection/entity'
-import { nanoNumber, nanoid, unique } from '~/utils'
+import { nanoNumber, nanoSkuCode, nanoid, unique } from '~/utils'
 
 @Injectable()
 export class GoodsService {
@@ -72,11 +73,13 @@ export class GoodsService {
   async findPages(query: GetGoodsPagesRequest): Promise<IApiPaginationData<IGoodsListItem>> {
     try {
       const where: FindOptionsWhere<Goods> = {
-        isDeleted: Enabled.NO,
+        isDeleted: query.isDeleted || Enabled.NO,
       }
 
-      if (query.status)
-        where.status = query.status
+      if (query.status !== 'warning')
+        where.status = query.status as IGoodsStatus
+      else
+        where.isWarning = Enabled.YES
 
       if (query.source)
         where.source = query.source
@@ -424,6 +427,7 @@ export class GoodsService {
       goods.buyBtnNameType = data.buyBtnNameType || GoodsBuyBtnType.DEFAULT
       goods.buyBtnName = data.buyBtnName || ''
       goods.status = GoodsStatus.DRAFT
+      goods.updatedTime = (new Date()).toISOString()
 
       // Tag
       if (data.tagId) {
@@ -624,8 +628,9 @@ export class GoodsService {
    * @throws NotFoundException
    * @throws FailedException
    * @throws ExistsException
+   * @returns Promise<IGoods['skuCode']>
    */
-  async updateInventoryInfo(id: string, data: GoodsInventoryInfoPayload): Promise<void> {
+  async updateInventoryInfo(id: string, data: GoodsInventoryInfoPayload): Promise<IGoods['skuCode']> {
     try {
       const founded = await this.repository.existsBy({ id })
 
@@ -646,7 +651,7 @@ export class GoodsService {
       const goods = new Goods()
 
       goods.id = id
-      goods.skuCode = data.skuCode || nanoNumber()
+      goods.skuCode = data.skuCode || nanoSkuCode()
       goods.isMultiSkus = data.isMultiSkus || Enabled.NO
       goods.price = data.price || 0
       goods.originalPrice = data.originalPrice || 0
@@ -672,6 +677,8 @@ export class GoodsService {
       else if (goods.status === GoodsStatus.IN_STOCK) {
         this.eventEmitter.emitAsync(GoodsInStockEvent.name, new GoodsInStockEvent(id))
       }
+
+      return goods.skuCode
     }
     catch (e) {
       throw new FailedException('更新商品价格库存信息', e.message, e.status)

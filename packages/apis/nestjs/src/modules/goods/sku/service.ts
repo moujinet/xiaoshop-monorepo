@@ -6,7 +6,7 @@ import { Goods } from '@/goods/manage/entity'
 import { GoodsSku } from '@/goods/sku/entity'
 import { GoodsSkuPayload } from '@/goods/sku/dto'
 import { FailedException } from '~/common/exception'
-import { nanoNumber, nanoid } from '~/utils'
+import { nanoNumber, nanoSkuCode, nanoid } from '~/utils'
 
 @Injectable()
 export class GoodsSkuService {
@@ -49,6 +49,7 @@ export class GoodsSkuService {
   async update(
     goodsId: string,
     data: GoodsSkuPayload[],
+    skuCode?: string,
   ) {
     try {
       const skus: GoodsSku[] = []
@@ -60,7 +61,7 @@ export class GoodsSkuService {
 
         goodsSku.id = sku.id || nanoid()
         goodsSku.goods = goods
-        goodsSku.skuCode = sku.skuCode || nanoNumber()
+        goodsSku.skuCode = sku.skuCode || nanoSkuCode(skuCode)
         goodsSku.name = sku.name
         goodsSku.image = sku.image || ''
         goodsSku.price = sku.price || 0

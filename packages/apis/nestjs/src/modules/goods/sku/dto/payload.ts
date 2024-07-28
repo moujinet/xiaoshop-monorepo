@@ -1,10 +1,9 @@
-import type { IGoodsSkuFormData, IGoodsSkuSpec, IGoodsSpec } from '@xiaoshop/schema'
+import type { IGoodsSkuFormData, IGoodsSkuSpec } from '@xiaoshop/schema'
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { example } from './example'
 import { nanoid } from '~/utils'
-import { GoodsSpecResponse } from '@/goods/spec/dto'
 
 /**
  * 商品 SKU 规格 DTO
@@ -92,13 +91,13 @@ export class GoodsSkuPayload implements IGoodsSkuFormData {
  * 更新商品多规格
  */
 export class UpdateGoodsSkusPayload {
-  @ApiProperty({ type: [GoodsSpecResponse], description: '商品多规格设置' })
-  @ValidateNested()
-  @Type(() => GoodsSpecResponse)
-  readonly specs: IGoodsSpec[]
+  @ApiProperty({ required: false, description: '商品编码', example: example.skuCode })
+  @IsString()
+  @IsOptional()
+  readonly skuCode: string
 
   @ApiProperty({ type: [GoodsSkuPayload], description: '商品多规格 SKU' })
   @ValidateNested()
   @Type(() => GoodsSkuPayload)
-  readonly skus: IGoodsSkuFormData[]
+  readonly skus: GoodsSkuPayload[]
 }

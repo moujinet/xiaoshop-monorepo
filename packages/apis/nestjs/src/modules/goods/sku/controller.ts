@@ -1,11 +1,11 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Body, Controller, Get, ParseArrayPipe, Put, Query } from '@nestjs/common'
-import { EXCEPTION_FAILED, exceptionFactory } from '~/common/exception'
+import { Body, Controller, Get, Put, Query } from '@nestjs/common'
+import { EXCEPTION_FAILED } from '~/common/exception'
 import { GoodsSkuService } from '@/goods/sku/service'
 import {
   GetGoodsSkuByGoodsRequest,
-  GoodsSkuPayload,
   GoodsSkuResponse,
+  UpdateGoodsSkusPayload,
 } from '@/goods/sku/dto'
 import {
   ApiDoneResponse,
@@ -38,8 +38,8 @@ export class GoodsSkuController {
   @Put('update')
   async update(
     @Query() query: GetGoodsSkuByGoodsRequest,
-    @Body(new ParseArrayPipe({ items: GoodsSkuPayload, exceptionFactory })) data: GoodsSkuPayload[],
+    @Body() data: UpdateGoodsSkusPayload,
   ) {
-    return this.service.update(query.id, data)
+    return this.service.update(query.id, data.skus, data.skuCode)
   }
 }
