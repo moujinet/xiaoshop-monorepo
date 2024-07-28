@@ -105,7 +105,7 @@ export default defineModule({
       children: [
         { id: 'import', name: '导入商品' },
         { id: 'export', name: '导出商品' },
-        { id: 'clawer', name: '商品采集' },
+        { id: 'crawler', name: '商品采集' },
       ],
     },
     {
@@ -124,7 +124,7 @@ export default defineModule({
             { id: 'self-pickup', name: '自提设置' },
           ],
         },
-        { id: 'clawer', name: '商品采集' },
+        { id: 'crawler', name: '商品采集' },
       ],
     },
   ],

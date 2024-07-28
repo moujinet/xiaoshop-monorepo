@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 defineOptions({
-  name: 'GoodsSettingsClawerPage',
+  name: 'GoodsSettingsCrawlerPage',
 })
 
 const { getOptions, updateOptions } = useSettings()
-const form = reactive(getOptions('goods.clawer', {}, ['apiKey']))
-const { loading, onUpdate } = updateOptions('goods.clawer', form)
+const form = reactive(getOptions('goods.crawler', {}, ['apiKey']))
+const { loading, onUpdate } = updateOptions('goods.crawler', form)
 </script>
 
 <template>
