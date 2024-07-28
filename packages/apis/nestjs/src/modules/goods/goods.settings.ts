@@ -8,5 +8,5 @@ export const GoodsSettings: ISettingsDict = {
   'preference.defaultGoodsImage': '',
 
   // 商品管理 - 采集设置
-  'clawer.apiKey': '',
+  'crawler.apiKey': '',
 }
