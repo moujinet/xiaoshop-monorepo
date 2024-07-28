@@ -397,6 +397,7 @@ export type IGoodsListItem = Pick<
   | 'sales'
   | 'sort'
   | 'updatedTime'
+  | 'deletedTime'
 >
 
 /**
