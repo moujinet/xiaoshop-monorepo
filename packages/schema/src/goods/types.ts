@@ -125,7 +125,6 @@ export type IGoodsRatingGrade = `${GoodsRatingGrade}` | GoodsRatingGrade
  * 商品导出记录状态
  *
  * - `PENDING`: 等待导出
- * - `PROCESSING`: 导出中
  * - `SUCCESS`: 导出成功
  * - `FAILED`: 导出失败
  *
