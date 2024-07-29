@@ -1549,44 +1549,47 @@ describe('Goods Module', () => {
     it('Update Goods Skus', async () => {
       const { body } = await request(app.getHttpServer())
         .put(`/goods/skus/update?id=${_goodsId}`)
-        .send([
-          {
-            name: '商品名称',
-            image: '/assets/1.png',
-            specs: [
-              {
-                specId: _goodsSpecs[0].id,
-                name: '颜色',
-                value: '红色',
-              },
-            ],
-            price: 199,
-            originalPrice: 299,
-            costPrice: 99,
-            inventory: 1000,
-            inventoryEarlyWarning: 10,
-            weight: 0.2,
-            volume: 0.01,
-          },
-          {
-            name: '商品名称1',
-            image: '/assets/1.png',
-            specs: [
-              {
-                specId: _goodsSpecs[0].id,
-                name: '颜色',
-                value: '蓝色',
-              },
-            ],
-            price: 199,
-            originalPrice: 299,
-            costPrice: 99,
-            inventory: 1000,
-            inventoryEarlyWarning: 10,
-            weight: 0.2,
-            volume: 0.01,
-          },
-        ])
+        .send({
+          skuCode: '',
+          skus: [
+            {
+              name: '商品名称',
+              image: '/assets/1.png',
+              specs: [
+                {
+                  specId: _goodsSpecs[0].id,
+                  name: '颜色',
+                  value: '红色',
+                },
+              ],
+              price: 199,
+              originalPrice: 299,
+              costPrice: 99,
+              inventory: 1000,
+              inventoryEarlyWarning: 10,
+              weight: 0.2,
+              volume: 0.01,
+            },
+            {
+              name: '商品名称1',
+              image: '/assets/1.png',
+              specs: [
+                {
+                  specId: _goodsSpecs[0].id,
+                  name: '颜色',
+                  value: '蓝色',
+                },
+              ],
+              price: 199,
+              originalPrice: 299,
+              costPrice: 99,
+              inventory: 1000,
+              inventoryEarlyWarning: 10,
+              weight: 0.2,
+              volume: 0.01,
+            },
+          ],
+        })
         .expect(200)
 
       expect(body.code).toEqual(0)
