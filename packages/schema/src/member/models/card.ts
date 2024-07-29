@@ -72,6 +72,10 @@ export interface IMemberCard {
  */
 export interface IMemberCardStyles {
   /**
+   * 会员卡图标
+   */
+  icon: string
+  /**
    * 会员卡文本颜色
    */
   textColor: string

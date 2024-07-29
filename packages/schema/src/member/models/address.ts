@@ -1,4 +1,4 @@
-import type { IArea, IEnabled } from '@/common'
+import type { IEnabled } from '@/common'
 
 /**
  * 会员地址
@@ -22,10 +22,8 @@ export interface IMemberAddress {
   mobile: string
   /**
    * 城市
-   *
-   * @see {@link IArea}
    */
-  location: IArea['code'][]
+  location: string[]
   /**
    * 详细地址
    */

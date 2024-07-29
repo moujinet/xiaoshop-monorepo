@@ -1,4 +1,3 @@
-import type { IArea } from '@/common'
 import type { IMemberGender, IMemberSource, IMemberStatus } from '@/member/types'
 import type { IMemberCardBinding, IMemberGroupDict, IMemberTagDict } from '@/member/models'
 
@@ -72,10 +71,8 @@ export interface IMember {
   gender: IMemberGender
   /**
    * 注册城市
-   *
-   * @see {@link IArea}
    */
-  location: IArea['code'][]
+  location: string[]
   /**
    * 注册时间
    */

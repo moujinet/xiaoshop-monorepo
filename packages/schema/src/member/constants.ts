@@ -34,7 +34,6 @@ export const MEMBER_STATUSES = [
  * - `WECHAT_OA`: 微信公众号
  * - `H5`: H5
  * - `MANUAL`: 手动创建
- * - `IMPORT`: 批量导入
  * - `WEB`: 网站
  * - `APP_ANDROID`: Android APP
  * - `APP_IOS`: iOS APP
@@ -44,7 +43,6 @@ export enum MemberSource {
   WECHAT_OA = 'wechat_oa',
   H5 = 'h5',
   MANUAL = 'manual',
-  IMPORT = 'import',
   WEB = 'web',
   APP_ANDROID = 'android',
   APP_IOS = 'ios',
@@ -60,7 +58,6 @@ export const MEMBER_SOURCES = [
   { label: '微信公众号', value: MemberSource.WECHAT_OA, color: 'green', icon: 'mingcute:wechat' },
   { label: 'H5', value: MemberSource.H5, color: 'blue', icon: 'mingcute:cellphone' },
   { label: '后台创建', value: MemberSource.MANUAL, color: 'blue', icon: 'mingcute:layout' },
-  { label: '批量导入', value: MemberSource.IMPORT, color: 'blue', icon: 'mingcute:upload-3' },
   { label: '网站', value: MemberSource.WEB, color: 'blue', icon: 'mingcute:laptop' },
   { label: 'iOS APP', value: MemberSource.APP_IOS, color: 'gray', icon: 'mingcute:apple' },
   { label: 'Android APP', value: MemberSource.APP_ANDROID, color: 'cyan', icon: 'mingcute:android-2' },

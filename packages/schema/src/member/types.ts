@@ -30,7 +30,6 @@ export type IMemberStatus = `${MemberStatus}` | MemberStatus
  * - `APP_ANDROID`: Android APP
  * - `APP_IOS`: iOS APP
  * - `H5`: H5
- * - `IMPORT`: 批量导入
  * - `MANUAL`: 后台创建
  * - `WEB`: 网站
  * - `WECHAT_MP`: 微信小程序
