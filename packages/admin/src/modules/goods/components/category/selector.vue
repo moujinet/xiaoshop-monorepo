@@ -10,6 +10,22 @@ refreshData()
 
 defineExpose({
   refresh: refreshData,
+  getLabel: (id: number) => {
+    for (const item of data.value) {
+      if (item.id === id) {
+        return item.name
+      }
+
+      if (item.children) {
+        const name = item.children.find(child => child.id === id)?.name
+        if (name) {
+          return `${item.name}/${name}`
+        }
+      }
+    }
+
+    return ''
+  },
 })
 </script>
 
