@@ -1,3 +1,5 @@
+import { IGoodsExportConditions } from '@xiaoshop/schema'
+
 /**
  * 商品管理事件
  */
@@ -5,7 +7,7 @@ abstract class GoodsManageEvent {
   /**
    * 商品 ID
    */
-  id: string
+  readonly id: string
 
   /**
    * 初始化
@@ -61,3 +63,27 @@ export class GoodsSoldOutEvent extends GoodsManageEvent {}
  * 商品库存预警事件
  */
 export class GoodsInventoryEarlyWarningEvent extends GoodsManageEvent {}
+
+/**
+ * 商品导出事件
+ */
+export class GoodsExportEvent {
+  /**
+   * 导出记录 ID
+   */
+  readonly id: number
+  /**
+   * 商品导出条件
+   *
+   * @see {@link IGoodsExportConditions}
+   */
+  readonly conditions: IGoodsExportConditions
+
+  constructor(
+    id: number,
+    conditions: IGoodsExportConditions,
+  ) {
+    this.id = id
+    this.conditions = conditions
+  }
+}

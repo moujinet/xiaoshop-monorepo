@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bull'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Global, Module, forwardRef } from '@nestjs/common'
 
@@ -41,12 +42,21 @@ import { GoodsAttributeTemplate } from '@/goods/attribute-template/entity'
 import { GoodsAttributeTemplateService } from '@/goods/attribute-template/service'
 import { GoodsAttributeTemplateController } from '@/goods/attribute-template/controller'
 
-import { GOODS_MODULE_ID } from '@/goods/constants'
+import { GoodsExportRecord } from '@/goods/export/entity'
+import { GoodsExportRecordService } from '@/goods/export/service'
+import { GoodsExportRecordController } from '@/goods/export/controller'
+import { GoodsExportTask } from '@/goods/export/tasks'
+
 import { AssetsModule } from '@/assets/assets.module'
 import { GoodsSettings } from '@/goods/goods.settings'
 import { GoodsListener } from '@/goods/goods.listener'
 import { GoodsScheduler } from '@/goods/goods.scheduler'
 import { SettingsModule } from '@/settings/settings.module'
+
+import {
+  GOODS_MODULE_ID,
+  GOODS_QUEUE_ID,
+} from '@/goods/constants'
 
 @Global()
 @Module({
@@ -71,7 +81,12 @@ import { SettingsModule } from '@/settings/settings.module'
       Goods,
       GoodsSku,
       GoodsSpec,
+      GoodsExportRecord,
     ]),
+
+    BullModule.registerQueue({
+      name: GOODS_QUEUE_ID,
+    }),
   ],
 
   controllers: [
@@ -85,6 +100,7 @@ import { SettingsModule } from '@/settings/settings.module'
     GoodsAdditionController,
     GoodsProtectionController,
     GoodsTagController,
+    GoodsExportRecordController,
   ],
 
   providers: [
@@ -98,6 +114,10 @@ import { SettingsModule } from '@/settings/settings.module'
     GoodsService,
     GoodsSkuService,
     GoodsSpecService,
+    GoodsExportRecordService,
+
+    // Queue Jobs
+    GoodsExportTask,
 
     // Event Listener
     GoodsListener,

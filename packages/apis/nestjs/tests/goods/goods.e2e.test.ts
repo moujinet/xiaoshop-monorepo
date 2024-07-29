@@ -17,6 +17,7 @@ const tables = [
   'shop_goods_attribute_template',
   'shop_goods_addition',
   'shop_goods_protection',
+  'shop_goods_export',
 
   // Middle Tables
   'shop_goods_has_additions',
@@ -1735,6 +1736,44 @@ describe('Goods Module', () => {
     })
   })
 
+  // Export Goods
+  describe('Export Goods', () => {
+    it('Create Goods Export Record', async () => {
+      const { body } = await request(app.getHttpServer())
+        .post('/goods/export/create')
+        .send({
+          status: 'in_stock',
+          source: 'connect',
+          categoryIds: [],
+          groupId: 0,
+          brandId: 0,
+          tagId: 0,
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
+    it('Fetch Goods Export Pages', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/goods/export/pages')
+        .expect(200)
+
+      expect(body.data.total).toEqual(1)
+    })
+
+    it('Delete Goods Export Record', async () => {
+      const { body } = await request(app.getHttpServer())
+        .delete('/goods/export/delete')
+        .send({
+          id: 1,
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+  })
+
   // Goods Service
   describe('Goods Service', () => {
     it('Update Sold Out Goods', async () => {
@@ -1747,7 +1786,7 @@ describe('Goods Module', () => {
       expect(result).toEqual([])
     })
 
-    it('Update Stock Warn Goods', async () => {
+    it('Update Inventory Early Warning', async () => {
       const module = await createTestingModule([
         GoodsModule,
       ]).compile()
@@ -1755,6 +1794,23 @@ describe('Goods Module', () => {
       const result = await module.get<GoodsService>(GoodsService).updateInventoryEarlyWarning()
 
       expect(result).toEqual([])
+    })
+
+    it('Fetch Export List', async () => {
+      const module = await createTestingModule([
+        GoodsModule,
+      ]).compile()
+
+      const result = await module.get<GoodsService>(GoodsService).findExportList({
+        status: 'in_stock',
+        source: 'connect',
+        categoryIds: [],
+        groupId: 0,
+        brandId: 0,
+        tagId: 0,
+      })
+
+      expect(result.length).toEqual(0)
     })
   })
 })

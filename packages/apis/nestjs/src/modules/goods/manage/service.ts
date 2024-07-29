@@ -17,6 +17,8 @@ import {
   type IGoods,
   type IGoodsBasicInfo,
   type IGoodsDetailInfo,
+  type IGoodsExportConditions,
+  IGoodsExportListItem,
   type IGoodsInventoryInfo,
   type IGoodsListItem,
   type IGoodsStatus,
@@ -173,6 +175,71 @@ export class GoodsService {
         page,
         pagesize,
       }
+    }
+    catch (e) {
+      throw new FailedException('获取商品分页列表', e.message)
+    }
+  }
+
+  /**
+   * 获取商品导出列表
+   *
+   * @param query IGoodsExportConditions
+   * @returns Promise<IGoodsExportListItem[]>
+   * @throws FailedException
+   */
+  async findExportList(query: IGoodsExportConditions): Promise<IGoodsExportListItem[]> {
+    try {
+      const where: FindOptionsWhere<Goods> = {
+        isDeleted: Enabled.NO,
+      }
+
+      if (query.status)
+        where.status = query.status
+
+      if (query.source)
+        where.source = query.source
+
+      if (query.categoryIds && query.categoryIds.length > 0)
+        where.categories = { id: In(query.categoryIds) }
+
+      if (query.brandId)
+        where.brand = { id: query.brandId }
+
+      if (query.groupId)
+        where.group = { id: query.groupId }
+
+      if (query.tagId)
+        where.tag = { id: query.tagId }
+
+      return await this.repository.find({
+        select: {
+          id: true,
+          type: true,
+          source: true,
+          isMultiSkus: true,
+          skuCode: true,
+          name: true,
+          price: true,
+          originalPrice: true,
+          costPrice: true,
+          inventory: true,
+          weight: true,
+          volume: true,
+          unit: true,
+          sales: true,
+          categories: { id: true, name: true },
+          tag: { id: true, name: true },
+          group: { id: true, name: true },
+          brand: { id: true, name: true },
+        },
+        where,
+        relations: ['group', 'tag', 'brand', 'categories'],
+        order: {
+          sort: 'ASC',
+          createdTime: 'DESC',
+        },
+      })
     }
     catch (e) {
       throw new FailedException('获取商品分页列表', e.message)
@@ -394,6 +461,7 @@ export class GoodsService {
    *
    * @param data GoodsBasicInfoPayload
    * @returns Promise<CreateGoodsResponse>
+   * @emits GoodsCreatedEvent
    * @throws ExistsException
    * @throws FailedException
    */
@@ -499,7 +567,10 @@ export class GoodsService {
       if (!res.id)
         throw new FailedException('创建商品基本信息')
 
-      this.eventEmitter.emitAsync(GoodsCreateEvent.name, new GoodsCreateEvent(res.id))
+      this.eventEmitter.emitAsync(
+        GoodsCreateEvent.name,
+        new GoodsCreateEvent(res.id),
+      )
 
       return {
         id: res.id,
@@ -626,6 +697,9 @@ export class GoodsService {
    *
    * @param id string
    * @param data GoodsInventoryInfoPayload
+   * @emits GoodsUpdateEvent
+   * @emits GoodsStockedEvent
+   * @emits GoodsInStockEvent
    * @throws NotFoundException
    * @throws FailedException
    * @throws ExistsException
@@ -735,6 +809,7 @@ export class GoodsService {
    * @param data BatchUpdateGoodsData
    * @throws NotFoundException
    * @throws FailedException
+   * @emits GoodsUpdateEvent
    */
   async batchUpdate(ids: string[], data: BatchUpdateGoodsData): Promise<void> {
     try {
@@ -822,6 +897,9 @@ export class GoodsService {
    * 复制商品至草稿
    *
    * @param id string
+   * @throws NotFoundException
+   * @throws FailedException
+   * @emits GoodsCreateEvent
    * @returns Promise<string>
    */
   async copyToDraft(id: string): Promise<string> {
@@ -935,6 +1013,8 @@ export class GoodsService {
    *
    * @returns Promise<string[]>
    * @throws FailedException
+   * @emits GoodsUpdateEvent
+   * @emits GoodsSoldOutEvent
    */
   async updateSoldOutGoods(): Promise<string[]> {
     try {
@@ -975,6 +1055,7 @@ export class GoodsService {
    *
    * @returns Promise<string[]>
    * @throws FailedException
+   * @emits GoodsInventoryEarlyWarningEvent
    */
   async updateInventoryEarlyWarning(): Promise<string[]> {
     try {
@@ -1021,6 +1102,7 @@ export class GoodsService {
    *
    * @returns Promise<string[]>
    * @throws FailedException
+   * @emits GoodsInStockEvent
    */
   async updateAutoInStockGoods(): Promise<string[]> {
     try {
@@ -1064,6 +1146,7 @@ export class GoodsService {
    *
    * @param id string
    * @throws FailedException
+   * @emits GoodsDeleteEvent
    */
   async softDelete(id: string): Promise<void> {
     try {
@@ -1090,6 +1173,7 @@ export class GoodsService {
    *
    * @param id string
    * @throws FailedException
+   * @emits GoodsRestoreEvent
    */
   async restore(id: string): Promise<void> {
     try {
@@ -1116,6 +1200,7 @@ export class GoodsService {
    * @param ids string[]
    * @returns Promise<void>
    * @throws FailedException
+   * @emits GoodsDeleteEvent
    */
   async batchDelete(ids: string[]): Promise<void> {
     try {
@@ -1148,6 +1233,7 @@ export class GoodsService {
    * @param ids string[]
    * @returns Promise<void>
    * @throws FailedException
+   * @emits GoodsRestoreEvent
    */
   async batchRestore(ids: string[]): Promise<void> {
     try {

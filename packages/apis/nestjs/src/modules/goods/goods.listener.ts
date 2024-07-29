@@ -1,7 +1,11 @@
+import { Queue } from 'bull'
+import { InjectQueue } from '@nestjs/bull'
 import { OnEvent } from '@nestjs/event-emitter'
 import { Inject, Injectable, Logger } from '@nestjs/common'
+import type { IGoodsExportJob } from '@/goods/interface'
 import {
   GoodsCopyEvent,
+  GoodsExportEvent,
   GoodsInStockEvent,
   GoodsInventoryEarlyWarningEvent,
   GoodsSoldOutEvent,
@@ -9,6 +13,7 @@ import {
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsSkuService } from '@/goods/sku/service'
 import { GoodsSpecService } from '@/goods/spec/service'
+import { GOODS_EXPORT_TASK, GOODS_QUEUE_ID } from '@/goods/constants'
 
 @Injectable()
 export class GoodsListener {
@@ -23,6 +28,9 @@ export class GoodsListener {
 
     @Inject(GoodsSkuService)
     private readonly sku: GoodsSkuService,
+
+    @InjectQueue(GOODS_QUEUE_ID)
+    private readonly queue: Queue<IGoodsExportJob>,
   ) {}
 
   @OnEvent(GoodsCopyEvent.name)
@@ -55,5 +63,10 @@ export class GoodsListener {
   async handleGoodsInStock(payload: GoodsInStockEvent) {
     // TODO: 后台消息推送
     this.logger.debug('商品上架', payload.id)
+  }
+
+  @OnEvent(GoodsExportEvent.name)
+  async handleGoodsExport(payload: GoodsExportEvent) {
+    await this.queue.add(GOODS_EXPORT_TASK, payload)
   }
 }
