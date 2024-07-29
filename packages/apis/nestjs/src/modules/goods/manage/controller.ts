@@ -173,7 +173,7 @@ export class GoodsController {
     if (!this.service.isExists(data.id))
       throw new NotFoundException(`商品 [${data.id}] `)
 
-    this.eventEmitter.emit(GoodsCopyEvent.name, new GoodsCopyEvent(data.id),
+    this.eventEmitter.emitAsync(GoodsCopyEvent.name, new GoodsCopyEvent(data.id),
     )
   }
 
