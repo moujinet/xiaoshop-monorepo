@@ -445,3 +445,28 @@ export type IGoodsBatchUpdateFormData = Partial<
     additionIds: number[]
   }
 >
+
+/**
+ * 商品导出项
+ */
+export type IGoodsExportListItem = Pick<
+  IGoods,
+  | 'id'
+  | 'type'
+  | 'source'
+  | 'isMultiSkus'
+  | 'skuCode'
+  | 'name'
+  | 'price'
+  | 'originalPrice'
+  | 'costPrice'
+  | 'inventory'
+  | 'weight'
+  | 'volume'
+  | 'unit'
+  | 'sales'
+  | 'categories'
+  | 'tag'
+  | 'group'
+  | 'brand'
+>
