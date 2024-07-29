@@ -12,7 +12,7 @@ import type {
  *
  * @see {@link StaffAccountStatus}
  */
-export type IStaffAccountStatus = typeof StaffAccountStatus[keyof typeof StaffAccountStatus]
+export type IStaffAccountStatus = `${StaffAccountStatus}` | StaffAccountStatus
 
 /**
  * 员工日志 - 类型
@@ -22,4 +22,4 @@ export type IStaffAccountStatus = typeof StaffAccountStatus[keyof typeof StaffAc
  *
  * @see {@link StaffLogType}
  */
-export type IStaffLogType = typeof StaffLogType[keyof typeof StaffLogType]
+export type IStaffLogType = `${StaffLogType}` | StaffLogType

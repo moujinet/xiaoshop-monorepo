@@ -22,7 +22,7 @@ import type {
  *
  * @see {@link MemberStatus}
  */
-export type IMemberStatus = typeof MemberStatus[keyof typeof MemberStatus]
+export type IMemberStatus = `${MemberStatus}` | MemberStatus
 
 /**
  * 会员 - 注册来源
@@ -38,7 +38,7 @@ export type IMemberStatus = typeof MemberStatus[keyof typeof MemberStatus]
  *
  * @see {@link MemberSource}
  */
-export type IMemberSource = typeof MemberSource[keyof typeof MemberSource]
+export type IMemberSource = `${MemberSource}` | MemberSource
 
 /**
  * 会员 - 性别
@@ -49,7 +49,7 @@ export type IMemberSource = typeof MemberSource[keyof typeof MemberSource]
  *
  * @see {@link MemberGender}
  */
-export type IMemberGender = typeof MemberGender[keyof typeof MemberGender]
+export type IMemberGender = `${MemberGender}` | MemberGender
 
 /**
  * 会员账户 - 状态
@@ -59,7 +59,7 @@ export type IMemberGender = typeof MemberGender[keyof typeof MemberGender]
  *
  * @see {@link MemberAccountStatus}
  */
-export type IMemberAccountStatus = typeof MemberAccountStatus[keyof typeof MemberAccountStatus]
+export type IMemberAccountStatus = `${MemberAccountStatus}` | MemberAccountStatus
 
 /**
  * 会员账户 - 标识
@@ -75,7 +75,7 @@ export type IMemberAccountStatus = typeof MemberAccountStatus[keyof typeof Membe
  *
  * @see {@link MemberAccountKey}
  */
-export type IMemberAccountKey = typeof MemberAccountKey[keyof typeof MemberAccountKey]
+export type IMemberAccountKey = `${MemberAccountKey}` | MemberAccountKey
 
 /**
  * 会员卡 - 类型
@@ -85,7 +85,7 @@ export type IMemberAccountKey = typeof MemberAccountKey[keyof typeof MemberAccou
  *
  * @see {@link MemberCardType}
  */
-export type IMemberCardType = typeof MemberCardType[keyof typeof MemberCardType]
+export type IMemberCardType = `${MemberCardType}` | MemberCardType
 
 /**
  * 会员卡 - 套餐类型
@@ -97,7 +97,7 @@ export type IMemberCardType = typeof MemberCardType[keyof typeof MemberCardType]
  *
  * @see {@link MemberCardPlanType}
  */
-export type IMemberCardPlanType = typeof MemberCardPlanType[keyof typeof MemberCardPlanType]
+export type IMemberCardPlanType = `${MemberCardPlanType}` | MemberCardPlanType
 
 /**
  * 会员积分 - 变更类型
@@ -108,7 +108,7 @@ export type IMemberCardPlanType = typeof MemberCardPlanType[keyof typeof MemberC
  *
  * @see {@link MemberPointsOperator}
  */
-export type IMemberPointsOperator = typeof MemberPointsOperator[keyof typeof MemberPointsOperator]
+export type IMemberPointsOperator = `${MemberPointsOperator}` | MemberPointsOperator
 
 /**
  * 会员积分规则 - 标识
@@ -121,7 +121,7 @@ export type IMemberPointsOperator = typeof MemberPointsOperator[keyof typeof Mem
  *
  * @see {@link MemberPointsRuleKey}
  */
-export type IMemberPointsRuleKey = typeof MemberPointsRuleKey[keyof typeof MemberPointsRuleKey]
+export type IMemberPointsRuleKey = `${MemberPointsRuleKey}` | MemberPointsRuleKey
 
 /**
  * 会员群体 - 筛选条件 - 操作符
@@ -131,7 +131,7 @@ export type IMemberPointsRuleKey = typeof MemberPointsRuleKey[keyof typeof Membe
  *
  * @see {@link MemberGroupCondOperator}
  */
-export type IMemberGroupCondOperator = typeof MemberGroupCondOperator[keyof typeof MemberGroupCondOperator]
+export type IMemberGroupCondOperator = `${MemberGroupCondOperator}` | MemberGroupCondOperator
 
 /**
  * 会员群体 - 筛选条件
@@ -149,7 +149,7 @@ export type IMemberGroupCondOperator = typeof MemberGroupCondOperator[keyof type
  *
  * @see {@link MemberGroupCondKey}
  */
-export type IMemberGroupCondKey = typeof MemberGroupCondKey[keyof typeof MemberGroupCondKey]
+export type IMemberGroupCondKey = `${MemberGroupCondKey}` | MemberGroupCondKey
 
 /**
  * 会员注销申请 - 状态
@@ -159,7 +159,7 @@ export type IMemberGroupCondKey = typeof MemberGroupCondKey[keyof typeof MemberG
  *
  * @see {@link MemberLogoutStatus}
  */
-export type IMemberLogoutStatus = typeof MemberLogoutStatus[keyof typeof MemberLogoutStatus]
+export type IMemberLogoutStatus = `${MemberLogoutStatus}` | MemberLogoutStatus
 
 /**
  * 会员日志 - 类型
@@ -171,4 +171,4 @@ export type IMemberLogoutStatus = typeof MemberLogoutStatus[keyof typeof MemberL
  *
  * @see {@link MemberLogType}
  */
-export type IMemberLogType = typeof MemberLogType[keyof typeof MemberLogType]
+export type IMemberLogType = `${MemberLogType}` | MemberLogType

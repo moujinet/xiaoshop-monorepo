@@ -14,7 +14,7 @@ import type {
  *
  * @see {@link LogisticsDeliveryStatus}
  */
-export type ILogisticsDeliveryStatus = typeof LogisticsDeliveryStatus[keyof typeof LogisticsDeliveryStatus]
+export type ILogisticsDeliveryStatus = `${LogisticsDeliveryStatus}` | LogisticsDeliveryStatus
 
 /**
  * 物流发货类型
@@ -25,7 +25,7 @@ export type ILogisticsDeliveryStatus = typeof LogisticsDeliveryStatus[keyof type
  *
  * @see {@link LogisticsDeliveryType}
  */
-export type ILogisticsDeliveryType = typeof LogisticsDeliveryType[keyof typeof LogisticsDeliveryType]
+export type ILogisticsDeliveryType = `${LogisticsDeliveryType}` | LogisticsDeliveryType
 
 /**
  * 物流发货方式
@@ -37,7 +37,7 @@ export type ILogisticsDeliveryType = typeof LogisticsDeliveryType[keyof typeof L
  *
  * @see {@link LogisticsDeliveryMode}
  */
-export type ILogisticsDeliveryMode = typeof LogisticsDeliveryMode[keyof typeof LogisticsDeliveryMode]
+export type ILogisticsDeliveryMode = `${LogisticsDeliveryMode}` | LogisticsDeliveryMode
 
 /**
  * 物流 - 运费计算方式
@@ -48,4 +48,4 @@ export type ILogisticsDeliveryMode = typeof LogisticsDeliveryMode[keyof typeof L
  *
  * @see {@link LogisticsFreightTemplateCalcMode}
  */
-export type ILogisticsFreightTemplateCalcMode = typeof LogisticsFreightTemplateCalcMode[keyof typeof LogisticsFreightTemplateCalcMode]
+export type ILogisticsFreightTemplateCalcMode = `${LogisticsFreightTemplateCalcMode}` | LogisticsFreightTemplateCalcMode

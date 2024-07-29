@@ -8,4 +8,4 @@ import type { AssetType } from '@/assets/constants'
  *
  * @see {@link AssetType}
  */
-export type IAssetType = typeof AssetType[keyof typeof AssetType]
+export type IAssetType = `${AssetType}` | AssetType

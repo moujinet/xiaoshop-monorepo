@@ -6,7 +6,7 @@ import type { Enabled } from '@/common/constants'
  * - `YES`: 启用
  * - `NO`: 停用
  */
-export type IEnabled = typeof Enabled[keyof typeof Enabled]
+export type IEnabled = `${Enabled}` | Enabled
 
 /**
  * 地区字典

@@ -274,3 +274,34 @@ export const GOODS_RATING_GRADES = [
   { value: GoodsRatingGrade.NORMAL, label: '中评', color: 'blue', icon: 'mingcute:emoji' },
   { value: GoodsRatingGrade.LOW, label: '差评', color: 'red', icon: 'mingcute:angry' },
 ]
+
+// -----------------------------------------------
+// 商品 - 导出 - 导出状态
+// -----------------------------------------------
+
+/**
+ * 枚举: 商品导出状态
+ *
+ * - `PENDING`: 等待导出
+ * - `PROCESSING`: 导出中
+ * - `SUCCESS`: 导出成功
+ * - `FAILED`: 导出失败
+ */
+export enum GoodsExportRecordStatus {
+  PENDING = 'pending',
+  PROCESSING = 'processing',
+  SUCCESS = 'success',
+  FAILED = 'failed',
+}
+
+/**
+ * 字典: 商品导出状态
+ *
+ * @see {@link IGoodsExportRecordStatus}
+ */
+export const GOODS_EXPORT_RECORD_STATUSES = [
+  { value: GoodsExportRecordStatus.PENDING, label: '等待导出' },
+  { value: GoodsExportRecordStatus.PROCESSING, label: '导出中' },
+  { value: GoodsExportRecordStatus.SUCCESS, label: '导出成功' },
+  { value: GoodsExportRecordStatus.FAILED, label: '导出失败' },
+]

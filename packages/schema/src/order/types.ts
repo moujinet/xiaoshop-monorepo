@@ -1,17 +1,17 @@
 import type {
-  OrderCommentAuditStatusEnum,
-  OrderGoodsStatusEnum,
-  OrderLogTypeEnum,
-  OrderPaymentDiscountTypeEnum,
-  OrderPaymentStatusEnum,
-  OrderPaymentTypeEnum,
-  OrderRefundModeEnum,
-  OrderRefundStageEnum,
-  OrderRefundStatusEnum,
-  OrderRefundTypeEnum,
-  OrderSourceEnum,
-  OrderStatusEnum,
-  OrderTypeEnum,
+  OrderCommentAuditStatus,
+  OrderGoodsStatus,
+  OrderLogType,
+  OrderPaymentDiscountType,
+  OrderPaymentStatus,
+  OrderPaymentType,
+  OrderRefundMode,
+  OrderRefundStage,
+  OrderRefundStatus,
+  OrderRefundType,
+  OrderSource,
+  OrderStatus,
+  OrderType,
 } from '@/order/constants'
 
 /**
@@ -20,9 +20,9 @@ import type {
  * - `NORMAL`: 普通订单
  * - `CONNECT`: 云链订单
  *
- * @see {@link OrderTypeEnum}
+ * @see {@link OrderType}
  */
-export type IOrderType = OrderTypeEnum
+export type IOrderType = `${OrderType}` | OrderType
 
 /**
  * 订单状态
@@ -36,9 +36,9 @@ export type IOrderType = OrderTypeEnum
  * - `REFUNDED`: 已退款
  * - `DELETED`: 已删除
  *
- * @see {@link OrderStatusEnum}
+ * @see {@link OrderStatus}
  */
-export type IOrderStatus = OrderStatusEnum
+export type IOrderStatus = `${OrderStatus}` | OrderStatus
 
 /**
  * 订单来源
@@ -52,9 +52,9 @@ export type IOrderStatus = OrderStatusEnum
  * - `WECHAT_MP`: 微信小程序
  * - `WECHAT_OA`: 微信公众号
  *
- * @see {@link OrderSourceEnum}
+ * @see {@link OrderSource}
  */
-export type IOrderSource = OrderSourceEnum
+export type IOrderSource = `${OrderSource}` | OrderSource
 
 /**
  * 订单支付状态
@@ -63,9 +63,9 @@ export type IOrderSource = OrderSourceEnum
  * - `PAID`: 已付款
  * - `CLOSE`: 已关闭
  *
- * @see {@link OrderPaymentStatusEnum}
+ * @see {@link OrderPaymentStatus}
  */
-export type IOrderPaymentStatus = OrderPaymentStatusEnum
+export type IOrderPaymentStatus = `${OrderPaymentStatus}` | OrderPaymentStatus
 
 /**
  * 订单支付类型
@@ -74,9 +74,9 @@ export type IOrderPaymentStatus = OrderPaymentStatusEnum
  * - `WECHAT`: 微信支付
  * - `BALANCE`: 余额支付
  *
- * @see {@link OrderPaymentTypeEnum}
+ * @see {@link OrderPaymentType}
  */
-export type IOrderPaymentType = OrderPaymentTypeEnum
+export type IOrderPaymentType = `${OrderPaymentType}` | OrderPaymentType
 
 /**
  * 订单支付折扣类型
@@ -84,9 +84,9 @@ export type IOrderPaymentType = OrderPaymentTypeEnum
  * - `PRIVILEGE`: 会员权益
  * - `PROMOTION`: 优惠活动
  *
- * @see {@link OrderPaymentDiscountTypeEnum}
+ * @see {@link OrderPaymentDiscountType}
  */
-export type IOrderPaymentDiscountType = OrderPaymentDiscountTypeEnum
+export type IOrderPaymentDiscountType = `${OrderPaymentDiscountType}` | OrderPaymentDiscountType
 
 /**
  * 订单商品状态
@@ -101,9 +101,9 @@ export type IOrderPaymentDiscountType = OrderPaymentDiscountTypeEnum
  * - `REFUNDING`: `待退款`
  * - `REFUNDED`: `已退款`
  *
- * @see {@link OrderGoodsStatusEnum}
+ * @see {@link OrderGoodsStatus}
  */
-export type IOrderGoodsStatus = OrderGoodsStatusEnum
+export type IOrderGoodsStatus = `${OrderGoodsStatus}` | OrderGoodsStatus
 
 /**
  * 订单退换货售后类型
@@ -111,9 +111,9 @@ export type IOrderGoodsStatus = OrderGoodsStatusEnum
  * - `APPLY`: 买家申请售后
  * - `REFUND`: 商家主动退款
  *
- * @see {@link OrderRefundTypeEnum}
+ * @see {@link OrderRefundType}
  */
-export type IOrderRefundType = OrderRefundTypeEnum
+export type IOrderRefundType = `${OrderRefundType}` | OrderRefundType
 
 /**
  * 订单退换货处理状态
@@ -122,9 +122,9 @@ export type IOrderRefundType = OrderRefundTypeEnum
  * - `PROCESSING`: 处理中
  * - `FINISHED`: 已结束
  *
- * @see {@link OrderRefundStatusEnum}
+ * @see {@link OrderRefundStatus}
  */
-export type IOrderRefundStatus = OrderRefundStatusEnum
+export type IOrderRefundStatus = `${OrderRefundStatus}` | OrderRefundStatus
 
 /**
  * 订单退换货处理阶段
@@ -140,9 +140,9 @@ export type IOrderRefundStatus = OrderRefundStatusEnum
  * - `REFUNDED`: 已退款
  * - `PARTIAL_REFUNDED`: 已部分退款
  *
- * @see {@link OrderRefundStageEnum}
+ * @see {@link OrderRefundStage}
  */
-export type IOrderRefundStage = OrderRefundStageEnum
+export type IOrderRefundStage = `${OrderRefundStage}` | OrderRefundStage
 
 /**
  * 订单退换货退款方式
@@ -150,9 +150,9 @@ export type IOrderRefundStage = OrderRefundStageEnum
  * - `REFUND`: 退货退款
  * - `REPLACE`: 换货
  *
- * @see {@link OrderRefundModeEnum}
+ * @see {@link OrderRefundMode}
  */
-export type IOrderRefundMode = OrderRefundModeEnum
+export type IOrderRefundMode = `${OrderRefundMode}` | OrderRefundMode
 
 /**
  * 订单评论审核状态
@@ -161,9 +161,9 @@ export type IOrderRefundMode = OrderRefundModeEnum
  * - `APPROVED`: 已通过
  * - `REJECTED`: 已拒绝
  *
- * @see {@link OrderCommentAuditStatusEnum}
+ * @see {@link OrderCommentAuditStatus}
  */
-export type IOrderCommentAuditStatus = OrderCommentAuditStatusEnum
+export type IOrderCommentAuditStatus = `${OrderCommentAuditStatus}` | OrderCommentAuditStatus
 
 /**
  * 订单日志类型
@@ -183,6 +183,6 @@ export type IOrderCommentAuditStatus = OrderCommentAuditStatusEnum
  * - `REFUND_SELLER_REFUNDS`: 商家退款
  * - `REFUND_FINISH`: 售后结束
  *
- * @see {@link OrderLogTypeEnum}
+ * @see {@link OrderLogType}
  */
-export type IOrderLogType = OrderLogTypeEnum
+export type IOrderLogType = `${OrderLogType}` | OrderLogType

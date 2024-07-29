@@ -1,6 +1,7 @@
 import type {
   GoodsAttributeOptionType,
   GoodsBuyBtnType,
+  GoodsExportRecordStatus,
   GoodsFreightChargeMode,
   GoodsInventoryDeductMode,
   GoodsPublishMode,
@@ -21,7 +22,7 @@ import type {
  *
  * @see {@link GoodsStatus}
  */
-export type IGoodsStatus = typeof GoodsStatus[keyof typeof GoodsStatus]
+export type IGoodsStatus = `${GoodsStatus}` | GoodsStatus
 
 /**
  * 商品 - 商品类型
@@ -32,7 +33,7 @@ export type IGoodsStatus = typeof GoodsStatus[keyof typeof GoodsStatus]
  *
  * @see {@link GoodsType}
  */
-export type IGoodsType = typeof GoodsType[keyof typeof GoodsType]
+export type IGoodsType = `${GoodsType}` | GoodsType
 
 /**
  * 商品 - 商品来源
@@ -44,7 +45,7 @@ export type IGoodsType = typeof GoodsType[keyof typeof GoodsType]
  *
  * @see {@link GoodsSource}
  */
-export type IGoodsSource = typeof GoodsSource[keyof typeof GoodsSource]
+export type IGoodsSource = `${GoodsSource}` | GoodsSource
 
 /**
  * 商品 - 库存扣减方式
@@ -54,7 +55,7 @@ export type IGoodsSource = typeof GoodsSource[keyof typeof GoodsSource]
  *
  * @see {@link GoodsInventoryDeductMode}
  */
-export type IGoodsInventoryDeductMode = typeof GoodsInventoryDeductMode[keyof typeof GoodsInventoryDeductMode]
+export type IGoodsInventoryDeductMode = `${GoodsInventoryDeductMode}` | GoodsInventoryDeductMode
 
 /**
  * 商品 - 运费支付方式
@@ -65,7 +66,7 @@ export type IGoodsInventoryDeductMode = typeof GoodsInventoryDeductMode[keyof ty
  *
  * @see {@link GoodsFreightChargeMode}
  */
-export type IGoodsFreightChargeMode = typeof GoodsFreightChargeMode[keyof typeof GoodsFreightChargeMode]
+export type IGoodsFreightChargeMode = `${GoodsFreightChargeMode}` | GoodsFreightChargeMode
 
 /**
  * 商品 - 退货运费承担方
@@ -75,7 +76,7 @@ export type IGoodsFreightChargeMode = typeof GoodsFreightChargeMode[keyof typeof
  *
  * @see {@link GoodsReturnsFreightBy}
  */
-export type IGoodsReturnsFreightBy = typeof GoodsReturnsFreightBy[keyof typeof GoodsReturnsFreightBy]
+export type IGoodsReturnsFreightBy = `${GoodsReturnsFreightBy}` | GoodsReturnsFreightBy
 
 /**
  * 商品 - 上架模式
@@ -86,7 +87,7 @@ export type IGoodsReturnsFreightBy = typeof GoodsReturnsFreightBy[keyof typeof G
  *
  * @see {@link GoodsPublishMode}
  */
-export type IGoodsPublishMode = typeof GoodsPublishMode[keyof typeof GoodsPublishMode]
+export type IGoodsPublishMode = `${GoodsPublishMode}` | GoodsPublishMode
 
 /**
  * 商品 - 购买按钮类型
@@ -96,7 +97,7 @@ export type IGoodsPublishMode = typeof GoodsPublishMode[keyof typeof GoodsPublis
  *
  * @see {@link GoodsBuyBtnType}
  */
-export type IGoodsBuyBtnType = typeof GoodsBuyBtnType[keyof typeof GoodsBuyBtnType]
+export type IGoodsBuyBtnType = `${GoodsBuyBtnType}` | GoodsBuyBtnType
 
 /**
  * 商品 - 参数模板参数类型
@@ -107,7 +108,7 @@ export type IGoodsBuyBtnType = typeof GoodsBuyBtnType[keyof typeof GoodsBuyBtnTy
  *
  * @see {@link GOODS_ATTRIBUTE_OPTION_TYPES}
  */
-export type IGoodsAttributeOptionType = typeof GoodsAttributeOptionType[keyof typeof GoodsAttributeOptionType]
+export type IGoodsAttributeOptionType = `${GoodsAttributeOptionType}` | GoodsAttributeOptionType
 
 /**
  * 商品评价综合评级
@@ -118,4 +119,16 @@ export type IGoodsAttributeOptionType = typeof GoodsAttributeOptionType[keyof ty
  *
  * @see {@link GoodsRatingGrade}
  */
-export type IGoodsRatingGrade = typeof GoodsRatingGrade[keyof typeof GoodsRatingGrade]
+export type IGoodsRatingGrade = `${GoodsRatingGrade}` | GoodsRatingGrade
+
+/**
+ * 商品导出记录状态
+ *
+ * - `PENDING`: 等待导出
+ * - `PROCESSING`: 导出中
+ * - `SUCCESS`: 导出成功
+ * - `FAILED`: 导出失败
+ *
+ * @see {@link GoodsExportRecordStatus}
+ */
+export type IGoodsExportRecordStatus = `${GoodsExportRecordStatus}` | GoodsExportRecordStatus
