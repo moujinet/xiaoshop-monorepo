@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { IAreaNested } from '@xiaoshop/schema'
+import type { ILocationNested } from '@xiaoshop/schema'
 
 defineOptions({
-  name: 'FormAreaTrigger',
+  name: 'FormLocationTrigger',
 })
 
 const props = defineProps<{
@@ -13,8 +13,8 @@ const emit = defineEmits(['select'])
 
 const visible = ref(false)
 const loading = ref(true)
-const { loadTree } = useAreas()
-const options = ref<IAreaNested[]>([])
+const { loadTree, toPath } = useLocation()
+const options = ref<ILocationNested[]>([])
 const model = ref<string[][]>([])
 
 watch(
@@ -46,7 +46,7 @@ function filterSelected(areas: string[][]) {
         result.push(normalized(area))
     })
 
-  return result
+  return result.map(area => toPath(area))
 }
 
 function handleSelect() {
@@ -62,7 +62,7 @@ function handleSelect() {
     <slot />
 
     <template #content>
-      <div class="area-trigger flex-(~ col gap-4) border-(1 solid $color-border-1) p-4 bg-white rounded shadow">
+      <div class="location-trigger flex-(~ col gap-4) border-(1 solid $color-border-1) p-4 bg-white rounded shadow">
         <a-cascader-panel
           v-model="model"
           :options="options"
@@ -85,7 +85,7 @@ function handleSelect() {
 </template>
 
 <style lang="less">
-.area-trigger {
+.location-trigger {
   .arco-cascader-panel {
     border: 0;
     box-shadow: none;

@@ -1,4 +1,5 @@
 import type { IEnabled } from '@/common/types'
+import type { ILocationPath } from '@/common/models'
 import type { ILogisticsFreightTemplateCalcMode } from '@/logistics/types'
 
 /**
@@ -47,8 +48,10 @@ export interface ILogisticsFreightTemplate {
 export interface ILogisticsFreightTemplateNormalRule {
   /**
    * 规则覆盖地区
+   *
+   * @see {@link ILocationPath}
    */
-  areas: string[]
+  locations: ILocationPath[]
   /**
    * 首重
    */
@@ -73,8 +76,10 @@ export interface ILogisticsFreightTemplateNormalRule {
 export interface ILogisticsFreightTemplateFreeRule {
   /**
    * 规则覆盖地区
+   *
+   * @see {@link ILocationPath}
    */
-  areas: string[]
+  locations: ILocationPath[]
   /**
    * 包邮件数 (达到或超过)
    */

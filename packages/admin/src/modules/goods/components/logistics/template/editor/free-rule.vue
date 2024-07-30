@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import type { ILogisticsFreightTemplateFreeRule } from '@xiaoshop/schema'
+import type {
+  ILocationCode,
+  ILocationPath,
+  ILogisticsFreightTemplateFreeRule,
+} from '@xiaoshop/schema'
+import { useLocationShortcuts } from '@/goods/hooks'
 
 defineOptions({
   name: 'GoodsLogisticsTemplateFreeRuleEditor',
@@ -10,22 +15,17 @@ const modelValue = defineModel<ILogisticsFreightTemplateFreeRule[]>('modelValue'
   default: () => [],
 })
 
-const { getNames } = useAreas()
-const selectedAreas = computed<string[]>(() => modelValue.value.flatMap(item => item.areas))
+const { toName } = useLocation()
+const selected = computed<ILocationCode[]>(
+  () => modelValue.value.flatMap(item => item.locations).map(p => p.map(p => p.code).join(',')),
+)
 
-const nationwide = ['11', '12', '13', '14', '15', '21', '22', '23', '31', '32', '33', '34', '35', '36', '37', '41', '42', '43', '44', '45', '46', '50', '51', '52', '53', '54', '61', '62', '63', '64', '65']
-const remoteAreas = ['15', '54', '63', '65']
+const shortcuts = useLocationShortcuts()
 
-const shortcuts = ref([
-  { label: '全国', areas: nationwide },
-  { label: '偏远地区', areas: remoteAreas },
-  { label: '其他(除偏远地区)', areas: nationwide.filter(code => !remoteAreas.includes(code)) },
-])
-
-function handleAppend(areas: string[]) {
-  if (areas.length > 0) {
+function handleAppend(locations: ILocationPath[]) {
+  if (locations.length > 0) {
     modelValue.value.push({
-      areas,
+      locations,
       overCount: 0,
       overAmount: 0,
     })
@@ -55,8 +55,8 @@ function handleAppend(areas: string[]) {
       <template v-for="(_, index) in modelValue" :key="index">
         <div class="col col-areas">
           <div class="flex-(~ auto gap-2 wrap)">
-            <a-tag v-for="area in modelValue[index].areas" :key="area">
-              {{ getNames(area) }}
+            <a-tag v-for="(area, idx) in modelValue[index].locations" :key="index + idx">
+              {{ toName(area) }}
             </a-tag>
           </div>
 
@@ -83,11 +83,11 @@ function handleAppend(areas: string[]) {
       </template>
 
       <div class="col-full">
-        <FormAreaTrigger :banded="selectedAreas" @select="handleAppend">
+        <FormLocationTrigger :banded="selected" @select="handleAppend">
           <a-button type="text">
             指定配送地区
           </a-button>
-        </FormAreaTrigger>
+        </FormLocationTrigger>
       </div>
     </div>
 
@@ -95,8 +95,8 @@ function handleAppend(areas: string[]) {
       <div class="flex-(~ v-center gap-2)">
         <span>快捷操作:</span>
 
-        <template v-for="({ label, areas }, index) in shortcuts" :key="index">
-          <CommonLink type="primary" @click="handleAppend(areas)">
+        <template v-for="({ label, locations }, index) in shortcuts" :key="index">
+          <CommonLink type="primary" @click="handleAppend(locations)">
             {{ label }}
           </CommonLink>
         </template>

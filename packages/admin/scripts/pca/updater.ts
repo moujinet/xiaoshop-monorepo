@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import * as clack from '@clack/prompts'
-import type { IArea, IAreaNested } from '@xiaoshop/schema'
+import type { ILocation, ILocationNested } from '@xiaoshop/schema'
 import color from 'picocolors'
 import { updateLocker, useLocker } from './locker'
 import { cancel, deepCopy, resolvePath } from './utils'
@@ -26,11 +26,11 @@ export async function checkUpdate(): Promise<boolean> {
 }
 
 export interface IUpdateReturns {
-  all: IAreaNested[]
-  provinces: IArea[]
-  cities: IArea[]
-  areas: IArea[]
-  streets: IArea[]
+  all: ILocationNested[]
+  provinces: ILocation[]
+  cities: ILocation[]
+  areas: ILocation[]
+  streets: ILocation[]
 }
 
 export async function update(): Promise<IUpdateReturns> {
@@ -46,11 +46,11 @@ export async function update(): Promise<IUpdateReturns> {
 
   spinner.start('从「国家统计局」获取 PCA 地区数据')
 
-  let all: IAreaNested[] = useCache ? readCache<IAreaNested>('all') : []
-  let provinces: IArea[] = useCache ? readCache('provinces') : []
-  let cities: IArea[] = useCache ? readCache('cities') : []
-  let areas: IArea[] = useCache ? readCache('areas') : []
-  let streets: IArea[] = useCache ? readCache('streets') : []
+  let all: ILocationNested[] = useCache ? readCache<ILocationNested>('all') : []
+  let provinces: ILocation[] = useCache ? readCache('provinces') : []
+  let cities: ILocation[] = useCache ? readCache('cities') : []
+  let areas: ILocation[] = useCache ? readCache('areas') : []
+  let streets: ILocation[] = useCache ? readCache('streets') : []
 
   if (provinces.length > 0 && cities.length > 0 && areas.length > 0 && streets.length > 0) {
     spinner.stop(`获取 PCA 地区数据 ${color.gray('(cached)')}`)
@@ -131,7 +131,7 @@ export async function update(): Promise<IUpdateReturns> {
   return { all, provinces, cities, areas, streets }
 }
 
-function readCache<T extends IArea | IAreaNested>(key: string): T[] {
+function readCache<T extends ILocation | ILocationNested>(key: string): T[] {
   const cacheFile = resolvePath(key, 'json', '.json')
 
   const cache = existsSync(cacheFile)
@@ -141,7 +141,7 @@ function readCache<T extends IArea | IAreaNested>(key: string): T[] {
   return cache || []
 }
 
-function writeCache(key: string, data: IArea[] | IAreaNested[]): void {
+function writeCache(key: string, data: ILocation[] | ILocationNested[]): void {
   const cacheFile = resolvePath(key, 'json', '.json')
 
   writeFileSync(cacheFile, JSON.stringify(data), 'utf-8')

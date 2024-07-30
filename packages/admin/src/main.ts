@@ -14,6 +14,6 @@ createAdminClient(
     setupApi()
 
     // 缓存地区信息
-    useAreas().init()
+    useLocationLoader().init()
   },
 )

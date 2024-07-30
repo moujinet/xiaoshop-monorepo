@@ -28,8 +28,6 @@ const form = reactive(
   ),
 )
 
-form.location = form.location ? form.location.split(',') : []
-
 const { loading, onUpdate } = updateOptions('store', form)
 </script>
 
@@ -64,7 +62,7 @@ const { loading, onUpdate } = updateOptions('store', form)
       <a-form-item field="location" label="联系地址" show-colon>
         <div class="form-item-full">
           <div class="form-item-sm">
-            <FormAreaSelector v-model="form.location" />
+            <FormLocationSelector v-model="form.location" />
           </div>
 
           <div class="form-item mt-2">

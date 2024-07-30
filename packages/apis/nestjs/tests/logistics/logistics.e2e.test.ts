@@ -167,9 +167,7 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-              ],
+              locations: [[{ code: '11', name: '北京市' }]],
               first: 1,
               firstPrice: 2,
               continue: 3,
@@ -179,9 +177,7 @@ describe('Logistics Module', () => {
           enableFreeRules: 'Y',
           freeRules: [
             {
-              areas: [
-                '11,1100,110000',
-              ],
+              locations: [[{ code: '11', name: '北京市' }]],
               overCount: 1,
               overAmount: 10,
             },
@@ -230,9 +226,7 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-              ],
+              locations: [[{ code: '11', name: '北京市' }]],
               first: 1,
               firstPrice: 2,
               continue: 3,
@@ -255,9 +249,7 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-              ],
+              locations: [[{ code: '11', name: '北京市' }]],
               first: 1,
               firstPrice: 2,
               continue: 3,
@@ -280,9 +272,7 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-              ],
+              locations: [[{ code: '11', name: '北京市' }]],
               first: 1,
               firstPrice: 2,
               continue: 3,
@@ -313,9 +303,8 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-                '11,1100,110001',
+              locations: [
+                [{ code: '11', name: '北京市' }],
               ],
               first: 10,
               firstPrice: 20,
@@ -326,9 +315,8 @@ describe('Logistics Module', () => {
           enableFreeRules: 'Y',
           freeRules: [
             {
-              areas: [
-                '11,1100,110000',
-                '11,1100,110001',
+              locations: [
+                [{ code: '11', name: '北京市' }],
               ],
               overCount: 2,
               overAmount: 20,
@@ -356,9 +344,8 @@ describe('Logistics Module', () => {
           calcMode: 'count',
           rules: [
             {
-              areas: [
-                '11,1100,110000',
-                '11,1100,110001',
+              locations: [
+                [{ code: '11', name: '北京市' }],
               ],
               first: 10,
               firstPrice: 20,
