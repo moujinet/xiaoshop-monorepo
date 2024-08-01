@@ -21,7 +21,7 @@ import {
 } from '~/common/exception'
 import { GoodsGroupService } from '@/goods/group/service'
 
-@ApiTags('商品分组')
+@ApiTags('商品/分组')
 @Controller('goods/group')
 export class GoodsGroupController {
   constructor(
@@ -29,40 +29,40 @@ export class GoodsGroupController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品分组」列表',
+    summary: '获取「分组」列表',
   })
   @ApiListedResponse(GoodsGroupResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分组」列表失败' })
   @Get('list')
   async list() {
     return this.service.findList()
   }
 
   @ApiOperation({
-    summary: '获取「商品分组」字典列表',
+    summary: '获取「分组」字典列表',
   })
   @ApiListedResponse(GoodsGroupDictResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分组」字典列表失败' })
   @Get('dict/list')
   async dictList() {
     return this.service.findDictList()
   }
 
   @ApiOperation({
-    summary: '获取「商品分组」详情',
+    summary: '获取「分组」详情',
   })
   @ApiObjectResponse(GoodsGroupResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品分组」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分组」不存在' })
   @Get('detail')
   async detail(@Query() query: GetGoodsGroupRequest) {
     return this.service.findDetail(+query.id)
   }
 
   @ApiOperation({
-    summary: '创建「商品分组」',
+    summary: '创建「分组」',
   })
-  @ApiDoneResponse('创建成功')
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品分组」已存在' })
+  @ApiDoneResponse('创建「分组」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分组」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Post('create')
   @HttpCode(200)
@@ -71,11 +71,11 @@ export class GoodsGroupController {
   }
 
   @ApiOperation({
-    summary: '更新「商品分组」',
+    summary: '更新「分组」',
   })
-  @ApiDoneResponse('更新成功')
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品分组」不存在' })
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品分组」已存在' })
+  @ApiDoneResponse('更新「分组」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分组」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分组」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('update')
   async update(
@@ -86,10 +86,10 @@ export class GoodsGroupController {
   }
 
   @ApiOperation({
-    summary: '删除「商品分组」',
+    summary: '删除「分组」',
   })
-  @ApiDoneResponse('删除成功')
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
+  @ApiDoneResponse('删除「分组」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「分组」失败' })
   @Delete('delete')
   async delete(@Body() data: DeleteGoodsGroupRequest) {
     return this.service.delete(data.id)

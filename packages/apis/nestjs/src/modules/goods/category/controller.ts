@@ -23,7 +23,7 @@ import {
 } from '@/goods/category/dto'
 import { GoodsCategoryService } from '@/goods/category/service'
 
-@ApiTags('商品分类')
+@ApiTags('商品/分类')
 @Controller('goods/category')
 export class GoodsCategoryController {
   constructor(
@@ -31,50 +31,50 @@ export class GoodsCategoryController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品分类」列表',
+    summary: '获取「分类」列表',
   })
   @ApiListedResponse(GoodsCategoryResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」列表失败' })
   @Get('list')
   async list(@Query() query: GetGoodsCategoryListRequest) {
     return this.service.findList(query)
   }
 
   @ApiOperation({
-    summary: '获取「商品分类」根列表',
+    summary: '获取「分类」根列表',
   })
   @ApiListedResponse(GoodsCategoryDictResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」根列表失败' })
   @Get('root/list')
   async rootList() {
     return this.service.findRootList()
   }
 
   @ApiOperation({
-    summary: '获取「商品分类」层级列表',
+    summary: '获取「分类」层级列表',
   })
   @ApiListedResponse(GoodsCategoryNestedDictResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」层级列表失败' })
   @Get('nested/list')
   async nestedList() {
     return this.service.findNestedList()
   }
 
   @ApiOperation({
-    summary: '获取「商品分类」详情',
+    summary: '获取「分类」详情',
   })
   @ApiObjectResponse(GoodsCategoryResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品分类」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分类」不存在' })
   @Get('detail')
   async detail(@Query() query: GetGoodsCategoryRequest) {
     return this.service.findDetail(+query.id)
   }
 
   @ApiOperation({
-    summary: '创建「商品分类」',
+    summary: '创建「分类」',
   })
-  @ApiDoneResponse('创建成功')
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品分类」已存在' })
+  @ApiDoneResponse('创建「分类」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分类」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Post('create')
   @HttpCode(200)
@@ -83,11 +83,11 @@ export class GoodsCategoryController {
   }
 
   @ApiOperation({
-    summary: '更新「商品分类」',
+    summary: '更新「分类」',
   })
-  @ApiDoneResponse('更新成功')
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品分类」不存在' })
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品分类」已存在' })
+  @ApiDoneResponse('更新「分类」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分类」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分类」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('update')
   async update(
@@ -98,10 +98,10 @@ export class GoodsCategoryController {
   }
 
   @ApiOperation({
-    summary: '删除「商品分类」',
+    summary: '删除「分类」',
   })
-  @ApiDoneResponse('删除成功')
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
+  @ApiDoneResponse('删除「分类」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「分类」失败' })
   @Delete('delete')
   async delete(@Body() data: DeleteGoodsCategoryRequest) {
     return this.service.delete(data.id)

@@ -45,12 +45,7 @@ export class GoodsExportRecordService {
         },
       })
 
-      return {
-        result,
-        total,
-        page,
-        pagesize,
-      }
+      return { result, total, page, pagesize }
     }
     catch (e) {
       throw new FailedException('获取导出记录分页列表', e.message)

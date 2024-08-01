@@ -22,7 +22,7 @@ import {
 } from '~/common/response/decorators'
 import { GoodsBrandService } from '@/goods/brand/service'
 
-@ApiTags('商品品牌')
+@ApiTags('商品/品牌')
 @Controller('goods/brand')
 export class GoodsBrandController {
   constructor(
@@ -30,40 +30,40 @@ export class GoodsBrandController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品品牌」列表',
+    summary: '获取「品牌」列表',
   })
   @ApiListedResponse(GoodsBrandListResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「品牌」列表失败' })
   @Get('list')
   async list() {
     return this.service.findList()
   }
 
   @ApiOperation({
-    summary: '获取「商品品牌」字典列表',
+    summary: '获取「品牌」字典列表',
   })
   @ApiListedResponse(GoodsBrandDictResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「品牌」字典列表失败' })
   @Get('dict/list')
   async dictList() {
     return this.service.findDictList()
   }
 
   @ApiOperation({
-    summary: '获取「商品品牌」详情',
+    summary: '获取「品牌」详情',
   })
   @ApiObjectResponse(GoodsBrandResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品品牌」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「品牌」不存在' })
   @Get('detail')
   async detail(@Query() query: GetGoodsBrandRequest) {
     return this.service.findDetail(+query.id)
   }
 
   @ApiOperation({
-    summary: '创建「商品品牌」',
+    summary: '创建「品牌」',
   })
-  @ApiDoneResponse('创建成功')
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品品牌」已存在' })
+  @ApiDoneResponse('创建「品牌」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「品牌」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Post('create')
   @HttpCode(200)
@@ -72,11 +72,11 @@ export class GoodsBrandController {
   }
 
   @ApiOperation({
-    summary: '更新「商品品牌」',
+    summary: '更新「品牌」',
   })
-  @ApiDoneResponse('更新成功')
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品品牌」不存在' })
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品品牌」已存在' })
+  @ApiDoneResponse('更新「品牌」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「品牌」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「品牌」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('update')
   async update(
@@ -87,10 +87,10 @@ export class GoodsBrandController {
   }
 
   @ApiOperation({
-    summary: '删除「商品品牌」',
+    summary: '删除「品牌」',
   })
-  @ApiDoneResponse('删除成功')
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
+  @ApiDoneResponse('删除「品牌」成功')
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「品牌」失败' })
   @Delete('delete')
   async delete(@Body() data: DeleteGoodsBrandRequest) {
     return this.service.delete(data.id)

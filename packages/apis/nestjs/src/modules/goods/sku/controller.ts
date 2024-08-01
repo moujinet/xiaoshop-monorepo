@@ -13,7 +13,7 @@ import {
   ApiListedResponse,
 } from '~/common/response/decorators'
 
-@ApiTags('商品多规格')
+@ApiTags('商品/多规格商品')
 @Controller('goods/skus')
 export class GoodsSkuController {
   constructor(
@@ -21,20 +21,20 @@ export class GoodsSkuController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品多规格」商品列表',
+    summary: '获取「多规格商品」列表',
   })
   @ApiListedResponse(GoodsSkuResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「商品多规格」商品列表失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「多规格商品」列表失败' })
   @Get('list')
   async list(@Query() query: GetGoodsSkuByGoodsRequest) {
     return this.service.findList(query.id)
   }
 
   @ApiOperation({
-    summary: '更新「商品多规格」商品价格库存',
+    summary: '更新「多规格商品」价格',
   })
   @ApiDoneResponse()
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新「商品多规格」商品价格库存失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新「多规格商品」价格失败' })
   @Put('update')
   async update(
     @Query() query: GetGoodsSkuByGoodsRequest,

@@ -14,7 +14,7 @@ import {
 } from '@/goods/export/dto'
 import { GoodsExportRecordService } from '@/goods/export/service'
 
-@ApiTags('商品导出')
+@ApiTags('商品/导出')
 @Controller('goods/export')
 export class GoodsExportRecordController {
   constructor(
@@ -22,20 +22,20 @@ export class GoodsExportRecordController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品导出」记录分页列表',
+    summary: '获取「导出」记录分页列表',
   })
   @ApiPaginatedResponse(GoodsExportResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「导出」记录分页列表失败' })
   @Get('pages')
   async pages(@Query() query: GetGoodsExportRecordPagesRequest) {
     return this.service.findPages(query)
   }
 
   @ApiOperation({
-    summary: '创建「商品导出」记录',
+    summary: '创建「导出」记录',
   })
-  @ApiDoneResponse('创建成功')
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '创建失败' })
+  @ApiDoneResponse('创建「导出」记录成功')
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '创建「导出」记录失败' })
   @Post('create')
   @HttpCode(200)
   async create(@Body() data: GoodsExportPayload) {
@@ -43,10 +43,10 @@ export class GoodsExportRecordController {
   }
 
   @ApiOperation({
-    summary: '删除「商品导出」记录',
+    summary: '删除「导出」记录',
   })
-  @ApiDoneResponse('删除成功')
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
+  @ApiDoneResponse('删除「导出」记录成功')
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「导出」记录失败' })
   @Delete('delete')
   async delete(@Body() data: DeleteGoodsExportRecordRequest) {
     return this.service.delete(data.id)

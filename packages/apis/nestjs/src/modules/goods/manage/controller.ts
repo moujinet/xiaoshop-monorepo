@@ -34,7 +34,7 @@ import {
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsCopyEvent } from '@/goods/goods.events'
 
-@ApiTags('商品信息')
+@ApiTags('商品/商品信息')
 @Controller('goods')
 export class GoodsController {
   constructor(
@@ -75,7 +75,7 @@ export class GoodsController {
   }
 
   @ApiOperation({
-    summary: '获取「商品」价格库存信息',
+    summary: '获取「商品」价格信息',
   })
   @ApiObjectResponse(GoodsInventoryInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })

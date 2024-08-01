@@ -12,7 +12,7 @@ import {
   ApiListedResponse,
 } from '~/common/response/decorators'
 
-@ApiTags('商品多规格')
+@ApiTags('商品/多规格设置')
 @Controller('goods/spec')
 export class GoodsSpecController {
   constructor(
@@ -20,20 +20,20 @@ export class GoodsSpecController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「商品多规格」设置',
+    summary: '获取「多规格」设置',
   })
   @ApiListedResponse(GoodsSpecResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「商品多规格」设置列表失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「多规格」设置列表失败' })
   @Get('list')
   async list(@Query() query: GetGoodsSpecByGoodsRequest) {
     return this.spec.findList(query.id)
   }
 
   @ApiOperation({
-    summary: '更新「商品多规格」设置',
+    summary: '更新「多规格」设置',
   })
   @ApiListedResponse(GoodsSpecResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「商品多规格」设置失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「多规格」设置失败' })
   @ApiBody({ type: [GoodsSpecPayload] })
   @Put('update')
   async update(

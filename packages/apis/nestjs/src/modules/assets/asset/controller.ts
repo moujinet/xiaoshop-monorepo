@@ -21,7 +21,7 @@ import {
   UploadAssetVideoOptionsPayload,
 } from '@/assets/asset/dto'
 
-@ApiTags('素材列表')
+@ApiTags('素材/素材信息')
 @Controller('assets')
 export class AssetController {
   constructor(
@@ -35,7 +35,7 @@ export class AssetController {
   ) {}
 
   @ApiOperation({
-    summary: '获取素材列表',
+    summary: '获取「素材」列表',
   })
   @ApiPaginatedResponse(AssetListItemResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
@@ -45,17 +45,17 @@ export class AssetController {
   }
 
   @ApiOperation({
-    summary: '获取素材详情',
+    summary: '获取「素材」详情',
   })
   @ApiObjectResponse(AssetResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '素材不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「素材」不存在' })
   @Get('detail')
   async detail(@Query() query: GetAssetRequest) {
     return this.asset.findDetail(+query.id)
   }
 
   @ApiOperation({
-    summary: '上传素材 - 图片',
+    summary: '上传「素材」 - 图片',
     description: `仅支持 \`image/jpg\` \`image/jpeg\` \`image/png\` \`image/gif\` 格式的图片`,
   })
   @ApiConsumes('multipart/form-data')
@@ -103,7 +103,7 @@ export class AssetController {
   }
 
   @ApiOperation({
-    summary: '上传素材 - 视频',
+    summary: '上传「素材」 - 视频',
     description: `仅支持 \`image/mp4\` 格式，最多同时上传 1 个视频文件`,
   })
   @ApiConsumes('multipart/form-data')
@@ -138,7 +138,7 @@ export class AssetController {
   }
 
   @ApiOperation({
-    summary: '删除素材',
+    summary: '删除「素材」',
   })
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })

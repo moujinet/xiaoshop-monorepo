@@ -18,7 +18,7 @@ import {
   type IGoodsBasicInfo,
   type IGoodsDetailInfo,
   type IGoodsExportConditions,
-  IGoodsExportListItem,
+  type IGoodsExportListItem,
   type IGoodsInventoryInfo,
   type IGoodsListItem,
   type IGoodsStatus,
