@@ -1,6 +1,8 @@
 import {
+  type ILocationPath,
   type IMember,
-  type IMemberCardBinding,
+  type IMemberAccountDict,
+  type IMemberCardBindingInfo,
   type IMemberGender,
   type IMemberGroupDict,
   type IMemberSource,
@@ -10,21 +12,25 @@ import {
   MemberSource,
   MemberStatus,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { MemberCardBinding } from '@/member/card/entities'
+import { MemberAccount } from '@/member/account/entities'
+import { MemberGroup } from '@/member/group/entity'
+import { MemberTag } from '@/member/tag/entity'
 
 @Entity('shop_member', {
   comment: '会员信息表',
 })
-@Index('idx_shop_member', [])
+@Index('idx_shop_member', ['status', 'lastLoginTime'])
 export class Member implements IMember {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member' })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberSource.MANUAL, comment: '注册来源' })
-  source: IMemberSource
-
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberStatus.NORMAL, comment: '会员状态' })
   status: IMemberStatus
+
+  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberSource.MANUAL, comment: '注册来源' })
+  source: IMemberSource
 
   @Column({ name: 'card_no', type: 'varchar', length: 16, nullable: false, default: '', comment: '会员卡号' })
   cardNo: string
@@ -54,7 +60,7 @@ export class Member implements IMember {
   gender: IMemberGender
 
   @Column({ type: 'simple-json', default: null, comment: '注册城市' })
-  location: string[]
+  location: ILocationPath
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string
@@ -65,9 +71,19 @@ export class Member implements IMember {
   @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
   lastLoginTime: string
 
+  @OneToMany(() => MemberAccount, account => account.member, { cascade: true, createForeignKeyConstraints: false })
+  @JoinColumn()
+  account: IMemberAccountDict[]
+
+  @OneToOne(() => MemberCardBinding, { cascade: true, createForeignKeyConstraints: false })
+  @JoinColumn()
+  binding: IMemberCardBindingInfo
+
+  @OneToOne(() => MemberGroup, { createForeignKeyConstraints: false })
+  @JoinColumn()
   group: IMemberGroupDict
 
+  @OneToOne(() => MemberTag, { createForeignKeyConstraints: false })
+  @JoinColumn()
   tag: IMemberTagDict
-
-  binding: IMemberCardBinding
 }

@@ -86,11 +86,18 @@ async function truncateTable(tables: string[]) {
   }
 }
 
+async function runSQL(sql: string) {
+  const db = AppDataSource.isInitialized ? AppDataSource : await AppDataSource.initialize()
+
+  await db.query(sql)
+}
+
 async function cleanDirs(dirs: string[]) {
   await rimraf(dirs, { glob: true })
 }
 
 export {
+  runSQL,
   cleanDirs,
   truncateTable,
   createTestingModule,

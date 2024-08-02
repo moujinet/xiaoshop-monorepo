@@ -7,12 +7,13 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 // Modules
-import { GoodsModule } from '@/goods/goods.module'
 import { AssetsModule } from '@/assets/assets.module'
+import { GoodsModule } from '@/goods/goods.module'
+import { LogisticsModule } from '@/logistics/logistics.module'
+import { MemberModule } from '@/member/member.module'
+import { SettingsModule } from '@/settings/settings.module'
 import { StaffsModule } from '@/staffs/staffs.module'
 import { UploadModule } from '@/upload/upload.module'
-import { SettingsModule } from '@/settings/settings.module'
-import { LogisticsModule } from '@/logistics/logistics.module'
 
 // Commands
 import {
@@ -65,6 +66,7 @@ import configuration from '~/configs'
 
     // Modules
     SettingsModule.register(),
+    MemberModule,
     GoodsModule,
     AssetsModule,
     LogisticsModule,
