@@ -35,15 +35,15 @@ export class GetMemberPagesRequest extends PaginationQueryDto {
   @IsOptional()
   readonly nickname: string
 
-  @ApiProperty({ required: false, description: '会员卡号', example: member.cardNo })
-  @IsString()
-  @IsOptional()
-  readonly cardNo: string
-
   @ApiProperty({ required: false, description: '会员手机号', example: member.mobile })
   @IsString()
   @IsOptional()
   readonly mobile: string
+
+  @ApiProperty({ required: false, description: '会员卡号', example: member.cardNo })
+  @IsString()
+  @IsOptional()
+  readonly cardNo: string
 
   @ApiProperty({ required: false, description: '会员性别', enum: MemberGender, example: member.gender })
   @IsEnum(MemberGender)

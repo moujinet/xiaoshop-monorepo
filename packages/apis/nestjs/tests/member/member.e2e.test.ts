@@ -96,6 +96,17 @@ describe('Member Module', () => {
       expect(body.data.name).toEqual('Member vip 1')
     })
 
+    it('Update Member Card Status', async () => {
+      const { body } = await request(app.getHttpServer())
+        .put('/member/card/status/update?id=1')
+        .send({
+          status: 'N',
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
     it('Fetch Member Custom Card List', async () => {
       const { body } = await request(app.getHttpServer())
         .get('/member/card/custom/list')

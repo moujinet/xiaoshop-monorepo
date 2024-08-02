@@ -17,6 +17,7 @@ import {
   DeleteMemberCardRequest,
   GetMemberCardRequest,
   MemberCardDictResponse,
+  MemberCardLevelListResponse,
   MemberCardListResponse,
   MemberCardPayload,
   MemberCardResponse,
@@ -33,7 +34,7 @@ export class MemberCardController {
   @ApiOperation({
     summary: '获取「会员卡」等级列表',
   })
-  @ApiListedResponse(MemberCardListResponse)
+  @ApiListedResponse(MemberCardLevelListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员等级列表失败' })
   @Get('level/list')
   async levelList() {
@@ -108,7 +109,7 @@ export class MemberCardController {
   @Put('status/update')
   async updateStatus(
     @Query() query: GetMemberCardRequest,
-    @Body() status: IEnabled,
+    @Body('status') status: IEnabled,
   ) {
     return this.service.updateStatus(+query.id, status)
   }
