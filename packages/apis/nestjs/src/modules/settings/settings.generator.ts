@@ -100,9 +100,9 @@ export class SettingsMigrationGenerator {
         }
       })
     }
-    else {
-      // 全新
-      settings.forEach((module) => {
+    // 全新
+    settings.forEach((module) => {
+      if (!migrations.find(m => m.id === module.id)) {
         this.migrations.push({
           id: module.id,
           create: module.settings,
@@ -110,8 +110,8 @@ export class SettingsMigrationGenerator {
           restore: [],
           remove: [],
         })
-      })
-    }
+      }
+    })
   }
 
   /**
