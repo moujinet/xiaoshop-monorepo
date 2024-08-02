@@ -1,4 +1,4 @@
-import type { IEnabled } from '@/common'
+import type { IEnabled, ILocationPath } from '@/common'
 
 /**
  * 会员地址
@@ -9,10 +9,6 @@ export interface IMemberAddress {
    */
   id: number
   /**
-   * 会员 ID
-   */
-  memberId: number
-  /**
    * 联系人
    */
   contractName: string
@@ -22,8 +18,10 @@ export interface IMemberAddress {
   mobile: string
   /**
    * 城市
+   *
+   * @see {@link ILocationPath}
    */
-  location: string[]
+  location: ILocationPath
   /**
    * 详细地址
    */
@@ -47,5 +45,23 @@ export interface IMemberAddress {
  */
 export type IMemberAddressInfo = Pick<
   IMemberAddress,
-  'id' | 'contractName' | 'mobile' | 'location' | 'address'
+  | 'id'
+  | 'contractName'
+  | 'mobile'
+  | 'location'
+  | 'address'
+>
+
+/**
+ * 会员地址列表
+ */
+export type IMemberAddressListItem = Pick<
+  IMemberAddress,
+  | 'id'
+  | 'contractName'
+  | 'mobile'
+  | 'location'
+  | 'address'
+  | 'isDefault'
+  | 'updatedTime'
 >

@@ -129,6 +129,7 @@ export const MEMBER_ACCOUNT_STATUSES = [
  * - `POINTS`: 积分
  * - `BALANCE`: 余额
  * - `SIGN_IN`: 签到
+ * - `LOGIN`: 登录次数
  * - `RED_PACKET`: 红包
  * - `COUPON`: 优惠券
  */
@@ -139,6 +140,7 @@ export enum MemberAccountKey {
   POINTS = 'points',
   BALANCE = 'balance',
   SIGN_IN = 'sign_in',
+  LOGIN = 'login',
   RED_PACKET = 'red_packet',
   COUPON = 'coupon',
 }
@@ -155,6 +157,7 @@ export const MEMBER_ACCOUNT_KEYS = [
   { label: '积分', value: MemberAccountKey.POINTS },
   { label: '余额', value: MemberAccountKey.BALANCE },
   { label: '签到', value: MemberAccountKey.SIGN_IN },
+  { label: '登录次数', value: MemberAccountKey.LOGIN },
   { label: '红包', value: MemberAccountKey.RED_PACKET },
   { label: '优惠券', value: MemberAccountKey.COUPON },
 ]

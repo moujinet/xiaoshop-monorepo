@@ -1,4 +1,4 @@
-import type { IMemberInfo } from '@/member/models'
+import type { IMemberProfile } from '@/member/models'
 import type { IMemberLogType, IMemberSource } from '@/member/types'
 
 /**
@@ -24,9 +24,9 @@ export interface IMemberLog {
   /**
    * 会员信息
    *
-   * @see {@link IMemberInfo}
+   * @see {@link IMemberProfile}
    */
-  member: IMemberInfo
+  member: IMemberProfile
   /**
    * 日志操作
    */

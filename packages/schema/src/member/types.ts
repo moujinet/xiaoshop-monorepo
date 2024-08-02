@@ -69,6 +69,7 @@ export type IMemberAccountStatus = `${MemberAccountStatus}` | MemberAccountStatu
  * - `POINTS`: 积分
  * - `BALANCE`: 余额
  * - `SIGN_IN`: 签到
+ * - `LOGIN`: 登录次数
  * - `RED_PACKET`: 红包
  * - `COUPON`: 优惠券
  *

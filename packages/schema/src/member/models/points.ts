@@ -16,11 +16,11 @@ export interface IMemberPointsRule {
    */
   key: IMemberPointsRuleKey
   /**
-   * 积分规则状态
+   * 积分规则启用状态
    *
    * @see {@link IEnabled}
    */
-  status: IEnabled
+  enable: IEnabled
   /**
    * 积分规则名称
    */
@@ -66,3 +66,16 @@ export interface IMemberPointsRuleOptions {
    */
   perMonthRatio: number
 }
+
+/**
+ * 会员积分规则列表
+ */
+export type IMemberPointsRuleListItem = Pick<
+  IMemberPointsRule,
+  | 'id'
+  | 'key'
+  | 'enable'
+  | 'name'
+  | 'desc'
+  | 'icon'
+>

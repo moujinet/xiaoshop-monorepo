@@ -67,6 +67,30 @@ export interface IMemberGroupCondition {
 }
 
 /**
- * 字典 - 会员群体
+ * 会员群体字典
  */
 export type IMemberGroupDict = Pick<IMemberGroup, 'id' | 'name'>
+
+/**
+ * 会员群体列表
+ */
+export type IMemberGroupListItem = Pick<
+  IMemberGroup,
+  | 'id'
+  | 'name'
+  | 'desc'
+  | 'total'
+  | 'refreshTime'
+>
+
+/**
+ * 会员群体条件列表
+ */
+export type IMemberGroupConditionListItem = Pick<
+  IMemberGroup,
+  | 'id'
+  | 'name'
+  | 'total'
+  | 'conditions'
+  | 'refreshTime'
+>

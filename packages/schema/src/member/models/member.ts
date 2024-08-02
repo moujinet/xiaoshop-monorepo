@@ -1,5 +1,6 @@
+import type { ILocationPath } from '@/common/models'
 import type { IMemberGender, IMemberSource, IMemberStatus } from '@/member/types'
-import type { IMemberCardBinding, IMemberGroupDict, IMemberTagDict } from '@/member/models'
+import type { IMemberAccountDict, IMemberCardBindingInfo, IMemberGroupDict, IMemberTagDict } from '@/member/models'
 
 /**
  * 会员信息
@@ -16,6 +17,18 @@ export interface IMember {
    */
   status: IMemberStatus
   /**
+   * 注册来源
+   *
+   * @see {@link IMemberSource}
+   */
+  source: IMemberSource
+  /**
+   * 会员账户
+   *
+   * @see {@link IMemberAccountDict}
+   */
+  account: IMemberAccountDict[]
+  /**
    * 会员分组
    *
    * @see {@link IMemberGroupDict}
@@ -30,9 +43,9 @@ export interface IMember {
   /**
    * 绑定会员卡
    *
-   * @see {@link IMemberCardBinding}
+   * @see {@link IMemberCardBindingInfo}
    */
-  binding: IMemberCardBinding
+  binding: IMemberCardBindingInfo
   /**
    * 会员卡号
    */
@@ -54,11 +67,13 @@ export interface IMember {
    */
   mobile: string
   /**
-   * 注册来源
-   *
-   * @see {@link IMemberSource}
+   * 会员密码
    */
-  source: IMemberSource
+  password: string
+  /**
+   * 会员密码盐值
+   */
+  salt: string
   /**
    * 会员生日
    */
@@ -71,8 +86,10 @@ export interface IMember {
   gender: IMemberGender
   /**
    * 注册城市
+   *
+   * @see {@link ILocationPath}
    */
-  location: string[]
+  location: ILocationPath
   /**
    * 注册时间
    */
@@ -90,7 +107,43 @@ export interface IMember {
 /**
  * 会员信息
  */
-export type IMemberInfo = Pick<
+export type IMemberProfile = Pick<
   IMember,
-  'id' | 'username' | 'nickname' | 'mobile' | 'avatar' | 'gender' | 'tag' | 'binding'
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'tag'
+  | 'group'
+  | 'binding'
+  | 'cardNo'
+  | 'avatar'
+  | 'username'
+  | 'nickname'
+  | 'mobile'
+  | 'birthday'
+  | 'gender'
+  | 'location'
+  | 'createdTime'
+  | 'lastLoginTime'
+>
+
+/**
+ * 会员列表
+ */
+export type IMemberListItem = Pick<
+  IMember,
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'tag'
+  | 'group'
+  | 'account'
+  | 'cardNo'
+  | 'avatar'
+  | 'username'
+  | 'nickname'
+  | 'mobile'
+  | 'gender'
+  | 'location'
+  | 'lastLoginTime'
 >

@@ -65,6 +65,10 @@ export interface IMemberCard {
    * 创建时间
    */
   createdTime: string
+  /**
+   * 更新时间
+   */
+  updatedTime: string
 }
 
 /**
@@ -152,9 +156,28 @@ export interface IMemberCardBinding {
    */
   dueTime: string
   /**
-   * 生效时间
+   * 开通时间
    */
   createdTime: string
+}
+
+/**
+ * 会员卡套餐绑定信息摘要
+ */
+export type IMemberCardBindingInfo = Pick<
+  IMemberCardBinding,
+  | 'id'
+  | 'times'
+  | 'dueTime'
+> & {
+  /**
+   * 会员卡
+   */
+  card: IMemberCardDict
+  /**
+   * 会员卡套餐
+   */
+  plan?: IMemberCardPlanDict
 }
 
 /**
@@ -163,16 +186,49 @@ export interface IMemberCardBinding {
 export type IMemberCardPlanInfo = Omit<IMemberCardPlan, 'createdTime'>
 
 /**
+ * 会员卡套餐字典
+ */
+export type IMemberCardPlanDict = Pick<IMemberCardPlan, 'id' | 'type' | 'duration'>
+
+/**
  * 会员卡信息
  */
 export type IMemberCardInfo = Omit<IMemberCard, 'plans' | 'createdTime'>
 
 /**
- * 会员等级卡
- */
-export type IMemberLevelCard = Omit<IMemberCard, 'plans'>
-
-/**
  * 会员卡字典
  */
 export type IMemberCardDict = Pick<IMemberCard, 'id' | 'type' | 'name'>
+
+/**
+ * 会员等级卡列表
+ */
+export type IMemberCardLevelListItem = Pick<
+  IMemberCard,
+  | 'id'
+  | 'isEnabled'
+  | 'key'
+  | 'name'
+  | 'desc'
+  | 'needExp'
+  | 'discount'
+  | 'pointsRatio'
+  | 'isFreeShipping'
+>
+
+/**
+ * 自定义会员卡列表
+ */
+export type IMemberCardListItem = Pick<
+  IMemberCard,
+  | 'id'
+  | 'isEnabled'
+  | 'key'
+  | 'name'
+  | 'desc'
+  | 'plans'
+  | 'discount'
+  | 'pointsRatio'
+  | 'isFreeShipping'
+  | 'createdTime'
+>
