@@ -21,7 +21,7 @@ import {
   UploadAssetVideoOptionsPayload,
 } from '@/assets/asset/dto'
 
-@ApiTags('素材/素材信息')
+@ApiTags('素材')
 @Controller('assets')
 export class AssetController {
   constructor(

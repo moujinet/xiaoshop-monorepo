@@ -34,7 +34,7 @@ import {
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsCopyEvent } from '@/goods/goods.events'
 
-@ApiTags('商品/商品信息')
+@ApiTags('商品')
 @Controller('goods')
 export class GoodsController {
   constructor(

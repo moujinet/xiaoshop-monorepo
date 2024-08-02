@@ -16,7 +16,7 @@ import { LocationDto } from '~/common'
 export class FreightTemplateNormalRulePayload {
   @ApiProperty({
     description: '规则区域',
-    type: [LocationDto],
+    type: [[LocationDto]],
     example: [[{ code: '11', name: '北京市' }]],
   })
   @IsArray()
@@ -47,7 +47,7 @@ export class FreightTemplateNormalRulePayload {
 export class FreightTemplateFreeRulePayload {
   @ApiProperty({
     description: '规则区域',
-    type: [LocationDto],
+    type: [[LocationDto]],
     example: [[{ code: '11', name: '北京市' }]],
   })
   @IsArray()
