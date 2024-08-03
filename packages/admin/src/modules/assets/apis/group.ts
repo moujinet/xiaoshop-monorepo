@@ -8,7 +8,9 @@ import type { IUseRequestReturn } from '~/utils/request'
  * @param type IAssetType
  * @returns IUseRequestReturn<IAssetGroupTreeItem[]>
  */
-export function fetchAssetGroupTree(type: IAssetType): IUseRequestReturn<IAssetGroupTreeItem[]> {
+export function fetchAssetGroupTree(
+  type: IAssetType,
+): IUseRequestReturn<IAssetGroupTreeItem[]> {
   const { data, loading, error, refreshData } = useRequest<IAssetGroupTreeItem[]>({
     method: 'get',
     url: '/assets/group/list',

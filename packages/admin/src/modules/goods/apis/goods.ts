@@ -1,4 +1,5 @@
 import type {
+  IApiPaginationData,
   IGoods,
   IGoodsBasicInfo,
   IGoodsBasicInfoFormData,
@@ -15,12 +16,12 @@ import type { IUseRequestReturn } from '~/utils/request'
  *
  * @api get /goods/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsListItem>>
+ * @returns IUseRequestReturn<IApiPaginationData<IGoodsListItem>>
  */
 export function fetchGoodsPages(
   params?: Record<string, any>,
-): IUseRequestReturn<IApiPaginationResult<IGoodsListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsListItem>>({
+): IUseRequestReturn<IApiPaginationData<IGoodsListItem>> {
+  return useRequest<IApiPaginationData<IGoodsListItem>>({
     method: 'get',
     url: '/goods/pages',
     params,

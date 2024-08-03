@@ -22,7 +22,9 @@
     "verbatimModuleSyntax": true
   },
   "include": [
-    "src/**/*",
+    "src/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.vue",
     "test/**/*.test.ts"
   ],
   "exclude": [

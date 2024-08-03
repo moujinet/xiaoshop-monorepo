@@ -1,4 +1,4 @@
-import type { IStaffAccountProfile } from '@xiaoshop/schema'
+import type { IApiPaginationData, IStaffAccountProfile } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -6,12 +6,12 @@ import type { IUseRequestReturn } from '~/utils/request'
  *
  * @api get /staffs/account/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IStaffAccountProfile>>
+ * @returns IUseRequestReturn<IApiPaginationData<IStaffAccountProfile>>
  */
 export function fetchAccountPages(
   params?: Record<string, any>,
-): IUseRequestReturn<IApiPaginationResult<IStaffAccountProfile>> {
-  return useRequest<IApiPaginationResult<IStaffAccountProfile>>({
+): IUseRequestReturn<IApiPaginationData<IStaffAccountProfile>> {
+  return useRequest<IApiPaginationData<IStaffAccountProfile>>({
     method: 'get',
     url: '/staffs/account/pages',
     params,

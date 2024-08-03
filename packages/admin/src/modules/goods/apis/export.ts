@@ -1,14 +1,18 @@
-import type { IGoodsExportConditions, IGoodsExportListItem } from '@xiaoshop/schema'
+import type {
+  IApiPaginationData,
+  IGoodsExportConditions,
+  IGoodsExportListItem,
+} from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取商品导出分页列表
  *
  * @api get /goods/export/pages
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsExportListItem>>
+ * @returns IUseRequestReturn<IApiPaginationData<IGoodsExportListItem>>
  */
-export function fetchGoodsExportPages(): IUseRequestReturn<IApiPaginationResult<IGoodsExportListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsExportListItem>>({
+export function fetchGoodsExportPages(): IUseRequestReturn<IApiPaginationData<IGoodsExportListItem>> {
+  return useRequest<IApiPaginationData<IGoodsExportListItem>>({
     method: 'get',
     url: '/goods/export/pages',
   })

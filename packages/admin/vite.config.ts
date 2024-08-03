@@ -81,7 +81,8 @@ const plugins: PluginOption[] = [
   // https://github.com/unplugin/unplugin-vue-components
   VueComponents({
     dts: 'src/vue-components.d.ts',
-    dirs: ['src/components/**'],
+    dirs: ['src/components'],
+    extensions: ['vue'],
     types: [
       {
         from: 'vue-router',

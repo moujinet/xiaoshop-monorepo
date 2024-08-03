@@ -1,4 +1,10 @@
-import { AssetType, type IAsset, type IAssetInfo, type IAssetUploadOptions } from '@xiaoshop/schema'
+import {
+  AssetType,
+  type IApiPaginationData,
+  type IAsset,
+  type IAssetInfo,
+  type IAssetUploadOptions,
+} from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -6,10 +12,12 @@ import type { IUseRequestReturn } from '~/utils/request'
  *
  * @api get /assets/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IAsset>>
+ * @returns IUseRequestReturn<IApiPaginationData<IAsset>>
  */
-export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IAsset>> {
-  return useRequest<IApiPaginationResult<IAsset>>({
+export function fetchAssetPages(
+  params?: Record<string, any>,
+): IUseRequestReturn<IApiPaginationData<IAsset>> {
+  return useRequest<IApiPaginationData<IAsset>>({
     method: 'get',
     url: '/assets/pages',
     params,
@@ -23,7 +31,9 @@ export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAssetInfo>
  */
-export function fetchAssetInfo(id: IAsset['id']): IUseRequestReturn<IAssetInfo> {
+export function fetchAssetInfo(
+  id: IAsset['id'],
+): IUseRequestReturn<IAssetInfo> {
   return useRequest<IAssetInfo>({
     method: 'get',
     url: '/assets/info',
@@ -40,7 +50,9 @@ export function fetchAssetInfo(id: IAsset['id']): IUseRequestReturn<IAssetInfo> 
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAsset>
  */
-export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
+export function fetchAssetDetail(
+  id: IAsset['id'],
+): IUseRequestReturn<IAsset> {
   return useRequest<IAsset>({
     method: 'get',
     url: '/assets/detail',
@@ -83,7 +95,7 @@ export function uploadAsset(
   data: IAssetUploadOptions,
   options: IUploadAssetOptions,
 ) {
-  const url = [AssetType.IMAGE].includes(data.type)
+  const url = data.type === AssetType.IMAGE
     ? '/assets/upload/image'
     : '/assets/upload/video'
 

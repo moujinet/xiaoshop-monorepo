@@ -1,4 +1,4 @@
-import { type IStaffLog, StaffLogType } from '@xiaoshop/schema'
+import { type IApiPaginationData, type IStaffLog, StaffLogType } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
@@ -6,12 +6,12 @@ import type { IUseRequestReturn } from '~/utils/request'
  *
  * @api get /staffs/log/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IStaffLog>>
+ * @returns IUseRequestReturn<IApiPaginationData<IStaffLog>>
  */
 export function fetchStaffLogPages(
   params?: Record<string, any>,
-): IUseRequestReturn<IApiPaginationResult<IStaffLog>> {
-  return useRequest<IApiPaginationResult<IStaffLog>>({
+): IUseRequestReturn<IApiPaginationData<IStaffLog>> {
+  return useRequest<IApiPaginationData<IStaffLog>>({
     method: 'get',
     url: '/staffs/log/pages',
     params: {

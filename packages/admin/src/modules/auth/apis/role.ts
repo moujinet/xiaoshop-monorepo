@@ -9,10 +9,10 @@ import type { IUseRequestReturn } from '~/utils/request'
  *
  * @api get /staffs/role/pages
  * @param params IFormData<IStaffRole>
- * @returns IUseRequestReturn<IApiPaginationResult<IStaffRole>>
+ * @returns IUseRequestReturn<IApiPaginationData<IStaffRole>>
  */
-export function fetchRolePages(params?: IFormData<IStaffRole>): IUseRequestReturn<IApiPaginationResult<IStaffRole>> {
-  return useRequest<IApiPaginationResult<IStaffRole>>({
+export function fetchRolePages(params?: IFormData<IStaffRole>): IUseRequestReturn<IApiPaginationData<IStaffRole>> {
+  return useRequest<IApiPaginationData<IStaffRole>>({
     method: 'get',
     url: '/staffs/role/pages',
     params,

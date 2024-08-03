@@ -52,19 +52,6 @@ declare global {
 
   type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
 
-  interface IApiResponse<T = any> {
-    code: number
-    message?: string
-    data: T
-  }
-
-  interface IApiPaginationResult<T = any> {
-    result: T[]
-    current: number
-    total: number
-    pageSize: number
-  }
-
   interface IDictionary {
     id: string
     name: string
