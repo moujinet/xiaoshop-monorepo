@@ -23,7 +23,7 @@
     "prepublishOnly": "nr build"
   },
   "devDependencies": {
-    "tsup": "^8.2.3",
+    "tsup": "^8.2.4",
     "vue": "^3.4.35"
   },
   "packageManager": "pnpm@9.6.0"
