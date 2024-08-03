@@ -1,12 +1,13 @@
 import type {
   IMemberPointsRule,
+  IMemberPointsRuleKey,
   IMemberPointsRuleListItem,
 } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MemberPointsRule } from '@/member/points/entity'
-import { MemberPointsRulePayload } from '@/member/points/dto'
+import { UpdateMemberPointsRuleOptionsPayload, UpdateMemberPointsRuleStatusPayload } from '@/member/points/dto'
 import { FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()
@@ -46,19 +47,19 @@ export class MemberPointsRuleService {
   /**
    * 获取会员积分规则详情
    *
-   * @param id 会员积分规则 ID
+   * @param key 会员积分规则标识
    * @returns Promise<IMemberPointsRule>
    * @throws {NotFoundException} 未找到会员积分规则
    * @throws {FailedException} 获取会员积分规则详情失败
    */
-  async findDetail(id: number): Promise<IMemberPointsRule> {
+  async findDetail(key: IMemberPointsRuleKey): Promise<IMemberPointsRule> {
     try {
-      const founded = await this.repository.existsBy({ id })
+      const rule = await this.repository.findOneBy({ key })
 
-      if (!founded)
+      if (!rule)
         throw new NotFoundException('未找到会员积分规则')
 
-      return await this.repository.findOneBy({ id })
+      return rule
     }
     catch (e) {
       throw new FailedException('获取会员积分规则详情', e.message, e.status)
@@ -66,28 +67,47 @@ export class MemberPointsRuleService {
   }
 
   /**
-   * 更新会员积分规则
+   * 更新会员积分规则状态
    *
-   * @param data 会员积分规则
+   * @param data 会员积分规则状态
+   * @throws {NotFoundException} 未找到会员积分规则
+   * @throws {FailedException} 更新会员积分规则状态失败
+   */
+  async updateStatus(data: UpdateMemberPointsRuleStatusPayload) {
+    try {
+      const founded = await this.repository.existsBy({ key: data.key })
+
+      if (!founded)
+        throw new NotFoundException('未找到会员积分规则')
+
+      await this.repository.update(
+        { key: data.key },
+        { enable: data.enable },
+      )
+    }
+    catch (e) {
+      throw new FailedException('更新会员积分规则', e.message, e.status)
+    }
+  }
+
+  /**
+   * 更新会员积分规则设置
+   *
+   * @param data 会员积分规则设置
    * @throws {NotFoundException} 未找到会员积分规则
    * @throws {FailedException} 更新会员积分规则失败
    */
-  async update(data: MemberPointsRulePayload) {
+  async updateOptions(data: UpdateMemberPointsRuleOptionsPayload) {
     try {
-      const rule = await this.repository.findOneBy({ key: data.key })
+      const founded = await this.repository.existsBy({ key: data.key })
 
-      if (!rule)
+      if (!founded)
         throw new NotFoundException('未找到会员积分规则')
 
-      rule.enable = data.enable
-
-      if (data.desc)
-        rule.desc = data.desc
-
-      if (data.options)
-        rule.options = data.options
-
-      await this.repository.update({ key: data.key }, rule)
+      await this.repository.update(
+        { key: data.key },
+        { options: data.options },
+      )
     }
     catch (e) {
       throw new FailedException('更新会员积分规则', e.message, e.status)

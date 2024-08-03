@@ -48,23 +48,27 @@ export interface IMemberPointsRuleOptions {
   /**
    * 积分
    */
-  points: number
+  points?: number
   /**
    * 最大积分
    */
-  limit: number
+  limit?: number
   /**
-   * 积分倍率
+   * 消费积分奖励倍率
    */
-  ratio: number
+  perOrderRatio?: number
   /**
    * 连续 7 天倍率
    */
-  perWeekRatio: number
+  perWeekRatio?: number
   /**
    * 连续 30 天倍率
    */
-  perMonthRatio: number
+  perMonthRatio?: number
+  /**
+   * 积分抵扣比例
+   */
+  ratio?: number
 }
 
 /**

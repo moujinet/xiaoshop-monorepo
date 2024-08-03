@@ -14,8 +14,9 @@ import {
 import {
   GetMemberPointsRuleRequest,
   MemberPointsRuleListResponse,
-  MemberPointsRulePayload,
   MemberPointsRuleResponse,
+  UpdateMemberPointsRuleOptionsPayload,
+  UpdateMemberPointsRuleStatusPayload,
 } from '@/member/points/dto'
 import { MemberPointsRuleService } from '@/member/points/service'
 
@@ -44,19 +45,32 @@ export class MemberPointsRuleController {
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('detail')
   async detail(@Query() query: GetMemberPointsRuleRequest) {
-    return this.service.findDetail(+query.id)
+    return this.service.findDetail(query.key)
   }
 
   @ApiOperation({
-    summary: '更新「积分规则」',
+    summary: '更新「积分规则」状态',
   })
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员积分规则」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
-  @Put('update')
-  async update(
-    @Body() data: MemberPointsRulePayload,
+  @Put('status/update')
+  async updateStatus(
+    @Body() data: UpdateMemberPointsRuleStatusPayload,
   ) {
-    return this.service.update(data)
+    return this.service.updateStatus(data)
+  }
+
+  @ApiOperation({
+    summary: '更新「积分规则」设置',
+  })
+  @ApiDoneResponse('更新成功')
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员积分规则」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
+  @Put('options/update')
+  async updateOptions(
+    @Body() data: UpdateMemberPointsRuleOptionsPayload,
+  ) {
+    return this.service.updateOptions(data)
   }
 }
