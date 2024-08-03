@@ -4,6 +4,7 @@ import {
   type IMemberListItem,
   type IMemberProfile,
   MEMBER_ACCOUNT_KEYS,
+  MEMBER_DEFAULT_PASSWORD,
   MemberAccountKey,
   MemberAccountStatus,
   MemberGender,
@@ -34,7 +35,6 @@ import {
   MemberAccount,
 } from '@/member/account/entities'
 import { SettingsService } from '@/settings/settings.service'
-import { MEMBER_DEFAULT_PASSWORD } from '@/member/constants'
 import { nanoNumber } from '~/utils'
 
 @Injectable()

@@ -12,8 +12,3 @@ export const MEMBER_CARD_DEFAULT_STYLES = {
   bgColor: '#fff',
   bgImage: '',
 }
-
-/**
- * 会员默认密码
- */
-export const MEMBER_DEFAULT_PASSWORD = '123456'
