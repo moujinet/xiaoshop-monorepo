@@ -10,28 +10,10 @@ defineOptions({
 const expandedKeys = ref([])
 
 const columns: TableColumnData[] = [
-  {
-    title: '部门名称',
-    dataIndex: 'name',
-    width: 300,
-  },
-  {
-    title: '描述',
-    dataIndex: 'desc',
-    slotName: 'desc',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdTime',
-    slotName: 'createdTime',
-    width: 180,
-  },
-  {
-    title: '操作',
-    slotName: 'actions',
-    width: 180,
-    align: 'center',
-  },
+  { title: '部门名称', dataIndex: 'name', width: 300 },
+  { title: '描述', dataIndex: 'desc', slotName: 'desc' },
+  { title: '创建时间', dataIndex: 'createdTime', slotName: 'createdTime', width: 180 },
+  { title: '操作', slotName: 'actions', width: 180, align: 'center' },
 ]
 
 const {

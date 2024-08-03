@@ -65,12 +65,21 @@ const searchForm = reactive({
 
 const alarms = ref(0)
 
-const { loading, data, refreshData } = fetchGoodsPages()
-
 const message = useMessage({
   onClose: () => {
     handleRefresh()
   },
+})
+
+const { loading, data, refreshData } = fetchGoodsPages()
+
+const { query, params, transformQuery } = useSearchForm({
+  form: searchForm,
+  combinedKeys: ['keywordType', 'keyword'],
+  stringKeys: ['type', 'status', 'source'],
+  splitNumberKeys: ['price', 'inventory', 'sales'],
+  splitStringKeys: ['inStockTime', 'stockedTime', 'createdTime'],
+  trimKeys: ['all'],
 })
 
 const expandable = reactive<TableExpandable>({
@@ -82,45 +91,17 @@ const expandable = reactive<TableExpandable>({
 watch(
   () => route.query,
   () => {
-    const formData = searchForm as Record<string, string | number | any[]>
-
-    Object.keys(route.query)
-      .forEach((key) => {
-        if (['type', 'status', 'source', 'keywordType', 'keyword'].includes(key))
-          formData[key] = route.query[key] as string
-        else if (['price', 'inventory', 'sales'].includes(key))
-          formData[key] = (route.query[key] as string).split(',').map(Number)
-        else if (['inStockTime', 'stockedTime', 'createdTime'].includes(key))
-          formData[key] = (route.query[key] as string).split(',')
-        else
-          formData[key] = Number(route.query[key] as string)
-      })
-
-    selectedKeys.value = []
-    expandedRowKeys.value = []
-
-    searchData()
+    transformQuery(route.query)
+    loadData()
   },
   { immediate: true },
 )
 
-function searchData() {
-  const formData = searchForm as Record<string, string | number | any[]>
-  const search: Record<string, string> = {}
+function loadData() {
+  selectedKeys.value = []
+  expandedRowKeys.value = []
 
-  if (formData.keyword !== '')
-    search[formData.keywordType as string] = formData.keyword as string
-
-  Object.keys(formData)
-    .filter(k => !['keyword', 'keywordType'].includes(k))
-    .forEach((key) => {
-      if (['price', 'inventory', 'sales', 'inStockTime', 'stockedTime', 'createdTime'].includes(key))
-        search[key] = (formData[key] as []).join(',')
-      else
-        search[key] = formData[key] as string
-    })
-
-  refreshData({ ...removeEmpty(search, true, ['all']) })
+  refreshData(params.value)
 
   countGoodsWarning().then((res) => {
     alarms.value = res
@@ -130,11 +111,8 @@ function searchData() {
 function handleRefresh() {
   handleSearch()
 
-  selectedKeys.value = []
-  expandedRowKeys.value = []
-
   if (searchForm.page === 1)
-    searchData()
+    loadData()
 }
 
 function handleReset() {
@@ -149,23 +127,7 @@ function handleReset() {
 }
 
 function handleSearch() {
-  const formData = searchForm as Record<string, string | number | any[]>
-  const search: Record<string, string> = {}
-
-  Object.keys(formData)
-    .forEach((key) => {
-      if (['price', 'inventory', 'sales', 'inStockTime', 'stockedTime', 'createdTime'].includes(key))
-        search[key] = (formData[key] as []).join(',')
-      else
-        search[key] = formData[key] as string
-    })
-
-  router.replace({
-    query: {
-      ...removeEmpty(search, true, ['all']),
-      page: 1,
-    },
-  })
+  router.replace({ query: { ...query.value, page: 1 } })
 }
 
 function handleTabsChange(status: string | number) {
@@ -355,7 +317,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
           <CommonEditable
             type="number"
             :default-value="record.sort"
-            @change="(val) => handleGoodsSortChange(record.id, val)"
+            @change="(val: number) => handleGoodsSortChange(record.id, val)"
           />
         </template>
 
