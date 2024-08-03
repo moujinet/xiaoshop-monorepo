@@ -1,9 +1,7 @@
 import {
   type ILocationPath,
   type IMemberGender,
-  IMemberStatus,
   MemberGender,
-  MemberStatus,
 } from '@xiaoshop/schema'
 import { Type } from 'class-transformer'
 import { ApiProperty, OmitType } from '@nestjs/swagger'
@@ -50,11 +48,6 @@ export class MemberPayload {
   @IsOptional()
   readonly location: ILocationPath
 
-  @ApiProperty({ required: false, description: '会员分组', example: 1 })
-  @IsNumber()
-  @IsOptional()
-  readonly groupId: number
-
   @ApiProperty({ required: false, description: '会员标签', example: 1 })
   @IsNumber()
   @IsOptional()
@@ -97,12 +90,7 @@ export class UpdateMemberProfilePayload
     'password',
     'location',
     'gender',
-  ] as const) {
-  @ApiProperty({ required: false, enum: MemberStatus, description: '会员状态', example: member.status })
-  @IsEnum(MemberStatus)
-  @IsOptional()
-  readonly status: IMemberStatus
-}
+  ] as const) {}
 
 /**
  * 批量更新会员资料 DTO

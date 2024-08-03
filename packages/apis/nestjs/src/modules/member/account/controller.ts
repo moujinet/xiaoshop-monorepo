@@ -1,3 +1,4 @@
+import type { IMemberStatus } from '@xiaoshop/schema'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
@@ -152,6 +153,20 @@ export class MemberController {
     @Body() data: UpdateMemberPasswordPayload,
   ) {
     return this.service.updatePassword(query.id, data.password, data.newPassword)
+  }
+
+  @ApiOperation({
+    summary: '更新「会员」状态',
+  })
+  @ApiDoneResponse('更新成功')
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
+  @Put('status/update')
+  async updateStatus(
+    @Query() query: GetMemberRequest,
+    @Body('status') status: IMemberStatus,
+  ) {
+    return this.service.updateStatus(+query.id, status)
   }
 
   @ApiOperation({

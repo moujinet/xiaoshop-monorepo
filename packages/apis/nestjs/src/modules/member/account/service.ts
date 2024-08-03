@@ -3,6 +3,7 @@ import {
   type IMemberAccountDict,
   type IMemberListItem,
   type IMemberProfile,
+  IMemberStatus,
   MEMBER_ACCOUNT_KEYS,
   MEMBER_DEFAULT_PASSWORD,
   MemberAccountKey,
@@ -15,7 +16,6 @@ import { isStrongPassword } from 'class-validator'
 import { Inject, Injectable } from '@nestjs/common'
 import { Between, FindOptionsWhere, In, Like, Repository } from 'typeorm'
 import { MemberCard, MemberCardBinding, MemberCardPlan } from '@/member/card/entities'
-import { MemberGroup } from '@/member/group/entity'
 import { MemberTag } from '@/member/tag/entity'
 import {
   BadRequestException,
@@ -289,11 +289,6 @@ export class MemberService {
         member.password = await bcrypt.hash(MEMBER_DEFAULT_PASSWORD, member.salt)
       }
 
-      if (data.groupId) {
-        member.group = new MemberGroup()
-        member.group.id = data.groupId
-      }
-
       if (data.tagId) {
         member.tag = new MemberTag()
         member.tag.id = data.tagId
@@ -368,11 +363,6 @@ export class MemberService {
       if (data.location)
         member.location = data.location
 
-      if (data.groupId) {
-        member.group = new MemberGroup()
-        member.group.id = data.groupId
-      }
-
       if (data.tagId) {
         member.tag = new MemberTag()
         member.tag.id = data.tagId
@@ -406,14 +396,6 @@ export class MemberService {
   async batchUpdateProfile(ids: number[], data: UpdateMemberProfilePayload) {
     try {
       const member = new Member()
-
-      if (data.status)
-        member.status = data.status
-
-      if (data.groupId) {
-        member.group = new MemberGroup()
-        member.group.id = data.groupId
-      }
 
       if (data.tagId) {
         member.tag = new MemberTag()
@@ -515,6 +497,28 @@ export class MemberService {
     }
     catch (e) {
       throw new FailedException('更新会员账户', e.message, e.status)
+    }
+  }
+
+  /**
+   * 更新会员状态
+   *
+   * @param id 会员 ID
+   * @param status 会员状态
+   * @throws {NotFoundException} 未找到会员
+   * @throws {FailedException} 更新会员状态失败
+   */
+  async updateStatus(id: number, status: IMemberStatus) {
+    try {
+      const founded = await this.repository.existsBy({ id })
+
+      if (!founded)
+        throw new NotFoundException('未找到会员')
+
+      await this.repository.update(id, { status })
+    }
+    catch (e) {
+      throw new FailedException('更新会员状态', e.message, e.status)
     }
   }
 
