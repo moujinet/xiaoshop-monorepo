@@ -24,6 +24,7 @@ describe('Member Module', () => {
       'shop_member_points_rule',
       'shop_member_address',
       'shop_member_logout',
+      'shop_member_has_tags',
     ])
   })
 

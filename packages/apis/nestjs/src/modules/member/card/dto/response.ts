@@ -42,6 +42,9 @@ export class MemberCardResponse implements IMemberCard {
   @ApiProperty({ description: '所需成长值', example: card.needExp })
   readonly needExp: number
 
+  @ApiProperty({ description: '会员数', example: 0 })
+  readonly total: number
+
   @ApiProperty({ description: '会员折扣', example: card.discount })
   readonly discount: number
 
@@ -59,19 +62,22 @@ export class MemberCardResponse implements IMemberCard {
 }
 
 /**
- * 会员卡列表响应 DTO
+ * 自定义会员卡列表响应 DTO
  */
 export class MemberCardListResponse
   extends PickType(MemberCardResponse, [
     'id',
+    'type',
     'isEnabled',
     'key',
     'name',
     'desc',
     'plans',
+    'styles',
     'discount',
     'pointsRatio',
     'isFreeShipping',
+    'total',
     'createdTime',
   ] as const)
   implements IMemberCardListItem {}
@@ -82,14 +88,17 @@ export class MemberCardListResponse
 export class MemberCardLevelListResponse
   extends PickType(MemberCardResponse, [
     'id',
+    'type',
     'isEnabled',
     'key',
     'name',
     'desc',
+    'styles',
     'needExp',
     'discount',
     'pointsRatio',
     'isFreeShipping',
+    'total',
   ] as const)
   implements IMemberCardLevelListItem {}
 

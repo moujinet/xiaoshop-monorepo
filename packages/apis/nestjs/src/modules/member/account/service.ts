@@ -80,7 +80,7 @@ export class MemberService {
       if (query.groupId)
         where.group = { id: query.groupId }
       if (query.tagId)
-        where.tag = { id: query.tagId }
+        where.tags = { id: query.tagId }
       if (query.cardId)
         where.binding = { card: { id: query.cardId } }
 
@@ -145,7 +145,7 @@ export class MemberService {
           id: true,
           status: true,
           source: true,
-          tag: { id: true, name: true },
+          tags: { id: true, name: true },
           group: { id: true, name: true },
           account: { key: true, name: true, value: true },
           cardNo: true,
@@ -158,7 +158,7 @@ export class MemberService {
           lastLoginTime: true,
         },
         where,
-        relations: ['tag', 'group', 'account'],
+        relations: ['tags', 'group', 'account'],
         skip: pagesize * (page - 1),
         take: pagesize,
         order: {
@@ -198,7 +198,7 @@ export class MemberService {
           location: true,
           createdTime: true,
           lastLoginTime: true,
-          tag: { id: true, name: true },
+          tags: { id: true, name: true },
           group: { id: true, name: true },
           binding: {
             id: true,
@@ -209,7 +209,7 @@ export class MemberService {
           },
         },
         where: { id },
-        relations: ['tag', 'group', 'binding'],
+        relations: ['tags', 'group', 'binding'],
       })
 
       if (!profile)
@@ -289,9 +289,15 @@ export class MemberService {
         member.password = await bcrypt.hash(MEMBER_DEFAULT_PASSWORD, member.salt)
       }
 
-      if (data.tagId) {
-        member.tag = new MemberTag()
-        member.tag.id = data.tagId
+      if (data.tagIds && data.tagIds.length > 0) {
+        member.tags = []
+
+        for (const tagId of data.tagIds) {
+          const tag = new MemberTag()
+          tag.id = tagId
+
+          member.tags.push(tag)
+        }
       }
 
       if (data.cardId) {
@@ -363,9 +369,15 @@ export class MemberService {
       if (data.location)
         member.location = data.location
 
-      if (data.tagId) {
-        member.tag = new MemberTag()
-        member.tag.id = data.tagId
+      if (data.tagIds && data.tagIds.length > 0) {
+        member.tags = []
+
+        for (const tagId of data.tagIds) {
+          const tag = new MemberTag()
+          tag.id = tagId
+
+          member.tags.push(tag)
+        }
       }
 
       if (data.cardId) {
@@ -397,9 +409,15 @@ export class MemberService {
     try {
       const member = new Member()
 
-      if (data.tagId) {
-        member.tag = new MemberTag()
-        member.tag.id = data.tagId
+      if (data.tagIds && data.tagIds.length > 0) {
+        member.tags = []
+
+        for (const tagId of data.tagIds) {
+          const tag = new MemberTag()
+          tag.id = tagId
+
+          member.tags.push(tag)
+        }
       }
 
       if (data.cardId) {

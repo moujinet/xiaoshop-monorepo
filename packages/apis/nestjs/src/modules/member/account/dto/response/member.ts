@@ -33,8 +33,8 @@ export class MemberResponse implements Omit<IMember, 'password' | 'salt'> {
   @ApiProperty({ description: '会员分组', example: member.group })
   readonly group: IMemberGroupDict
 
-  @ApiProperty({ description: '会员标签', example: member.tag })
-  readonly tag: IMemberTagDict
+  @ApiProperty({ description: '会员标签', example: [member.tag] })
+  readonly tags: IMemberTagDict[]
 
   @ApiProperty({ description: '绑定会员卡', example: member.binding })
   readonly binding: IMemberCardBindingInfo
@@ -81,7 +81,7 @@ export class MemberListResponse
     'id',
     'status',
     'source',
-    'tag',
+    'tags',
     'group',
     'account',
     'cardNo',
@@ -103,7 +103,7 @@ export class MemberProfileResponse
     'id',
     'status',
     'source',
-    'tag',
+    'tags',
     'group',
     'binding',
     'cardNo',

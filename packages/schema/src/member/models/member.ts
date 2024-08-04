@@ -39,7 +39,7 @@ export interface IMember {
    *
    * @see {@link IMemberTag}
    */
-  tag: IMemberTagDict
+  tags: IMemberTagDict[]
   /**
    * 绑定会员卡
    *
@@ -112,7 +112,7 @@ export type IMemberProfile = Pick<
   | 'id'
   | 'status'
   | 'source'
-  | 'tag'
+  | 'tags'
   | 'group'
   | 'binding'
   | 'cardNo'
@@ -135,7 +135,7 @@ export type IMemberListItem = Pick<
   | 'id'
   | 'status'
   | 'source'
-  | 'tag'
+  | 'tags'
   | 'group'
   | 'account'
   | 'cardNo'

@@ -7,7 +7,7 @@ import {
   type IMemberCardType,
   MemberCardType,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VirtualColumn } from 'typeorm'
 import { MemberCardPlan } from '@/member/card/entities'
 
 @Entity('shop_member_card', {
@@ -58,4 +58,7 @@ export class MemberCard implements IMemberCard {
   @OneToMany(() => MemberCardPlan, plan => plan.card, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn()
   plans: IMemberCardPlan[]
+
+  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_card_binding WHERE cardId = ${alias}.id` })
+  total: number
 }

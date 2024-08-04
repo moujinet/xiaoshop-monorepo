@@ -62,6 +62,12 @@ export interface IMemberCard {
    */
   isFreeShipping: IEnabled
   /**
+   * 开通会员数
+   *
+   * @virtual
+   */
+  total: number
+  /**
    * 创建时间
    */
   createdTime: string
@@ -206,14 +212,17 @@ export type IMemberCardDict = Pick<IMemberCard, 'id' | 'type' | 'name'>
 export type IMemberCardLevelListItem = Pick<
   IMemberCard,
   | 'id'
+  | 'type'
   | 'isEnabled'
   | 'key'
   | 'name'
   | 'desc'
+  | 'styles'
   | 'needExp'
   | 'discount'
   | 'pointsRatio'
   | 'isFreeShipping'
+  | 'total'
 >
 
 /**
@@ -222,13 +231,16 @@ export type IMemberCardLevelListItem = Pick<
 export type IMemberCardListItem = Pick<
   IMemberCard,
   | 'id'
+  | 'type'
   | 'isEnabled'
   | 'key'
   | 'name'
   | 'desc'
+  | 'styles'
   | 'plans'
   | 'discount'
   | 'pointsRatio'
   | 'isFreeShipping'
+  | 'total'
   | 'createdTime'
 >

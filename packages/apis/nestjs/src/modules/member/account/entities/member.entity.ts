@@ -12,7 +12,7 @@ import {
   MemberSource,
   MemberStatus,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { MemberCardBinding } from '@/member/card/entities'
 import { MemberAccount } from '@/member/account/entities'
 import { MemberGroup } from '@/member/group/entity'
@@ -83,7 +83,7 @@ export class Member implements IMember {
   @JoinColumn()
   group: IMemberGroupDict
 
-  @OneToOne(() => MemberTag, { createForeignKeyConstraints: false })
-  @JoinColumn()
-  tag: IMemberTagDict
+  @ManyToMany(() => MemberTag, { createForeignKeyConstraints: false })
+  @JoinTable({ name: 'shop_member_has_tags' })
+  tags: IMemberTagDict[]
 }

@@ -48,10 +48,10 @@ export class MemberPayload {
   @IsOptional()
   readonly location: ILocationPath
 
-  @ApiProperty({ required: false, description: '会员标签', example: 1 })
-  @IsNumber()
+  @ApiProperty({ required: false, description: '会员标签', example: [1] })
+  @IsNumber({}, { each: true })
   @IsOptional()
-  readonly tagId: number
+  readonly tagIds: number[]
 
   @ApiProperty({ required: false, description: '开通会员卡', example: 1 })
   @IsNumber()
