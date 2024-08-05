@@ -231,18 +231,22 @@ export const MEMBER_CARD_PLAN_TYPES = [
 /**
  * 枚举: 会员群体 - 筛选条件 - 条件项
  *
- * - `CARD`: 会员卡
- * - `TAG`: 会员标签
- * - `GENDER`: 会员性别
- * - `BIRTHDAY`: 会员生日
- * - `CREATED_TIME`: 注册时间
- * - `POINTS`: 当前积分
- * - `EXP`: 当前成长值
- * - `SIGN_IN`: 累计签到数
- * - `ORDER_COUNT`: 累计订单数
- * - `ORDER_AMOUNT`: 累计订单金额
+ * - `SOURCE`: 注册来源 [web]
+ * - `STATUS`: 会员状态 [normal, blocked]
+ * - `CARD`: 会员卡 [cardId, cardPlanId]
+ * - `TAG`: 会员标签 [tagId]
+ * - `GENDER`: 会员性别 [male]
+ * - `BIRTHDAY`: 会员生日 [from, to]
+ * - `CREATED_TIME`: 注册时间 [from, to]
+ * - `POINTS`: 当前积分 [min, max]
+ * - `EXP`: 当前成长值 [min, max]
+ * - `SIGN_IN`: 累计签到数 [min, max]
+ * - `ORDER_COUNT`: 累计订单数 [min, max]
+ * - `ORDER_AMOUNT`: 累计订单金额 [min, max]
  */
 export enum MemberGroupCondKey {
+  SOURCE = 'source',
+  STATUS = 'status',
   CARD = 'card',
   TAG = 'tag',
   GENDER = 'gender',
@@ -261,6 +265,8 @@ export enum MemberGroupCondKey {
  * @see {@link IMemberGroupCondKey}
  */
 export const MEMBER_GROUP_COND_KEYS = [
+  { label: '注册来源', value: MemberGroupCondKey.SOURCE },
+  { label: '会员状态', value: MemberGroupCondKey.STATUS },
   { label: '会员等级', value: MemberGroupCondKey.CARD },
   { label: '会员标签', value: MemberGroupCondKey.TAG },
   { label: '会员性别', value: MemberGroupCondKey.GENDER },

@@ -30,9 +30,8 @@ export class MemberGroupConditionPayload implements IMemberGroupCondition {
   readonly name: string
 
   @ApiProperty({ description: '会员群体条件值', example: example.conditions[0].value })
-  @IsString({ each: true })
   @IsNotEmpty({ each: true })
-  readonly value: string[]
+  readonly value: Array<string | number>
 }
 
 /**

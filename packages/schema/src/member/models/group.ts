@@ -45,25 +45,25 @@ export interface IMemberGroup {
  */
 export interface IMemberGroupCondition {
   /**
-   * 会员群体条件标识
+   * 筛选条件标识
    *
    * @see {@link IMemberGroupCondKey}
    */
   key: IMemberGroupCondKey
   /**
-   * 会员群体条件运算符
+   * 筛选条件运算符
    *
    * @see {@link IMemberGroupCondOperator}
    */
   operator: IMemberGroupCondOperator
   /**
-   * 会员群体条件名
+   * 筛选条件名
    */
   name: string
   /**
-   * 会员群体条件值
+   * 筛选条件值
    */
-  value: string[]
+  value: Array<string | number>
 }
 
 /**

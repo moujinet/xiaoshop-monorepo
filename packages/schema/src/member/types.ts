@@ -136,16 +136,18 @@ export type IMemberGroupCondOperator = `${MemberGroupCondOperator}` | MemberGrou
 /**
  * 会员群体 - 筛选条件
  *
- * - `CARD`: 会员卡
- * - `TAG`: 标签
- * - `GENDER`: 性别
- * - `BIRTHDAY`: 生日
- * - `CREATED_TIME`: 注册时间
- * - `POINTS`: 积分
- * - `EXP`: 成长值
- * - `SIGN_IN`: 签到
- * - `ORDER_COUNT`: 订单数
- * - `ORDER_AMOUNT`: 订单金额
+ * - `SOURCE`: 注册来源 [web]
+ * - `STATUS`: 会员状态 [normal, blocked]
+ * - `CARD`: 会员卡 [cardId, cardPlanId]
+ * - `TAG`: 会员标签 [tagId]
+ * - `GENDER`: 会员性别 [male]
+ * - `BIRTHDAY`: 会员生日 [from, to]
+ * - `CREATED_TIME`: 注册时间 [from, to]
+ * - `POINTS`: 当前积分 [min, max]
+ * - `EXP`: 当前成长值 [min, max]
+ * - `SIGN_IN`: 累计签到数 [min, max]
+ * - `ORDER_COUNT`: 累计订单数 [min, max]
+ * - `ORDER_AMOUNT`: 累计订单金额 [min, max]
  *
  * @see {@link MemberGroupCondKey}
  */
