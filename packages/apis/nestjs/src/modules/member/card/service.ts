@@ -104,7 +104,7 @@ export class MemberCardService {
       return await this.repository.find({
         select: { id: true, type: true, name: true },
         where: { isEnabled: Enabled.YES },
-        order: { type: 'DESC', updatedTime: 'DESC' },
+        order: { type: 'DESC' },
       })
     }
     catch (e) {
