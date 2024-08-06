@@ -312,10 +312,14 @@ export const MEMBER_GROUP_COND_OPERATORS = [
  * 枚举: 会员注销申请 - 状态
  *
  * - `PENDING`: 待处理
+ * - `APPROVED`: 已通过
+ * - `REJECTED`: 已拒绝
  * - `LOGOUT`: 已注销
  */
 export enum MemberLogoutStatus {
   PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
   LOGOUT = 'logout',
 }
 
@@ -326,6 +330,8 @@ export enum MemberLogoutStatus {
  */
 export const MEMBER_LOGOUT_STATUSES = [
   { label: '待处理', value: MemberLogoutStatus.PENDING, color: 'blue' },
+  { label: '已通过', value: MemberLogoutStatus.APPROVED, color: 'orange' },
+  { label: '已拒绝', value: MemberLogoutStatus.REJECTED, color: 'red' },
   { label: '已注销', value: MemberLogoutStatus.LOGOUT, color: 'gray' },
 ]
 
