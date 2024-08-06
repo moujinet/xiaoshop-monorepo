@@ -55,6 +55,6 @@ export class MemberGroupListResponse
     'name',
     'desc',
     'total',
-    'refreshTime',
+    'updatedTime',
   ] as const)
   implements IMemberGroupListItem {}

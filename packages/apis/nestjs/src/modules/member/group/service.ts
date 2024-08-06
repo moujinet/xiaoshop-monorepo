@@ -27,11 +27,11 @@ export class MemberGroupService {
   ) {}
 
   /**
-   * 获取会员分组分页列表
+   * 获取会员群体分页列表
    *
    * @param query 查询条件
    * @returns Promise<IApiPaginationData<IMemberGroupListItem>>
-   * @throws {FailedException} 获取会员分组分页列表失败
+   * @throws {FailedException} 获取会员群体分页列表失败
    */
   async findPages(
     query: GetMemberGroupPagesRequest,
@@ -45,7 +45,7 @@ export class MemberGroupService {
           name: true,
           desc: true,
           total: true,
-          refreshTime: true,
+          updatedTime: true,
         },
         skip: pagesize * (page - 1),
         take: pagesize,
@@ -58,15 +58,15 @@ export class MemberGroupService {
       return { result, total, page, pagesize }
     }
     catch (e) {
-      throw new FailedException('获取会员分组分页列表', e.message)
+      throw new FailedException('获取会员群体分页列表', e.message)
     }
   }
 
   /**
-   * 获取会员分组条件列表
+   * 获取会员群体条件列表
    *
    * @returns Promise<IMemberGroupConditionListItem[]>
-   * @throws {FailedException} 获取会员分组条件列表失败
+   * @throws {FailedException} 获取会员群体条件列表失败
    */
   async findConditionList(): Promise<IMemberGroupConditionListItem[]> {
     try {
@@ -76,7 +76,6 @@ export class MemberGroupService {
           name: true,
           conditions: true,
           total: true,
-          refreshTime: true,
         },
         order: {
           updatedTime: 'DESC',
@@ -84,15 +83,15 @@ export class MemberGroupService {
       })
     }
     catch (e) {
-      throw new FailedException('获取会员分组条件列表', e.message)
+      throw new FailedException('获取会员群体条件列表', e.message)
     }
   }
 
   /**
-   * 获取会员分组字典列表
+   * 获取会员群体字典列表
    *
    * @returns Promise<IMemberGroupDict[]>
-   * @throws {FailedException} 获取会员分组字典失败
+   * @throws {FailedException} 获取会员群体字典失败
    */
   async findDictList(): Promise<IMemberGroupDict[]> {
     try {
@@ -102,45 +101,45 @@ export class MemberGroupService {
       })
     }
     catch (e) {
-      throw new FailedException('获取会员分组字典', e.message)
+      throw new FailedException('获取会员群体字典', e.message)
     }
   }
 
   /**
-   * 获取会员分组详情
+   * 获取会员群体详情
    *
    * @param id 分组 ID
    * @returns Promise<IMemberGroup>
-   * @throws {NotFoundException} 未找到会员分组
-   * @throws {FailedException} 获取会员分组详情失败
+   * @throws {NotFoundException} 未找到会员群体
+   * @throws {FailedException} 获取会员群体详情失败
    */
   async findDetail(id: number): Promise<IMemberGroup> {
     try {
       const founded = await this.repository.existsBy({ id })
 
       if (!founded)
-        throw new NotFoundException('未找到会员分组')
+        throw new NotFoundException('未找到会员群体')
 
       return await this.repository.findOneBy({ id })
     }
     catch (e) {
-      throw new FailedException('获取会员分组详情', e.message, e.status)
+      throw new FailedException('获取会员群体详情', e.message, e.status)
     }
   }
 
   /**
-   * 创建会员分组
+   * 创建会员群体
    *
-   * @param data 会员分组
-   * @throws {ExistsException} 会员分组已存在
-   * @throws {FailedException} 创建会员分组失败
+   * @param data 会员群体
+   * @throws {ExistsException} 会员群体已存在
+   * @throws {FailedException} 创建会员群体失败
    */
   async create(data: MemberGroupPayload) {
     try {
       const exists = await this.repository.existsBy({ name: data.name })
 
       if (exists)
-        throw new ExistsException(`会员分组「${data.name}」已存在`)
+        throw new ExistsException(`会员群体「${data.name}」已存在`)
 
       const group = new MemberGroup()
 
@@ -151,30 +150,30 @@ export class MemberGroupService {
       await this.repository.save(group)
     }
     catch (e) {
-      throw new FailedException('创建会员分组', e.message, e.status)
+      throw new FailedException('创建会员群体', e.message, e.status)
     }
   }
 
   /**
-   * 更新会员分组
+   * 更新会员群体
    *
    * @param id 分组 ID
-   * @param data 会员分组
-   * @throws {NotFoundException} 未找到会员分组
-   * @throws {ExistsException} 会员分组已存在
-   * @throws {FailedException} 更新会员分组失败
+   * @param data 会员群体
+   * @throws {NotFoundException} 未找到会员群体
+   * @throws {ExistsException} 会员群体已存在
+   * @throws {FailedException} 更新会员群体失败
    */
   async update(id: number, data: MemberGroupPayload) {
     try {
       const founded = await this.repository.existsBy({ id })
 
       if (!founded)
-        throw new NotFoundException('未找到会员分组')
+        throw new NotFoundException('未找到会员群体')
 
       const exists = await this.repository.existsBy({ id: Not(id), name: data.name })
 
       if (exists)
-        throw new ExistsException(`会员分组「${data.name}」已存在`)
+        throw new ExistsException(`会员群体「${data.name}」已存在`)
 
       const group = new MemberGroup()
 
@@ -186,15 +185,36 @@ export class MemberGroupService {
       await this.repository.save(group)
     }
     catch (e) {
-      throw new FailedException('更新会员分组', e.message, e.status)
+      throw new FailedException('更新会员群体', e.message, e.status)
     }
   }
 
   /**
-   * 删除会员分组
+   * 更新会员群体人数
+   *
+   * @param id 会员群体 ID
+   * @param total 会员数量
+   * @throws {FailedException} 更新会员群体失败
+   */
+  async updateTotal(id: number, total: number) {
+    try {
+      const founded = await this.repository.existsBy({ id })
+
+      if (!founded)
+        throw new NotFoundException('未找到会员群体')
+
+      await this.repository.update({ id }, { total, refreshTime: (new Date()).toISOString() })
+    }
+    catch (e) {
+      throw new FailedException('更新会员群体', e.message, e.status)
+    }
+  }
+
+  /**
+   * 删除会员群体
    *
    * @param id 分组 ID
-   * @throws {FailedException} 删除会员分组失败
+   * @throws {FailedException} 删除会员群体失败
    */
   async delete(id: number) {
     try {
@@ -204,7 +224,7 @@ export class MemberGroupService {
         await this.repository.delete({ id })
     }
     catch (e) {
-      throw new FailedException('删除会员分组', e.message, e.status)
+      throw new FailedException('删除会员群体', e.message, e.status)
     }
   }
 }

@@ -24,7 +24,7 @@ import {
 } from '@/member/group/dto'
 import { MemberGroupService } from '@/member/group/service'
 
-@ApiTags('会员/分组')
+@ApiTags('会员/群体')
 @Controller('member/group')
 export class MemberGroupController {
   constructor(
@@ -32,10 +32,10 @@ export class MemberGroupController {
   ) {}
 
   @ApiOperation({
-    summary: '获取「分组」列表',
+    summary: '获取「群体」分页列表',
   })
   @ApiPaginatedResponse(MemberGroupListResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员分组分页列表' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体分页列表' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('pages')
   async pages(@Query() query: GetMemberGroupPagesRequest) {
@@ -43,20 +43,20 @@ export class MemberGroupController {
   }
 
   @ApiOperation({
-    summary: '获取「分组」字典列表',
+    summary: '获取「群体」字典列表',
   })
   @ApiListedResponse(MemberGroupDictResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员分组字典失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体字典失败' })
   @Get('dict/list')
   async dictList() {
     return this.service.findDictList()
   }
 
   @ApiOperation({
-    summary: '获取「分组」详情',
+    summary: '获取「群体」详情',
   })
   @ApiObjectResponse(MemberGroupResponse)
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员分组详情失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体详情失败' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('detail')
   async detail(@Query() query: GetMemberGroupRequest) {
@@ -64,10 +64,10 @@ export class MemberGroupController {
   }
 
   @ApiOperation({
-    summary: '创建「分组」',
+    summary: '创建「群体」',
   })
   @ApiDoneResponse('创建成功')
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员分组」已存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员群体」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Post('create')
   @HttpCode(200)
@@ -76,11 +76,11 @@ export class MemberGroupController {
   }
 
   @ApiOperation({
-    summary: '更新「分组」',
+    summary: '更新「群体」',
   })
   @ApiDoneResponse('更新成功')
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员分组」不存在' })
-  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员分组」已存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员群体」不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员群体」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('update')
   async update(
@@ -91,7 +91,7 @@ export class MemberGroupController {
   }
 
   @ApiOperation({
-    summary: '删除「分组」',
+    summary: '删除「群体」',
   })
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })

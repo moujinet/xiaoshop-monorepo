@@ -1,6 +1,7 @@
 import {
   type IApiPaginationData,
   type IMemberAccountDict,
+  IMemberGroupCondition,
   type IMemberListItem,
   type IMemberProfile,
   IMemberStatus,
@@ -9,12 +10,14 @@ import {
   MemberAccountKey,
   MemberAccountStatus,
   MemberGender,
+  MemberGroupCondKey,
+  MemberGroupCondOperator,
 } from '@xiaoshop/schema'
 import * as bcrypt from 'bcrypt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { isStrongPassword } from 'class-validator'
 import { Inject, Injectable } from '@nestjs/common'
-import { Between, FindOptionsWhere, In, Like, Repository } from 'typeorm'
+import { Between, FindOptionsWhere, In, Like, Not, Repository } from 'typeorm'
 import { MemberCard, MemberCardBinding, MemberCardPlan } from '@/member/card/entities'
 import { MemberTag } from '@/member/tag/entity'
 import {
@@ -604,6 +607,71 @@ export class MemberService {
     }
     catch (e) {
       throw new FailedException('重置会员密码', e.message, e.status)
+    }
+  }
+
+  /**
+   * 统计会员群众
+   *
+   * @param conditions IMemberGroupCondition[]
+   * @returns Promise<number>
+   * @throws {FailedException} 统计会员群众失败
+   */
+  async countMemberByGroupConditions(conditions: IMemberGroupCondition[]): Promise<number> {
+    try {
+      const where: FindOptionsWhere<Member> = {}
+
+      if (conditions.length === 0)
+        return 0
+
+      for (const condition of conditions) {
+        if (condition.key === MemberGroupCondKey.SOURCE)
+          where.source = condition.operator === MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value)
+
+        if (condition.key === MemberGroupCondKey.STATUS)
+          where.status = MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value)
+
+        if (condition.key === MemberGroupCondKey.GENDER)
+          where.gender = MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value)
+
+        if (condition.key === MemberGroupCondKey.CARD)
+          where.binding = { card: { id: MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value) } }
+
+        if (condition.key === MemberGroupCondKey.TAG)
+          where.tags = { id: MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value) }
+
+        if ([
+          MemberGroupCondKey.ORDER_AMOUNT,
+          MemberGroupCondKey.ORDER_COUNT,
+          MemberGroupCondKey.EXP,
+          MemberGroupCondKey.POINTS,
+          MemberGroupCondKey.SIGN_IN,
+        ].includes(condition.key as MemberGroupCondKey)) {
+          const keyMapping = {
+            [MemberGroupCondKey.ORDER_AMOUNT]: MemberAccountKey.ORDER_AMOUNT,
+            [MemberGroupCondKey.ORDER_COUNT]: MemberAccountKey.ORDERS,
+            [MemberGroupCondKey.EXP]: MemberAccountKey.EXP,
+            [MemberGroupCondKey.POINTS]: MemberAccountKey.POINTS,
+            [MemberGroupCondKey.SIGN_IN]: MemberAccountKey.SIGN_IN,
+          }
+
+          where.account = {
+            key: keyMapping[condition.key],
+            value: Between(Number(condition.value[0]), Number(condition.value[1])),
+          }
+        }
+
+        if (condition.key === MemberGroupCondKey.BIRTHDAY)
+          where.birthday = Between(condition.value[0].toString(), condition.value[1].toString())
+
+        if (condition.key === MemberGroupCondKey.CREATED_TIME)
+          where.createdTime = Between(`${condition.value[0]} 00:00:00`, `${condition.value[1]} 23:59:59`)
+      }
+
+      return await this.repository.count({ where })
+    }
+    catch (e) {
+      throw new FailedException('统计会员群众', e.message)
     }
   }
 

@@ -80,7 +80,7 @@ export type IMemberGroupListItem = Pick<
   | 'name'
   | 'desc'
   | 'total'
-  | 'refreshTime'
+  | 'updatedTime'
 >
 
 /**
@@ -92,5 +92,4 @@ export type IMemberGroupConditionListItem = Pick<
   | 'name'
   | 'total'
   | 'conditions'
-  | 'refreshTime'
 >

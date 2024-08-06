@@ -34,6 +34,8 @@ import { MemberSettings } from '@/member/member.settings'
 
 import { MEMBER_MODULE_ID } from '@/member/constants'
 
+import { MemberScheduler } from '@/member/member.scheduler'
+
 @Module({
   imports: [
     forwardRef(() =>
@@ -76,6 +78,9 @@ import { MEMBER_MODULE_ID } from '@/member/constants'
     MemberAddressService,
     MemberPointsRuleService,
     MemberLogoutService,
+
+    // Scheduler
+    MemberScheduler,
   ],
 })
 export class MemberModule {}
