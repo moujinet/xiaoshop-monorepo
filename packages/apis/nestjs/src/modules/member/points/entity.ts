@@ -9,9 +9,9 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 @Entity('shop_member_points_rule', {
   comment: '会员积分规则表',
 })
-@Index('idx_shop_member_points_rule', ['enable'])
+@Index('IDX_shop_member_points_rule', ['enable'])
 export class MemberPointsRule implements IMemberPointsRule {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_points_rule' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_points_rule' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '积分规则标识' })

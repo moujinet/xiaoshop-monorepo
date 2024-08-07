@@ -11,9 +11,9 @@ import { Member } from '@/member/account/entities'
 @Entity('shop_member_address', {
   comment: '会员地址表',
 })
-@Index('idx_shop_member_address', ['isDefault', 'updatedTime'])
+@Index('IDX_shop_member_address', ['isDefault', 'updatedTime'])
 export class MemberAddress implements IMemberAddress {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_address' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_address' })
   id: number
 
   @Column({ name: 'contract_name', type: 'varchar', length: 32, nullable: false, default: '', comment: '联系人' })

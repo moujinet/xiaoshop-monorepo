@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('manage_staff_department', {
   comment: '组织部门表',
 })
-@Index('idx_manage_staff_department', ['sort', 'updatedTime'])
+@Index('IDX_manage_staff_department', ['sort', 'updatedTime'])
 export class Department implements IStaffDepartment {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_department' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_department' })
   id: number
 
   @Column({ name: 'parent_id', type: 'int', default: 0, unsigned: true, comment: '上级部门 ID' })

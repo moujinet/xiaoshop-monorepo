@@ -12,7 +12,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
   comment: '物流运费模板表',
 })
 export class LogisticsFreightTemplate implements ILogisticsFreightTemplate {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_logistics_freight_template' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_logistics_freight_template' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '模板名称' })

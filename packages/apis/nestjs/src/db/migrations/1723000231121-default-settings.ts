@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class DefaultSettings1722070809894 implements MigrationInterface {
+export class DefaultSettings1723000231121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
       ('store.name', 'XiaoShop'),

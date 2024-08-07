@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class AssetsSettings1722070809894 implements MigrationInterface {
+export class AssetsSettings1723000231121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
       ('assets.image.enableCompress', '1'),

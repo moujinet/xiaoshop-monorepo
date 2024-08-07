@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('manage_staff_role', {
   comment: '员工角色表',
 })
-@Index('idx_manage_staff_role', ['sort', 'updatedTime'])
+@Index('IDX_manage_staff_role', ['sort', 'updatedTime'])
 export class Role implements IStaffRole {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_role' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_role' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '角色名称' })

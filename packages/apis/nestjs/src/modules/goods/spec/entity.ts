@@ -6,7 +6,7 @@ import { Goods } from '@/goods/manage/entity'
   comment: '商品规格表',
 })
 export class GoodsSpec implements IGoodsSpec {
-  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'pk_shop_goods_spec' })
+  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'PK_shop_goods_spec' })
   id: string
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '规格名' })

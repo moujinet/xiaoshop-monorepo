@@ -7,7 +7,7 @@ import { Member, MemberAccount } from '@/member/account/entities'
 
 import { MemberCardService } from '@/member/card/service'
 import { MemberCardController } from '@/member/card/controller'
-import { MemberCard, MemberCardBinding, MemberCardPlan } from '@/member/card/entities'
+import { MemberCard, MemberCardBinding } from '@/member/card/entities'
 
 import { MemberGroup } from '@/member/group/entity'
 import { MemberGroupService } from '@/member/group/service'
@@ -49,7 +49,6 @@ import { MemberScheduler } from '@/member/member.scheduler'
       Member,
       MemberAccount,
       MemberCard,
-      MemberCardPlan,
       MemberCardBinding,
       MemberGroup,
       MemberTag,

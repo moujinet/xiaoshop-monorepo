@@ -12,6 +12,11 @@ export const card = {
   key: 'lv0',
   name: 'Member Level 0',
   desc: 'Member Level 0',
+  badge: {
+    icon: 'icon',
+    textColor: '#000000',
+    bgColor: '#ffffff',
+  },
   styles: {
     icon: 'icon',
     textColor: '#000000',

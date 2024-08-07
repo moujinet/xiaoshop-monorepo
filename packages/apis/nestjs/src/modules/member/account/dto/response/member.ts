@@ -2,7 +2,7 @@ import type {
   ILocationPath,
   IMember,
   IMemberAccountDict,
-  IMemberCardBindingInfo,
+  IMemberCardBinding,
   IMemberGender,
   IMemberGroupDict,
   IMemberListItem,
@@ -37,7 +37,7 @@ export class MemberResponse implements Omit<IMember, 'password' | 'salt'> {
   readonly tags: IMemberTagDict[]
 
   @ApiProperty({ description: '绑定会员卡', example: member.binding })
-  readonly binding: IMemberCardBindingInfo
+  readonly card: IMemberCardBinding
 
   @ApiProperty({ description: '会员卡号', example: member.cardNo })
   readonly cardNo: string
@@ -84,6 +84,7 @@ export class MemberListResponse
     'tags',
     'group',
     'account',
+    'card',
     'cardNo',
     'avatar',
     'username',
@@ -96,7 +97,7 @@ export class MemberListResponse
   implements IMemberListItem {}
 
 /**
- * 会员字典列表响应 DTO
+ * 会员资料响应 DTO
  */
 export class MemberProfileResponse
   extends PickType(MemberResponse, [
@@ -105,7 +106,7 @@ export class MemberProfileResponse
     'source',
     'tags',
     'group',
-    'binding',
+    'card',
     'cardNo',
     'avatar',
     'username',

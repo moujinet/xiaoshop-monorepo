@@ -2,21 +2,21 @@ import {
   Enabled,
   type IEnabled,
   type IMemberCard,
+  type IMemberCardBadgeStyles,
   type IMemberCardPlan,
   type IMemberCardStyles,
   type IMemberCardType,
   MemberCardType,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VirtualColumn } from 'typeorm'
-import { MemberCardPlan } from '@/member/card/entities'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn, VirtualColumn } from 'typeorm'
 
 @Entity('shop_member_card', {
   comment: '会员卡信息表',
 })
-@Index('idx_shop_member_card_level', ['type', 'key'])
-@Index('idx_shop_member_card_custom', ['type', 'updatedTime'])
+@Index('IDX_shop_member_card_level', ['type', 'isEnabled', 'key'])
+@Index('IDX_shop_member_card_custom', ['type', 'isEnabled', 'updatedTime'])
 export class MemberCard implements IMemberCard {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_card' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_card' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '会员卡类型' })
@@ -34,6 +34,9 @@ export class MemberCard implements IMemberCard {
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '会员卡描述' })
   desc: string
 
+  @Column({ type: 'simple-json', default: null, comment: '会员徽章样式' })
+  badge: IMemberCardBadgeStyles
+
   @Column({ type: 'simple-json', default: null, comment: '会员卡样式' })
   styles: IMemberCardStyles
 
@@ -49,16 +52,15 @@ export class MemberCard implements IMemberCard {
   @Column({ name: 'is_free_shipping', type: 'char', length: 1, nullable: false, default: Enabled.NO, comment: '是否包邮 (N:否 Y:是)' })
   isFreeShipping: IEnabled
 
+  @Column({ type: 'simple-json', default: null, comment: '会员卡有效期套餐' })
+  plans: IMemberCardPlan[]
+
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string
 
   @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
   updatedTime: string
 
-  @OneToMany(() => MemberCardPlan, plan => plan.card, { cascade: true, createForeignKeyConstraints: false })
-  @JoinColumn()
-  plans: IMemberCardPlan[]
-
-  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_card_binding WHERE cardId = ${alias}.id` })
+  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_card_binding WHERE card_id = ${alias}.id` })
   total: number
 }

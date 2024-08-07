@@ -17,7 +17,6 @@ describe('Member Module', () => {
       'shop_member',
       'shop_member_account',
       'shop_member_card',
-      'shop_member_card_plan',
       'shop_member_card_binding',
       'shop_member_group',
       'shop_member_tag',
@@ -42,6 +41,11 @@ describe('Member Module', () => {
           isEnabled: 'Y',
           name: 'Member vip 1',
           desc: 'Member vip 1',
+          badge: {
+            icon: 'icon',
+            textColor: '#000000',
+            bgColor: '#ffffff',
+          },
           styles: {
             icon: 'icon',
             textColor: '#000000',
@@ -70,6 +74,11 @@ describe('Member Module', () => {
           isEnabled: 'Y',
           name: 'Member vip 1',
           desc: 'Member vip 1',
+          badge: {
+            icon: 'icon',
+            textColor: '#000000',
+            bgColor: '#ffffff',
+          },
           styles: {
             icon: 'icon',
             textColor: '#000000',

@@ -15,9 +15,9 @@ import { Department } from '@/staffs/department/entity'
 @Entity('manage_staff_account', {
   comment: '员工账号表',
 })
-@Index('idx_manage_staff_account', ['status', 'username', 'mobile', 'lastLoginTime'])
+@Index('IDX_manage_staff_account', ['status', 'username', 'mobile', 'lastLoginTime'])
 export class Account implements IStaffAccount {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_account' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_account' })
   id: number
 
   @Column({ name: 'is_admin', type: 'char', length: 1, nullable: false, default: Enabled.NO, comment: '是否管理员 (N: 否 Y: 是)' })

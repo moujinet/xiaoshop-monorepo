@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
   comment: '系统设置表',
 })
 export class Settings implements ISettings {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_settings' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_settings' })
   id: number
 
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true, default: '', comment: '设置项键名' })

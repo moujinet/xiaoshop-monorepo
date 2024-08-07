@@ -60,6 +60,11 @@ export class GetMemberPagesRequest extends PaginationQueryDto {
   @IsOptional()
   readonly tagId: number
 
+  @ApiProperty({ required: false, description: '会员等级 IDS', example: [1, 2] })
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  readonly cardIds: number[]
+
   @ApiProperty({ required: false, description: '会员等级', example: 1 })
   @IsNumberString()
   @IsOptional()

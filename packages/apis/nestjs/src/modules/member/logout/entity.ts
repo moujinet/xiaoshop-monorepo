@@ -10,9 +10,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 
 @Entity('shop_member_logout', {
   comment: '会员注销申请表',
 })
-@Index('idx_shop_member_logout', ['status', 'source', 'username', 'nickname', 'mobile', 'createdTime'])
+@Index('IDX_shop_member_logout', ['status', 'source', 'username', 'nickname', 'mobile', 'createdTime'])
 export class MemberLogout implements IMemberLogout {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_logout' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_logout' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberLogoutStatus.PENDING, comment: '注销状态' })

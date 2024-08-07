@@ -1,6 +1,7 @@
 import {
   Enabled,
   type IEnabled,
+  type IMemberCardBadgeStyles,
   type IMemberCardPlanType,
   type IMemberCardStyles,
   MemberCardPlanType,
@@ -11,9 +12,29 @@ import { Type } from 'class-transformer'
 import { card, plan } from './example'
 
 /**
+ * 会员徽章样式 DTO
+ */
+export class MemberCardBadgePayload implements Partial<IMemberCardBadgeStyles> {
+  @ApiProperty({ required: false, description: '会员卡图标', example: card.badge.icon })
+  @IsString()
+  @IsOptional()
+  readonly icon: string
+
+  @ApiProperty({ required: false, description: '文字颜色', example: card.badge.textColor })
+  @IsString()
+  @IsOptional()
+  readonly textColor: string
+
+  @ApiProperty({ required: false, description: '背景颜色', example: card.badge.bgColor })
+  @IsString()
+  @IsOptional()
+  readonly bgColor: string
+}
+
+/**
  * 会员卡样式 DTO
  */
-export class MemberCardStylesPayload {
+export class MemberCardStylesPayload implements Partial<IMemberCardStyles> {
   @ApiProperty({ required: false, description: '会员卡图标', example: card.styles.icon })
   @IsString()
   @IsOptional()
@@ -74,6 +95,11 @@ export class MemberCardPayload {
   @IsOptional()
   readonly desc: string
 
+  @ApiProperty({ required: false, type: MemberCardBadgePayload, description: '会员徽章样式', example: card.badge })
+  @Type(() => MemberCardBadgePayload)
+  @IsOptional()
+  readonly badge: IMemberCardBadgeStyles
+
   @ApiProperty({ required: false, type: MemberCardStylesPayload, description: '会员卡样式', example: card.styles })
   @Type(() => MemberCardStylesPayload)
   @IsOptional()
@@ -99,7 +125,7 @@ export class MemberCardPayload {
   @IsOptional()
   readonly isFreeShipping: IEnabled
 
-  @ApiProperty({ required: false, description: '会员卡套餐', type: [MemberCardPlanPayload], example: card.plans })
+  @ApiProperty({ required: false, description: '会员卡有效期', type: [MemberCardPlanPayload], example: card.plans })
   @ValidateNested()
   @Type(() => MemberCardPlanPayload)
   @IsOptional()

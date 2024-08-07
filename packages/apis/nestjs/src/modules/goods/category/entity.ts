@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('shop_goods_category', {
   comment: '商品分类表',
 })
-@Index('idx_shop_goods_category', ['sort', 'parentId', 'updatedTime'])
+@Index('IDX_shop_goods_category', ['sort', 'parentId', 'updatedTime'])
 export class GoodsCategory implements IGoodsCategory {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_category' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_goods_category' })
   id: number
 
   @Column({ name: 'parent_id', type: 'int', unsigned: true, default: 0, comment: '父分类 ID' })

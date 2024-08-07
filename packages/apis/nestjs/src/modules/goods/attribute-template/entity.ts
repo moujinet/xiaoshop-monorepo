@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('shop_goods_attribute_template', {
   comment: '商品参数模板表',
 })
-@Index('idx_shop_goods_attribute_template', ['updatedTime'])
+@Index('IDX_shop_goods_attribute_template', ['updatedTime'])
 export class GoodsAttributeTemplate implements IGoodsAttributeTemplate {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_attribute_template' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_goods_attribute_template' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '模板名称' })

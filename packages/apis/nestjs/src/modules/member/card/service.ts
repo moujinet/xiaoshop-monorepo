@@ -3,18 +3,18 @@ import {
   type IEnabled,
   type IMemberCard,
   type IMemberCardDict,
-  type IMemberCardLevelListItem,
-  type IMemberCardListItem,
-  type IMemberCardPlan,
+  type IMemberCustomCardListItem,
+  type IMemberLevelListItem,
+  type IMemberValidLevel,
   MemberCardPlanType,
   MemberCardType,
 } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { MEMBER_CARD_DEFAULT_BADGE, MEMBER_CARD_DEFAULT_STYLES } from '@/member/constants'
 import { MemberCardPayload } from '@/member/card/dto'
-import { MEMBER_CARD_DEFAULT_STYLES } from '@/member/constants'
-import { MemberCard, MemberCardPlan } from '@/member/card/entities'
+import { MemberCard } from '@/member/card/entities'
 import { ExistsException, FailedException } from '~/common/exception'
 
 @Injectable()
@@ -22,34 +22,31 @@ export class MemberCardService {
   constructor(
     @InjectRepository(MemberCard)
     private readonly repository: Repository<MemberCard>,
-
-    @InjectRepository(MemberCardPlan)
-    private readonly planRepo: Repository<MemberCardPlan>,
   ) {}
 
   /**
    * 获取会员卡等级列表
    *
-   * @returns Promise<IMemberCardLevelListItem[]>
+   * @returns Promise<IMemberLevelListItem[]>
    * @throws {FailedException} 获取会员卡等级列表失败
    */
-  async findLevelList(): Promise<IMemberCardLevelListItem[]> {
+  async findLevelList(): Promise<IMemberLevelListItem[]> {
     try {
       return await this.repository.find({
-        select: {
-          id: true,
-          type: true,
-          isEnabled: true,
-          key: true,
-          name: true,
-          desc: true,
-          styles: { icon: true, textColor: true, bgColor: true, bgImage: true },
-          needExp: true,
-          discount: true,
-          pointsRatio: true,
-          isFreeShipping: true,
-          total: true,
-        },
+        select: [
+          'id',
+          'type',
+          'isEnabled',
+          'key',
+          'name',
+          'desc',
+          'badge',
+          'needExp',
+          'discount',
+          'pointsRatio',
+          'isFreeShipping',
+          'total',
+        ],
         where: { type: MemberCardType.LEVEL },
         order: { key: 'ASC' },
       })
@@ -62,29 +59,28 @@ export class MemberCardService {
   /**
    * 获取自定义会员卡列表
    *
-   * @returns Promise<IMemberCardListItem[]>
+   * @returns Promise<IMemberCustomCardListItem[]>
    * @throws {FailedException} 获取自定义会员卡列表失败
    */
-  async findCustomList(): Promise<IMemberCardListItem[]> {
+  async findCustomList(): Promise<IMemberCustomCardListItem[]> {
     try {
       return await this.repository.find({
-        select: {
-          id: true,
-          type: true,
-          isEnabled: true,
-          key: true,
-          name: true,
-          desc: true,
-          styles: { icon: true, textColor: true, bgColor: true, bgImage: true },
-          discount: true,
-          pointsRatio: true,
-          isFreeShipping: true,
-          plans: true,
-          total: true,
-          createdTime: true,
-        },
+        select: [
+          'id',
+          'type',
+          'isEnabled',
+          'key',
+          'name',
+          'desc',
+          'badge',
+          'discount',
+          'pointsRatio',
+          'isFreeShipping',
+          'plans',
+          'total',
+          'createdTime',
+        ],
         where: { type: MemberCardType.CUSTOM },
-        relations: ['plans'],
         order: { updatedTime: 'DESC' },
       })
     }
@@ -113,6 +109,59 @@ export class MemberCardService {
   }
 
   /**
+   * 获取会员卡升级列表
+   *
+   * @returns Promise<IMemberValidLevel[]>
+   * @throws {FailedException} 获取会员卡升级列表失败
+   */
+  async findLevelUpCards(): Promise<IMemberValidLevel[]> {
+    try {
+      const cards = await this.repository.find({
+        select: { id: true, name: true, needExp: true },
+        where: { type: MemberCardType.LEVEL, isEnabled: Enabled.YES },
+        order: { key: 'ASC' },
+      })
+
+      // 因为最后一个等级无法再升级，所以删除
+      cards.pop()
+
+      return cards
+    }
+    catch (e) {
+      throw new FailedException('获取会员卡升级列表', e.message)
+    }
+  }
+
+  /**
+   * 获取下一级会员卡
+   *
+   * @param key string
+   * @returns Promise<IMemberCard>
+   * @throws {FailedException} 获取下一级会员卡失败
+   */
+  async findNextLevelCard(key: string): Promise<IMemberCard> {
+    try {
+      const nextKey = `vip${Number(key.replace('vip', '')) + 1}`
+
+      const card = await this.repository.findOne({
+        where: {
+          type: MemberCardType.LEVEL,
+          isEnabled: Enabled.YES,
+          key: nextKey,
+        },
+      })
+
+      if (!card)
+        throw new NotFoundException('会员卡不存在')
+
+      return card
+    }
+    catch (e) {
+      throw new FailedException('获取下一级会员卡', e.message, e.status)
+    }
+  }
+
+  /**
    * 获取会员卡详情
    *
    * @param id 会员卡 ID
@@ -122,15 +171,14 @@ export class MemberCardService {
    */
   async findDetail(id: number): Promise<IMemberCard> {
     try {
-      const detail = await this.repository.findOne({
+      const card = await this.repository.findOne({
         where: { id },
-        relations: ['plans'],
       })
 
-      if (!detail)
+      if (!card)
         throw new NotFoundException('会员卡不存在')
 
-      return detail
+      return card
     }
     catch (e) {
       throw new FailedException('获取会员卡详情', e.message, e.status)
@@ -162,24 +210,21 @@ export class MemberCardService {
       card.needExp = data.needExp || 0
       card.discount = data.discount || 0
       card.pointsRatio = data.pointsRatio || 0
+      card.badge = data.badge || MEMBER_CARD_DEFAULT_BADGE
       card.styles = data.styles || MEMBER_CARD_DEFAULT_STYLES
       card.isFreeShipping = data.isFreeShipping || Enabled.NO
       card.type = MemberCardType.CUSTOM
       card.isEnabled = Enabled.YES
 
       if (data.plans && data.plans.length > 0) {
-        card.plans = []
-
-        for (const plan of data.plans) {
-          const cardPlan = new MemberCardPlan()
-
-          cardPlan.card = card
-          cardPlan.type = plan.type || MemberCardPlanType.TIMES
-          cardPlan.price = plan.price || 0
-          cardPlan.duration = plan.duration || 0
-
-          card.plans.push(cardPlan)
-        }
+        card.plans = data.plans.map((plan, index) => {
+          return {
+            id: plan.id || index + 1,
+            type: plan.type || MemberCardPlanType.TIMES,
+            duration: plan.duration || 0,
+            price: plan.price || 0,
+          }
+        })
       }
 
       await this.repository.save(card)
@@ -202,7 +247,6 @@ export class MemberCardService {
     try {
       const card = await this.repository.findOne({
         where: { id },
-        relations: ['plans'],
       })
 
       if (!card)
@@ -228,35 +272,20 @@ export class MemberCardService {
         card.pointsRatio = data.pointsRatio
       if (data.styles)
         card.styles = data.styles || MEMBER_CARD_DEFAULT_STYLES
+      if (data.badge)
+        card.badge = data.badge || MEMBER_CARD_DEFAULT_BADGE
       if (data.isFreeShipping)
         card.isFreeShipping = data.isFreeShipping
 
       if (data.plans && data.plans.length > 0) {
-        const plans: IMemberCardPlan[] = []
-
-        for (const plan of data.plans) {
-          const cardPlan = new MemberCardPlan()
-
-          if (plan.id)
-            cardPlan.id = plan.id
-
-          cardPlan.card = card
-          cardPlan.type = plan.type || MemberCardPlanType.TIMES
-          cardPlan.price = plan.price || 0
-          cardPlan.duration = plan.duration || 0
-
-          plans.push(cardPlan)
-        }
-
-        const removed = card.plans.filter(
-          cardPlan => plans.map(p => p.id).includes(cardPlan.id) === false,
-        ).map(cardPlan => cardPlan.id)
-
-        if (removed.length > 0) {
-          await this.planRepo.delete(removed)
-        }
-
-        card.plans = plans
+        card.plans = data.plans.map((plan, index) => {
+          return {
+            id: plan.id || index + 1,
+            type: plan.type || MemberCardPlanType.TIMES,
+            duration: plan.duration || 0,
+            price: plan.price || 0,
+          }
+        })
       }
 
       delete card.updatedTime
@@ -298,13 +327,13 @@ export class MemberCardService {
    */
   async delete(id: number) {
     try {
-      const founded = await this.repository.existsBy({ id, type: MemberCardType.CUSTOM })
+      const founded = await this.repository.existsBy({
+        id,
+        type: MemberCardType.CUSTOM,
+      })
 
-      if (founded) {
-        await this.repository.delete({ id }).then(() => {
-          this.planRepo.delete({ card: { id } })
-        })
-      }
+      if (founded)
+        await this.repository.delete({ id })
     }
     catch (e) {
       throw new FailedException('删除会员卡', e.message)

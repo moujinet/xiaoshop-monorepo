@@ -1,6 +1,12 @@
 import type { ILocationPath } from '@/common/models'
 import type { IMemberGender, IMemberSource, IMemberStatus } from '@/member/types'
-import type { IMemberAccountDict, IMemberCardBindingInfo, IMemberGroupDict, IMemberTagDict } from '@/member/models'
+import type {
+  IMemberAccountDict,
+  IMemberCardBinding,
+  IMemberCardBindingInfo,
+  IMemberGroupDict,
+  IMemberTagDict,
+} from '@/member/models'
 
 /**
  * 会员信息
@@ -41,11 +47,11 @@ export interface IMember {
    */
   tags: IMemberTagDict[]
   /**
-   * 绑定会员卡
+   * 会员卡
    *
-   * @see {@link IMemberCardBindingInfo}
+   * @see {@link IMemberCardBinding}
    */
-  binding: IMemberCardBindingInfo
+  card: IMemberCardBinding
   /**
    * 会员卡号
    */
@@ -114,7 +120,7 @@ export type IMemberProfile = Pick<
   | 'source'
   | 'tags'
   | 'group'
-  | 'binding'
+  | 'card'
   | 'cardNo'
   | 'avatar'
   | 'username'
@@ -146,4 +152,11 @@ export type IMemberListItem = Pick<
   | 'gender'
   | 'location'
   | 'lastLoginTime'
->
+> & {
+  /**
+   * 会员卡
+   *
+   * @see {@link IMemberCardBindingInfo}
+   */
+  card: IMemberCardBindingInfo
+}

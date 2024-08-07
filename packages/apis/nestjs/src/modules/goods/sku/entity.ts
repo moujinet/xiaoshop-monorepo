@@ -5,9 +5,9 @@ import { Goods } from '@/goods/manage/entity'
 @Entity('shop_goods_sku', {
   comment: '商品 SKU 表',
 })
-@Index('idx_shop_goods_sku', ['skuCode'], { unique: true })
+@Index('IDX_shop_goods_sku', ['skuCode'], { unique: true })
 export class GoodsSku implements IGoodsSku {
-  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'pk_shop_goods_sku' })
+  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'PK_shop_goods_sku' })
   id: string
 
   @Column({ name: 'sku_code', type: 'char', length: 32, nullable: false, default: '', comment: 'SKU 编码' })

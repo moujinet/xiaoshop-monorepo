@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('shop_member_group', {
   comment: '会员群体表',
 })
-@Index('idx_shop_member_group', ['total', 'updatedTime'])
+@Index('IDX_shop_member_group', ['total', 'updatedTime'])
 export class MemberGroup implements IMemberGroup {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_group' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_group' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '群体名称' })

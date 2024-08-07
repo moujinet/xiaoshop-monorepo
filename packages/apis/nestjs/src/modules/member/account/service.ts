@@ -1,14 +1,17 @@
 import {
+  Enabled,
   type IApiPaginationData,
   type IMemberAccountDict,
-  IMemberGroupCondition,
+  type IMemberGroupCondition,
   type IMemberListItem,
   type IMemberProfile,
-  IMemberStatus,
+  type IMemberStatus,
   MEMBER_ACCOUNT_KEYS,
   MEMBER_DEFAULT_PASSWORD,
   MemberAccountKey,
   MemberAccountStatus,
+  MemberCardPlanType,
+  MemberCardType,
   MemberGender,
   MemberGroupCondKey,
   MemberGroupCondOperator,
@@ -18,7 +21,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { isStrongPassword } from 'class-validator'
 import { Inject, Injectable } from '@nestjs/common'
 import { Between, FindOptionsWhere, In, Like, Not, Repository } from 'typeorm'
-import { MemberCard, MemberCardBinding, MemberCardPlan } from '@/member/card/entities'
+import { MemberCardBinding } from '@/member/card/entities'
 import { MemberTag } from '@/member/tag/entity'
 import {
   BadRequestException,
@@ -37,6 +40,7 @@ import {
   Member,
   MemberAccount,
 } from '@/member/account/entities'
+import { MemberCardService } from '@/member/card/service'
 import { SettingsService } from '@/settings/settings.service'
 import { nanoNumber } from '~/utils'
 
@@ -47,7 +51,10 @@ export class MemberService {
     private readonly repository: Repository<Member>,
 
     @InjectRepository(MemberAccount)
-    private readonly accountRepo: Repository<MemberAccount>,
+    private readonly memberAccountRepository: Repository<MemberAccount>,
+
+    @Inject(MemberCardService)
+    private readonly memberCardService: MemberCardService,
 
     @Inject(SettingsService)
     private readonly settings: SettingsService,
@@ -85,7 +92,9 @@ export class MemberService {
       if (query.tagId)
         where.tags = { id: query.tagId }
       if (query.cardId)
-        where.binding = { card: { id: query.cardId } }
+        where.card = { cardId: query.cardId }
+      if (query.cardIds)
+        where.card = { cardId: In(query.cardIds) }
 
       // 会员积分
       if (query.points) {
@@ -150,6 +159,18 @@ export class MemberService {
           source: true,
           tags: { id: true, name: true },
           group: { id: true, name: true },
+          card: {
+            id: true,
+            cardId: true,
+            cardType: true,
+            styles: {
+              id: true,
+              key: true,
+              name: true,
+              styles: { icon: true, textColor: true, bgColor: true, bgImage: true },
+              badge: { icon: true, textColor: true, bgColor: true },
+            },
+          },
           account: { key: true, name: true, value: true },
           cardNo: true,
           avatar: true,
@@ -161,7 +182,7 @@ export class MemberService {
           lastLoginTime: true,
         },
         where,
-        relations: ['tags', 'group', 'account'],
+        relations: ['tags', 'card', 'group', 'account'],
         skip: pagesize * (page - 1),
         take: pagesize,
         order: {
@@ -199,20 +220,13 @@ export class MemberService {
           birthday: true,
           gender: true,
           location: true,
-          createdTime: true,
-          lastLoginTime: true,
           tags: { id: true, name: true },
           group: { id: true, name: true },
-          binding: {
-            id: true,
-            card: { id: true, type: true, name: true },
-            plan: { id: true, type: true, duration: true },
-            times: true,
-            dueTime: true,
-          },
+          createdTime: true,
+          lastLoginTime: true,
         },
         where: { id },
-        relations: ['tags', 'group', 'binding'],
+        relations: ['tags', 'group', 'card'],
       })
 
       if (!profile)
@@ -240,7 +254,7 @@ export class MemberService {
       if (!founded)
         throw new NotFoundException('未找到会员')
 
-      return await this.accountRepo.find({
+      return await this.memberAccountRepository.find({
         select: { key: true, name: true, value: true },
         where: { member: { id } },
       })
@@ -304,16 +318,15 @@ export class MemberService {
       }
 
       if (data.cardId) {
-        member.binding = new MemberCardBinding()
-        member.binding.card = new MemberCard()
-        member.binding.card.id = data.cardId
+        const card = await this.createMemberCardBinding(
+          data.cardId,
+          data.cardPlanId,
+        )
 
-        if (data.cardPlanId) {
-          member.binding.plan = new MemberCardPlan()
-          member.binding.plan.id = data.cardPlanId
+        if (card) {
+          member.cardNo = nanoNumber(9)
+          member.card = card
         }
-
-        member.cardNo = nanoNumber(9)
       }
 
       member.account = []
@@ -339,6 +352,63 @@ export class MemberService {
   }
 
   /**
+   * 创建会员卡绑定信息
+   *
+   * @param cardId 会员卡 ID
+   * @param planId 会员有效期 ID
+   * @returns Promise<MemberCardBinding>
+   * @throws {FailedException} 创建会员卡绑定信息失败
+   * @throws {NotFoundException} 会员卡不存在
+   */
+  async createMemberCardBinding(cardId: number, planId?: number): Promise<MemberCardBinding> {
+    try {
+      const card = await this.memberCardService.findDetail(cardId)
+
+      const binding = new MemberCardBinding()
+
+      binding.cardId = card.id
+      binding.cardType = card.type
+      binding.discount = card.discount
+      binding.pointsRatio = card.pointsRatio
+      binding.isFreeShipping = card.isFreeShipping
+      binding.needExp = card.needExp
+
+      if (card.type === MemberCardType.CUSTOM && planId) {
+        const plan = card.plans.find(item => item.id === planId)
+
+        if (!plan)
+          throw new NotFoundException('会员卡有效期不存在')
+
+        binding.cardPlanType = plan.type
+
+        const today = new Date()
+
+        if (plan.type === MemberCardPlanType.DAYS)
+          binding.dueTime = today.setDate(today.getDate() + plan.duration).toString()
+        else if (plan.type === MemberCardPlanType.MONTHS)
+          binding.dueTime = today.setMonth(today.getMonth() + plan.duration).toString()
+        else if (plan.type === MemberCardPlanType.YEARS)
+          binding.dueTime = today.setFullYear(today.getFullYear() + plan.duration).toString()
+      }
+      else {
+        const nextLevel = await this.memberCardService.findNextLevelCard(card.key)
+
+        if (nextLevel) {
+          binding.isUpgradeable = Enabled.YES
+          binding.nextNeedExp = nextLevel.needExp
+        }
+      }
+
+      binding.styles.id = card.id
+
+      return binding
+    }
+    catch (e) {
+      throw new FailedException('创建会员卡绑定信息', e.message, e.status)
+    }
+  }
+
+  /**
    * 更新会员资料
    *
    * @param {number} id 会员 ID
@@ -348,14 +418,10 @@ export class MemberService {
    */
   async updateProfile(id: number, data: UpdateMemberPayload) {
     try {
-      const founded = await this.repository.existsBy({ id })
+      const member = await this.repository.findOneBy({ id })
 
-      if (!founded)
+      if (!member)
         throw new NotFoundException('未找到会员')
-
-      const member = new Member()
-
-      member.id = id
 
       if (data.avatar)
         member.avatar = data.avatar
@@ -380,17 +446,6 @@ export class MemberService {
           tag.id = tagId
 
           member.tags.push(tag)
-        }
-      }
-
-      if (data.cardId) {
-        member.binding = new MemberCardBinding()
-        member.binding.card = new MemberCard()
-        member.binding.card.id = data.cardId
-
-        if (data.cardPlanId) {
-          member.binding.plan = new MemberCardPlan()
-          member.binding.plan.id = data.cardPlanId
         }
       }
 
@@ -424,13 +479,14 @@ export class MemberService {
       }
 
       if (data.cardId) {
-        member.binding = new MemberCardBinding()
-        member.binding.card = new MemberCard()
-        member.binding.card.id = data.cardId
+        const card = await this.createMemberCardBinding(
+          data.cardId,
+          data.cardPlanId,
+        )
 
-        if (data.cardPlanId) {
-          member.binding.plan = new MemberCardPlan()
-          member.binding.plan.id = data.cardPlanId
+        if (card) {
+          member.cardNo = nanoNumber(9)
+          member.card = card
         }
       }
 
@@ -461,26 +517,26 @@ export class MemberService {
       if (!member)
         throw new NotFoundException('未找到会员')
 
-      const founded = await this.accountRepo.exists({
+      const founded = await this.memberAccountRepository.exists({
         where: { member: { id: memberId } },
       })
 
       if (!founded)
         throw new NotFoundException('未找到会员账户')
 
-      const updateData = new MemberAccount()
+      const account = new MemberAccount()
 
       if ('status' in data)
-        updateData.status = data.status
+        account.status = data.status
       if ('value' in data)
-        updateData.value = data.value
+        account.value = data.value
 
-      await this.accountRepo.update(
+      await this.memberAccountRepository.update(
         {
           key: data.key,
           member: { id: memberId },
         },
-        updateData,
+        account,
       )
     }
     catch (e) {
@@ -501,19 +557,19 @@ export class MemberService {
       if (Object.keys(data).length === 1)
         throw new BadRequestException('更新内容为空')
 
-      const updateData = new MemberAccount()
+      const account = new MemberAccount()
 
       if ('status' in data)
-        updateData.status = data.status
+        account.status = data.status
       if ('value' in data)
-        updateData.value = data.value
+        account.value = data.value
 
-      await this.accountRepo.update(
+      await this.memberAccountRepository.update(
         {
           key: data.key,
           member: { id: In(ids) },
         },
-        updateData,
+        account,
       )
     }
     catch (e) {
@@ -635,7 +691,7 @@ export class MemberService {
           where.gender = MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value)
 
         if (condition.key === MemberGroupCondKey.CARD)
-          where.binding = { card: { id: MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value) } }
+          where.card = { id: MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value) }
 
         if (condition.key === MemberGroupCondKey.TAG)
           where.tags = { id: MemberGroupCondOperator.IN ? In(condition.value) : Not(condition.value) }

@@ -36,10 +36,10 @@ import { GoodsProtection } from '@/goods/protection/entity'
 @Entity('shop_goods', {
   comment: '商品信息表',
 })
-@Index('idx_shop_goods', ['isDeleted', 'status', 'sort', 'updatedTime'])
-@Index('idx_shop_goods_warning', ['isDeleted', 'isWarning', 'sort', 'updatedTime'])
+@Index('IDX_shop_goods', ['isDeleted', 'status', 'sort', 'updatedTime'])
+@Index('IDX_shop_goods_warning', ['isDeleted', 'isWarning', 'sort', 'updatedTime'])
 export class Goods implements IGoods {
-  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'pk_shop_goods' })
+  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'PK_shop_goods' })
   id: string
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: GoodsType.ENTITY, comment: '商品类型' })

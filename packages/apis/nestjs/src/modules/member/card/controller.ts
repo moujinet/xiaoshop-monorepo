@@ -17,10 +17,10 @@ import {
   DeleteMemberCardRequest,
   GetMemberCardRequest,
   MemberCardDictResponse,
-  MemberCardLevelListResponse,
-  MemberCardListResponse,
   MemberCardPayload,
   MemberCardResponse,
+  MemberCustomCardListResponse,
+  MemberLevelListResponse,
 } from '@/member/card/dto'
 import { MemberCardService } from '@/member/card/service'
 
@@ -34,7 +34,7 @@ export class MemberCardController {
   @ApiOperation({
     summary: '获取「会员卡」等级列表',
   })
-  @ApiListedResponse(MemberCardLevelListResponse)
+  @ApiListedResponse(MemberLevelListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员等级列表失败' })
   @Get('level/list')
   async levelList() {
@@ -44,7 +44,7 @@ export class MemberCardController {
   @ApiOperation({
     summary: '获取自定义「会员卡」列表',
   })
-  @ApiListedResponse(MemberCardListResponse)
+  @ApiListedResponse(MemberCustomCardListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取自定义会员卡列表失败' })
   @Get('custom/list')
   async customList() {

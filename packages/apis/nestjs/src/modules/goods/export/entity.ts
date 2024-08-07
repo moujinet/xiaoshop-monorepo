@@ -9,9 +9,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 
 @Entity('shop_goods_export', {
   comment: '商品导出记录表',
 })
-@Index('idx_shop_goods_export', ['status', 'createdTime'])
+@Index('IDX_shop_goods_export', ['status', 'createdTime'])
 export class GoodsExportRecord implements IGoodsExportRecord {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_export' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_goods_export' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: GoodsExportRecordStatus.PENDING, comment: '导出状态' })

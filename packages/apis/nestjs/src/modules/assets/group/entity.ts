@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 
 @Entity('app_assets_group', {
   comment: '素材分组表',
 })
-@Index('idx_app_assets_group', ['parentId', 'type', 'name'])
+@Index('IDX_app_assets_group', ['parentId', 'type', 'name'])
 export class AssetGroup implements IAssetGroup {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_app_assets_group' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_app_assets_group' })
   id: number
 
   @Column({ name: 'parent_id', type: 'int', default: 0, unsigned: true, comment: '上级分组 ID' })

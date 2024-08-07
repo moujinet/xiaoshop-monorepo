@@ -1,12 +1,13 @@
 import type {
   IEnabled,
   IMemberCard,
+  IMemberCardBadgeStyles,
   IMemberCardDict,
-  IMemberCardLevelListItem,
-  IMemberCardListItem,
   IMemberCardPlan,
   IMemberCardStyles,
   IMemberCardType,
+  IMemberCustomCardListItem,
+  IMemberLevelListItem,
 } from '@xiaoshop/schema'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { card } from './example'
@@ -32,6 +33,9 @@ export class MemberCardResponse implements IMemberCard {
 
   @ApiProperty({ description: '会员卡描述', example: card.desc })
   readonly desc: string
+
+  @ApiProperty({ description: '会员徽章样式', example: card.badge })
+  readonly badge: IMemberCardBadgeStyles
 
   @ApiProperty({ description: '会员卡样式', example: card.styles })
   readonly styles: IMemberCardStyles
@@ -64,7 +68,7 @@ export class MemberCardResponse implements IMemberCard {
 /**
  * 自定义会员卡列表响应 DTO
  */
-export class MemberCardListResponse
+export class MemberCustomCardListResponse
   extends PickType(MemberCardResponse, [
     'id',
     'type',
@@ -73,19 +77,19 @@ export class MemberCardListResponse
     'name',
     'desc',
     'plans',
-    'styles',
+    'badge',
     'discount',
     'pointsRatio',
     'isFreeShipping',
     'total',
     'createdTime',
   ] as const)
-  implements IMemberCardListItem {}
+  implements IMemberCustomCardListItem {}
 
 /**
  * 会员卡等级列表响应 DTO
  */
-export class MemberCardLevelListResponse
+export class MemberLevelListResponse
   extends PickType(MemberCardResponse, [
     'id',
     'type',
@@ -93,14 +97,14 @@ export class MemberCardLevelListResponse
     'key',
     'name',
     'desc',
-    'styles',
+    'badge',
     'needExp',
     'discount',
     'pointsRatio',
     'isFreeShipping',
     'total',
   ] as const)
-  implements IMemberCardLevelListItem {}
+  implements IMemberLevelListItem {}
 
 /**
  * 会员卡字典列表响应 DTO

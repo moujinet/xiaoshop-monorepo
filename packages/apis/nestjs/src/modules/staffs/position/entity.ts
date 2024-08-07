@@ -5,9 +5,9 @@ import { Department } from '@/staffs/department/entity'
 @Entity('manage_staff_position', {
   comment: '组织职位表',
 })
-@Index('idx_manage_staff_position', ['sort', 'updatedTime'])
+@Index('IDX_manage_staff_position', ['sort', 'updatedTime'])
 export class Position implements IStaffPosition {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_position' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_position' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '职位名称' })

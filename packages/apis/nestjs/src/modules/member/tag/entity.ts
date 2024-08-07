@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('shop_member_tag', {
   comment: '会员标签表',
 })
-@Index('idx_shop_member_tag', ['updatedTime'])
+@Index('IDX_shop_member_tag', ['updatedTime'])
 export class MemberTag implements IMemberTag {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_tag' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_tag' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '标签名称' })

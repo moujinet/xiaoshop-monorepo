@@ -66,6 +66,21 @@ export class MemberLogoutService {
   }
 
   /**
+   * 获取审核通过会员注销申请列表
+   *
+   * @returns Promise<IMemberLogout[]>
+   * @throws {FailedException} 获取会员注销申请列表失败
+   */
+  async findApproveList(): Promise<IMemberLogout[]> {
+    try {
+      return await this.repository.findBy({ status: MemberLogoutStatus.APPROVED })
+    }
+    catch (e) {
+      throw new FailedException('获取会员注销申请列表', e.message)
+    }
+  }
+
+  /**
    * 获取会员注销申请详情
    *
    * @param id 会员注销申请 ID

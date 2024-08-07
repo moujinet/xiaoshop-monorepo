@@ -2,7 +2,6 @@ import {
   type ILocationPath,
   type IMember,
   type IMemberAccountDict,
-  type IMemberCardBindingInfo,
   type IMemberGender,
   type IMemberGroupDict,
   type IMemberSource,
@@ -21,9 +20,9 @@ import { MemberTag } from '@/member/tag/entity'
 @Entity('shop_member', {
   comment: '会员信息表',
 })
-@Index('idx_shop_member', ['status', 'lastLoginTime'])
+@Index('IDX_shop_member', ['status', 'lastLoginTime'])
 export class Member implements IMember {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberStatus.NORMAL, comment: '会员状态' })
@@ -62,22 +61,13 @@ export class Member implements IMember {
   @Column({ type: 'simple-json', default: null, comment: '注册城市' })
   location: ILocationPath
 
-  @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
-  createdTime: string
-
-  @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
-  updatedTime: string
-
-  @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
-  lastLoginTime: string
-
   @OneToMany(() => MemberAccount, account => account.member, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn()
   account: IMemberAccountDict[]
 
   @OneToOne(() => MemberCardBinding, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn()
-  binding: IMemberCardBindingInfo
+  card: MemberCardBinding
 
   @OneToOne(() => MemberGroup, { createForeignKeyConstraints: false })
   @JoinColumn()
@@ -86,4 +76,13 @@ export class Member implements IMember {
   @ManyToMany(() => MemberTag, { createForeignKeyConstraints: false })
   @JoinTable({ name: 'shop_member_has_tags' })
   tags: IMemberTagDict[]
+
+  @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
+  createdTime: string
+
+  @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
+  updatedTime: string
+
+  @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
+  lastLoginTime: string
 }

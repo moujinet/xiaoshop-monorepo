@@ -11,9 +11,9 @@ import { Member } from '@/member/account/entities'
 @Entity('shop_member_account', {
   comment: '会员账户表',
 })
-@Index('idx_shop_member_account', ['status', 'key'])
+@Index('IDX_shop_member_account', ['status', 'key'])
 export class MemberAccount implements IMemberAccount {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_member_account' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_account' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '账户标识' })

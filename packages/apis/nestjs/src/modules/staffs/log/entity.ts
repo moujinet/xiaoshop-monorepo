@@ -11,9 +11,9 @@ import { Account } from '@/staffs/account/entity'
 @Entity('manage_staff_log', {
   comment: '员工操作日志表',
 })
-@Index('idx_manage_staff_log', ['type', 'createdTime'])
+@Index('IDX_manage_staff_log', ['type', 'createdTime'])
 export class StaffLog implements IStaffLog {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_manage_staff_log' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_log' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: StaffLogType.OPERATE, comment: '日志类型' })
