@@ -13,7 +13,7 @@ export const DefaultSettings: ISettingsDict = {
   'store.contactMobile': '',
   'store.contactPhone': '',
   'store.email': 'xiaos@mouji.net',
-  'store.location': '',
+  'store.location': '[]',
   'store.address': '',
   'store.longitude': '',
   'store.latitude': '',
