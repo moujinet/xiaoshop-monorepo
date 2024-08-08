@@ -5,7 +5,7 @@ import {
 } from '@xiaoshop/schema'
 import { Type } from 'class-transformer'
 import { ApiProperty, OmitType } from '@nestjs/swagger'
-import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { IsArray, IsEnum, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateIf, ValidateNested } from 'class-validator'
 import { member } from '../example'
 import { LocationDto } from '~/common'
 
@@ -24,7 +24,8 @@ export class MemberPayload {
   readonly nickname: string
 
   @ApiProperty({ required: false, description: '会员手机号', example: member.mobile })
-  @IsString()
+  @ValidateIf(o => o.mobile)
+  @IsMobilePhone('zh-CN')
   @IsOptional()
   readonly mobile: string
 
@@ -90,6 +91,7 @@ export class UpdateMemberProfilePayload
     'password',
     'location',
     'gender',
+    'points',
   ] as const) {}
 
 /**

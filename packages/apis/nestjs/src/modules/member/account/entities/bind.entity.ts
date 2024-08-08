@@ -1,31 +1,44 @@
 import {
   Enabled,
   type IEnabled,
+  type IMemberCardBadgeStyles,
   type IMemberCardBinding,
   type IMemberCardPlanType,
-  type IMemberCardStyleInfo,
+  type IMemberCardStyles,
   type IMemberCardType,
   MemberCardPlanType,
   MemberCardType,
 } from '@xiaoshop/schema'
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { MemberCard } from '@/member/card/entities'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity('shop_member_card_binding', {
+@Entity('shop_member_bind_card', {
   comment: '会员卡绑定表',
 })
-export class MemberCardBinding implements IMemberCardBinding {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_card_binding' })
+@Index('IDX_shop_member_bind_card', ['memberId', 'cardId', 'createdTime'])
+export class MemberBindCard implements IMemberCardBinding {
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_bind_card' })
   id: number
+
+  @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID (冗余)' })
+  memberId: number
 
   @Column({ name: 'card_id', type: 'int', unsigned: true, default: 0, comment: '会员卡 ID (冗余)' })
   cardId: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '会员卡类型 (冗余)' })
-  cardType: IMemberCardType
+  @Column({ name: 'card_plan_id', type: 'int', unsigned: true, default: 0, comment: '会员卡有效期套餐 ID (冗余)' })
+  cardPlanId: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardPlanType.TIMES, comment: '会员卡有效期类型 (冗余)' })
-  cardPlanType: IMemberCardPlanType
+  @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '会员卡标识 (冗余)' })
+  key: string
+
+  @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '会员卡名称 (冗余)' })
+  name: string
+
+  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '会员卡类型 (冗余)' })
+  type: IMemberCardType
+
+  @Column({ name: 'plan_type', type: 'varchar', length: 32, nullable: false, default: MemberCardPlanType.TIMES, comment: '会员卡有效期类型 (冗余)' })
+  planType: IMemberCardPlanType
 
   @Column({ type: 'float', unsigned: true, default: 0, comment: '会员折扣 (冗余)' })
   discount: number
@@ -48,9 +61,11 @@ export class MemberCardBinding implements IMemberCardBinding {
   @Column({ type: 'int', unsigned: true, default: 0, comment: '会员卡使用次数' })
   times: number
 
-  @OneToOne(() => MemberCard, { createForeignKeyConstraints: true })
-  @JoinColumn()
-  styles: IMemberCardStyleInfo
+  @Column({ name: 'card_styles', type: 'simple-json', default: null, comment: '会员卡样式 (冗余)' })
+  cardStyles: IMemberCardStyles
+
+  @Column({ name: 'badge_styles', type: 'simple-json', default: null, comment: '会员徽章样式 (冗余)' })
+  badgeStyles: IMemberCardBadgeStyles
 
   @Column({ name: 'due_time', type: 'datetime', default: null, comment: '到期时间' })
   dueTime: string

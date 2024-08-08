@@ -1,7 +1,6 @@
 import {
   type ILocationPath,
   type IMember,
-  type IMemberAccountDict,
   type IMemberGender,
   type IMemberGroupDict,
   type IMemberSource,
@@ -12,8 +11,7 @@ import {
   MemberStatus,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { MemberCardBinding } from '@/member/card/entities'
-import { MemberAccount } from '@/member/account/entities'
+import { MemberAccount, MemberBindCard } from '@/member/account/entities'
 import { MemberGroup } from '@/member/group/entity'
 import { MemberTag } from '@/member/tag/entity'
 
@@ -63,11 +61,11 @@ export class Member implements IMember {
 
   @OneToMany(() => MemberAccount, account => account.member, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn()
-  account: IMemberAccountDict[]
+  account: MemberAccount[]
 
-  @OneToOne(() => MemberCardBinding, { cascade: true, createForeignKeyConstraints: false })
+  @OneToOne(() => MemberBindCard, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn()
-  card: MemberCardBinding
+  card: MemberBindCard
 
   @OneToOne(() => MemberGroup, { createForeignKeyConstraints: false })
   @JoinColumn()

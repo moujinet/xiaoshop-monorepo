@@ -34,11 +34,11 @@ export class MemberCard implements IMemberCard {
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '会员卡描述' })
   desc: string
 
-  @Column({ type: 'simple-json', default: null, comment: '会员徽章样式' })
-  badge: IMemberCardBadgeStyles
+  @Column({ name: 'card_styles', type: 'simple-json', default: null, comment: '会员卡样式' })
+  cardStyles: IMemberCardStyles
 
-  @Column({ type: 'simple-json', default: null, comment: '会员卡样式' })
-  styles: IMemberCardStyles
+  @Column({ name: 'badge_styles', type: 'simple-json', default: null, comment: '会员徽章样式' })
+  badgeStyles: IMemberCardBadgeStyles
 
   @Column({ name: 'need_exp', type: 'int', unsigned: true, default: 0, comment: '所需成长值' })
   needExp: number
@@ -61,6 +61,6 @@ export class MemberCard implements IMemberCard {
   @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
   updatedTime: string
 
-  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_card_binding WHERE card_id = ${alias}.id` })
+  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_bind_card WHERE card_id = ${alias}.id` })
   total: number
 }

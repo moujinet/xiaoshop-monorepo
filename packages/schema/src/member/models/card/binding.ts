@@ -1,6 +1,6 @@
 import type { IEnabled } from '@/common'
 import type { IMemberCardPlanType, IMemberCardType } from '@/member/types'
-import type { IMemberCardStyleInfo } from '@/member/models/card/card'
+import type { IMemberCardBadgeStyles, IMemberCardStyles } from '@/member/models/card/styles'
 
 /**
  * 会员卡 - 绑定信息
@@ -11,21 +11,37 @@ export interface IMemberCardBinding {
    */
   id: number
   /**
+   * 会员 ID
+   */
+  memberId: number
+  /**
    * 会员卡 ID
    */
   cardId: number
+  /**
+   * 会员卡有效期套餐 ID
+   */
+  cardPlanId: number
+  /**
+   * 会员卡标识
+   */
+  key: string
+  /**
+   * 会员卡名称
+   */
+  name: string
   /**
    * 会员卡类型
    *
    * @see {@link IMemberCardType}
    */
-  cardType: IMemberCardType
+  type: IMemberCardType
   /**
    * 会员卡有效期类型
    *
    * @see {@link IMemberCardPlanType}
    */
-  cardPlanType: IMemberCardPlanType
+  planType: IMemberCardPlanType
   /**
    * 会员折扣
    */
@@ -59,15 +75,21 @@ export interface IMemberCardBinding {
    */
   times: number
   /**
+   * 会员卡卡片样式
+   *
+   * @see {@link IMemberCardStyles}
+   */
+  cardStyles: IMemberCardStyles
+  /**
+   * 会员卡徽章样式
+   *
+   * @see {@link IMemberCardBadgeStyles}
+   */
+  badgeStyles: IMemberCardBadgeStyles
+  /**
    * 到期时间 (根据自定义会员卡有效期计算)
    */
   dueTime: string
-  /**
-   * 会员卡样式信息
-   *
-   * @see {@link IMemberCardStyleInfo}
-   */
-  styles: IMemberCardStyleInfo
   /**
    * 开通时间
    */
@@ -81,6 +103,8 @@ export type IMemberCardBindingInfo = Pick<
   IMemberCardBinding,
   | 'id'
   | 'cardId'
-  | 'cardType'
-  | 'styles'
+  | 'cardPlanId'
+  | 'name'
+  | 'type'
+  | 'badgeStyles'
 >

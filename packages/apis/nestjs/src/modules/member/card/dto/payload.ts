@@ -98,12 +98,12 @@ export class MemberCardPayload {
   @ApiProperty({ required: false, type: MemberCardBadgePayload, description: '会员徽章样式', example: card.badge })
   @Type(() => MemberCardBadgePayload)
   @IsOptional()
-  readonly badge: IMemberCardBadgeStyles
+  readonly badgeStyles: IMemberCardBadgeStyles
 
   @ApiProperty({ required: false, type: MemberCardStylesPayload, description: '会员卡样式', example: card.styles })
   @Type(() => MemberCardStylesPayload)
   @IsOptional()
-  readonly styles: IMemberCardStyles
+  readonly cardStyles: IMemberCardStyles
 
   @ApiProperty({ required: false, description: '所需成长值', example: card.needExp })
   @IsNumber()

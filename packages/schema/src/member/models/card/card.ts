@@ -43,13 +43,13 @@ export interface IMemberCard {
    *
    * @see {@link IMemberCardStyles}
    */
-  styles: IMemberCardStyles
+  cardStyles: IMemberCardStyles
   /**
    * 会员卡徽章样式
    *
    * @see {@link IMemberCardBadgeStyles}
    */
-  badge: IMemberCardBadgeStyles
+  badgeStyles: IMemberCardBadgeStyles
   /**
    * 会员卡套餐
    *
@@ -109,7 +109,7 @@ export type IMemberLevelListItem = Pick<
   | 'key'
   | 'name'
   | 'desc'
-  | 'badge'
+  | 'badgeStyles'
   | 'needExp'
   | 'discount'
   | 'pointsRatio'
@@ -128,33 +128,11 @@ export type IMemberCustomCardListItem = Pick<
   | 'key'
   | 'name'
   | 'desc'
-  | 'badge'
+  | 'badgeStyles'
   | 'plans'
   | 'discount'
   | 'pointsRatio'
   | 'isFreeShipping'
   | 'total'
   | 'createdTime'
->
-
-/**
- * 可升级的会员等级
- */
-export type IMemberValidLevel = Pick<
-  IMemberCard,
-  | 'id'
-  | 'name'
-  | 'needExp'
->
-
-/**
- * 会员卡样式信息
- */
-export type IMemberCardStyleInfo = Pick<
-  IMemberCard,
-  | 'id'
-  | 'key'
-  | 'name'
-  | 'styles'
-  | 'badge'
 >

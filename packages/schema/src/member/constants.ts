@@ -63,7 +63,7 @@ export const MEMBER_SOURCES = [
   { label: '微信小程序', value: MemberSource.WECHAT_MP, color: 'gray', icon: 'mingcute:wechat-miniprogram' },
   { label: '微信公众号', value: MemberSource.WECHAT_OA, color: 'green', icon: 'mingcute:wechat' },
   { label: 'H5', value: MemberSource.H5, color: 'blue', icon: 'mingcute:cellphone' },
-  { label: '后台创建', value: MemberSource.MANUAL, color: 'blue', icon: 'mingcute:layout' },
+  { label: '手动创建', value: MemberSource.MANUAL, color: 'blue', icon: 'mingcute:layout' },
   { label: '网站', value: MemberSource.WEB, color: 'blue', icon: 'mingcute:laptop' },
   { label: 'iOS APP', value: MemberSource.APP_IOS, color: 'gray', icon: 'mingcute:apple' },
   { label: 'Android APP', value: MemberSource.APP_ANDROID, color: 'cyan', icon: 'mingcute:android-2' },

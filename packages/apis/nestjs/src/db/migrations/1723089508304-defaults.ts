@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class Default1723000264041 implements MigrationInterface {
+export class Defaults1723089508304 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`app_assets_group\` (\`parent_id\`, \`name\`, \`enable_compress\`, \`enable_watermark\`, \`enable_thumbnail\`) VALUES
       (0, '系统图片', 'N', 'N', 'N'),
@@ -19,7 +19,7 @@ export class Default1723000264041 implements MigrationInterface {
       ('deduction', 'Y', '积分抵现', '会员消费时, 积分抵扣一定金额', 'mingcute:cash', '{"limit": 10000, "ratio": 10}')
     `)
 
-    await queryRunner.query(`INSERT INTO \`shop_member_card\` (\`type\`, \`is_enabled\`, \`key\`, \`name\`, \`desc\`, \`badge\`, \`styles\`, \`need_exp\`, \`discount\`, \`points_ratio\`, \`is_free_shipping\`) VALUES
+    await queryRunner.query(`INSERT INTO \`shop_member_card\` (\`type\`, \`is_enabled\`, \`key\`, \`name\`, \`desc\`, \`badge_styles\`, \`card_styles\`, \`need_exp\`, \`discount\`, \`points_ratio\`, \`is_free_shipping\`) VALUES
       ('level', 'Y', 'vip0', '注册会员', '会员等级', '{"icon": "", "textColor": "#424954", "bgColor": "#D8E1E2"}', '{"icon": "", "textColor": "#424954", "bgColor": "#D8E1E2", "bgImage": ""}', 100, 100, 1, 'N'),
       ('level', 'Y', 'vip1', '普通会员', '会员等级', '{"icon": "mingcute:vip-3", "textColor": "#547183", "bgColor": "#B5D0CD"}', '{"icon": "", "textColor": "#547183", "bgColor": "#B5D0CD", "bgImage": ""}', 200, 100, 1, 'N'),
       ('level', 'Y', 'vip2', '青铜会员', '会员等级', '{"icon": "mingcute:vip-3", "textColor": "#F3F8F4", "bgColor": "#B38264"}', '{"icon": "", "textColor": "#F3F8F4", "bgColor": "#B38264", "bgImage": ""}', 400, 100, 1.1, 'N'),

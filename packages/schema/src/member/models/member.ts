@@ -1,10 +1,14 @@
 import type { ILocationPath } from '@/common/models'
 import type { IMemberGender, IMemberSource, IMemberStatus } from '@/member/types'
 import type {
-  IMemberAccountDict,
+  IMemberAccount,
+  IMemberAccountKeyValue,
+  IMemberCard,
   IMemberCardBinding,
   IMemberCardBindingInfo,
+  IMemberCustomCardListItem,
   IMemberGroupDict,
+  IMemberLevelListItem,
   IMemberTagDict,
 } from '@/member/models'
 
@@ -31,9 +35,9 @@ export interface IMember {
   /**
    * 会员账户
    *
-   * @see {@link IMemberAccountDict}
+   * @see {@link IMemberAccount}
    */
-  account: IMemberAccountDict[]
+  account: IMemberAccount[]
   /**
    * 会员分组
    *
@@ -143,7 +147,6 @@ export type IMemberListItem = Pick<
   | 'source'
   | 'tags'
   | 'group'
-  | 'account'
   | 'cardNo'
   | 'avatar'
   | 'username'
@@ -159,4 +162,21 @@ export type IMemberListItem = Pick<
    * @see {@link IMemberCardBindingInfo}
    */
   card: IMemberCardBindingInfo
+  /**
+   * 会员账户
+   *
+   * @see {@link IMemberAccountKeyValue}
+   */
+  account: IMemberAccountKeyValue
 }
+
+/**
+ * 会员徽章类型
+ *
+ * @see {@link IMemberCard}
+ * @see {@link IMemberLevelListItem}
+ * @see {@link IMemberCustomCardListItem}
+ * @see {@link IMemberCardBinding}
+ * @see {@link IMemberCardBindingInfo}
+ */
+export type IMemberBadgeType = IMemberCard | IMemberLevelListItem | IMemberCustomCardListItem | IMemberCardBinding | IMemberCardBindingInfo

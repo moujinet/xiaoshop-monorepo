@@ -4,7 +4,6 @@ import { Body, Controller, Get, HttpCode, Post, Put, Query } from '@nestjs/commo
 import {
   ApiDoneResponse,
   ApiExceptionResponse,
-  ApiListedResponse,
   ApiObjectResponse,
   ApiPaginatedResponse,
 } from '~/common/response/decorators'
@@ -19,7 +18,7 @@ import {
   BatchUpdateMemberPayload,
   GetMemberPagesRequest,
   GetMemberRequest,
-  MemberAccountDictResponse,
+  MemberAccountListResponse,
   MemberListResponse,
   MemberPayload,
   MemberProfileResponse,
@@ -63,7 +62,7 @@ export class MemberController {
   @ApiOperation({
     summary: '获取「会员」账户',
   })
-  @ApiListedResponse(MemberAccountDictResponse)
+  @ApiObjectResponse(MemberAccountListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员账户失败' })
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })

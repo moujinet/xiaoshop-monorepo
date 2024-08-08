@@ -35,10 +35,10 @@ export class MemberCardResponse implements IMemberCard {
   readonly desc: string
 
   @ApiProperty({ description: '会员徽章样式', example: card.badge })
-  readonly badge: IMemberCardBadgeStyles
+  readonly badgeStyles: IMemberCardBadgeStyles
 
   @ApiProperty({ description: '会员卡样式', example: card.styles })
-  readonly styles: IMemberCardStyles
+  readonly cardStyles: IMemberCardStyles
 
   @ApiProperty({ description: '会员卡套餐' })
   readonly plans: IMemberCardPlan[]
@@ -77,7 +77,7 @@ export class MemberCustomCardListResponse
     'name',
     'desc',
     'plans',
-    'badge',
+    'badgeStyles',
     'discount',
     'pointsRatio',
     'isFreeShipping',
@@ -97,7 +97,7 @@ export class MemberLevelListResponse
     'key',
     'name',
     'desc',
-    'badge',
+    'badgeStyles',
     'needExp',
     'discount',
     'pointsRatio',

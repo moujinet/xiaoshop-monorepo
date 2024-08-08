@@ -1,8 +1,10 @@
 import type {
   ILocationPath,
   IMember,
-  IMemberAccountDict,
+  IMemberAccount,
+  IMemberAccountRecord,
   IMemberCardBinding,
+  IMemberCardBindingInfo,
   IMemberGender,
   IMemberGroupDict,
   IMemberListItem,
@@ -28,7 +30,7 @@ export class MemberResponse implements Omit<IMember, 'password' | 'salt'> {
   readonly source: IMemberSource
 
   @ApiProperty({ description: '会员账户', example: member.account })
-  readonly account: IMemberAccountDict[]
+  readonly account: IMemberAccount[]
 
   @ApiProperty({ description: '会员分组', example: member.group })
   readonly group: IMemberGroupDict
@@ -36,7 +38,7 @@ export class MemberResponse implements Omit<IMember, 'password' | 'salt'> {
   @ApiProperty({ description: '会员标签', example: [member.tag] })
   readonly tags: IMemberTagDict[]
 
-  @ApiProperty({ description: '绑定会员卡', example: member.binding })
+  @ApiProperty({ description: '绑定会员卡', example: member.card })
   readonly card: IMemberCardBinding
 
   @ApiProperty({ description: '会员卡号', example: member.cardNo })
@@ -83,8 +85,6 @@ export class MemberListResponse
     'source',
     'tags',
     'group',
-    'account',
-    'card',
     'cardNo',
     'avatar',
     'username',
@@ -94,7 +94,13 @@ export class MemberListResponse
     'location',
     'lastLoginTime',
   ] as const)
-  implements IMemberListItem {}
+  implements IMemberListItem {
+  @ApiProperty({ description: '会员账户', example: member.accountRecord })
+  readonly account: IMemberAccountRecord
+
+  @ApiProperty({ description: '会员账户', example: member.bindInfo })
+  readonly card: IMemberCardBindingInfo
+}
 
 /**
  * 会员资料响应 DTO

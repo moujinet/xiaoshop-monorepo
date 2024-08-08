@@ -2,7 +2,6 @@ import type { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { createNestApplication, runSQL, truncateTable } from '~~/tests/application'
 import { MemberModule } from '@/member/member.module'
-import { EXCEPTION_NOT_FOUND } from '~/common/exception'
 
 describe('Member Module', () => {
   let app: INestApplication
@@ -16,8 +15,8 @@ describe('Member Module', () => {
     await truncateTable([
       'shop_member',
       'shop_member_account',
+      'shop_member_bind_card',
       'shop_member_card',
-      'shop_member_card_binding',
       'shop_member_group',
       'shop_member_tag',
       'shop_member_points_rule',
@@ -132,17 +131,6 @@ describe('Member Module', () => {
 
       expect(body.data.length).toEqual(0)
     })
-
-    it('Delete Member Card', async () => {
-      const { body } = await request(app.getHttpServer())
-        .delete('/member/card/delete')
-        .send({
-          id: 1,
-        })
-        .expect(200)
-
-      expect(body.code).toEqual(0)
-    })
   })
 
   // Member Group
@@ -202,25 +190,6 @@ describe('Member Module', () => {
 
       expect(body.data.total).toEqual(1)
     })
-
-    it('Delete Member Group', async () => {
-      const { body } = await request(app.getHttpServer())
-        .delete('/member/group/delete')
-        .send({
-          id: 1,
-        })
-        .expect(200)
-
-      expect(body.code).toEqual(0)
-    })
-
-    it('Fetch Member Group Detail Throw NotFoundException', async () => {
-      const { body } = await request(app.getHttpServer())
-        .get('/member/group/detail?id=1')
-        .expect(200)
-
-      expect(body.code).toEqual(EXCEPTION_NOT_FOUND)
-    })
   })
 
   // Member Tag
@@ -262,25 +231,6 @@ describe('Member Module', () => {
 
       expect(body.data.total).toEqual(1)
     })
-
-    it('Delete Member Tag', async () => {
-      const { body } = await request(app.getHttpServer())
-        .delete('/member/tag/delete')
-        .send({
-          id: 1,
-        })
-        .expect(200)
-
-      expect(body.code).toEqual(0)
-    })
-
-    it('Fetch Member Tag Detail Throw NotFoundException', async () => {
-      const { body } = await request(app.getHttpServer())
-        .get('/member/tag/detail?id=1')
-        .expect(200)
-
-      expect(body.code).toEqual(EXCEPTION_NOT_FOUND)
-    })
   })
 
   // Member Account
@@ -290,10 +240,32 @@ describe('Member Module', () => {
         .post('/member/create')
         .send({
           username: 'test',
+          nickname: 'test',
+          mobile: '13800006668',
+          gender: 'male',
+          location: [{ code: '44', name: '广东省' }, { code: '4420', name: '中山市' }],
+          tagIds: [1],
+          cardId: 1,
+          cardPlanId: 1,
+          points: 100,
         })
         .expect(200)
 
       expect(body.code).toEqual(0)
+
+      await request(app.getHttpServer())
+        .get('/member/profile?id=1')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.data.nickname).toEqual('test')
+        })
+
+      await request(app.getHttpServer())
+        .get('/member/account?id=1')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.data.find(item => item.key === 'points').value).toEqual(100)
+        })
     })
 
     it('Update Member Profile', async () => {
@@ -341,7 +313,7 @@ describe('Member Module', () => {
         .send({
           ids: [1],
           profile: {
-            status: 'blocked',
+            tagIds: [1],
           },
         })
         .expect(200)

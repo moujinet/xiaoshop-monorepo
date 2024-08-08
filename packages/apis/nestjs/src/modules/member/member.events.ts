@@ -5,14 +5,14 @@ abstract class MemberManageEvent {
   /**
    * 会员 ID
    */
-  readonly id: string
+  readonly id: number
 
   /**
    * 初始化
    *
-   * @param id string
+   * @param id number
    */
-  constructor(id: string) {
+  constructor(id: number) {
     this.id = id
   }
 }
@@ -31,11 +31,6 @@ export class MemberLoginEvent extends MemberManageEvent {}
  * 会员签到事件
  */
 export class MemberSignInEvent extends MemberManageEvent {}
-
-/**
- * 会员升级事件
- */
-export class MemberLevelUpEvent extends MemberManageEvent {}
 
 /**
  * 会员注销事件

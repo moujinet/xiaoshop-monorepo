@@ -5,7 +5,6 @@ import {
   type IMemberCardDict,
   type IMemberCustomCardListItem,
   type IMemberLevelListItem,
-  type IMemberValidLevel,
   MemberCardPlanType,
   MemberCardType,
 } from '@xiaoshop/schema'
@@ -14,7 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { MEMBER_CARD_DEFAULT_BADGE, MEMBER_CARD_DEFAULT_STYLES } from '@/member/constants'
 import { MemberCardPayload } from '@/member/card/dto'
-import { MemberCard } from '@/member/card/entities'
+import { MemberCard } from '@/member/card/entity'
 import { ExistsException, FailedException } from '~/common/exception'
 
 @Injectable()
@@ -40,7 +39,7 @@ export class MemberCardService {
           'key',
           'name',
           'desc',
-          'badge',
+          'badgeStyles',
           'needExp',
           'discount',
           'pointsRatio',
@@ -72,7 +71,7 @@ export class MemberCardService {
           'key',
           'name',
           'desc',
-          'badge',
+          'badgeStyles',
           'discount',
           'pointsRatio',
           'isFreeShipping',
@@ -105,30 +104,6 @@ export class MemberCardService {
     }
     catch (e) {
       throw new FailedException('获取会员卡字典列表', e.message)
-    }
-  }
-
-  /**
-   * 获取会员卡升级列表
-   *
-   * @returns Promise<IMemberValidLevel[]>
-   * @throws {FailedException} 获取会员卡升级列表失败
-   */
-  async findLevelUpCards(): Promise<IMemberValidLevel[]> {
-    try {
-      const cards = await this.repository.find({
-        select: { id: true, name: true, needExp: true },
-        where: { type: MemberCardType.LEVEL, isEnabled: Enabled.YES },
-        order: { key: 'ASC' },
-      })
-
-      // 因为最后一个等级无法再升级，所以删除
-      cards.pop()
-
-      return cards
-    }
-    catch (e) {
-      throw new FailedException('获取会员卡升级列表', e.message)
     }
   }
 
@@ -204,14 +179,14 @@ export class MemberCardService {
 
       const card = new MemberCard()
 
-      card.key = `vip${total + 1}`
+      card.key = `svip${total + 1}`
       card.name = data.name
       card.desc = data.desc || ''
       card.needExp = data.needExp || 0
       card.discount = data.discount || 0
       card.pointsRatio = data.pointsRatio || 0
-      card.badge = data.badge || MEMBER_CARD_DEFAULT_BADGE
-      card.styles = data.styles || MEMBER_CARD_DEFAULT_STYLES
+      card.badgeStyles = data.badgeStyles || MEMBER_CARD_DEFAULT_BADGE
+      card.cardStyles = data.cardStyles || MEMBER_CARD_DEFAULT_STYLES
       card.isFreeShipping = data.isFreeShipping || Enabled.NO
       card.type = MemberCardType.CUSTOM
       card.isEnabled = Enabled.YES
@@ -270,10 +245,10 @@ export class MemberCardService {
         card.discount = data.discount
       if (data.pointsRatio)
         card.pointsRatio = data.pointsRatio
-      if (data.styles)
-        card.styles = data.styles || MEMBER_CARD_DEFAULT_STYLES
-      if (data.badge)
-        card.badge = data.badge || MEMBER_CARD_DEFAULT_BADGE
+      if (data.cardStyles)
+        card.cardStyles = data.cardStyles || MEMBER_CARD_DEFAULT_STYLES
+      if (data.badgeStyles)
+        card.badgeStyles = data.badgeStyles || MEMBER_CARD_DEFAULT_BADGE
       if (data.isFreeShipping)
         card.isFreeShipping = data.isFreeShipping
 

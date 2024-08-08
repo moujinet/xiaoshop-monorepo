@@ -1,7 +1,8 @@
 import {
   Enabled,
   type IApiPaginationData,
-  type IMemberAccountDict,
+  type IMemberAccount,
+  IMemberAccountKeyValue,
   type IMemberGroupCondition,
   type IMemberListItem,
   type IMemberProfile,
@@ -21,7 +22,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { isStrongPassword } from 'class-validator'
 import { Inject, Injectable } from '@nestjs/common'
 import { Between, FindOptionsWhere, In, Like, Not, Repository } from 'typeorm'
-import { MemberCardBinding } from '@/member/card/entities'
 import { MemberTag } from '@/member/tag/entity'
 import {
   BadRequestException,
@@ -39,10 +39,10 @@ import {
 import {
   Member,
   MemberAccount,
+  MemberBindCard,
 } from '@/member/account/entities'
 import { MemberCardService } from '@/member/card/service'
 import { SettingsService } from '@/settings/settings.service'
-import { nanoNumber } from '~/utils'
 
 @Injectable()
 export class MemberService {
@@ -52,6 +52,9 @@ export class MemberService {
 
     @InjectRepository(MemberAccount)
     private readonly memberAccountRepository: Repository<MemberAccount>,
+
+    @InjectRepository(MemberBindCard)
+    private readonly memberBindCardRepository: Repository<MemberBindCard>,
 
     @Inject(MemberCardService)
     private readonly memberCardService: MemberCardService,
@@ -140,14 +143,14 @@ export class MemberService {
       if (query.lastLoginTime) {
         const [from, to] = query.lastLoginTime.split(',')
 
-        where.lastLoginTime = Between(from, to)
+        where.lastLoginTime = Between(`${from} 00:00:00`, `${to} 23:59:59`)
       }
 
       // 注册时间
       if (query.createdTime) {
         const [from, to] = query.createdTime.split(',')
 
-        where.createdTime = Between(from, to)
+        where.createdTime = Between(`${from} 00:00:00`, `${to} 23:59:59`)
       }
 
       const pagesize = query.pagesize || 10
@@ -162,16 +165,11 @@ export class MemberService {
           card: {
             id: true,
             cardId: true,
-            cardType: true,
-            styles: {
-              id: true,
-              key: true,
-              name: true,
-              styles: { icon: true, textColor: true, bgColor: true, bgImage: true },
-              badge: { icon: true, textColor: true, bgColor: true },
-            },
+            cardPlanId: true,
+            name: true,
+            type: true,
+            badgeStyles: { icon: true, textColor: true, bgColor: true },
           },
-          account: { key: true, name: true, value: true },
           cardNo: true,
           avatar: true,
           username: true,
@@ -182,7 +180,7 @@ export class MemberService {
           lastLoginTime: true,
         },
         where,
-        relations: ['tags', 'card', 'group', 'account'],
+        relations: ['tags', 'group', 'account', 'card'],
         skip: pagesize * (page - 1),
         take: pagesize,
         order: {
@@ -190,7 +188,17 @@ export class MemberService {
         },
       })
 
-      return { result, total, page, pagesize }
+      return {
+        result: result.map(
+          (item: any) => ({
+            ...item,
+            account: this.transformAccountToKV(item.account),
+          }),
+        ),
+        total,
+        page,
+        pagesize,
+      }
     }
     catch (e) {
       throw new FailedException('获取会员分页列表', e.message)
@@ -243,21 +251,23 @@ export class MemberService {
    * 获取会员账户列表
    *
    * @param id 会员 ID
-   * @returns Promise<IMemberAccountDict[]>
+   * @returns Promise<IMemberAccountKeyValue>
    * @throws {FailedException} 获取会员账户列表失败
    * @throws {NotFoundException} 未找到会员
    */
-  async findAccount(id: number): Promise<IMemberAccountDict[]> {
+  async findAccount(id: number): Promise<IMemberAccountKeyValue> {
     try {
       const founded = await this.repository.existsBy({ id })
 
       if (!founded)
         throw new NotFoundException('未找到会员')
 
-      return await this.memberAccountRepository.find({
+      const accounts = await this.memberAccountRepository.find({
         select: { key: true, name: true, value: true },
         where: { member: { id } },
       })
+
+      return this.transformAccountToKV(accounts)
     }
     catch (e) {
       throw new FailedException('获取会员账户列表', e.message, e.status)
@@ -317,18 +327,6 @@ export class MemberService {
         }
       }
 
-      if (data.cardId) {
-        const card = await this.createMemberCardBinding(
-          data.cardId,
-          data.cardPlanId,
-        )
-
-        if (card) {
-          member.cardNo = nanoNumber(9)
-          member.card = card
-        }
-      }
-
       member.account = []
 
       // 默认账户
@@ -339,12 +337,27 @@ export class MemberService {
         account.key = defaults.value
         account.name = defaults.label
         account.member = member
-        account.value = data.points || 0
+        account.value = account.key === MemberAccountKey.POINTS ? data.points || 0 : 0
 
         member.account.push(account)
       }
 
-      await this.repository.save(member)
+      const created = await this.repository.save(member)
+
+      if (data.cardId) {
+        const bindCard = await this.bindMemberCard(created.id, data.cardId, data.cardPlanId)
+        await this.repository.update(created.id, {
+          cardNo: created.id.toString().padStart(9, '0'),
+          card: bindCard,
+        })
+      }
+      else {
+        const bindCard = await this.bindMemberCard(created.id, 1) // vip0
+        await this.repository.update(created.id, {
+          cardNo: created.id.toString().padStart(9, '0'),
+          card: bindCard,
+        })
+      }
     }
     catch (e) {
       throw new FailedException('创建会员资料', e.message, e.status)
@@ -352,34 +365,52 @@ export class MemberService {
   }
 
   /**
-   * 创建会员卡绑定信息
+   * 绑定会员卡
    *
+   * @param memberId 会员 ID
    * @param cardId 会员卡 ID
-   * @param planId 会员有效期 ID
-   * @returns Promise<MemberCardBinding>
-   * @throws {FailedException} 创建会员卡绑定信息失败
+   * @param planId 会员卡有效期 ID
+   * @throws {FailedException} 绑定会员卡失败
+   * @throws {NotFoundException} 会员不存在
    * @throws {NotFoundException} 会员卡不存在
    */
-  async createMemberCardBinding(cardId: number, planId?: number): Promise<MemberCardBinding> {
+  async bindMemberCard(memberId: number, cardId: number, planId?: number): Promise<MemberBindCard> {
     try {
+      const member = await this.repository.findOne({
+        where: { id: memberId },
+        relations: ['card'],
+      })
+
+      if (!member)
+        throw new NotFoundException('会员不存在')
+
       const card = await this.memberCardService.findDetail(cardId)
 
-      const binding = new MemberCardBinding()
+      if (!card)
+        throw new NotFoundException('会员卡不存在')
 
+      const binding = member.card || new MemberBindCard()
+
+      binding.memberId = member.id
       binding.cardId = card.id
-      binding.cardType = card.type
+      binding.type = card.type
+      binding.key = card.key
+      binding.name = card.name
       binding.discount = card.discount
       binding.pointsRatio = card.pointsRatio
       binding.isFreeShipping = card.isFreeShipping
       binding.needExp = card.needExp
+      binding.cardStyles = card.cardStyles
+      binding.badgeStyles = card.badgeStyles
 
-      if (card.type === MemberCardType.CUSTOM && planId) {
+      if (planId && card.type === MemberCardType.CUSTOM) {
         const plan = card.plans.find(item => item.id === planId)
 
         if (!plan)
           throw new NotFoundException('会员卡有效期不存在')
 
-        binding.cardPlanType = plan.type
+        binding.cardPlanId = plan.id
+        binding.planType = plan.type
 
         const today = new Date()
 
@@ -399,12 +430,10 @@ export class MemberService {
         }
       }
 
-      binding.styles.id = card.id
-
-      return binding
+      return await this.memberBindCardRepository.save(binding)
     }
     catch (e) {
-      throw new FailedException('创建会员卡绑定信息', e.message, e.status)
+      throw new FailedException('绑定会员卡', e.message, e.status)
     }
   }
 
@@ -449,6 +478,14 @@ export class MemberService {
         }
       }
 
+      if (data.cardId) {
+        await this.bindMemberCard(
+          member.id,
+          data.cardId,
+          data.cardPlanId,
+        )
+      }
+
       await this.repository.save(member)
     }
     catch (e) {
@@ -465,32 +502,35 @@ export class MemberService {
    */
   async batchUpdateProfile(ids: number[], data: UpdateMemberProfilePayload) {
     try {
-      const member = new Member()
-
       if (data.tagIds && data.tagIds.length > 0) {
-        member.tags = []
+        await Promise.all(ids.map(
+          (id) => {
+            const member = new Member()
 
-        for (const tagId of data.tagIds) {
-          const tag = new MemberTag()
-          tag.id = tagId
+            member.id = id
+            member.tags = []
 
-          member.tags.push(tag)
-        }
+            for (const tagId of data.tagIds) {
+              const tag = new MemberTag()
+              tag.id = tagId
+
+              member.tags.push(tag)
+            }
+
+            return this.repository.save(member)
+          },
+        ))
       }
 
       if (data.cardId) {
-        const card = await this.createMemberCardBinding(
-          data.cardId,
-          data.cardPlanId,
-        )
-
-        if (card) {
-          member.cardNo = nanoNumber(9)
-          member.card = card
-        }
+        await Promise.all(ids.map(
+          id => this.bindMemberCard(
+            id,
+            data.cardId,
+            data.cardPlanId,
+          ),
+        ))
       }
-
-      await this.repository.update(ids, member)
     }
     catch (e) {
       throw new FailedException('更新会员资料', e.message, e.status)
@@ -748,5 +788,18 @@ export class MemberService {
       minNumbers: pwdStrong.includes('number') ? 1 : 0,
       minSymbols: pwdStrong.includes('symbol') ? 1 : 0,
     })
+  }
+
+  /**
+   * 转换会员账户列表为键值对
+   *
+   * @param accounts 会员账户列表
+   * @returns IMemberAccountKeyValue
+   */
+  transformAccountToKV(accounts: IMemberAccount[]): IMemberAccountKeyValue {
+    return accounts.reduce((record, account) => {
+      record[account.key] = account.value
+      return record
+    }, {} as IMemberAccountKeyValue)
   }
 }

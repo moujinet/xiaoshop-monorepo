@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class DefaultSettings1723000231121 implements MigrationInterface {
+export class DefaultSettings1723089487311 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES
+    await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
       ('store.name', 'XiaoShop'),
       ('store.logo', ''),
       ('store.tel', ''),
@@ -51,7 +51,7 @@ export class DefaultSettings1723000231121 implements MigrationInterface {
 }
 
 // @ID: default
-// @CREATE: [{"key":"store.name","value":"XiaoShop"},{"key":"store.logo","value":""},{"key":"store.tel","value":""},{"key":"store.enableWeapp","value":"1"},{"key":"store.enableH5","value":"1"},{"key":"store.contact","value":"云链小朔"},{"key":"store.contactMobile","value":""},{"key":"store.contactPhone","value":""},{"key":"store.email","value":"xiaos@mouji.net"},{"key":"store.location","value":""},{"key":"store.address","value":""},{"key":"store.longitude","value":""},{"key":"store.latitude","value":""},{"key":"map.key","value":""},{"key":"map.enableMobileLocation","value":"1"},{"key":"map.mobileLocationExpire","value":"15"},{"key":"verifyCode.enableOnAdminLogin","value":"1"},{"key":"verifyCode.enableOnLogin","value":"1"},{"key":"verifyCode.enableOnRegister","value":"1"}]
+// @CREATE: [{"key":"store.name","value":"XiaoShop"},{"key":"store.logo","value":""},{"key":"store.tel","value":""},{"key":"store.enableWeapp","value":"1"},{"key":"store.enableH5","value":"1"},{"key":"store.contact","value":"云链小朔"},{"key":"store.contactMobile","value":""},{"key":"store.contactPhone","value":""},{"key":"store.email","value":"xiaos@mouji.net"},{"key":"store.location","value":"[]"},{"key":"store.address","value":""},{"key":"store.longitude","value":""},{"key":"store.latitude","value":""},{"key":"map.key","value":""},{"key":"map.enableMobileLocation","value":"1"},{"key":"map.mobileLocationExpire","value":"15"},{"key":"verifyCode.enableOnAdminLogin","value":"1"},{"key":"verifyCode.enableOnLogin","value":"1"},{"key":"verifyCode.enableOnRegister","value":"1"}]
 // @UPDATE: []
 // @RESTORE: []
 // @REMOVE: []

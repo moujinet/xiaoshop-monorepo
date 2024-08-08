@@ -34,3 +34,13 @@ export interface IMemberAccount {
  * 会员账户字典
  */
 export type IMemberAccountDict = Pick<IMemberAccount, 'key' | 'name' | 'value'>
+
+/**
+ * 会员账户对象
+ */
+export type IMemberAccountRecord = Record<IMemberAccount['key'], IMemberAccountDict>
+
+/**
+ * 会员账户键值对象
+ */
+export type IMemberAccountKeyValue = Record<IMemberAccount['key'], IMemberAccount['value']>

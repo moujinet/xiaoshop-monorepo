@@ -3,11 +3,11 @@ import { Module, forwardRef } from '@nestjs/common'
 
 import { MemberService } from '@/member/account/service'
 import { MemberController } from '@/member/account/controller'
-import { Member, MemberAccount } from '@/member/account/entities'
+import { Member, MemberAccount, MemberBindCard } from '@/member/account/entities'
 
 import { MemberCardService } from '@/member/card/service'
 import { MemberCardController } from '@/member/card/controller'
-import { MemberCard, MemberCardBinding } from '@/member/card/entities'
+import { MemberCard } from '@/member/card/entity'
 
 import { MemberGroup } from '@/member/group/entity'
 import { MemberGroupService } from '@/member/group/service'
@@ -32,9 +32,8 @@ import { MemberLogoutController } from '@/member/logout/controller'
 import { SettingsModule } from '@/settings/settings.module'
 import { MemberSettings } from '@/member/member.settings'
 
-import { MEMBER_MODULE_ID } from '@/member/constants'
-
 import { MemberScheduler } from '@/member/member.scheduler'
+import { MEMBER_MODULE_ID } from '@/member/constants'
 
 @Module({
   imports: [
@@ -49,7 +48,7 @@ import { MemberScheduler } from '@/member/member.scheduler'
       Member,
       MemberAccount,
       MemberCard,
-      MemberCardBinding,
+      MemberBindCard,
       MemberGroup,
       MemberTag,
       MemberAddress,
