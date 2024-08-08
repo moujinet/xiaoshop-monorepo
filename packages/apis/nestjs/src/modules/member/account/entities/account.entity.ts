@@ -1,9 +1,7 @@
-import {
-  type IMember,
-  type IMemberAccount,
-  type IMemberAccountKey,
-  type IMemberAccountStatus,
-  MemberAccountStatus,
+import type {
+  IMember,
+  IMemberAccount,
+  IMemberAccountKey,
 } from '@xiaoshop/schema'
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Member } from '@/member/account/entities'
@@ -11,16 +9,13 @@ import { Member } from '@/member/account/entities'
 @Entity('shop_member_account', {
   comment: '会员账户表',
 })
-@Index('IDX_shop_member_account', ['status', 'key'])
+@Index('IDX_shop_member_account', ['key'])
 export class MemberAccount implements IMemberAccount {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_account' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '账户标识' })
   key: IMemberAccountKey
-
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberAccountStatus.ENABLE, comment: '账户状态' })
-  status: IMemberAccountStatus
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '账户名' })
   name: string

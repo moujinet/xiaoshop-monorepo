@@ -98,31 +98,6 @@ export const MEMBER_GENDERS = [
 ]
 
 // -----------------------------------------------
-// 会员 - 会员账户状态
-// -----------------------------------------------
-
-/**
- * 枚举: 会员账户状态
- *
- * - `ENABLE`: 启用
- * - `DISABLE`: 停用
- */
-export enum MemberAccountStatus {
-  ENABLE = 'enable',
-  DISABLE = 'disable',
-}
-
-/**
- * 字典: 会员账户状态
- *
- * @see {@link IMemberAccountStatus}
- */
-export const MEMBER_ACCOUNT_STATUSES = [
-  { label: '启用', value: MemberAccountStatus.ENABLE, color: 'green' },
-  { label: '停用', value: MemberAccountStatus.DISABLE, color: 'gray' },
-]
-
-// -----------------------------------------------
 // 会员 - 会员账户标识
 // -----------------------------------------------
 
@@ -395,35 +370,4 @@ export const MEMBER_POINTS_RULE_KEYS = [
   { label: '生日有礼', value: MemberPointsRuleKey.BIRTHDAY },
   { label: '签到奖励', value: MemberPointsRuleKey.SIGN_IN },
   { label: '积分抵现', value: MemberPointsRuleKey.DEDUCTION },
-]
-
-// -----------------------------------------------
-// 会员 - 会员日志 - 类型
-// -----------------------------------------------
-
-/**
- * 枚举: 会员日志 - 类型
- *
- * - `OPERATE`: 常规操作
- * - `VISIT`: 浏览商品
- * - `FAVORITE`: 收藏商品
- * - `POINTS`: 积分变动
- */
-export enum MemberLogType {
-  OPERATE = 'operate',
-  VISIT = 'visit',
-  FAVORITE = 'favorite',
-  POINTS = 'points',
-}
-
-/**
- * 字典: 会员日志 - 类型
- *
- * @see {@link IMemberLogType}
- */
-export const MEMBER_LOG_TYPES = [
-  { label: '常规操作', value: MemberLogType.OPERATE },
-  { label: '浏览商品', value: MemberLogType.VISIT },
-  { label: '收藏商品', value: MemberLogType.FAVORITE },
-  { label: '积分变动', value: MemberLogType.POINTS },
 ]

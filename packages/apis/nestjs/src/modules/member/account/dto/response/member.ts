@@ -2,7 +2,7 @@ import type {
   ILocationPath,
   IMember,
   IMemberAccount,
-  IMemberAccountRecord,
+  IMemberAccountKeyValue,
   IMemberCardBinding,
   IMemberCardBindingInfo,
   IMemberGender,
@@ -96,7 +96,7 @@ export class MemberListResponse
   ] as const)
   implements IMemberListItem {
   @ApiProperty({ description: '会员账户', example: member.accountRecord })
-  readonly account: IMemberAccountRecord
+  readonly account: IMemberAccountKeyValue
 
   @ApiProperty({ description: '会员账户', example: member.bindInfo })
   readonly card: IMemberCardBindingInfo

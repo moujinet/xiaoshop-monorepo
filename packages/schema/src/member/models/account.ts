@@ -1,4 +1,4 @@
-import type { IMemberAccountKey, IMemberAccountStatus } from '@/member/types'
+import type { IMemberAccountKey } from '@/member/types'
 
 /**
  * 会员账户
@@ -15,12 +15,6 @@ export interface IMemberAccount {
    */
   key: IMemberAccountKey
   /**
-   * 账户状态
-   *
-   * @see {@link IMemberAccountStatus}
-   */
-  status: IMemberAccountStatus
-  /**
    * 账户名
    */
   name: string
@@ -34,11 +28,6 @@ export interface IMemberAccount {
  * 会员账户字典
  */
 export type IMemberAccountDict = Pick<IMemberAccount, 'key' | 'name' | 'value'>
-
-/**
- * 会员账户对象
- */
-export type IMemberAccountRecord = Record<IMemberAccount['key'], IMemberAccountDict>
 
 /**
  * 会员账户键值对象

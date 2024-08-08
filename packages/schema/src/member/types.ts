@@ -1,12 +1,10 @@
 import type {
   MemberAccountKey,
-  MemberAccountStatus,
   MemberCardPlanType,
   MemberCardType,
   MemberGender,
   MemberGroupCondKey,
   MemberGroupCondOperator,
-  MemberLogType,
   MemberLogoutStatus,
   MemberPointsOperator,
   MemberPointsRuleKey,
@@ -49,16 +47,6 @@ export type IMemberSource = `${MemberSource}` | MemberSource
  * @see {@link MemberGender}
  */
 export type IMemberGender = `${MemberGender}` | MemberGender
-
-/**
- * 会员账户 - 状态
- *
- * - `ENABLE`: 启用
- * - `DISABLE`: 禁用
- *
- * @see {@link MemberAccountStatus}
- */
-export type IMemberAccountStatus = `${MemberAccountStatus}` | MemberAccountStatus
 
 /**
  * 会员账户 - 标识
@@ -162,15 +150,3 @@ export type IMemberGroupCondKey = `${MemberGroupCondKey}` | MemberGroupCondKey
  * @see {@link MemberLogoutStatus}
  */
 export type IMemberLogoutStatus = `${MemberLogoutStatus}` | MemberLogoutStatus
-
-/**
- * 会员日志 - 类型
- *
- * - `OPERATE`: 常规操作
- * - `VISIT`: 浏览商品
- * - `FAVORITE`: 收藏商品
- * - `POINTS`: 积分变动
- *
- * @see {@link MemberLogType}
- */
-export type IMemberLogType = `${MemberLogType}` | MemberLogType

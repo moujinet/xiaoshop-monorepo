@@ -14,8 +14,6 @@ import {
   EXCEPTION_NOT_FOUND,
 } from '~/common/exception'
 import {
-  BatchUpdateMemberAccountPayload,
-  BatchUpdateMemberPayload,
   GetMemberPagesRequest,
   GetMemberRequest,
   MemberAccountListResponse,
@@ -23,7 +21,6 @@ import {
   MemberPayload,
   MemberProfileResponse,
   ResetMemberPasswordPayload,
-  UpdateMemberAccountPayload,
   UpdateMemberPasswordPayload,
   UpdateMemberPayload,
 } from '@/member/account/dto'
@@ -96,47 +93,6 @@ export class MemberController {
     @Body() data: UpdateMemberPayload,
   ) {
     return this.service.updateProfile(+query.id, data)
-  }
-
-  @ApiOperation({
-    summary: '批量更新「会员」资料',
-  })
-  @ApiDoneResponse()
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '批量更新会员资料失败' })
-  @Put('batch/update')
-  async batchUpdate(
-    @Body() data: BatchUpdateMemberPayload,
-  ) {
-    return this.service.batchUpdateProfile(data.ids, data.profile)
-  }
-
-  @ApiOperation({
-    summary: '更新「会员」账户',
-  })
-  @ApiDoneResponse()
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新会员账户失败' })
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员' })
-  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员账户' })
-  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '更新内容为空' })
-  @Put('account/update')
-  async updateAccount(
-    @Query() query: GetMemberRequest,
-    @Body() data: UpdateMemberAccountPayload,
-  ) {
-    return this.service.updateAccount(+query.id, data)
-  }
-
-  @ApiOperation({
-    summary: '批量更新「会员」账户',
-  })
-  @ApiDoneResponse()
-  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '批量更新会员账户失败' })
-  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '更新内容为空' })
-  @Put('batch/account/update')
-  async batchUpdateAccount(
-    @Body() data: BatchUpdateMemberAccountPayload,
-  ) {
-    return this.service.batchUpdateAccount(data.ids, data.account)
   }
 
   @ApiOperation({

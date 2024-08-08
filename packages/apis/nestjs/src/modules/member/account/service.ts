@@ -2,7 +2,7 @@ import {
   Enabled,
   type IApiPaginationData,
   type IMemberAccount,
-  IMemberAccountKeyValue,
+  type IMemberAccountKeyValue,
   type IMemberGroupCondition,
   type IMemberListItem,
   type IMemberProfile,
@@ -10,7 +10,6 @@ import {
   MEMBER_ACCOUNT_KEYS,
   MEMBER_DEFAULT_PASSWORD,
   MemberAccountKey,
-  MemberAccountStatus,
   MemberCardPlanType,
   MemberCardType,
   MemberGender,
@@ -32,9 +31,7 @@ import {
 import {
   GetMemberPagesRequest,
   MemberPayload,
-  UpdateMemberAccountPayload,
   UpdateMemberPayload,
-  UpdateMemberProfilePayload,
 } from '@/member/account/dto'
 import {
   Member,
@@ -333,7 +330,6 @@ export class MemberService {
       for (const defaults of MEMBER_ACCOUNT_KEYS) {
         const account = new MemberAccount()
 
-        account.status = MemberAccountStatus.ENABLE
         account.key = defaults.value
         account.name = defaults.label
         account.member = member
@@ -467,153 +463,10 @@ export class MemberService {
       if (data.location)
         member.location = data.location
 
-      if (data.tagIds && data.tagIds.length > 0) {
-        member.tags = []
-
-        for (const tagId of data.tagIds) {
-          const tag = new MemberTag()
-          tag.id = tagId
-
-          member.tags.push(tag)
-        }
-      }
-
-      if (data.cardId) {
-        await this.bindMemberCard(
-          member.id,
-          data.cardId,
-          data.cardPlanId,
-        )
-      }
-
       await this.repository.save(member)
     }
     catch (e) {
       throw new FailedException('更新会员资料', e.message, e.status)
-    }
-  }
-
-  /**
-   * 批量更新会员资料
-   *
-   * @param ids 会员 IDs
-   * @param data 会员资料
-   * @throws {FailedException} 批量更新会员资料失败
-   */
-  async batchUpdateProfile(ids: number[], data: UpdateMemberProfilePayload) {
-    try {
-      if (data.tagIds && data.tagIds.length > 0) {
-        await Promise.all(ids.map(
-          (id) => {
-            const member = new Member()
-
-            member.id = id
-            member.tags = []
-
-            for (const tagId of data.tagIds) {
-              const tag = new MemberTag()
-              tag.id = tagId
-
-              member.tags.push(tag)
-            }
-
-            return this.repository.save(member)
-          },
-        ))
-      }
-
-      if (data.cardId) {
-        await Promise.all(ids.map(
-          id => this.bindMemberCard(
-            id,
-            data.cardId,
-            data.cardPlanId,
-          ),
-        ))
-      }
-    }
-    catch (e) {
-      throw new FailedException('更新会员资料', e.message, e.status)
-    }
-  }
-
-  /**
-   * 更新会员账户
-   *
-   * @param memberId 会员 ID
-   * @param data 更新数据
-   * @throws {NotFoundException} 未找到会员
-   * @throws {NotFoundException} 未找到会员账户
-   * @throws {BadRequestException} 更新内容为空
-   * @throws {FailedException} 更新会员账户失败
-   */
-  async updateAccount(memberId: number, data: UpdateMemberAccountPayload) {
-    try {
-      if (Object.keys(data).length === 1)
-        throw new BadRequestException('更新内容为空')
-
-      const member = await this.repository.existsBy({ id: memberId })
-
-      if (!member)
-        throw new NotFoundException('未找到会员')
-
-      const founded = await this.memberAccountRepository.exists({
-        where: { member: { id: memberId } },
-      })
-
-      if (!founded)
-        throw new NotFoundException('未找到会员账户')
-
-      const account = new MemberAccount()
-
-      if ('status' in data)
-        account.status = data.status
-      if ('value' in data)
-        account.value = data.value
-
-      await this.memberAccountRepository.update(
-        {
-          key: data.key,
-          member: { id: memberId },
-        },
-        account,
-      )
-    }
-    catch (e) {
-      throw new FailedException('更新会员账户', e.message, e.status)
-    }
-  }
-
-  /**
-   * 批量更新会员账户
-   *
-   * @param ids 会员 IDs
-   * @param data 会员账户
-   * @throws {FailedException} 批量更新会员账户失败
-   * @throws {BadRequestException} 更新内容为空
-   */
-  async batchUpdateAccount(ids: number[], data: UpdateMemberAccountPayload) {
-    try {
-      if (Object.keys(data).length === 1)
-        throw new BadRequestException('更新内容为空')
-
-      const account = new MemberAccount()
-
-      if ('status' in data)
-        account.status = data.status
-      if ('value' in data)
-        account.value = data.value
-
-      await this.memberAccountRepository.update(
-        {
-          key: data.key,
-          member: { id: In(ids) },
-        },
-        account,
-      )
-    }
-    catch (e) {
-      throw new FailedException('更新会员账户', e.message, e.status)
     }
   }
 
