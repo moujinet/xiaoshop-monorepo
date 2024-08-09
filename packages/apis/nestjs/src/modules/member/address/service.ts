@@ -8,7 +8,7 @@ import {
 import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Member } from '@/member/account/entities'
+import { Member } from '@/member/profile/entity'
 import { MemberAddress } from '@/member/address/entity'
 import { GetMemberAddressPagesRequest, MemberAddressPayload } from '@/member/address/dto'
 import { FailedException, NotFoundException } from '~/common/exception'

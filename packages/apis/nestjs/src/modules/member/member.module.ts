@@ -1,9 +1,17 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Module, forwardRef } from '@nestjs/common'
 
-import { MemberService } from '@/member/account/service'
-import { MemberController } from '@/member/account/controller'
-import { Member, MemberAccount, MemberBindCard } from '@/member/account/entities'
+import { MemberService } from '@/member/profile/service'
+import { MemberController } from '@/member/profile/controller'
+import { Member } from '@/member/profile/entity'
+
+import { MemberAccountService } from '@/member/account/service'
+import { MemberAccountController } from '@/member/account/controller'
+import { MemberAccount } from '@/member/account/entity'
+
+import { MemberCardBindingService } from '@/member/binding/service'
+import { MemberCardBindingController } from '@/member/binding/controller'
+import { MemberCardBinding } from '@/member/binding/entity'
 
 import { MemberCardService } from '@/member/card/service'
 import { MemberCardController } from '@/member/card/controller'
@@ -47,8 +55,8 @@ import { MEMBER_MODULE_ID } from '@/member/constants'
     TypeOrmModule.forFeature([
       Member,
       MemberAccount,
+      MemberCardBinding,
       MemberCard,
-      MemberBindCard,
       MemberGroup,
       MemberTag,
       MemberAddress,
@@ -60,6 +68,8 @@ import { MEMBER_MODULE_ID } from '@/member/constants'
 
   controllers: [
     MemberController,
+    MemberAccountController,
+    MemberCardBindingController,
     MemberCardController,
     MemberGroupController,
     MemberTagController,
@@ -70,6 +80,8 @@ import { MEMBER_MODULE_ID } from '@/member/constants'
 
   providers: [
     MemberService,
+    MemberAccountService,
+    MemberCardBindingService,
     MemberCardService,
     MemberGroupService,
     MemberTagService,

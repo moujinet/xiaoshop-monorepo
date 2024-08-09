@@ -11,12 +11,12 @@ import {
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity('shop_member_bind_card', {
+@Entity('shop_member_card_binding', {
   comment: '会员卡绑定表',
 })
-@Index('IDX_shop_member_bind_card', ['memberId', 'cardId', 'createdTime'])
-export class MemberBindCard implements IMemberCardBinding {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_bind_card' })
+@Index('IDX_shop_member_card_binding', ['cardId', 'memberId', 'createdTime'])
+export class MemberCardBinding implements IMemberCardBinding {
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_card_binding' })
   id: number
 
   @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID (冗余)' })
@@ -25,8 +25,8 @@ export class MemberBindCard implements IMemberCardBinding {
   @Column({ name: 'card_id', type: 'int', unsigned: true, default: 0, comment: '会员卡 ID (冗余)' })
   cardId: number
 
-  @Column({ name: 'card_plan_id', type: 'int', unsigned: true, default: 0, comment: '会员卡有效期套餐 ID (冗余)' })
-  cardPlanId: number
+  @Column({ name: 'plan_id', type: 'int', unsigned: true, default: 0, comment: '会员卡有效期套餐 ID (冗余)' })
+  planId: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '会员卡标识 (冗余)' })
   key: string

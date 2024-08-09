@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class Defaults1723089508304 implements MigrationInterface {
+export class Defaults1723186977542 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`app_assets_group\` (\`parent_id\`, \`name\`, \`enable_compress\`, \`enable_watermark\`, \`enable_thumbnail\`) VALUES
       (0, '系统图片', 'N', 'N', 'N'),

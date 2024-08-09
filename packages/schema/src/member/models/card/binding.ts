@@ -21,7 +21,7 @@ export interface IMemberCardBinding {
   /**
    * 会员卡有效期套餐 ID
    */
-  cardPlanId: number
+  planId: number
   /**
    * 会员卡标识
    */
@@ -103,7 +103,7 @@ export type IMemberCardBindingInfo = Pick<
   IMemberCardBinding,
   | 'id'
   | 'cardId'
-  | 'cardPlanId'
+  | 'planId'
   | 'name'
   | 'type'
   | 'badgeStyles'

@@ -61,6 +61,6 @@ export class MemberCard implements IMemberCard {
   @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
   updatedTime: string
 
-  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_bind_card WHERE card_id = ${alias}.id` })
+  @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM shop_member_card_binding WHERE card_id = ${alias}.id` })
   total: number
 }

@@ -1,7 +1,7 @@
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { Inject, Injectable, Logger } from '@nestjs/common'
-import { MemberService } from '@/member/account/service'
+import { MemberService } from '@/member/profile/service'
 import { MemberLogoutEvent } from '@/member/member.events'
 import { MemberGroupService } from '@/member/group/service'
 import { MemberLogoutService } from '@/member/logout/service'

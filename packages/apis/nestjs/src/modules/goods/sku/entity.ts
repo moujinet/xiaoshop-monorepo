@@ -10,6 +10,9 @@ export class GoodsSku implements IGoodsSku {
   @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'PK_shop_goods_sku' })
   id: string
 
+  @Column({ name: 'goods_id', type: 'char', length: 32, nullable: false, default: '', comment: '商品 ID' })
+  goodsId: string
+
   @Column({ name: 'sku_code', type: 'char', length: 32, nullable: false, default: '', comment: 'SKU 编码' })
   skuCode: string
 
@@ -47,6 +50,6 @@ export class GoodsSku implements IGoodsSku {
   sales: number
 
   @ManyToOne(() => Goods, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'goods_id' })
   goods: Goods
 }

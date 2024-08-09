@@ -1,5 +1,6 @@
 import type { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
+import { MemberStatus } from '@xiaoshop/schema'
 import { createNestApplication, runSQL, truncateTable } from '~~/tests/application'
 import { MemberModule } from '@/member/member.module'
 
@@ -13,16 +14,16 @@ describe('Member Module', () => {
     await app.init()
 
     await truncateTable([
-      'shop_member',
       'shop_member_account',
-      'shop_member_bind_card',
+      'shop_member_address',
+      'shop_member_card_binding',
       'shop_member_card',
       'shop_member_group',
-      'shop_member_tag',
-      'shop_member_points_rule',
-      'shop_member_address',
-      'shop_member_logout',
       'shop_member_has_tags',
+      'shop_member_logout',
+      'shop_member_points_rule',
+      'shop_member_tag',
+      'shop_member',
     ])
   })
 
@@ -264,19 +265,8 @@ describe('Member Module', () => {
         .get('/member/account?id=1')
         .expect(200)
         .then(({ body }) => {
-          expect(body.data.find(item => item.key === 'points').value).toEqual(100)
+          expect(body.data.points).toEqual(100)
         })
-    })
-
-    it('Update Member Profile', async () => {
-      const { body } = await request(app.getHttpServer())
-        .put('/member/update?id=1')
-        .send({
-          nickname: 'test (修改)',
-        })
-        .expect(200)
-
-      expect(body.code).toEqual(0)
     })
 
     it('Fetch Member Profile', async () => {
@@ -284,19 +274,7 @@ describe('Member Module', () => {
         .get('/member/profile?id=1')
         .expect(200)
 
-      expect(body.data.nickname).toEqual('test (修改)')
-    })
-
-    it('Update Member Account', async () => {
-      const { body } = await request(app.getHttpServer())
-        .put('/member/account/update?id=1')
-        .send({
-          key: 'login',
-          value: 100,
-        })
-        .expect(200)
-
-      expect(body.code).toEqual(0)
+      expect(body.data.nickname).toEqual('test')
     })
 
     it('Fetch Member Account', async () => {
@@ -304,44 +282,49 @@ describe('Member Module', () => {
         .get('/member/account?id=1')
         .expect(200)
 
-      expect(body.data.find((d: any) => d.key === 'login').value).toEqual(100)
+      expect(body.data.points).toEqual(100)
     })
 
-    it('Batch Update Member Profile', async () => {
+    it('Update Member Status', async () => {
       const { body } = await request(app.getHttpServer())
-        .put('/member/batch/update')
+        .put('/member/status/update?id=1')
         .send({
-          ids: [1],
-          profile: {
-            tagIds: [1],
-          },
+          status: MemberStatus.BLOCKED,
         })
         .expect(200)
 
       expect(body.code).toEqual(0)
     })
 
-    it('Batch Update Member Account', async () => {
+    it('Update Member Tags', async () => {
       const { body } = await request(app.getHttpServer())
-        .put('/member/batch/account/update')
+        .put('/member/tags/update?id=1')
         .send({
-          ids: [1],
-          account: {
-            key: 'exp',
-            value: 100,
-          },
+          tagIds: [1],
         })
         .expect(200)
 
       expect(body.code).toEqual(0)
     })
 
-    it('Update Member Password', async () => {
+    it('Update Member Points Account', async () => {
       const { body } = await request(app.getHttpServer())
-        .put('/member/password/update?id=1')
+        .put('/member/account/points/update?id=1')
         .send({
-          password: '123456',
-          newPassword: 'abc1234',
+          points: 1000,
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
+    it('Bind Member Card', async () => {
+      const { body } = await request(app.getHttpServer())
+        .put('/member/card/bind')
+        .send({
+          memberId: 1,
+          cardId: 1,
+          cardPlanId: 1,
         })
         .expect(200)
 

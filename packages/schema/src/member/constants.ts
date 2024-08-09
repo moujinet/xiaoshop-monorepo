@@ -116,13 +116,13 @@ export const MEMBER_GENDERS = [
  */
 export enum MemberAccountKey {
   ORDERS = 'orders',
-  ORDER_AMOUNT = 'order_amount',
+  ORDER_AMOUNT = 'orderAmount',
   EXP = 'exp',
   POINTS = 'points',
   BALANCE = 'balance',
-  SIGN_IN = 'sign_in',
+  SIGN_IN = 'signIn',
   LOGIN = 'login',
-  RED_PACKET = 'red_packet',
+  RED_PACKET = 'redPacket',
   COUPON = 'coupon',
 }
 
@@ -176,15 +176,15 @@ export const MEMBER_CARD_TYPES = [
  * 枚举: 会员卡套餐类型
  *
  * - `TIMES`: 次数
- * - `DAYS`: 天数
- * - `MONTHS`: 月数
- * - `YEARS`: 年数
+ * - `DAY`: 天数
+ * - `MONTH`: 月数
+ * - `YEAR`: 年数
  */
 export enum MemberCardPlanType {
   TIMES = 'times',
-  DAYS = 'days',
-  MONTHS = 'months',
-  YEARS = 'years',
+  DAY = 'day',
+  MONTH = 'month',
+  YEAR = 'year',
 }
 
 /**
@@ -194,9 +194,9 @@ export enum MemberCardPlanType {
  */
 export const MEMBER_CARD_PLAN_TYPES = [
   { label: '次数', unit: '次', value: MemberCardPlanType.TIMES },
-  { label: '天数', unit: '天', value: MemberCardPlanType.DAYS },
-  { label: '月数', unit: '月', value: MemberCardPlanType.MONTHS },
-  { label: '年数', unit: '年', value: MemberCardPlanType.YEARS },
+  { label: '天数', unit: '天', value: MemberCardPlanType.DAY },
+  { label: '月数', unit: '月', value: MemberCardPlanType.MONTH },
+  { label: '年数', unit: '年', value: MemberCardPlanType.YEAR },
 ]
 
 // -----------------------------------------------

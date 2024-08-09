@@ -24,6 +24,16 @@ export class MemberCardService {
   ) {}
 
   /**
+   * 判断会员卡是否存在
+   *
+   * @param id 会员卡 ID
+   * @returns Promise<IMemberCard>
+   */
+  async existsCard(id: number): Promise<boolean> {
+    return await this.repository.existsBy({ id })
+  }
+
+  /**
    * 获取会员卡等级列表
    *
    * @returns Promise<IMemberLevelListItem[]>
@@ -157,6 +167,31 @@ export class MemberCardService {
     }
     catch (e) {
       throw new FailedException('获取会员卡详情', e.message, e.status)
+    }
+  }
+
+  /**
+   * 获取会员卡样式
+   *
+   * @param id 会员卡 ID
+   * @returns Promise<Pick<IMemberCard, 'badgeStyles' | 'cardStyles'>>
+   * @throws {NotFoundException} 会员卡不存在
+   * @throws {FailedException} 获取会员卡样式失败
+   */
+  async findCardStyles(id: number): Promise<Pick<IMemberCard, 'badgeStyles' | 'cardStyles'>> {
+    try {
+      const card = await this.repository.findOne({
+        select: ['badgeStyles', 'cardStyles'],
+        where: { id },
+      })
+
+      if (!card)
+        throw new NotFoundException('会员卡不存在')
+
+      return card
+    }
+    catch (e) {
+      throw new FailedException('获取会员卡样式', e.message, e.status)
     }
   }
 

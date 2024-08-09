@@ -60,6 +60,15 @@ export class Goods implements IGoods {
   @Column({ name: 'is_warning', type: 'char', length: 1, default: Enabled.NO, comment: '是否预警 (N:否 Y:是)' })
   isWarning: IEnabled
 
+  @Column({ name: 'tag_id', type: 'int', unsigned: true, default: 0, comment: '商品标签 ID' })
+  tagId: number
+
+  @Column({ name: 'brand_id', type: 'int', unsigned: true, default: 0, comment: '商品品牌 ID' })
+  brandId: number
+
+  @Column({ name: 'group_id', type: 'int', unsigned: true, default: 0, comment: '商品分组 ID' })
+  groupId: number
+
   @Column({ type: 'simple-json', default: null, comment: '商品图片' })
   images: string[]
 
@@ -175,27 +184,27 @@ export class Goods implements IGoods {
   attributes: IGoodsAttribute[]
 
   @OneToOne(() => GoodsTag, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'tag_id' })
   tag: GoodsTag
 
   @OneToOne(() => GoodsGroup, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'group_id' })
   group: GoodsGroup
 
   @OneToOne(() => GoodsBrand, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'brand_id' })
   brand: GoodsBrand
 
   @ManyToMany(() => GoodsCategory, { createForeignKeyConstraints: false })
-  @JoinTable({ name: 'shop_goods_has_categories' })
+  @JoinTable({ name: 'shop_goods_has_categories', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'category_id' } })
   categories: GoodsCategory[]
 
   @ManyToMany(() => GoodsProtection, { createForeignKeyConstraints: false })
-  @JoinTable({ name: 'shop_goods_has_protections' })
+  @JoinTable({ name: 'shop_goods_has_protections', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'protection_id' } })
   protections: GoodsProtection[]
 
   @ManyToMany(() => GoodsAddition, { createForeignKeyConstraints: false })
-  @JoinTable({ name: 'shop_goods_has_additions' })
+  @JoinTable({ name: 'shop_goods_has_additions', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'addition_id' } })
   additions: GoodsAddition[]
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', comment: '创建时间' })

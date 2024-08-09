@@ -2,19 +2,22 @@ import {
   Enabled,
   type IEnabled,
   type ILocationPath,
+  type IMember,
   type IMemberAddress,
-  type IMemberProfile,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Member } from '@/member/account/entities'
+import { Member } from '@/member/profile/entity'
 
 @Entity('shop_member_address', {
   comment: '会员地址表',
 })
-@Index('IDX_shop_member_address', ['isDefault', 'updatedTime'])
+@Index('IDX_shop_member_address', ['memberId', 'isDefault', 'updatedTime'])
 export class MemberAddress implements IMemberAddress {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_address' })
   id: number
+
+  @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID' })
+  memberId: number
 
   @Column({ name: 'contract_name', type: 'varchar', length: 32, nullable: false, default: '', comment: '联系人' })
   contractName: string
@@ -41,6 +44,6 @@ export class MemberAddress implements IMemberAddress {
   updatedTime: string
 
   @OneToOne(() => Member, { createForeignKeyConstraints: false })
-  @JoinColumn()
-  member: IMemberProfile
+  @JoinColumn({ name: 'member_id' })
+  member: IMember
 }

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class GoodsSettings1723089487311 implements MigrationInterface {
+export class GoodsSettings1723186931106 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`INSERT INTO \`manage_settings\` (\`key\`, \`value\`) VALUES 
       ('goods.preference.enableGoodsStock', '1'),

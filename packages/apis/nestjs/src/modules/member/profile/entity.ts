@@ -11,9 +11,10 @@ import {
   MemberStatus,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { MemberAccount, MemberBindCard } from '@/member/account/entities'
-import { MemberGroup } from '@/member/group/entity'
 import { MemberTag } from '@/member/tag/entity'
+import { MemberGroup } from '@/member/group/entity'
+import { MemberAccount } from '@/member/account/entity'
+import { MemberCardBinding } from '@/member/binding/entity'
 
 @Entity('shop_member', {
   comment: '会员信息表',
@@ -28,6 +29,9 @@ export class Member implements IMember {
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberSource.MANUAL, comment: '注册来源' })
   source: IMemberSource
+
+  @Column({ name: 'group_id', type: 'int', unsigned: true, default: 0, comment: '会员群体 ID' })
+  groupId: number
 
   @Column({ name: 'card_no', type: 'varchar', length: 16, nullable: false, default: '', comment: '会员卡号' })
   cardNo: string
@@ -60,19 +64,19 @@ export class Member implements IMember {
   location: ILocationPath
 
   @OneToMany(() => MemberAccount, account => account.member, { cascade: true, createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'account_id' })
   account: MemberAccount[]
 
-  @OneToOne(() => MemberBindCard, { cascade: true, createForeignKeyConstraints: false })
-  @JoinColumn()
-  card: MemberBindCard
+  @OneToOne(() => MemberCardBinding, { cascade: true, createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'card_binding_id' })
+  card: MemberCardBinding
 
   @OneToOne(() => MemberGroup, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'group_id' })
   group: IMemberGroupDict
 
   @ManyToMany(() => MemberTag, { createForeignKeyConstraints: false })
-  @JoinTable({ name: 'shop_member_has_tags' })
+  @JoinTable({ name: 'shop_member_has_tags', joinColumn: { name: 'member_id' }, inverseJoinColumn: { name: 'tag_id' } })
   tags: IMemberTagDict[]
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })

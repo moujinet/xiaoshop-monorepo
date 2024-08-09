@@ -9,6 +9,7 @@ export const MemberSettings: ISettingsDict = {
   'register.passwordLength': '6',
   'register.passwordStrong': '["number", "lower"]',
   'register.defaultAvatar': '',
+  'register.defaultCardId': '1',
 
   // 会员管理 - 注销设置
   'logout.enableLogout': '1',

@@ -26,6 +26,12 @@ export class Account implements IStaffAccount {
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '员工状态' })
   status: IStaffAccountStatus
 
+  @Column({ name: 'department_id', type: 'int', unsigned: true, default: 0, comment: '部门 ID' })
+  departmentId: number
+
+  @Column({ name: 'position_id', type: 'int', unsigned: true, default: 0, comment: '职位 ID' })
+  positionId: number
+
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '员工账号' })
   username: string
 
@@ -51,14 +57,14 @@ export class Account implements IStaffAccount {
   lastLoginTime: string
 
   @ManyToMany(() => Role, { createForeignKeyConstraints: false })
-  @JoinTable({ name: 'manage_staff_account_has_roles' })
+  @JoinTable({ name: 'manage_staff_account_has_roles', joinColumn: { name: 'staff_id' }, inverseJoinColumn: { name: 'role_id' } })
   roles: IStaffRoleInfo[]
 
   @OneToOne(() => Department, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'department_id' })
   department: IStaffDepartmentDict
 
   @OneToOne(() => Position, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'position_id' })
   position: IStaffPositionDict
 }
