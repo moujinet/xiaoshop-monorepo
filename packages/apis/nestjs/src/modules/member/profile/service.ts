@@ -294,11 +294,16 @@ export class MemberService {
       const created = await this.repository.save(member)
 
       // 绑定会员卡
-      await this.memberCardBinding.bindMemberCard(
+      const binding = await this.memberCardBinding.bindMemberCard(
         created.id,
         data.cardId || 0,
         data.cardPlanId || 0,
       )
+
+      await this.repository.update(created.id, {
+        cardNo: created.id.toString().padStart(8, '0'),
+        card: binding,
+      })
     }
     catch (e) {
       throw new FailedException('创建会员失败', e.message, e.status)

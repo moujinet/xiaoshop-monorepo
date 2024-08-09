@@ -64,7 +64,7 @@ export class MemberCardBindingService {
       }) || new MemberCardBinding()
 
       // 相同会员卡不重复绑定
-      if (binding.cardId === cardId && (!planId || binding.planId === planId))
+      if (cardId !== 0 && binding.cardId === cardId && (!planId || binding.planId === planId))
         return binding
 
       // 默认会员卡
