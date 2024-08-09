@@ -136,9 +136,6 @@ export class MemberCardService {
         },
       })
 
-      if (!card)
-        throw new NotFoundException('会员卡不存在')
-
       return card
     }
     catch (e) {
