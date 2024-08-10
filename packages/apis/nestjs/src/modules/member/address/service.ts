@@ -10,7 +10,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Member } from '@/member/profile/entity'
 import { MemberAddress } from '@/member/address/entity'
-import { GetMemberAddressPagesRequest, MemberAddressPayload } from '@/member/address/dto'
+import { GetMemberAddressListRequest, GetMemberAddressPagesRequest, MemberAddressPayload } from '@/member/address/dto'
 import { FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()
@@ -46,6 +46,9 @@ export class MemberAddressService {
           isDefault: true,
           updatedTime: true,
         },
+        where: {
+          memberId: query.memberId,
+        },
         skip: pagesize * (page - 1),
         take: pagesize,
         order: {
@@ -64,10 +67,11 @@ export class MemberAddressService {
   /**
    * 获取会员收货地址字典列表
    *
+   * @param query 查询条件
    * @returns Promise<IMemberAddressInfo[]>
    * @throws {FailedException} 获取会员收货地址字典失败
    */
-  async findList(): Promise<IMemberAddressInfo[]> {
+  async findList(query: GetMemberAddressListRequest): Promise<IMemberAddressInfo[]> {
     try {
       return await this.repository.find({
         select: {
@@ -76,6 +80,9 @@ export class MemberAddressService {
           mobile: true,
           location: true,
           address: true,
+        },
+        where: {
+          memberId: query.memberId,
         },
         order: {
           isDefault: 'DESC',
@@ -177,6 +184,71 @@ export class MemberAddressService {
     }
     catch (e) {
       throw new FailedException('更新会员收货地址', e.message, e.status)
+    }
+  }
+
+  /**
+   * 获取默认会员收货地址
+   *
+   * @param memberId 会员 ID
+   * @returns Promise<IMemberAddress>
+   * @throws {NotFoundException} 会员不存在
+   * @throws {FailedException} 获取默认收货地址失败
+   */
+  async findDefaultAddress(memberId: number): Promise<IMemberAddress> {
+    try {
+      const member = await this.memberRepo.existsBy({ id: memberId })
+
+      if (!member)
+        throw new NotFoundException('会员不存在')
+
+      const founded = await this.repository.findOne({
+        where: {
+          memberId,
+          isDefault: Enabled.YES,
+        },
+      })
+
+      if (founded)
+        return founded
+
+      return await this.repository.findOne({
+        where: {
+          memberId,
+        },
+      })
+    }
+    catch (e) {
+      throw new FailedException('获取默认收货地址', e.message, e.status)
+    }
+  }
+
+  /**
+   * 设置默认会员收货地址
+   *
+   * @param memberId 会员 ID
+   * @param id 会员收货地址 ID
+   * @throws {NotFoundException} 会员不存在
+   * @throws {NotFoundException} 未找到会员收货地址
+   * @throws {FailedException} 设置默认收货地址失败
+   */
+  async setDefault(memberId: number, id: number) {
+    try {
+      const member = await this.memberRepo.existsBy({ id: memberId })
+
+      if (!member)
+        throw new NotFoundException('会员不存在')
+
+      const founded = await this.repository.existsBy({ id })
+
+      if (!founded)
+        throw new NotFoundException('未找到会员收货地址')
+
+      await this.repository.update({ memberId }, { isDefault: Enabled.NO })
+      await this.repository.update({ id }, { isDefault: Enabled.YES })
+    }
+    catch (e) {
+      throw new FailedException('设置默认收货地址', e.message, e.status)
     }
   }
 

@@ -15,6 +15,9 @@ export class MemberAddressResponse implements IMemberAddress {
   @ApiProperty({ description: '会员收货地址 ID', example: 1 })
   readonly id: number
 
+  @ApiProperty({ description: '会员 ID', example: 1 })
+  readonly memberId: number
+
   @ApiProperty({ description: '联系人', example: example.contractName })
   readonly contractName: string
 

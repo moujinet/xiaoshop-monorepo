@@ -15,6 +15,8 @@ import {
 } from '~/common/exception'
 import {
   DeleteMemberAddressRequest,
+  GetMemberAddressByMemberIdRequest,
+  GetMemberAddressListRequest,
   GetMemberAddressPagesRequest,
   GetMemberAddressRequest,
   MemberAddressInfoResponse,
@@ -48,8 +50,8 @@ export class MemberAddressController {
   @ApiListedResponse(MemberAddressInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员收货地址字典失败' })
   @Get('list')
-  async list() {
-    return this.service.findList()
+  async list(@Query() query: GetMemberAddressListRequest) {
+    return this.service.findList(query)
   }
 
   @ApiOperation({
@@ -57,10 +59,38 @@ export class MemberAddressController {
   })
   @ApiObjectResponse(MemberAddressResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员收货地址详情失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员收货地址未找到' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('detail')
   async detail(@Query() query: GetMemberAddressRequest) {
     return this.service.findDetail(+query.id)
+  }
+
+  @ApiOperation({
+    summary: '获取默认「收货地址」',
+  })
+  @ApiObjectResponse(MemberAddressResponse)
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员收货地址详情失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
+  @Get('default')
+  async findDefaultAddress(@Query() query: GetMemberAddressByMemberIdRequest) {
+    return this.service.findDefaultAddress(query.memberId)
+  }
+
+  @ApiOperation({
+    summary: '设置默认「收货地址」',
+  })
+  @ApiObjectResponse(MemberAddressResponse)
+  @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '设置默认收货地址失败' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员不存在' })
+  @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员收货地址' })
+  @Put('default/update')
+  async setDefaultAddress(
+    @Query() query: GetMemberAddressByMemberIdRequest,
+    @Body('id') id: number,
+  ) {
+    return this.service.setDefault(query.memberId, id)
   }
 
   @ApiOperation({

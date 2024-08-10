@@ -5,9 +5,13 @@ import type { IEnabled, ILocationPath } from '@/common'
  */
 export interface IMemberAddress {
   /**
-   * 地址编号
+   * 地址 ID
    */
   id: number
+  /**
+   * 会员 ID
+   */
+  memberId: number
   /**
    * 联系人
    */

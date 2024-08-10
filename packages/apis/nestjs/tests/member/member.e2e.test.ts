@@ -407,6 +407,97 @@ describe('Member Module', () => {
     })
   })
 
+  // Member Address
+  describe('Member Address', () => {
+    it('Create Member Address', async () => {
+      const { body } = await request(app.getHttpServer())
+        .post('/member/address/create')
+        .send({
+          memberId: 1,
+          contractName: '测试',
+          mobile: '13500009987',
+          location: [{ code: '11', name: '北京' }],
+          address: '测试',
+          postCode: '110000',
+          isDefault: 'Y',
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
+    it('Update Member Address', async () => {
+      const { body } = await request(app.getHttpServer())
+        .put('/member/address/update?id=1')
+        .send({
+          memberId: 1,
+          contractName: '测试 (修改)',
+          mobile: '13500009987',
+          location: [{ code: '11', name: '北京' }],
+          address: '测试',
+          postCode: '110000',
+          isDefault: 'N',
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
+    it('Fetch Member Address Detail', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/member/address/detail?id=1')
+        .expect(200)
+
+      expect(body.data.contractName).toEqual('测试 (修改)')
+    })
+
+    it('Fetch Member Address Pages', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/member/address/pages?memberId=1')
+        .expect(200)
+
+      expect(body.data.total).toEqual(1)
+    })
+
+    it('Fetch Member Address List', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/member/address/list?memberId=1')
+        .expect(200)
+
+      expect(body.data.length).toEqual(1)
+    })
+
+    it('Fetch Member Default Address', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/member/address/default?memberId=1')
+        .expect(200)
+
+      expect(body.data.id).toEqual(1)
+    })
+
+    it('Update Member Default Address', async () => {
+      const { body } = await request(app.getHttpServer())
+        .put('/member/address/default/update?memberId=1')
+        .send({
+          id: 1,
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+
+    it('Delete Member Address', async () => {
+      const { body } = await request(app.getHttpServer())
+        .delete('/member/address/delete')
+        .send({
+          id: 1,
+        })
+        .expect(200)
+
+      expect(body.code).toEqual(0)
+    })
+  })
+
   // Member Logout
   describe('Member Logout', () => {
     it('Create Member Logout', async () => {
