@@ -4,7 +4,7 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取员工日志分页列表
  *
- * @api get /staffs/log/pages
+ * @api get /admin/staffs/log/pages
  * @param params Record<string, any>
  * @returns IUseRequestReturn<IApiPaginationData<IStaffLog>>
  */
@@ -13,7 +13,7 @@ export function fetchStaffLogPages(
 ): IUseRequestReturn<IApiPaginationData<IStaffLog>> {
   return useRequest<IApiPaginationData<IStaffLog>>({
     method: 'get',
-    url: '/staffs/log/pages',
+    url: '/admin/staffs/log/pages',
     params: {
       ...params,
       type: StaffLogType.LOGIN,

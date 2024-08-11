@@ -10,7 +10,7 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取素材分页列表
  *
- * @api get /assets/pages
+ * @api get /admin/assets/pages
  * @param params Record<string, any>
  * @returns IUseRequestReturn<IApiPaginationData<IAsset>>
  */
@@ -19,7 +19,7 @@ export function fetchAssetPages(
 ): IUseRequestReturn<IApiPaginationData<IAsset>> {
   return useRequest<IApiPaginationData<IAsset>>({
     method: 'get',
-    url: '/assets/pages',
+    url: '/admin/assets/pages',
     params,
   })
 }
@@ -27,7 +27,7 @@ export function fetchAssetPages(
 /**
  * 获取素材详情
  *
- * @api get /assets/detail
+ * @api get /admin/assets/detail
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAssetInfo>
  */
@@ -36,7 +36,7 @@ export function fetchAssetInfo(
 ): IUseRequestReturn<IAssetInfo> {
   return useRequest<IAssetInfo>({
     method: 'get',
-    url: '/assets/info',
+    url: '/admin/assets/info',
     params: {
       id,
     },
@@ -46,7 +46,7 @@ export function fetchAssetInfo(
 /**
  * 获取素材详情
  *
- * @api get /assets/detail
+ * @api get /admin/assets/detail
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAsset>
  */
@@ -55,7 +55,7 @@ export function fetchAssetDetail(
 ): IUseRequestReturn<IAsset> {
   return useRequest<IAsset>({
     method: 'get',
-    url: '/assets/detail',
+    url: '/admin/assets/detail',
     params: {
       id,
     },
@@ -96,8 +96,8 @@ export function uploadAsset(
   options: IUploadAssetOptions,
 ) {
   const url = data.type === AssetType.IMAGE
-    ? '/assets/upload/image'
-    : '/assets/upload/video'
+    ? '/admin/assets/upload/image'
+    : '/admin/assets/upload/video'
 
   return useUploadRequest<IAssetUploadOptions>({
     url,
@@ -110,14 +110,14 @@ export function uploadAsset(
 /**
  * 删除素材
  *
- * @api delete /assets/delete
+ * @api delete /admin/assets/delete
  * @param id IAsset['id']
  * @returns Promise<any>
  */
 export function deleteAsset(id: IAsset['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/assets/delete',
+    url: '/admin/assets/delete',
     data: {
       id,
     },

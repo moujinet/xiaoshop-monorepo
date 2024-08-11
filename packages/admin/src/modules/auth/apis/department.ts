@@ -8,7 +8,7 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取组织部门树
  *
- * @api get /staffs/department/list
+ * @api get /admin/staffs/department/list
  * @returns IUseRequestReturn<IStaffDepartmentTreeItem[]>
  */
 export function fetchDepartmentTree(): IUseRequestReturn<IStaffDepartmentTreeItem[]> {
@@ -19,7 +19,7 @@ export function fetchDepartmentTree(): IUseRequestReturn<IStaffDepartmentTreeIte
     refreshData,
   } = useRequest<IStaffDepartmentTreeItem[]>({
     method: 'get',
-    url: '/staffs/department/list',
+    url: '/admin/staffs/department/list',
   })
 
   return {
@@ -33,27 +33,27 @@ export function fetchDepartmentTree(): IUseRequestReturn<IStaffDepartmentTreeIte
 /**
  * 获取组织部门根节点
  *
- * @api get /staffs/department/root/list
+ * @api get /admin/staffs/department/root/list
  * @returns IUseRequestReturn<IStaffDepartmentDict[]>
  */
 export function fetchDepartmentRootList(): IUseRequestReturn<IStaffDepartmentDict[]> {
   return useRequest<IStaffDepartmentDict[]>({
     method: 'get',
-    url: '/staffs/department/root/list',
+    url: '/admin/staffs/department/root/list',
   })
 }
 
 /**
  * 获取组织部门详情
  *
- * @api get /staffs/department/detail
+ * @api get /admin/staffs/department/detail
  * @param id IStaffDepartment['id']
  * @returns IUseRequestReturn<IStaffDepartment>
  */
 export function fetchDepartmentDetail(id: IStaffDepartment['id']): IUseRequestReturn<IStaffDepartment> {
   return useRequest<IStaffDepartment>({
     method: 'get',
-    url: '/staffs/department/detail',
+    url: '/admin/staffs/department/detail',
     params: {
       id,
     },
@@ -63,14 +63,14 @@ export function fetchDepartmentDetail(id: IStaffDepartment['id']): IUseRequestRe
 /**
  * 创建组织部门
  *
- * @api post /staffs/department/create
+ * @api post /admin/staffs/department/create
  * @param data IFormData<IStaffDepartment>
  * @returns Promise<any>
  */
 export function createDepartment(data: IFormData<IStaffDepartment>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/staffs/department/create',
+    url: '/admin/staffs/department/create',
     data,
   })
 }
@@ -78,7 +78,7 @@ export function createDepartment(data: IFormData<IStaffDepartment>): Promise<any
 /**
  * 更新组织部门
  *
- * @api put /staffs/department/update
+ * @api put /admin/staffs/department/update
  * @param id IStaffDepartment['id']
  * @param data IFormData<IStaffDepartment>
  * @returns Promise<any>
@@ -86,7 +86,7 @@ export function createDepartment(data: IFormData<IStaffDepartment>): Promise<any
 export function updateDepartment(id: IStaffDepartment['id'], data: IFormData<IStaffDepartment>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/staffs/department/update',
+    url: '/admin/staffs/department/update',
     params: { id },
     data,
   })
@@ -95,14 +95,14 @@ export function updateDepartment(id: IStaffDepartment['id'], data: IFormData<ISt
 /**
  * 删除组织部门
  *
- * @api delete /staffs/department/delete
+ * @api delete /admin/staffs/department/delete
  * @param id IStaffDepartment['id']
  * @returns Promise<any>
  */
 export function deleteDepartment(id: IStaffDepartment['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/staffs/department/delete',
+    url: '/admin/staffs/department/delete',
     data: {
       id,
     },

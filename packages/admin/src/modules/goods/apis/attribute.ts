@@ -4,33 +4,33 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品属性模板列表
  *
- * @api get /goods/attribute-template/list
+ * @api get /admin/goods/attribute-template/list
  * @returns IUseRequestReturn<IGoodsAttributeTemplateListItem[]>
  */
 export function fetchGoodsAttributeTemplateList(): IUseRequestReturn<IGoodsAttributeTemplateListItem[]> {
   return useRequest<IGoodsAttributeTemplateListItem[]>({
     method: 'get',
-    url: '/goods/attribute-template/list',
+    url: '/admin/goods/attribute-template/list',
   })
 }
 
 /**
  * 获取商品属性模板字典列表
  *
- * @api get /goods/attribute-template/dict/list
+ * @api get /admin/goods/attribute-template/dict/list
  * @returns IUseRequestReturn<IGoodsAttributeTemplateDict[]>
  */
 export function fetchGoodsAttributeTemplateDictList(): IUseRequestReturn<IGoodsAttributeTemplateDict[]> {
   return useRequest<IGoodsAttributeTemplateDict[]>({
     method: 'get',
-    url: '/goods/attribute-template/dict/list',
+    url: '/admin/goods/attribute-template/dict/list',
   })
 }
 
 /**
  * 获取商品属性模板详情
  *
- * @api get /goods/attribute-template/detail
+ * @api get /admin/goods/attribute-template/detail
  * @param id IGoodsAttributeTemplate['id']
  * @returns IUseRequestReturn<IGoodsAttributeTemplate>
  */
@@ -39,7 +39,7 @@ export function fetchGoodsAttributeTemplateDetail(
 ): IUseRequestReturn<IGoodsAttributeTemplate> {
   return useRequest<IGoodsAttributeTemplate>({
     method: 'get',
-    url: '/goods/attribute-template/detail',
+    url: '/admin/goods/attribute-template/detail',
     params: {
       id,
     },
@@ -49,7 +49,7 @@ export function fetchGoodsAttributeTemplateDetail(
 /**
  * 创建商品属性模板
  *
- * @api post /goods/attribute-template/create
+ * @api post /admin/goods/attribute-template/create
  * @param data IFormData<IGoodsAttributeTemplate>
  * @returns Promise<any>
  */
@@ -58,7 +58,7 @@ export function createGoodsAttributeTemplate(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/attribute-template/create',
+    url: '/admin/goods/attribute-template/create',
     data,
   })
 }
@@ -66,7 +66,7 @@ export function createGoodsAttributeTemplate(
 /**
  * 更新商品属性模板
  *
- * @api put /goods/attribute-template/update
+ * @api put /admin/goods/attribute-template/update
  * @param id IGoodsAttributeTemplate['id']
  * @param data IFormData<IGoodsAttributeTemplate>
  * @returns Promise<any>
@@ -77,7 +77,7 @@ export function updateGoodsAttributeTemplate(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/attribute-template/update',
+    url: '/admin/goods/attribute-template/update',
     data,
     params: {
       id,
@@ -88,14 +88,14 @@ export function updateGoodsAttributeTemplate(
 /**
  * 删除商品属性模板
  *
- * @api delete /goods/attribute-template/delete
+ * @api delete /admin/goods/attribute-template/delete
  * @param id IGoodsAttributeTemplate['id']
  * @returns Promise<any>
  */
 export function deleteGoodsAttributeTemplate(id: IGoodsAttributeTemplate['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/attribute-template/delete',
+    url: '/admin/goods/attribute-template/delete',
     data: {
       id,
     },

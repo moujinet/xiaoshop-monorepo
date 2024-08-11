@@ -1,4 +1,5 @@
 import type {
+  IApiPaginationData,
   IStaffRole,
   IStaffRoleDict,
 } from '@xiaoshop/schema'
@@ -7,14 +8,14 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取员工角色分页列表
  *
- * @api get /staffs/role/pages
+ * @api get /admin/staffs/role/pages
  * @param params IFormData<IStaffRole>
  * @returns IUseRequestReturn<IApiPaginationData<IStaffRole>>
  */
 export function fetchRolePages(params?: IFormData<IStaffRole>): IUseRequestReturn<IApiPaginationData<IStaffRole>> {
   return useRequest<IApiPaginationData<IStaffRole>>({
     method: 'get',
-    url: '/staffs/role/pages',
+    url: '/admin/staffs/role/pages',
     params,
   })
 }
@@ -22,27 +23,27 @@ export function fetchRolePages(params?: IFormData<IStaffRole>): IUseRequestRetur
 /**
  * 获取员工角色列表
  *
- * @api get /staffs/role/list
+ * @api get /admin/staffs/role/list
  * @returns IUseRequestReturn<IStaffRoleDict[]>
  */
 export function fetchRoleList(): IUseRequestReturn<IStaffRoleDict[]> {
   return useRequest<IStaffRoleDict[]>({
     method: 'get',
-    url: '/staffs/role/list',
+    url: '/admin/staffs/role/list',
   })
 }
 
 /**
  * 获取员工角色详情
  *
- * @api get /staffs/role/detail
+ * @api get /admin/staffs/role/detail
  * @param id IStaffRole['id']
  * @returns IUseRequestReturn<IStaffRole>
  */
 export function fetchRoleDetail(id: IStaffRole['id']): IUseRequestReturn<IStaffRole> {
   return useRequest<IStaffRole>({
     method: 'get',
-    url: '/staffs/role/detail',
+    url: '/admin/staffs/role/detail',
     params: {
       id,
     },
@@ -52,14 +53,14 @@ export function fetchRoleDetail(id: IStaffRole['id']): IUseRequestReturn<IStaffR
 /**
  * 创建员工角色
  *
- * @api post /staffs/role/create
+ * @api post /admin/staffs/role/create
  * @param data IFormData<IStaffRole>
  * @returns Promise<any>
  */
 export function createRole(data: IFormData<IStaffRole>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/staffs/role/create',
+    url: '/admin/staffs/role/create',
     data,
   })
 }
@@ -67,7 +68,7 @@ export function createRole(data: IFormData<IStaffRole>): Promise<any> {
 /**
  * 更新员工角色
  *
- * @api put /staffs/role/update
+ * @api put /admin/staffs/role/update
  * @param id IStaffRole['id']
  * @param data IFormData<IStaffRole>
  * @returns Promise<any>
@@ -75,7 +76,7 @@ export function createRole(data: IFormData<IStaffRole>): Promise<any> {
 export function updateRole(id: IStaffRole['id'], data: IFormData<IStaffRole>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/staffs/role/update',
+    url: '/admin/staffs/role/update',
     params: { id },
     data,
   })
@@ -84,14 +85,14 @@ export function updateRole(id: IStaffRole['id'], data: IFormData<IStaffRole>): P
 /**
  * 删除员工角色
  *
- * @api delete /staffs/role/delete
+ * @api delete /admin/staffs/role/delete
  * @param id IStaffRole['id']
  * @returns Promise<any>
  */
 export function deleteRole(id: IStaffRole['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/staffs/role/delete',
+    url: '/admin/staffs/role/delete',
     data: {
       id,
     },

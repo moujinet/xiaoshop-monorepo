@@ -4,7 +4,7 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品分类列表
  *
- * @api get /goods/category/list
+ * @api get /admin/goods/category/list
  * @param parentId IGoodsCategory['id']
  * @returns IUseRequestReturn<IGoodsCategoryListItem[]>
  */
@@ -13,7 +13,7 @@ export function fetchGoodsCategoryList(
 ): IUseRequestReturn<IGoodsCategoryListItem[]> {
   return useRequest<IGoodsCategoryListItem[]>({
     method: 'get',
-    url: '/goods/category/list',
+    url: '/admin/goods/category/list',
     params: {
       parentId,
     },
@@ -23,7 +23,7 @@ export function fetchGoodsCategoryList(
 /**
  * 获取商品分类树
  *
- * @api get /goods/category/nested/list
+ * @api get /admin/goods/category/nested/list
  * @returns IUseRequestReturn<IGoodsCategoryTreeItem[]>
  */
 export function fetchGoodsCategoryTree(): IUseRequestReturn<IGoodsCategoryTreeItem[]> {
@@ -34,7 +34,7 @@ export function fetchGoodsCategoryTree(): IUseRequestReturn<IGoodsCategoryTreeIt
     refreshData,
   } = useRequest<IGoodsCategoryTreeItem[]>({
     method: 'get',
-    url: '/goods/category/nested/list',
+    url: '/admin/goods/category/nested/list',
   })
 
   return {
@@ -48,7 +48,7 @@ export function fetchGoodsCategoryTree(): IUseRequestReturn<IGoodsCategoryTreeIt
 /**
  * 获取商品分类详情
  *
- * @api get /goods/category/detail
+ * @api get /admin/goods/category/detail
  * @param id IGoodsCategory['id']
  * @returns IUseRequestReturn<IGoodsCategory>
  */
@@ -57,7 +57,7 @@ export function fetchGoodsCategoryDetail(
 ): IUseRequestReturn<IGoodsCategory> {
   return useRequest<IGoodsCategory>({
     method: 'get',
-    url: '/goods/category/detail',
+    url: '/admin/goods/category/detail',
     params: {
       id,
     },
@@ -67,14 +67,14 @@ export function fetchGoodsCategoryDetail(
 /**
  * 创建商品分类
  *
- * @api post /goods/category/create
+ * @api post /admin/goods/category/create
  * @param data IFormData<IGoodsCategory>
  * @returns Promise<any>
  */
 export function createGoodsCategory(data: IFormData<IGoodsCategory>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/category/create',
+    url: '/admin/goods/category/create',
     data,
   })
 }
@@ -82,7 +82,7 @@ export function createGoodsCategory(data: IFormData<IGoodsCategory>): Promise<an
 /**
  * 更新商品分类
  *
- * @api put /goods/category/update
+ * @api put /admin/goods/category/update
  * @param id IGoodsCategory['id']
  * @param data IFormData<IGoodsCategory>
  * @returns Promise<any>
@@ -93,7 +93,7 @@ export function updateGoodsCategory(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/category/update',
+    url: '/admin/goods/category/update',
     data,
     params: {
       id,
@@ -104,14 +104,14 @@ export function updateGoodsCategory(
 /**
  * 删除商品分类
  *
- * @api delete /goods/category/delete
+ * @api delete /admin/goods/category/delete
  * @param id IGoodsCategory['id']
  * @returns Promise<any>
  */
 export function deleteGoodsCategory(id: IGoodsCategory['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/category/delete',
+    url: '/admin/goods/category/delete',
     data: {
       id,
     },
