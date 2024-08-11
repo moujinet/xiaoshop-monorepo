@@ -6,7 +6,7 @@ import {
   StaffLogType,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Account } from '@/staffs/account/entity'
+import { StaffAccount } from '@/staffs/account/entity'
 
 @Entity('manage_staff_log', {
   comment: '员工操作日志表',
@@ -19,7 +19,7 @@ export class StaffLog implements IStaffLog {
   @Column({ type: 'varchar', length: 32, nullable: false, default: StaffLogType.OPERATE, comment: '日志类型' })
   type: IStaffLogType
 
-  @ManyToOne(() => Account, { createForeignKeyConstraints: false })
+  @ManyToOne(() => StaffAccount, { createForeignKeyConstraints: false })
   @JoinColumn()
   staff: IStaffAccountInfo
 

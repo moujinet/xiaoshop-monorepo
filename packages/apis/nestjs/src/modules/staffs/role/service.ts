@@ -2,16 +2,16 @@ import type { IApiPaginationData, IStaffRole, IStaffRoleDict } from '@xiaoshop/s
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Role } from '@/staffs/role/entity'
+import { StaffRole } from '@/staffs/role/entity'
 import { GetRolePagesRequest, RolePayload } from '@/staffs/role/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
 @Injectable()
-export class RoleService {
+export class StaffRoleService {
   constructor(
-    @InjectRepository(Role)
-    private readonly repository: Repository<Role>,
+    @InjectRepository(StaffRole)
+    private readonly repository: Repository<StaffRole>,
   ) {}
 
   /**

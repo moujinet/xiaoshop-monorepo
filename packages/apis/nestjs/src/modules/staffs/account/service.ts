@@ -3,19 +3,19 @@ import * as bcrypt from 'bcrypt'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Role } from '@/staffs/role/entity'
-import { Account } from '@/staffs/account/entity'
-import { Position } from '@/staffs/position/entity'
-import { Department } from '@/staffs/department/entity'
+import { StaffRole } from '@/staffs/role/entity'
+import { StaffAccount } from '@/staffs/account/entity'
+import { StaffPosition } from '@/staffs/position/entity'
+import { StaffDepartment } from '@/staffs/department/entity'
 import { GetAccountPagesRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staffs/account/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
 @Injectable()
-export class AccountService {
+export class StaffAccountService {
   constructor(
-    @InjectRepository(Account)
-    private readonly repository: Repository<Account>,
+    @InjectRepository(StaffAccount)
+    private readonly repository: Repository<StaffAccount>,
   ) {}
 
   /**
@@ -158,7 +158,7 @@ export class AccountService {
       if (existsMobile)
         throw new ExistsException(`员工手机 [${data.mobile}] `)
 
-      const account = new Account()
+      const account = new StaffAccount()
 
       account.username = data.username
       account.name = data.name
@@ -172,20 +172,20 @@ export class AccountService {
 
       if (data.roleIds && data.roleIds.length > 0) {
         for (const roleId of data.roleIds) {
-          const role = new Role()
+          const role = new StaffRole()
           role.id = roleId
           account.roles.push(role)
         }
       }
 
       if (data.positionId) {
-        const position = new Position()
+        const position = new StaffPosition()
         position.id = data.positionId
         account.position = position
       }
 
       if (data.departmentId) {
-        const department = new Department()
+        const department = new StaffDepartment()
         department.id = data.departmentId
         account.department = department
       }
@@ -238,7 +238,7 @@ export class AccountService {
       if (existsMobile)
         throw new ExistsException(`员工手机 [${data.mobile}] `)
 
-      const account = new Account()
+      const account = new StaffAccount()
 
       account.id = id
       account.username = data.username
@@ -255,20 +255,20 @@ export class AccountService {
 
       if (data.roleIds && data.roleIds.length > 0) {
         for (const roleId of data.roleIds) {
-          const role = new Role()
+          const role = new StaffRole()
           role.id = roleId
           account.roles.push(role)
         }
       }
 
       if (data.positionId) {
-        const position = new Position()
+        const position = new StaffPosition()
         position.id = data.positionId
         account.position = position
       }
 
       if (data.departmentId) {
-        const department = new Department()
+        const department = new StaffDepartment()
         department.id = data.departmentId
         account.department = department
       }

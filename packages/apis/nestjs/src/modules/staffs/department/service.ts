@@ -2,15 +2,15 @@ import type { IStaffDepartment, IStaffDepartmentDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Department } from '@/staffs/department/entity'
+import { StaffDepartment } from '@/staffs/department/entity'
 import { DepartmentPayload } from '@/staffs/department/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()
-export class DepartmentService {
+export class StaffDepartmentService {
   constructor(
-    @InjectRepository(Department)
-    private readonly repository: Repository<Department>,
+    @InjectRepository(StaffDepartment)
+    private readonly repository: Repository<StaffDepartment>,
   ) {}
 
   /**

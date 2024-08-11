@@ -1,12 +1,12 @@
 import type { IStaffDepartmentDict, IStaffPosition } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Department } from '@/staffs/department/entity'
+import { StaffDepartment } from '@/staffs/department/entity'
 
 @Entity('manage_staff_position', {
   comment: '组织职位表',
 })
 @Index('IDX_manage_staff_position', ['sort', 'updatedTime'])
-export class Position implements IStaffPosition {
+export class StaffPosition implements IStaffPosition {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_position' })
   id: number
 
@@ -25,7 +25,7 @@ export class Position implements IStaffPosition {
   @UpdateDateColumn({ name: 'updated_time', type: 'datetime', default: null, comment: '更新时间' })
   updatedTime: string
 
-  @ManyToOne(() => Department, { createForeignKeyConstraints: false })
+  @ManyToOne(() => StaffDepartment, { createForeignKeyConstraints: false })
   @JoinColumn()
   department: IStaffDepartmentDict
 }

@@ -6,9 +6,9 @@ import { GetMemberIdRequest, MemberAccountResponse } from '@/member/account/dto'
 import { EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiObjectResponse } from '~/common/response/decorators'
 
-@ApiTags('会员/账户')
-@Controller('member/account')
-export class MemberAccountController {
+@ApiTags('管理/会员/账户')
+@Controller('admin/member/account')
+export class MemberAccountAdminController {
   constructor(
     private readonly service: MemberAccountService,
   ) {}

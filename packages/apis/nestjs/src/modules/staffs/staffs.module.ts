@@ -1,55 +1,55 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { Account } from '@/staffs/account/entity'
-import { AccountService } from '@/staffs/account/service'
-import { AccountController } from '@/staffs/account/controller'
+import { StaffAccount } from '@/staffs/account/entity'
+import { StaffAccountService } from '@/staffs/account/service'
+import { StaffAccountAdminController } from '@/staffs/account/controller.admin'
 
-import { Department } from '@/staffs/department/entity'
-import { DepartmentService } from '@/staffs/department/service'
-import { DepartmentController } from '@/staffs/department/controller'
+import { StaffDepartment } from '@/staffs/department/entity'
+import { StaffDepartmentService } from '@/staffs/department/service'
+import { StaffDepartmentAdminController } from '@/staffs/department/controller.admin'
 
-import { Position } from '@/staffs/position/entity'
-import { PositionService } from '@/staffs/position/service'
-import { PositionController } from '@/staffs/position/controller'
+import { StaffPosition } from '@/staffs/position/entity'
+import { StaffPositionService } from '@/staffs/position/service'
+import { StaffPositionAdminController } from '@/staffs/position/controller.admin'
 
-import { Role } from '@/staffs/role/entity'
-import { RoleService } from '@/staffs/role/service'
-import { RoleController } from '@/staffs/role/controller'
+import { StaffRole } from '@/staffs/role/entity'
+import { StaffRoleService } from '@/staffs/role/service'
+import { StaffRoleAdminController } from '@/staffs/role/controller.admin'
 
 import { StaffLog } from '@/staffs/log/entity'
 import { StaffLogService } from '@/staffs/log/service'
-import { StaffLogController } from '@/staffs/log/controller'
+import { StaffLogAdminController } from '@/staffs/log/controller.admin'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Account,
-      Department,
-      Position,
-      Role,
+      StaffAccount,
+      StaffDepartment,
+      StaffPosition,
+      StaffRole,
       StaffLog,
     ]),
   ],
 
   controllers: [
-    AccountController,
-    DepartmentController,
-    PositionController,
-    RoleController,
-    StaffLogController,
+    StaffAccountAdminController,
+    StaffDepartmentAdminController,
+    StaffPositionAdminController,
+    StaffRoleAdminController,
+    StaffLogAdminController,
   ],
 
   providers: [
-    AccountService,
-    DepartmentService,
-    PositionService,
-    RoleService,
+    StaffAccountService,
+    StaffDepartmentService,
+    StaffPositionService,
+    StaffRoleService,
     StaffLogService,
   ],
 
   exports: [
-    AccountService,
+    StaffAccountService,
     StaffLogService,
   ],
 })

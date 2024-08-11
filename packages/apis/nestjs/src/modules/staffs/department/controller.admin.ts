@@ -3,13 +3,13 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse } from '~/common/response/decorators'
 import { DeleteDepartmentRequest, DepartmentPayload, DepartmentResponse, GetDepartmentRequest } from '@/staffs/department/dto'
-import { DepartmentService } from '@/staffs/department/service'
+import { StaffDepartmentService } from '@/staffs/department/service'
 
-@ApiTags('组织部门')
-@Controller('staffs/department')
-export class DepartmentController {
+@ApiTags('管理/权限/组织部门')
+@Controller('admin/staffs/department')
+export class StaffDepartmentAdminController {
   constructor(
-    private readonly service: DepartmentService,
+    private readonly service: StaffDepartmentService,
   ) {}
 
   @ApiOperation({

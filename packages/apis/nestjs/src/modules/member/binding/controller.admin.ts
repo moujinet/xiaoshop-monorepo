@@ -5,9 +5,9 @@ import { EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse } from '~/common/response/decorators'
 import { BatchBindMemberCardPayload, BindMemberCardPayload } from '@/member/binding/dto'
 
-@ApiTags('会员/绑定会员卡')
-@Controller('member/card')
-export class MemberCardBindingController {
+@ApiTags('管理/会员/绑定会员卡')
+@Controller('admin/member/card')
+export class MemberCardBindingAdminController {
   constructor(
     private readonly service: MemberCardBindingService,
   ) {}

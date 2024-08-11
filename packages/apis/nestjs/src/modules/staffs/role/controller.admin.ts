@@ -3,13 +3,13 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
 import { DeleteRoleRequest, GetRolePagesRequest, GetRoleRequest, RoleDictResponse, RolePayload, RoleResponse } from '@/staffs/role/dto'
-import { RoleService } from '@/staffs/role/service'
+import { StaffRoleService } from '@/staffs/role/service'
 
-@ApiTags('员工角色')
-@Controller('staffs/role')
-export class RoleController {
+@ApiTags('管理/权限/员工角色')
+@Controller('admin/staffs/role')
+export class StaffRoleAdminController {
   constructor(
-    private readonly service: RoleService,
+    private readonly service: StaffRoleService,
   ) {}
 
   @ApiOperation({

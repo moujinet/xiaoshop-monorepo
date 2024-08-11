@@ -3,13 +3,13 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
 import { AccountResponse, DeleteAccountRequest, GetAccountPagesRequest, GetAccountRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staffs/account/dto'
-import { AccountService } from '@/staffs/account/service'
+import { StaffAccountService } from '@/staffs/account/service'
 
-@ApiTags('员工账号')
-@Controller('staffs/account')
-export class AccountController {
+@ApiTags('管理/权限/员工账号')
+@Controller('admin/staffs/account')
+export class StaffAccountAdminController {
   constructor(
-    private readonly service: AccountService,
+    private readonly service: StaffAccountService,
   ) {}
 
   @ApiOperation({

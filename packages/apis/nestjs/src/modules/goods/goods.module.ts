@@ -4,47 +4,47 @@ import { Global, Module, forwardRef } from '@nestjs/common'
 
 import { Goods } from '@/goods/manage/entity'
 import { GoodsService } from '@/goods/manage/service'
-import { GoodsController } from '@/goods/manage/controller'
+import { GoodsAdminController } from '@/goods/manage/controller.admin'
 
 import { GoodsSku } from '@/goods/sku/entity'
 import { GoodsSkuService } from '@/goods/sku/service'
-import { GoodsSkuController } from '@/goods/sku/controller'
+import { GoodsSkuAdminController } from '@/goods/sku/controller.admin'
 
 import { GoodsSpec } from '@/goods/spec/entity'
 import { GoodsSpecService } from '@/goods/spec/service'
-import { GoodsSpecController } from '@/goods/spec/controller'
+import { GoodsSpecAdminController } from '@/goods/spec/controller.admin'
 
 import { GoodsBrand } from '@/goods/brand/entity'
 import { GoodsBrandService } from '@/goods/brand/service'
-import { GoodsBrandController } from '@/goods/brand/controller'
+import { GoodsBrandAdminController } from '@/goods/brand/controller.admin'
 
 import { GoodsCategory } from '@/goods/category/entity'
 import { GoodsCategoryService } from '@/goods/category/service'
-import { GoodsCategoryController } from '@/goods/category/controller'
+import { GoodsCategoryAdminController } from '@/goods/category/controller.admin'
 
 import { GoodsGroup } from '@/goods/group/entity'
 import { GoodsGroupService } from '@/goods/group/service'
-import { GoodsGroupController } from '@/goods/group/controller'
+import { GoodsGroupAdminController } from '@/goods/group/controller.admin'
 
 import { GoodsTag } from '@/goods/tag/entity'
 import { GoodsTagService } from '@/goods/tag/service'
-import { GoodsTagController } from '@/goods/tag/controller'
+import { GoodsTagAdminController } from '@/goods/tag/controller.admin'
 
 import { GoodsAddition } from '@/goods/addition/entity'
 import { GoodsAdditionService } from '@/goods/addition/service'
-import { GoodsAdditionController } from '@/goods/addition/controller'
+import { GoodsAdditionAdminController } from '@/goods/addition/controller.admin'
 
 import { GoodsProtection } from '@/goods/protection/entity'
 import { GoodsProtectionService } from '@/goods/protection/service'
-import { GoodsProtectionController } from '@/goods/protection/controller'
+import { GoodsProtectionAdminController } from '@/goods/protection/controller.admin'
 
 import { GoodsAttributeTemplate } from '@/goods/attribute-template/entity'
 import { GoodsAttributeTemplateService } from '@/goods/attribute-template/service'
-import { GoodsAttributeTemplateController } from '@/goods/attribute-template/controller'
+import { GoodsAttributeTemplateAdminController } from '@/goods/attribute-template/controller.admin'
 
 import { GoodsExportRecord } from '@/goods/export/entity'
 import { GoodsExportRecordService } from '@/goods/export/service'
-import { GoodsExportRecordController } from '@/goods/export/controller'
+import { GoodsExportRecordAdminController } from '@/goods/export/controller.admin'
 import { GoodsExportTask } from '@/goods/export/tasks'
 
 import { AssetsModule } from '@/assets/assets.module'
@@ -90,17 +90,18 @@ import {
   ],
 
   controllers: [
-    GoodsController,
-    GoodsSpecController,
-    GoodsSkuController,
-    GoodsAttributeTemplateController,
-    GoodsBrandController,
-    GoodsCategoryController,
-    GoodsGroupController,
-    GoodsAdditionController,
-    GoodsProtectionController,
-    GoodsTagController,
-    GoodsExportRecordController,
+    // Admin
+    GoodsAdminController,
+    GoodsSpecAdminController,
+    GoodsSkuAdminController,
+    GoodsAttributeTemplateAdminController,
+    GoodsBrandAdminController,
+    GoodsCategoryAdminController,
+    GoodsGroupAdminController,
+    GoodsAdditionAdminController,
+    GoodsProtectionAdminController,
+    GoodsTagAdminController,
+    GoodsExportRecordAdminController,
   ],
 
   providers: [

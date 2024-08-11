@@ -24,9 +24,9 @@ import {
 } from '@/member/group/dto'
 import { MemberGroupService } from '@/member/group/service'
 
-@ApiTags('会员/群体')
-@Controller('member/group')
-export class MemberGroupController {
+@ApiTags('管理/会员/群体')
+@Controller('admin/member/group')
+export class MemberGroupAdminController {
   constructor(
     private readonly service: MemberGroupService,
   ) {}

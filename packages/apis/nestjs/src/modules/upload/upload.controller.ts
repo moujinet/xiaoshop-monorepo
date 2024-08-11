@@ -5,7 +5,7 @@ import { UPLOAD_IMAGE_MIMETYPE, UPLOAD_VIDEO_MIMETYPE } from '@/upload/constants
 import { UploadService } from '@/upload/upload.service'
 import { exceptionFactory } from '~/common/exception'
 
-@ApiTags('文件上传')
+@ApiTags('通用/文件上传')
 @Controller('upload')
 export class UploadController {
   constructor(

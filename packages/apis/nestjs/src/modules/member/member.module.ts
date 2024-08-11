@@ -1,47 +1,47 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Module, forwardRef } from '@nestjs/common'
 
-import { MemberService } from '@/member/profile/service'
-import { MemberController } from '@/member/profile/controller'
 import { Member } from '@/member/profile/entity'
+import { MemberService } from '@/member/profile/service'
+import { MemberAdminController } from '@/member/profile/controller.admin'
 
-import { MemberAccountService } from '@/member/account/service'
-import { MemberAccountController } from '@/member/account/controller'
 import { MemberAccount } from '@/member/account/entity'
+import { MemberAccountService } from '@/member/account/service'
+import { MemberAccountAdminController } from '@/member/account/controller.admin'
 
-import { MemberCardBindingService } from '@/member/binding/service'
-import { MemberCardBindingController } from '@/member/binding/controller'
 import { MemberCardBinding } from '@/member/binding/entity'
+import { MemberCardBindingService } from '@/member/binding/service'
+import { MemberCardBindingAdminController } from '@/member/binding/controller.admin'
 
-import { MemberCardService } from '@/member/card/service'
-import { MemberCardController } from '@/member/card/controller'
 import { MemberCard } from '@/member/card/entity'
+import { MemberCardService } from '@/member/card/service'
+import { MemberCardAdminController } from '@/member/card/controller.admin'
 
 import { MemberGroup } from '@/member/group/entity'
 import { MemberGroupService } from '@/member/group/service'
-import { MemberGroupController } from '@/member/group/controller'
+import { MemberGroupAdminController } from '@/member/group/controller.admin'
 
 import { MemberTag } from '@/member/tag/entity'
 import { MemberTagService } from '@/member/tag/service'
-import { MemberTagController } from '@/member/tag/controller'
+import { MemberTagAdminController } from '@/member/tag/controller.admin'
 
-import { MemberPointsRule } from '@/member/points/entity'
-import { MemberPointsRuleService } from '@/member/points/service'
-import { MemberPointsRuleController } from '@/member/points/controller'
+import { MemberPointsRule } from '@/member/points-rule/entity'
+import { MemberPointsRuleService } from '@/member/points-rule/service'
+import { MemberPointsRuleAdminController } from '@/member/points-rule/controller.admin'
 
 import { MemberAddress } from '@/member/address/entity'
 import { MemberAddressService } from '@/member/address/service'
-import { MemberAddressController } from '@/member/address/controller'
+import { MemberAddressAdminController } from '@/member/address/controller.admin'
 
 import { MemberLogout } from '@/member/logout/entity'
 import { MemberLogoutService } from '@/member/logout/service'
-import { MemberLogoutController } from '@/member/logout/controller'
+import { MemberLogoutAdminController } from '@/member/logout/controller.admin'
 
-import { SettingsModule } from '@/settings/settings.module'
 import { MemberSettings } from '@/member/member.settings'
-
 import { MemberScheduler } from '@/member/member.scheduler'
 import { MEMBER_MODULE_ID } from '@/member/constants'
+
+import { SettingsModule } from '@/settings/settings.module'
 
 @Module({
   imports: [
@@ -67,15 +67,17 @@ import { MEMBER_MODULE_ID } from '@/member/constants'
   ],
 
   controllers: [
-    MemberController,
-    MemberAccountController,
-    MemberCardBindingController,
-    MemberCardController,
-    MemberGroupController,
-    MemberTagController,
-    MemberPointsRuleController,
-    MemberAddressController,
-    MemberLogoutController,
+
+    // admin
+    MemberAdminController,
+    MemberAccountAdminController,
+    MemberCardBindingAdminController,
+    MemberCardAdminController,
+    MemberGroupAdminController,
+    MemberTagAdminController,
+    MemberPointsRuleAdminController,
+    MemberAddressAdminController,
+    MemberLogoutAdminController,
   ],
 
   providers: [

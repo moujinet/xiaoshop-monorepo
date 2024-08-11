@@ -70,8 +70,8 @@ import configuration from '~/configs'
     GoodsModule,
     AssetsModule,
     LogisticsModule,
-    UploadModule,
     StaffsModule,
+    UploadModule,
 
     // Commands
     CreateMigrateCommand,

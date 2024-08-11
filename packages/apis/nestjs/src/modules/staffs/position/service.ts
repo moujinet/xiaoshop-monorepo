@@ -2,17 +2,17 @@ import type { IApiPaginationData, IStaffPosition, IStaffPositionDict } from '@xi
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Position } from '@/staffs/position/entity'
-import { Department } from '@/staffs/department/entity'
+import { StaffPosition } from '@/staffs/position/entity'
+import { StaffDepartment } from '@/staffs/department/entity'
 import { GetPositionPagesRequest, PositionPayload } from '@/staffs/position/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
 @Injectable()
-export class PositionService {
+export class StaffPositionService {
   constructor(
-    @InjectRepository(Position)
-    private readonly repository: Repository<Position>,
+    @InjectRepository(StaffPosition)
+    private readonly repository: Repository<StaffPosition>,
   ) {}
 
   /**
@@ -134,13 +134,13 @@ export class PositionService {
       if (exists)
         throw new ExistsException(`部门职位 [${data.name}] `)
 
-      const position = new Position()
+      const position = new StaffPosition()
 
       position.name = data.name
       position.desc = data.desc
       position.sort = data.sort
 
-      const department = new Department()
+      const department = new StaffDepartment()
 
       department.id = data.departmentId
       position.department = department
@@ -185,14 +185,14 @@ export class PositionService {
       if (exists)
         throw new ExistsException(`部门职位 [${data.name}] `)
 
-      const position = new Position()
+      const position = new StaffPosition()
 
       position.id = id
       position.name = data.name
       position.desc = data.desc
       position.sort = data.sort
 
-      const department = new Department()
+      const department = new StaffDepartment()
 
       department.id = data.departmentId
       position.department = department

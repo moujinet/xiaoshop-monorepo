@@ -8,15 +8,15 @@ import {
   type IStaffRoleInfo,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Role } from '@/staffs/role/entity'
-import { Position } from '@/staffs/position/entity'
-import { Department } from '@/staffs/department/entity'
+import { StaffRole } from '@/staffs/role/entity'
+import { StaffPosition } from '@/staffs/position/entity'
+import { StaffDepartment } from '@/staffs/department/entity'
 
 @Entity('manage_staff_account', {
   comment: '员工账号表',
 })
 @Index('IDX_manage_staff_account', ['status', 'username', 'mobile', 'lastLoginTime'])
-export class Account implements IStaffAccount {
+export class StaffAccount implements IStaffAccount {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_account' })
   id: number
 
@@ -56,15 +56,15 @@ export class Account implements IStaffAccount {
   @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
   lastLoginTime: string
 
-  @ManyToMany(() => Role, { createForeignKeyConstraints: false })
+  @ManyToMany(() => StaffRole, { createForeignKeyConstraints: false })
   @JoinTable({ name: 'manage_staff_account_has_roles', joinColumn: { name: 'staff_id' }, inverseJoinColumn: { name: 'role_id' } })
   roles: IStaffRoleInfo[]
 
-  @OneToOne(() => Department, { createForeignKeyConstraints: false })
+  @OneToOne(() => StaffDepartment, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'department_id' })
   department: IStaffDepartmentDict
 
-  @OneToOne(() => Position, { createForeignKeyConstraints: false })
+  @OneToOne(() => StaffPosition, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'position_id' })
   position: IStaffPositionDict
 }

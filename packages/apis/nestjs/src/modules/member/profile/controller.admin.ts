@@ -25,9 +25,9 @@ import {
   ApiPaginatedResponse,
 } from '~/common/response/decorators'
 
-@ApiTags('会员')
-@Controller('member')
-export class MemberController {
+@ApiTags('管理/会员')
+@Controller('admin/member')
+export class MemberAdminController {
   constructor(
     private readonly service: MemberService,
   ) {}

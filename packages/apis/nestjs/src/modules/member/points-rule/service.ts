@@ -6,8 +6,8 @@ import type {
 import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { MemberPointsRule } from '@/member/points/entity'
-import { UpdateMemberPointsRuleOptionsPayload, UpdateMemberPointsRuleStatusPayload } from '@/member/points/dto'
+import { MemberPointsRule } from '@/member/points-rule/entity'
+import { UpdateMemberPointsRuleOptionsPayload, UpdateMemberPointsRuleStatusPayload } from '@/member/points-rule/dto'
 import { FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()

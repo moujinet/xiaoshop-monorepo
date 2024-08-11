@@ -5,9 +5,9 @@ import { ApiExceptionResponse, ApiPaginatedResponse } from '~/common/response/de
 import { GetStaffLogPagesRequest, StaffLogResponse } from '@/staffs/log/dto'
 import { StaffLogService } from '@/staffs/log/service'
 
-@ApiTags('员工日志')
-@Controller('staffs/log')
-export class StaffLogController {
+@ApiTags('管理/权限/员工日志')
+@Controller('admin/staffs/log')
+export class StaffLogAdminController {
   constructor(
     private readonly service: StaffLogService,
   ) {}

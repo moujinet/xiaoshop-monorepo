@@ -3,13 +3,13 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
 import { DeletePositionRequest, GetPositionListRequest, GetPositionPagesRequest, GetPositionRequest, PositionPayload, PositionResponse } from '@/staffs/position/dto'
-import { PositionService } from '@/staffs/position/service'
+import { StaffPositionService } from '@/staffs/position/service'
 
-@ApiTags('组织职位')
-@Controller('staffs/position')
-export class PositionController {
+@ApiTags('管理/权限/组织职位')
+@Controller('admin/staffs/position')
+export class StaffPositionAdminController {
   constructor(
-    private readonly service: PositionService,
+    private readonly service: StaffPositionService,
   ) {}
 
   @ApiOperation({

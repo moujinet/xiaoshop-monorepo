@@ -3,7 +3,7 @@ import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { StaffLog } from '@/staffs/log/entity'
-import { Account } from '@/staffs/account/entity'
+import { StaffAccount } from '@/staffs/account/entity'
 import { GetStaffLogPagesRequest, StaffLogPayload } from '@/staffs/log/dto'
 import { FailedException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
@@ -78,7 +78,7 @@ export class StaffLogService {
   async create(type: IStaffLogType, data: StaffLogPayload) {
     try {
       const log = new StaffLog()
-      const staff = new Account()
+      const staff = new StaffAccount()
       staff.id = data.staff.id
 
       log.staff = staff

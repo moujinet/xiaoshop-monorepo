@@ -21,9 +21,9 @@ import {
 } from '@/member/logout/dto'
 import { MemberLogoutService } from '@/member/logout/service'
 
-@ApiTags('会员/注销申请')
-@Controller('member/logout')
-export class MemberLogoutController {
+@ApiTags('管理/会员/注销申请')
+@Controller('admin/member/logout')
+export class MemberLogoutAdminController {
   constructor(
     private readonly service: MemberLogoutService,
   ) {}

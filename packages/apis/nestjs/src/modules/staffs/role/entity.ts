@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
   comment: '员工角色表',
 })
 @Index('IDX_manage_staff_role', ['sort', 'updatedTime'])
-export class Role implements IStaffRole {
+export class StaffRole implements IStaffRole {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_role' })
   id: number
 

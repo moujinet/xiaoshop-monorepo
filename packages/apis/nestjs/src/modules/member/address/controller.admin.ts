@@ -26,9 +26,9 @@ import {
 } from '@/member/address/dto'
 import { MemberAddressService } from '@/member/address/service'
 
-@ApiTags('会员/收货地址')
-@Controller('member/address')
-export class MemberAddressController {
+@ApiTags('管理/会员/收货地址')
+@Controller('admin/member/address')
+export class MemberAddressAdminController {
   constructor(
     private readonly service: MemberAddressService,
   ) {}

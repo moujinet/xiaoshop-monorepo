@@ -17,12 +17,12 @@ import {
   MemberPointsRuleResponse,
   UpdateMemberPointsRuleOptionsPayload,
   UpdateMemberPointsRuleStatusPayload,
-} from '@/member/points/dto'
-import { MemberPointsRuleService } from '@/member/points/service'
+} from '@/member/points-rule/dto'
+import { MemberPointsRuleService } from '@/member/points-rule/service'
 
-@ApiTags('会员/积分规则')
-@Controller('member/points/rule')
-export class MemberPointsRuleController {
+@ApiTags('管理/会员/积分规则')
+@Controller('admin/member/points/rule')
+export class MemberPointsRuleAdminController {
   constructor(
     private readonly service: MemberPointsRuleService,
   ) {}
