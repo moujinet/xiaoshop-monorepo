@@ -7,6 +7,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 // Modules
+import { AuthModule } from '@/auth/auth.module'
 import { AssetsModule } from '@/assets/assets.module'
 import { GoodsModule } from '@/goods/goods.module'
 import { LogisticsModule } from '@/logistics/logistics.module'
@@ -65,6 +66,7 @@ import configuration from '~/configs'
     EventEmitterModule.forRoot(),
 
     // Modules
+    AuthModule,
     SettingsModule.register(),
     MemberModule,
     GoodsModule,

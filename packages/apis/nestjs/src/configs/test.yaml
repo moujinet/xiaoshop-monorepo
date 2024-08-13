@@ -34,3 +34,7 @@ queue:
   prefix: 'queue'
   redis:
     db: 2
+
+jwt:
+  secret: 'xiaoshop'
+  expiresIn: '1d'

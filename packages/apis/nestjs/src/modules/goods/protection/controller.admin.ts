@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   EXCEPTION_BAD_REQUEST,
@@ -21,6 +21,7 @@ import {
   GoodsProtectionResponse,
 } from '@/goods/protection/dto'
 import { GoodsProtectionService } from '@/goods/protection/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/保障服务')
 @Controller('admin/goods/protection')
@@ -32,6 +33,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '获取「保障服务」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsProtectionListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「保障服务」列表失败' })
   @Get('list')
@@ -42,6 +45,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '获取「保障服务」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsProtectionDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「保障服务」字典列表失败' })
   @Get('dict/list')
@@ -52,6 +57,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '获取「保障服务」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsProtectionResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「保障服务」不存在' })
   @Get('detail')
@@ -62,6 +69,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '创建「保障服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建「保障服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「保障服务」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -74,6 +83,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '更新「保障服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新「保障服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「保障服务」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「保障服务」已存在' })
@@ -89,6 +100,8 @@ export class GoodsProtectionAdminController {
   @ApiOperation({
     summary: '删除「保障服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除「保障服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「保障服务」失败' })
   @Delete('delete')

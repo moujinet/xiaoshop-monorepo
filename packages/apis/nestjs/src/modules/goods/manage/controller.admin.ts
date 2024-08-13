@@ -1,5 +1,5 @@
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   BatchUpdateGoodsPayload,
@@ -33,6 +33,7 @@ import {
 } from '~/common/exception'
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsCopyEvent } from '@/goods/goods.events'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品')
 @Controller('admin/goods')
@@ -45,6 +46,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '获取「商品」分页列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(GoodsPageListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('pages')
@@ -55,6 +58,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '获取「商品」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -66,6 +71,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '获取「商品」基本信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsBasicInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -77,6 +84,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '获取「商品」价格信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsInventoryInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -88,6 +97,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '获取「商品」详情信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsDetailInfoResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品信息」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -99,6 +110,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '统计「商品」预警数量',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiAnyResponse<number>(1)
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Get('warning/count')
@@ -109,6 +122,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '创建「商品」基本信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(CreateGoodsResponse)
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品」信息已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -121,6 +136,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '更新「商品」基本信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品」信息已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品」信息不存在' })
@@ -136,6 +153,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '更新「商品」价格库存信息',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「商品」信息已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品」信息不存在' })
@@ -151,6 +170,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '更新「商品」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品」信息不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -165,6 +186,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '复制「商品」至草稿',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Post('copy')
@@ -180,6 +203,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '增加「商品」浏览量',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('visit/update')
@@ -190,6 +215,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '逻辑删除「商品」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Delete('delete/soft')
@@ -200,6 +227,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '恢复已删除「商品」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('delete/restore')
@@ -210,6 +239,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '批量更新「商品」属性',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「商品」信息不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -223,6 +254,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '批量逻辑删除「商品」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Delete('batch/delete/soft')
@@ -233,6 +266,8 @@ export class GoodsAdminController {
   @ApiOperation({
     summary: '批量恢复已删除「商品」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
   @Put('batch/delete/restore')

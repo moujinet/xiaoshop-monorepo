@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   EXCEPTION_BAD_REQUEST,
@@ -21,6 +21,7 @@ import {
   GoodsAdditionResponse,
 } from '@/goods/addition/dto'
 import { GoodsAdditionService } from '@/goods/addition/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/附加服务')
 @Controller('admin/goods/addition')
@@ -32,6 +33,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '获取「附加服务」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsAdditionListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「附加服务」列表失败' })
   @Get('list')
@@ -42,6 +45,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '获取「附加服务」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsAdditionDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「附加服务」字典列表失败' })
   @Get('dict/list')
@@ -52,6 +57,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '获取「附加服务」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsAdditionResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「附加服务」不存在' })
   @Get('detail')
@@ -62,6 +69,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '创建「附加服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建「附加服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「附加服务」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -74,6 +83,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '更新「附加服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新「附加服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「附加服务」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「附加服务」已存在' })
@@ -89,6 +100,8 @@ export class GoodsAdditionAdminController {
   @ApiOperation({
     summary: '删除「附加服务」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除「附加服务」成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「附加服务」失败' })
   @Delete('delete')

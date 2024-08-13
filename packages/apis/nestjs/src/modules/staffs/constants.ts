@@ -1,4 +1,4 @@
 /**
  * 模块 ID
  */
-export const GOODS_MODULE_ID = 'staffs'
+export const STAFFS_MODULE_ID = 'staffs'

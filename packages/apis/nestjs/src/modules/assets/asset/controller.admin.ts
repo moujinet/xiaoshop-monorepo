@@ -2,7 +2,7 @@ import { Queue } from 'bull'
 import { InjectQueue } from '@nestjs/bull'
 import { AssetType } from '@xiaoshop/schema'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Inject, ParseFilePipeBuilder, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { AssetService } from '@/assets/asset/service'
 import { UploadService } from '@/upload/upload.service'
@@ -20,6 +20,7 @@ import {
   UploadAssetImageOptionsPayload,
   UploadAssetVideoOptionsPayload,
 } from '@/assets/asset/dto'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/素材')
 @Controller('admin/assets')
@@ -37,6 +38,8 @@ export class AssetAdminController {
   @ApiOperation({
     summary: '获取「素材」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(AssetListItemResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
   @Get('pages')
@@ -47,6 +50,8 @@ export class AssetAdminController {
   @ApiOperation({
     summary: '获取「素材」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(AssetResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「素材」不存在' })
   @Get('detail')
@@ -58,6 +63,8 @@ export class AssetAdminController {
     summary: '上传「素材」 - 图片',
     description: `仅支持 \`image/jpg\` \`image/jpeg\` \`image/png\` \`image/gif\` 格式的图片`,
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @ApiDoneResponse('上传成功')
@@ -106,6 +113,8 @@ export class AssetAdminController {
     summary: '上传「素材」 - 视频',
     description: `仅支持 \`image/mp4\` 格式，最多同时上传 1 个视频文件`,
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @ApiDoneResponse('上传成功')
@@ -140,6 +149,8 @@ export class AssetAdminController {
   @ApiOperation({
     summary: '删除「素材」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')

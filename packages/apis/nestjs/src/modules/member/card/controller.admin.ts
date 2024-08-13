@@ -1,5 +1,5 @@
 import type { IEnabled } from '@xiaoshop/schema'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   ApiDoneResponse,
@@ -23,6 +23,7 @@ import {
   MemberLevelListResponse,
 } from '@/member/card/dto'
 import { MemberCardService } from '@/member/card/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/会员/会员卡')
 @Controller('admin/member/card')
@@ -34,6 +35,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '获取「会员卡」等级列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(MemberLevelListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员等级列表失败' })
   @Get('level/list')
@@ -44,6 +47,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '获取自定义「会员卡」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(MemberCustomCardListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取自定义会员卡列表失败' })
   @Get('custom/list')
@@ -54,6 +59,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '获取「会员卡」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(MemberCardDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员卡字典失败' })
   @Get('dict/list')
@@ -64,6 +71,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '获取「会员卡」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(MemberCardResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员卡详情失败' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -75,6 +84,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '创建自定义「会员卡」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员卡」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -87,6 +98,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '更新「会员卡」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员卡」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员卡」已存在' })
@@ -102,6 +115,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '更新「会员卡」启用状态',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员卡」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员卡」已存在' })
@@ -117,6 +132,8 @@ export class MemberCardAdminController {
   @ApiOperation({
     summary: '删除自定义「会员卡」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')

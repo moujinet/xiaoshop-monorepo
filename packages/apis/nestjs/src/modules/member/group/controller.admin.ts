@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   ApiDoneResponse,
@@ -23,6 +23,7 @@ import {
   MemberGroupResponse,
 } from '@/member/group/dto'
 import { MemberGroupService } from '@/member/group/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/会员/群体')
 @Controller('admin/member/group')
@@ -34,6 +35,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '获取「群体」分页列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(MemberGroupListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体分页列表' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -45,6 +48,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '获取「群体」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(MemberGroupDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体字典失败' })
   @Get('dict/list')
@@ -55,6 +60,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '获取「群体」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(MemberGroupResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员群体详情失败' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -66,6 +73,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '创建「群体」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员群体」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -78,6 +87,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '更新「群体」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员群体」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员群体」已存在' })
@@ -93,6 +104,8 @@ export class MemberGroupAdminController {
   @ApiOperation({
     summary: '删除「群体」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')

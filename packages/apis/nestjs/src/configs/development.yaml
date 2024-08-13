@@ -1,5 +1,5 @@
 app:
-  prefix: '/dev'
+  prefix: '/api'
   port: 3001
   swagger: true
 
@@ -34,3 +34,7 @@ queue:
   prefix: 'queue'
   redis:
     db: 2
+
+jwt:
+  secret: 'xiaoshop'
+  expiresIn: '1d'

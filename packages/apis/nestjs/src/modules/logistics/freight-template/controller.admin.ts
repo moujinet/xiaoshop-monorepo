@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { LogisticsFreightTemplateService } from '@/logistics/freight-template/service'
 import {
@@ -11,6 +11,7 @@ import {
 } from '@/logistics/freight-template/dto'
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse } from '~/common/response/decorators'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/物流发货/运费模板')
 @Controller('admin/freight-template')
@@ -22,6 +23,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '获取运费模板列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(FreightTemplateListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
   @Get('list')
@@ -32,6 +35,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '获取运费模板字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(FreightTemplateDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
   @Get('dict/list')
@@ -42,6 +47,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '获取运费模板详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(FreightTemplateResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '运费模板不存在' })
   @Get('detail')
@@ -52,6 +59,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '创建运费模板',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '运费模板已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -64,6 +73,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '更新运费模板',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '运费模板不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '运费模板已存在' })
@@ -79,6 +90,8 @@ export class LogisticsTemplateFreightAdminController {
   @ApiOperation({
     summary: '删除运费模板',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')

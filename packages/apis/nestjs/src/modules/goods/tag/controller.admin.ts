@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   DeleteGoodsTagRequest,
@@ -21,6 +21,7 @@ import {
   ApiObjectResponse,
 } from '~/common/response/decorators'
 import { GoodsTagService } from '@/goods/tag/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/标签')
 @Controller('admin/goods/tag')
@@ -32,6 +33,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '获取「标签」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsTagListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「标签」列表失败' })
   @Get('list')
@@ -42,6 +45,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '获取「标签」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsTagDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「标签」字典列表失败' })
   @Get('dict/list')
@@ -52,6 +57,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '获取「标签」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsTagResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「标签」不存在' })
   @Get('detail')
@@ -62,6 +69,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '创建「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建标签成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「标签」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -74,6 +83,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '更新「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新标签成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「标签」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「标签」已存在' })
@@ -89,6 +100,8 @@ export class GoodsTagAdminController {
   @ApiOperation({
     summary: '删除「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('标签删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '标签删除失败' })
   @Delete('delete')

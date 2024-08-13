@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   DeleteGoodsBrandRequest,
@@ -21,6 +21,7 @@ import {
   ApiObjectResponse,
 } from '~/common/response/decorators'
 import { GoodsBrandService } from '@/goods/brand/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/品牌')
 @Controller('admin/goods/brand')
@@ -32,6 +33,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '获取「品牌」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsBrandListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「品牌」列表失败' })
   @Get('list')
@@ -42,6 +45,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '获取「品牌」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsBrandDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「品牌」字典列表失败' })
   @Get('dict/list')
@@ -52,6 +57,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '获取「品牌」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsBrandResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「品牌」不存在' })
   @Get('detail')
@@ -62,6 +69,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '创建「品牌」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建「品牌」成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「品牌」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -74,6 +83,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '更新「品牌」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新「品牌」成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「品牌」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「品牌」已存在' })
@@ -89,6 +100,8 @@ export class GoodsBrandAdminController {
   @ApiOperation({
     summary: '删除「品牌」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除「品牌」成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「品牌」失败' })
   @Delete('delete')

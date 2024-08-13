@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { MemberService } from '@/member/profile/service'
 import {
@@ -24,6 +24,7 @@ import {
   ApiObjectResponse,
   ApiPaginatedResponse,
 } from '~/common/response/decorators'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/会员')
 @Controller('admin/member')
@@ -35,6 +36,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '获取「会员」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(MemberListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员分页列表失败' })
   @Get('pages')
@@ -45,6 +48,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '获取「会员」资料',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(MemberProfileResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员' })
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员资料失败' })
@@ -56,6 +61,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '创建「会员」资料',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '会员密码强度不够' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '会员已存在' })
@@ -69,6 +76,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '更新「会员」状态',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新会员状态失败' })
@@ -83,6 +92,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '更新「会员」标签',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新会员状态失败' })
@@ -97,6 +108,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '批量更新「会员」标签',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '会员不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新会员状态失败' })
@@ -110,6 +123,8 @@ export class MemberAdminController {
   @ApiOperation({
     summary: '重置「会员」密码',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '未找到会员' })
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '重置会员密码失败' })

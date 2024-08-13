@@ -1,4 +1,4 @@
-import type { IApiPaginationData, IStaffAccountProfile } from '@xiaoshop/schema'
+import { type IApiPaginationData, type IStaffAccount, type IStaffAccountProfile, StaffAccountStatus } from '@xiaoshop/schema'
 import * as bcrypt from 'bcrypt'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
@@ -109,6 +109,44 @@ export class StaffAccountService {
         },
         where: {
           id,
+        },
+        relations: [
+          'roles',
+          'position',
+          'department',
+        ],
+      })
+
+      if (!detail)
+        throw new NotFoundException('员工账号')
+
+      return detail
+    }
+    catch (e) {
+      throw new FailedException('获取员工账号详情', e.message, e.status)
+    }
+  }
+
+  /**
+   * 通过员工账号获取员工账号详情
+   *
+   * @param username string
+   * @returns Promise<IStaffAccountProfile>
+   * @throws FailedException
+   * @throws NotFoundException
+   * @see {@link IStaffAccountProfile}
+   */
+  async findByUsername(username: string): Promise<IStaffAccount> {
+    try {
+      const detail = await this.repository.findOne({
+        select: {
+          roles: { id: true, name: true, permissions: true },
+          position: { id: true, name: true },
+          department: { id: true, name: true },
+        },
+        where: {
+          username,
+          status: StaffAccountStatus.NORMAL,
         },
         relations: [
           'roles',
@@ -278,6 +316,15 @@ export class StaffAccountService {
     catch (e) {
       throw new FailedException('更新员工账号', e.message, e.status)
     }
+  }
+
+  /**
+   * 更新员工账号最后登录时间
+   *
+   * @param id number
+   */
+  async updateLoginTime(id: number) {
+    await this.repository.update({ id }, { lastLoginTime: (new Date()).toISOString() })
   }
 
   /**

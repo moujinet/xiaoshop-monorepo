@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   EXCEPTION_BAD_REQUEST,
@@ -22,6 +22,7 @@ import {
   GoodsCategoryResponse,
 } from '@/goods/category/dto'
 import { GoodsCategoryService } from '@/goods/category/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/分类')
 @Controller('admin/goods/category')
@@ -33,6 +34,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '获取「分类」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsCategoryResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」列表失败' })
   @Get('list')
@@ -43,6 +46,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '获取「分类」根列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsCategoryDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」根列表失败' })
   @Get('root/list')
@@ -53,6 +58,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '获取「分类」层级列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsCategoryNestedDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分类」层级列表失败' })
   @Get('nested/list')
@@ -63,6 +70,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '获取「分类」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsCategoryResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分类」不存在' })
   @Get('detail')
@@ -73,6 +82,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '创建「分类」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建「分类」成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分类」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -85,6 +96,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '更新「分类」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新「分类」成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分类」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分类」已存在' })
@@ -100,6 +113,8 @@ export class GoodsCategoryAdminController {
   @ApiOperation({
     summary: '删除「分类」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除「分类」成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「分类」失败' })
   @Delete('delete')

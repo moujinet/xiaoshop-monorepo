@@ -1,9 +1,10 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
 import { DeletePositionRequest, GetPositionListRequest, GetPositionPagesRequest, GetPositionRequest, PositionPayload, PositionResponse } from '@/staffs/position/dto'
 import { StaffPositionService } from '@/staffs/position/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/权限/组织职位')
 @Controller('admin/staffs/position')
@@ -15,6 +16,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '获取职位列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(PositionResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
   @Get('pages')
@@ -25,6 +28,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '获取指定部门的职位列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(PositionResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '请求失败' })
   @Get('list')
@@ -35,6 +40,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '获取职位详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(PositionResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '职位不存在' })
   @Get('detail')
@@ -45,6 +52,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '创建职位',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '职位已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -57,6 +66,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '更新职位',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '职位不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '职位已存在' })
@@ -69,6 +80,8 @@ export class StaffPositionAdminController {
   @ApiOperation({
     summary: '删除职位',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')

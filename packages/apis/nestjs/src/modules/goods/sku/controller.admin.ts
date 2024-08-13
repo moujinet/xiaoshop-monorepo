@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Get, Put, Query } from '@nestjs/common'
 import { EXCEPTION_FAILED } from '~/common/exception'
 import { GoodsSkuService } from '@/goods/sku/service'
@@ -12,6 +12,7 @@ import {
   ApiExceptionResponse,
   ApiListedResponse,
 } from '~/common/response/decorators'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/多规格商品')
 @Controller('admin/goods/skus')
@@ -23,6 +24,8 @@ export class GoodsSkuAdminController {
   @ApiOperation({
     summary: '获取「多规格商品」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsSkuResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「多规格商品」列表失败' })
   @Get('list')
@@ -33,6 +36,8 @@ export class GoodsSkuAdminController {
   @ApiOperation({
     summary: '更新「多规格商品」价格',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse()
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '更新「多规格商品」价格失败' })
   @Put('update')

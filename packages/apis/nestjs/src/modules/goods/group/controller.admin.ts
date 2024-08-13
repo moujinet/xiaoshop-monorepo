@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   DeleteGoodsGroupRequest,
@@ -20,6 +20,7 @@ import {
   EXCEPTION_NOT_FOUND,
 } from '~/common/exception'
 import { GoodsGroupService } from '@/goods/group/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/商品/分组')
 @Controller('admin/goods/group')
@@ -31,6 +32,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '获取「分组」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsGroupResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分组」列表失败' })
   @Get('list')
@@ -41,6 +44,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '获取「分组」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(GoodsGroupDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取「分组」字典列表失败' })
   @Get('dict/list')
@@ -51,6 +56,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '获取「分组」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(GoodsGroupResponse)
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分组」不存在' })
   @Get('detail')
@@ -61,6 +68,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '创建「分组」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建「分组」成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分组」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -73,6 +82,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '更新「分组」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新「分组」成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「分组」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「分组」已存在' })
@@ -88,6 +99,8 @@ export class GoodsGroupAdminController {
   @ApiOperation({
     summary: '删除「分组」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除「分组」成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除「分组」失败' })
   @Delete('delete')

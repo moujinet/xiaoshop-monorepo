@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { IMemberLogoutStatus } from '@xiaoshop/schema'
 import {
@@ -20,6 +20,7 @@ import {
   MemberLogoutResponse,
 } from '@/member/logout/dto'
 import { MemberLogoutService } from '@/member/logout/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/会员/注销申请')
 @Controller('admin/member/logout')
@@ -31,6 +32,8 @@ export class MemberLogoutAdminController {
   @ApiOperation({
     summary: '获取「注销申请」分页列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(MemberLogoutResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员注销申请分页列表' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -42,6 +45,8 @@ export class MemberLogoutAdminController {
   @ApiOperation({
     summary: '获取「注销申请」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(MemberLogoutResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员注销申请详情失败' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -53,6 +58,8 @@ export class MemberLogoutAdminController {
   @ApiOperation({
     summary: '创建「注销申请」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员注销申请」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -65,6 +72,8 @@ export class MemberLogoutAdminController {
   @ApiOperation({
     summary: '更新「注销申请」申请原因',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员注销申请」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -79,6 +88,8 @@ export class MemberLogoutAdminController {
   @ApiOperation({
     summary: '更新「注销申请」申请状态',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员注销申请」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })

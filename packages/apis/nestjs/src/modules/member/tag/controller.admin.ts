@@ -1,4 +1,4 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
   ApiDoneResponse,
@@ -23,6 +23,7 @@ import {
   MemberTagResponse,
 } from '@/member/tag/dto'
 import { MemberTagService } from '@/member/tag/service'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/会员/标签')
 @Controller('admin/member/tag')
@@ -34,6 +35,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '获取「标签」列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiPaginatedResponse(MemberTagListResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员标签分页列表' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -45,6 +48,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '获取「标签」字典列表',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiListedResponse(MemberTagDictResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员标签字典失败' })
   @Get('dict/list')
@@ -55,6 +60,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '获取「标签」详情',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiObjectResponse(MemberTagResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '获取会员标签详情失败' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -66,6 +73,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '创建「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('创建成功')
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员标签」已存在' })
   @ApiExceptionResponse({ code: EXCEPTION_BAD_REQUEST, message: '请求参数错误' })
@@ -78,6 +87,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '更新「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('更新成功')
   @ApiExceptionResponse({ code: EXCEPTION_NOT_FOUND, message: '「会员标签」不存在' })
   @ApiExceptionResponse({ code: EXCEPTION_EXISTS, message: '「会员标签」已存在' })
@@ -93,6 +104,8 @@ export class MemberTagAdminController {
   @ApiOperation({
     summary: '删除「标签」',
   })
+  @Admin()
+  @ApiBearerAuth()
   @ApiDoneResponse('删除成功')
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '删除失败' })
   @Delete('delete')
