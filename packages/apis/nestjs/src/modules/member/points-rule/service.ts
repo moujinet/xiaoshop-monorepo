@@ -4,17 +4,21 @@ import type {
   IMemberPointsRuleListItem,
 } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MemberPointsRule } from '@/member/points-rule/entity'
 import { UpdateMemberPointsRuleOptionsPayload, UpdateMemberPointsRuleStatusPayload } from '@/member/points-rule/dto'
 import { FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberPointsRuleService {
   constructor(
     @InjectRepository(MemberPointsRule)
     private readonly repository: Repository<MemberPointsRule>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -84,6 +88,8 @@ export class MemberPointsRuleService {
         { key: data.key },
         { enable: data.enable },
       )
+
+      await this.log.write('会员管理', `更新会员积分规则「${data.key}」状态为「${data.enable ? '启用' : '禁用'}」`)
     }
     catch (e) {
       throw new FailedException('更新会员积分规则', e.message, e.status)
@@ -108,6 +114,8 @@ export class MemberPointsRuleService {
         { key: data.key },
         { options: data.options },
       )
+
+      await this.log.write('会员管理', `更新会员积分规则「${data.key}」设置「${JSON.stringify(data.options)}」`)
     }
     catch (e) {
       throw new FailedException('更新会员积分规则', e.message, e.status)

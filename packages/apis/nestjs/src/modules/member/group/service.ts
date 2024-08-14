@@ -6,7 +6,7 @@ import type {
   IMemberGroupListItem,
 } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import {
   ExistsException,
@@ -18,12 +18,16 @@ import {
   MemberGroupPayload,
 } from '@/member/group/dto'
 import { MemberGroup } from '@/member/group/entity'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberGroupService {
   constructor(
     @InjectRepository(MemberGroup)
     private readonly repository: Repository<MemberGroup>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -148,6 +152,7 @@ export class MemberGroupService {
       group.conditions = data.conditions || []
 
       await this.repository.save(group)
+      await this.log.write('会员管理', `创建会员群体「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建会员群体', e.message, e.status)
@@ -183,6 +188,7 @@ export class MemberGroupService {
       group.conditions = data.conditions || []
 
       await this.repository.save(group)
+      await this.log.write('会员管理', `更新会员群体「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新会员群体', e.message, e.status)
@@ -218,10 +224,12 @@ export class MemberGroupService {
    */
   async delete(id: number) {
     try {
-      const founded = await this.repository.existsBy({ id })
+      const group = await this.repository.findOneBy({ id })
 
-      if (founded)
+      if (group) {
         await this.repository.delete({ id })
+        await this.log.write('会员管理', `删除会员群体「${group.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除会员群体', e.message, e.status)

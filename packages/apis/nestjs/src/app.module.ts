@@ -1,3 +1,4 @@
+import { ClsModule } from 'nestjs-cls'
 import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
 import { ConfigModule } from '@nestjs/config'
@@ -13,7 +14,7 @@ import { GoodsModule } from '@/goods/goods.module'
 import { LogisticsModule } from '@/logistics/logistics.module'
 import { MemberModule } from '@/member/member.module'
 import { SettingsModule } from '@/settings/settings.module'
-import { StaffsModule } from '@/staffs/staffs.module'
+import { StaffModule } from '@/staff/staff.module'
 import { UploadModule } from '@/upload/upload.module'
 
 // Commands
@@ -65,6 +66,18 @@ import configuration from '~/configs'
     // EventEmitter
     EventEmitterModule.forRoot(),
 
+    // CLS
+    ClsModule.forRoot({
+      global: true,
+      middleware: {
+        mount: true,
+        setup: (cls, req) => {
+          cls.set<string>('IP', req.ip)
+          cls.set<string>('AGENT', req.headers['user-agent'] || '')
+        },
+      },
+    }),
+
     // Modules
     AuthModule,
     SettingsModule.register(),
@@ -72,7 +85,7 @@ import configuration from '~/configs'
     GoodsModule,
     AssetsModule,
     LogisticsModule,
-    StaffsModule,
+    StaffModule,
     UploadModule,
 
     // Commands

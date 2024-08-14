@@ -2,12 +2,12 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse } from '~/common/response/decorators'
-import { DeleteDepartmentRequest, DepartmentPayload, DepartmentResponse, GetDepartmentRequest } from '@/staffs/department/dto'
-import { StaffDepartmentService } from '@/staffs/department/service'
+import { DeleteDepartmentRequest, DepartmentPayload, DepartmentResponse, GetDepartmentRequest } from '@/staff/department/dto'
+import { StaffDepartmentService } from '@/staff/department/service'
 import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/权限/组织部门')
-@Controller('admin/staffs/department')
+@Controller('admin/staff/department')
 export class StaffDepartmentAdminController {
   constructor(
     private readonly service: StaffDepartmentService,

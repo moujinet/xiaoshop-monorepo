@@ -16,9 +16,12 @@ import { ASSET_MODULE_ID, ASSET_QUEUE_ID } from '@/assets/constants'
 
 import { SettingsModule } from '@/settings/settings.module'
 import { UploadModule } from '@/upload/upload.module'
+import { StaffModule } from '@/staff/staff.module'
 
 @Module({
   imports: [
+    StaffModule,
+
     forwardRef(() => UploadModule),
 
     forwardRef(() =>

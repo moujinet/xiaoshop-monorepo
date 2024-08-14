@@ -10,17 +10,21 @@ import {
 } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { MEMBER_CARD_DEFAULT_BADGE, MEMBER_CARD_DEFAULT_STYLES } from '@/member/constants'
 import { MemberCardPayload } from '@/member/card/dto'
 import { MemberCard } from '@/member/card/entity'
 import { ExistsException, FailedException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberCardService {
   constructor(
     @InjectRepository(MemberCard)
     private readonly repository: Repository<MemberCard>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -235,6 +239,7 @@ export class MemberCardService {
       }
 
       await this.repository.save(card)
+      await this.log.write('会员管理', `创建会员卡「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建会员卡', e.message, e.status)
@@ -298,6 +303,7 @@ export class MemberCardService {
       delete card.updatedTime
 
       await this.repository.save(card)
+      await this.log.write('会员管理', `更新会员卡「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新会员卡', e.message, e.status)
@@ -314,12 +320,13 @@ export class MemberCardService {
    */
   async updateStatus(id: number, status: IEnabled) {
     try {
-      const founded = await this.repository.existsBy({ id })
+      const card = await this.repository.findOneBy({ id })
 
-      if (!founded)
+      if (!card)
         throw new NotFoundException('会员卡不存在')
 
       await this.repository.update({ id }, { isEnabled: status })
+      await this.log.write('会员管理', `更新会员卡「${card.name}」状态为「${status === Enabled.YES ? '启用' : '禁用'}」`)
     }
     catch (e) {
       throw new FailedException('更新会员卡状态', e.message)
@@ -334,13 +341,15 @@ export class MemberCardService {
    */
   async delete(id: number) {
     try {
-      const founded = await this.repository.existsBy({
+      const founded = await this.repository.findOneBy({
         id,
         type: MemberCardType.CUSTOM,
       })
 
-      if (founded)
+      if (founded) {
         await this.repository.delete({ id })
+        await this.log.write('会员管理', `删除会员卡「${founded.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除会员卡', e.message)

@@ -10,6 +10,7 @@ import {
   MemberGender,
   MemberGroupCondKey,
   MemberGroupCondOperator,
+  MemberStatus,
 } from '@xiaoshop/schema'
 import * as bcrypt from 'bcrypt'
 import { isStrongPassword } from 'class-validator'
@@ -24,6 +25,7 @@ import { MemberAccountService } from '@/member/account/service'
 import { MemberCardBindingService } from '@/member/binding/service'
 import { GetMemberPagesRequest, MemberPayload } from '@/member/profile/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberService {
@@ -39,6 +41,9 @@ export class MemberService {
 
     @Inject(SettingsService)
     private readonly settings: SettingsService,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -304,6 +309,8 @@ export class MemberService {
         cardNo: created.id.toString().padStart(8, '0'),
         card: binding,
       })
+
+      await this.log.write('会员管理', `创建会员「${created.nickname}」`)
     }
     catch (e) {
       throw new FailedException('创建会员失败', e.message, e.status)
@@ -326,6 +333,7 @@ export class MemberService {
         throw new NotFoundException('会员不存在')
 
       await this.repository.update(id, { status })
+      await this.log.write('会员管理', `更新会员「${id}」状态「${status === MemberStatus.NORMAL ? '正常' : '冻结'}」`)
     }
     catch (e) {
       throw new FailedException('更新会员状态', e.message, e.status)
@@ -360,6 +368,7 @@ export class MemberService {
       }
 
       await this.repository.save(member)
+      await this.log.write('会员管理', `更新会员「${id}」标签「${tagIds.join(',')}」`)
     }
     catch (e) {
       throw new FailedException('更新会员标签', e.message, e.status)
@@ -409,6 +418,7 @@ export class MemberService {
       )
 
       await this.repository.update(id, member)
+      await this.log.write('会员管理', `重置会员「${id}」密码`)
     }
     catch (e) {
       throw new FailedException('重置会员密码', e.message, e.status)

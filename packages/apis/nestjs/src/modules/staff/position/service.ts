@@ -1,10 +1,11 @@
 import type { IApiPaginationData, IStaffPosition, IStaffPositionDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { StaffPosition } from '@/staffs/position/entity'
-import { StaffDepartment } from '@/staffs/department/entity'
-import { GetPositionPagesRequest, PositionPayload } from '@/staffs/position/dto'
+import { StaffLogService } from '@/staff/log/service'
+import { StaffPosition } from '@/staff/position/entity'
+import { StaffDepartment } from '@/staff/department/entity'
+import { GetPositionPagesRequest, PositionPayload } from '@/staff/position/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
@@ -13,6 +14,9 @@ export class StaffPositionService {
   constructor(
     @InjectRepository(StaffPosition)
     private readonly repository: Repository<StaffPosition>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -146,6 +150,7 @@ export class StaffPositionService {
       position.department = department
 
       await this.repository.save(position)
+      await this.log.write('权限管理', `创建职位「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建部门职位', e.message, e.status)
@@ -198,6 +203,7 @@ export class StaffPositionService {
       position.department = department
 
       await this.repository.save(position)
+      await this.log.write('权限管理', `更新职位「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新部门职位', e.message, e.status)
@@ -212,7 +218,12 @@ export class StaffPositionService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const position = await this.repository.findOne({ where: { id }, relations: ['department'] })
+
+      if (position) {
+        await this.repository.delete({ id })
+        await this.log.write('权限管理', `删除职位「${position.department.name}/${position.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除部门职位', e.message)

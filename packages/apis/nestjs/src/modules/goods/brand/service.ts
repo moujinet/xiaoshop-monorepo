@@ -1,16 +1,20 @@
 import type { IGoodsBrand, IGoodsBrandDict, IGoodsBrandListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsBrand } from '@/goods/brand/entity'
 import { GoodsBrandPayload } from '@/goods/brand/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsBrandService {
   constructor(
     @InjectRepository(GoodsBrand)
     private readonly repository: Repository<GoodsBrand>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -113,6 +117,7 @@ export class GoodsBrandService {
       brand.sort = data.sort || 1
 
       await this.repository.save(brand)
+      await this.log.write('商品管理', `创建商品品牌「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品品牌', e.message, e.status)
@@ -153,6 +158,7 @@ export class GoodsBrandService {
       brand.sort = data.sort || 1
 
       await this.repository.save(brand)
+      await this.log.write('商品管理', `更新商品品牌「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品品牌', e.message, e.status)
@@ -166,7 +172,12 @@ export class GoodsBrandService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const brand = await this.repository.findOneBy({ id })
+
+      if (brand) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品品牌「${brand.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品品牌', e.message)

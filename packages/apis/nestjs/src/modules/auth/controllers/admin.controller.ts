@@ -8,7 +8,7 @@ import { ApiExceptionResponse, ApiObjectResponse } from '~/common/response/decor
 import { EXCEPTION_FAILED } from '~/common/exception'
 
 @ApiTags('管理/权限')
-@Controller('/admin/staffs')
+@Controller('/admin/auth')
 export class AuthAdminController {
   constructor(
     @Inject()
@@ -22,7 +22,7 @@ export class AuthAdminController {
   @ApiObjectResponse(StaffLoginTokenResponse)
   @ApiExceptionResponse({ code: EXCEPTION_FAILED, message: '员工鉴权失败' })
   @HttpCode(200)
-  @Post('login')
+  @Post('staff/login')
   async login(@Body() data: StaffLoginPayload) {
     return this.auth.loginStaff(data.username, data.password)
   }
@@ -33,7 +33,7 @@ export class AuthAdminController {
   @Admin()
   @ApiBearerAuth()
   @ApiObjectResponse(StaffLoginProfileResponse)
-  @Get('auth/profile')
+  @Get('staff/profile')
   async profile(@Request() request): Promise<IStaffLoginProfile> {
     return request.user
   }

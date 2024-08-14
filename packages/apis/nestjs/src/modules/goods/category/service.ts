@@ -1,16 +1,20 @@
 import type { IGoodsCategory, IGoodsCategoryDict, IGoodsCategoryListItem, IGoodsCategoryNestedDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsCategory } from '@/goods/category/entity'
 import { GetGoodsCategoryListRequest, GoodsCategoryPayload } from '@/goods/category/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsCategoryService {
   constructor(
     @InjectRepository(GoodsCategory)
     private readonly repository: Repository<GoodsCategory>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -144,6 +148,7 @@ export class GoodsCategoryService {
       category.sort = data.sort || 1
 
       await this.repository.save(category)
+      await this.log.write('商品管理', `创建商品分类「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品分类', e.message, e.status)
@@ -184,6 +189,7 @@ export class GoodsCategoryService {
       category.sort = data.sort || 1
 
       await this.repository.save(category)
+      await this.log.write('商品管理', `更新商品分类「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品分类', e.message, e.status)
@@ -197,7 +203,12 @@ export class GoodsCategoryService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const category = await this.repository.findOne({ where: { id } })
+
+      if (category) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品分类「${category.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品分类', e.message)

@@ -1,8 +1,10 @@
 import { type CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common'
 import { Request } from 'express'
+import { ClsService } from 'nestjs-cls'
 import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
+import { IStaffLoginProfile } from '@xiaoshop/schema'
 import { UnauthorizedException } from '~/common/exception'
 import {
   AUTH_IS_ADMIN,
@@ -20,6 +22,9 @@ export class AuthGuard implements CanActivate {
 
     @Inject()
     private readonly config: ConfigService,
+
+    @Inject()
+    private readonly cls: ClsService,
   ) {}
 
   /**
@@ -50,7 +55,7 @@ export class AuthGuard implements CanActivate {
       if (isAdmin && payload.scope !== AUTH_IS_ADMIN)
         throw new UnauthorizedException()
 
-      request.user = payload.user
+      this.cls.set<IStaffLoginProfile>('USER', payload.user)
     }
     catch (e) {
       throw new UnauthorizedException(e.message)

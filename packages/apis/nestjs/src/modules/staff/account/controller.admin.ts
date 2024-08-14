@@ -2,12 +2,12 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
-import { AccountResponse, DeleteAccountRequest, GetAccountPagesRequest, GetAccountRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staffs/account/dto'
-import { StaffAccountService } from '@/staffs/account/service'
+import { AccountResponse, DeleteAccountRequest, GetAccountPagesRequest, GetAccountRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staff/account/dto'
+import { StaffAccountService } from '@/staff/account/service'
 import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/权限/员工账号')
-@Controller('admin/staffs/account')
+@Controller('admin/staff/account')
 export class StaffAccountAdminController {
   constructor(
     private readonly service: StaffAccountService,

@@ -6,12 +6,13 @@ import {
   type IMemberAddressListItem,
 } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Member } from '@/member/profile/entity'
 import { MemberAddress } from '@/member/address/entity'
 import { GetMemberAddressListRequest, GetMemberAddressPagesRequest, MemberAddressPayload } from '@/member/address/dto'
 import { FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberAddressService {
@@ -21,6 +22,9 @@ export class MemberAddressService {
 
     @InjectRepository(Member)
     private readonly memberRepo: Repository<Member>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**

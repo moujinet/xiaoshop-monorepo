@@ -15,11 +15,10 @@ import type {
 export type IStaffAccountStatus = `${StaffAccountStatus}` | StaffAccountStatus
 
 /**
- * 员工日志 - 类型
+ * 员工日志类型
  *
- * - `LOGIN`: 登录登出
- * - `OPERATE`: 操作日志
- *
- * @see {@link StaffLogType}
+ * - `SYSTEM`: 系统
+ * - `CRONTAB`: 定时
+ * - `MANUAL`: 手动
  */
 export type IStaffLogType = `${StaffLogType}` | StaffLogType

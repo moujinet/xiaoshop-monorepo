@@ -1,16 +1,20 @@
 import { Enabled, type ILogisticsFreightTemplate, ILogisticsFreightTemplateDict, ILogisticsFreightTemplateListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { BadRequestException, ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { FreightTemplatePayload } from '@/logistics/freight-template/dto'
 import { LogisticsFreightTemplate } from '@/logistics/freight-template/entity'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class LogisticsFreightTemplateService {
   constructor(
     @InjectRepository(LogisticsFreightTemplate)
     private readonly repository: Repository<LogisticsFreightTemplate>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -115,6 +119,7 @@ export class LogisticsFreightTemplateService {
       template.freeRules = data.freeRules
 
       await this.repository.save(template)
+      await this.log.write('物流发货', `创建运费模板「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建运费模板', e.message, e.status)
@@ -162,6 +167,7 @@ export class LogisticsFreightTemplateService {
       template.freeRules = data.freeRules
 
       await this.repository.save(template)
+      await this.log.write('物流发货', `更新运费模板「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新运费模板', e.message, e.status)
@@ -177,7 +183,12 @@ export class LogisticsFreightTemplateService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const template = await this.repository.findOneBy({ id })
+
+      if (template) {
+        await this.repository.delete({ id })
+        await this.log.write('物流发货', `删除运费模板「${template.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除运费模板', e.message, e.status)

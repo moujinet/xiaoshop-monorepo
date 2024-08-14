@@ -5,17 +5,21 @@ import {
   MemberLogoutStatus,
 } from '@xiaoshop/schema'
 import { Between, FindOptionsWhere, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MemberLogout } from '@/member/logout/entity'
-import { GetMemberLogoutPagesRequest, MemberLogoutPayload } from '@/member/logout/dto'
-import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { GetMemberLogoutPagesRequest } from '@/member/logout/dto'
+import { FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberLogoutService {
   constructor(
     @InjectRepository(MemberLogout)
     private readonly repository: Repository<MemberLogout>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -103,62 +107,6 @@ export class MemberLogoutService {
   }
 
   /**
-   * 创建会员注销申请
-   *
-   * @param data 会员注销申请
-   * @throws {FailedException} 创建会员注销申请失败
-   * @throws {ExistsException} 会员注销申请已存在
-   */
-  async create(data: MemberLogoutPayload) {
-    try {
-      const exists = await this.repository.existsBy({
-        memberId: data.memberId,
-        status: MemberLogoutStatus.PENDING,
-      })
-
-      if (exists)
-        throw new ExistsException('会员注销申请已存在')
-
-      const apply = new MemberLogout()
-
-      apply.memberId = data.memberId
-      apply.username = data.username
-      apply.nickname = data.nickname
-      apply.mobile = data.mobile
-      apply.reason = data.reason
-      apply.source = data.source
-      apply.status = MemberLogoutStatus.PENDING
-
-      await this.repository.save(apply)
-    }
-    catch (e) {
-      throw new FailedException('创建会员注销申请', e.message, e.status)
-    }
-  }
-
-  /**
-   * 更新会员注销申请原因
-   *
-   * @param id 会员注销申请 ID
-   * @param reason 会员注销申请原因
-   * @throws {NotFoundException} 会员注销申请不存在
-   * @throws {FailedException} 更新会员注销申请原因失败
-   */
-  async updateReason(id: number, reason: string) {
-    try {
-      const founded = await this.repository.existsBy({ id })
-
-      if (!founded)
-        throw new NotFoundException('会员注销申请不存在')
-
-      await this.repository.update(id, { reason })
-    }
-    catch (e) {
-      throw new FailedException('更新会员注销申请', e.message, e.status)
-    }
-  }
-
-  /**
    * 更新会员注销申请状态
    *
    * @param id 会员注销申请 ID
@@ -174,6 +122,7 @@ export class MemberLogoutService {
         throw new NotFoundException('会员注销申请不存在')
 
       await this.repository.update(id, { status })
+      await this.log.write('会员管理', `更新会员注销申请「${id}」的状态为「${status === MemberLogoutStatus.APPROVED ? '审核通过' : '拒绝'}」`)
     }
     catch (e) {
       throw new FailedException('更新会员注销申请状态', e.message, e.status)

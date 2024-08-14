@@ -8,9 +8,9 @@ import {
   type IStaffRoleInfo,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { StaffRole } from '@/staffs/role/entity'
-import { StaffPosition } from '@/staffs/position/entity'
-import { StaffDepartment } from '@/staffs/department/entity'
+import { StaffRole } from '@/staff/role/entity'
+import { StaffPosition } from '@/staff/position/entity'
+import { StaffDepartment } from '@/staff/department/entity'
 
 @Entity('manage_staff_account', {
   comment: '员工账号表',

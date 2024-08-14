@@ -4,16 +4,20 @@ import type {
   IMemberAccountKeyValue,
 } from '@xiaoshop/schema'
 import { In, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MemberAccount } from '@/member/account/entity'
 import { FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberAccountService {
   constructor(
     @InjectRepository(MemberAccount)
     private readonly repository: Repository<MemberAccount>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -35,7 +39,7 @@ export class MemberAccountService {
       if (!accounts.length)
         throw new NotFoundException('未找到会员账户')
 
-      return await this.transformToKV(accounts)
+      return this.transformToKV(accounts)
     }
     catch (e) {
       throw new FailedException('获取会员账户', e.message, e.status)
@@ -60,6 +64,8 @@ export class MemberAccountService {
         member: { id: memberId },
         key,
       }, { value })
+
+      await this.log.write('会员管理', `更新「${memberId}」会员的「${key}」账户为「${value}」`)
     }
     catch (e) {
       throw new FailedException('更新会员账户', e.message, e.status)
@@ -88,27 +94,11 @@ export class MemberAccountService {
       }, {
         value,
       })
+
+      await this.log.write('会员管理', `批量更新会员「${memberIds.join(',')}」的「${key}」账户为「${value}」`)
     }
     catch (e) {
       throw new FailedException('批量更新会员账户', e.message, e.status)
-    }
-  }
-
-  /**
-   * 删除会员账户
-   *
-   * @param memberId 会员 ID
-   * @throws {FailedException} 删除会员账户失败
-   */
-  async deleteMemberAccount(memberId: number) {
-    try {
-      const founded = await this.repository.existsBy({ member: { id: memberId } })
-
-      if (founded)
-        await this.repository.delete({ member: { id: memberId } })
-    }
-    catch (e) {
-      throw new FailedException('删除会员账户', e.message)
     }
   }
 

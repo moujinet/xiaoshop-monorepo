@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
 import { Inject, Injectable } from '@nestjs/common'
 import { AUTH_IS_ADMIN } from './constants'
-import { StaffAccountService } from '@/staffs/account/service'
+import { StaffAccountService } from '@/staff/account/service'
 import { FailedException } from '~/common/exception'
 
 @Injectable()

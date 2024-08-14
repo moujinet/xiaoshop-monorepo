@@ -1,6 +1,6 @@
 import type { IStaffDepartmentDict, IStaffPosition } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { StaffDepartment } from '@/staffs/department/entity'
+import { StaffDepartment } from '@/staff/department/entity'
 
 @Entity('manage_staff_position', {
   comment: '组织职位表',

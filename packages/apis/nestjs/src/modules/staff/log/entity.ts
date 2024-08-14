@@ -1,12 +1,11 @@
-import {
-  type IStaffAccountInfo,
-  type IStaffLog,
-  type IStaffLogExtra,
-  type IStaffLogType,
-  StaffLogType,
+import type {
+  IStaffAccountInfo,
+  IStaffLog,
+  IStaffLogExtra,
+  IStaffLogType,
 } from '@xiaoshop/schema'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { StaffAccount } from '@/staffs/account/entity'
+import { StaffAccount } from '@/staff/account/entity'
 
 @Entity('manage_staff_log', {
   comment: '员工操作日志表',
@@ -16,15 +15,18 @@ export class StaffLog implements IStaffLog {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_staff_log' })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: StaffLogType.OPERATE, comment: '日志类型' })
-  type: IStaffLogType
+  @Column({ name: 'staff_id', type: 'int', unsigned: true, nullable: false, default: 0, comment: '员工 ID' })
+  staffId: number
 
   @ManyToOne(() => StaffAccount, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'staff_id' })
   staff: IStaffAccountInfo
 
-  @Column({ type: 'varchar', length: 64, nullable: false, default: '', comment: '日志操作' })
-  action: string
+  @Column({ type: 'varchar', length: 32, nullable: false, default: 'manual', comment: '日志类型' })
+  type: IStaffLogType
+
+  @Column({ type: 'varchar', length: 64, nullable: false, default: '', comment: '日志模块' })
+  module: string
 
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '日志内容' })
   content: string

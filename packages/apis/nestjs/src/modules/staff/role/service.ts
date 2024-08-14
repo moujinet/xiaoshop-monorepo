@@ -1,9 +1,10 @@
 import type { IApiPaginationData, IStaffRole, IStaffRoleDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { StaffRole } from '@/staffs/role/entity'
-import { GetRolePagesRequest, RolePayload } from '@/staffs/role/dto'
+import { StaffRole } from '@/staff/role/entity'
+import { StaffLogService } from '@/staff/log/service'
+import { GetRolePagesRequest, RolePayload } from '@/staff/role/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
@@ -12,6 +13,9 @@ export class StaffRoleService {
   constructor(
     @InjectRepository(StaffRole)
     private readonly repository: Repository<StaffRole>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -100,6 +104,7 @@ export class StaffRoleService {
         throw new ExistsException(`员工角色 [${data.name}] `)
 
       await this.repository.save(data)
+      await this.log.write('权限管理', `创建角色「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建员工角色', e.message, e.status)
@@ -132,6 +137,7 @@ export class StaffRoleService {
         throw new ExistsException(`员工角色 [${data.name}] `)
 
       await this.repository.update({ id }, data)
+      await this.log.write('权限管理', `更新角色「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新员工角色', e.message, e.status)
@@ -146,7 +152,12 @@ export class StaffRoleService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const role = await this.repository.findOneBy({ id })
+
+      if (role) {
+        await this.repository.delete({ id })
+        await this.log.write('权限管理', `删除角色「${role.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除员工角色', e.message)

@@ -5,6 +5,7 @@ import { SettingsService } from '@/settings/settings.service'
 import { SettingsAdminController } from '@/settings/settings.controller.admin'
 import { ISettingsModuleOptions } from '@/settings/interface'
 import { SETTINGS_OPTIONS } from '@/settings/constants'
+import { StaffModule } from '@/staff/staff.module'
 
 @Global()
 @Module({})
@@ -13,6 +14,7 @@ export class SettingsModule {
     return {
       module: SettingsModule,
       imports: [
+        StaffModule,
         TypeOrmModule.forFeature([
           Settings,
         ]),

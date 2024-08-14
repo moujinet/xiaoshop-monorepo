@@ -1,16 +1,20 @@
 import type { IAssetGroup, IAssetGroupRootItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AssetGroup } from '@/assets/group/entity'
 import { AssetGroupPayload, GetAssetGroupListRequest } from '@/assets/group/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class AssetGroupService {
   constructor(
     @InjectRepository(AssetGroup)
     private readonly repository: Repository<AssetGroup>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -105,6 +109,7 @@ export class AssetGroupService {
         throw new ExistsException(`素材分组 [${data.name}] `)
 
       await this.repository.save(data)
+      await this.log.write('素材管理', `创建素材分组「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建素材分组', e.message, e.status)
@@ -138,6 +143,7 @@ export class AssetGroupService {
         throw new ExistsException(`素材分组 [${data.name}] `)
 
       await this.repository.update({ id }, data)
+      await this.log.write('素材管理', `更新素材分组「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新素材分组', e.message, e.status)
@@ -152,7 +158,12 @@ export class AssetGroupService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const group = await this.repository.findOneBy({ id })
+
+      if (group) {
+        await this.repository.delete({ id })
+        await this.log.write('素材管理', `删除素材分组：${group.name}`)
+      }
     }
     catch (e) {
       throw new FailedException('删除素材分组', e.message)

@@ -4,7 +4,7 @@ import type {
   IAssetListItem,
 } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Asset } from '@/assets/asset/entity'
 import { AssetGroup } from '@/assets/group/entity'
@@ -16,12 +16,16 @@ import {
   UploadAssetImageOptionsPayload,
   UploadAssetVideoOptionsPayload,
 } from '@/assets/asset/dto'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class AssetService {
   constructor(
     @InjectRepository(Asset)
     private readonly repository: Repository<Asset>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -113,6 +117,12 @@ export class AssetService {
     options: UploadAssetImageOptionsPayload | UploadAssetVideoOptionsPayload,
     file: UploadAssetFilePayload,
   ) {
+    const typeName = options.type === 'image'
+      ? '图片'
+      : options.type === 'video'
+        ? '视频'
+        : '图标'
+
     try {
       const group = new AssetGroup()
       group.id = Number(options.groupId)
@@ -125,14 +135,9 @@ export class AssetService {
       newAsset.size = file.size
 
       await this.repository.save(newAsset)
+      await this.log.write('素材管理', `上传「${typeName}」素材：${file.name}`)
     }
     catch (e) {
-      const typeName = options.type === 'image'
-        ? '图片'
-        : options.type === 'video'
-          ? '视频'
-          : '图标'
-
       throw new FailedException(`上传${typeName}素材`, e.message, e.status)
     }
   }
@@ -144,7 +149,12 @@ export class AssetService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const asset = await this.repository.findOneBy({ id })
+
+      if (asset) {
+        await this.repository.delete({ id })
+        await this.log.write('素材管理', `删除素材：${asset.name}`)
+      }
     }
     catch (e) {
       throw new FailedException('删除素材', e.message)

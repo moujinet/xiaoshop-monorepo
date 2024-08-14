@@ -13,6 +13,11 @@ export class GetStaffLogPagesRequest extends PaginationQueryDto {
   @IsOptional()
   readonly type: IStaffLogType
 
+  @ApiProperty({ required: false, description: '日志模块', example: 'module' })
+  @IsString()
+  @IsOptional()
+  readonly module: string
+
   @ApiProperty({ required: false, description: '员工姓名', example: example.staff.name })
   @IsString()
   @IsOptional()

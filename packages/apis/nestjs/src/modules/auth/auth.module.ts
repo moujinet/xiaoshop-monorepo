@@ -6,13 +6,13 @@ import { AuthGuard } from '@/auth/auth.guard'
 import { AuthService } from '@/auth/auth.service'
 import { AuthAdminController } from '@/auth/controllers/admin.controller'
 
-import { StaffsModule } from '@/staffs/staffs.module'
+import { StaffModule } from '@/staff/staff.module'
 
 import { JwtConfigService } from '~/configs/modules/jwt.config'
 
 @Module({
   imports: [
-    StaffsModule,
+    StaffModule,
 
     JwtModule.registerAsync({
       global: true,

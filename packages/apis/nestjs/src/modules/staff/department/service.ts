@@ -1,9 +1,10 @@
 import type { IStaffDepartment, IStaffDepartmentDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { StaffDepartment } from '@/staffs/department/entity'
-import { DepartmentPayload } from '@/staffs/department/dto'
+import { StaffDepartment } from '@/staff/department/entity'
+import { DepartmentPayload } from '@/staff/department/dto'
+import { StaffLogService } from '@/staff/log/service'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 
 @Injectable()
@@ -11,6 +12,9 @@ export class StaffDepartmentService {
   constructor(
     @InjectRepository(StaffDepartment)
     private readonly repository: Repository<StaffDepartment>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -101,6 +105,7 @@ export class StaffDepartmentService {
         throw new ExistsException(`组织部门 [${data.name}] `)
 
       await this.repository.save(data)
+      await this.log.write('权限管理', `创建部门「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建组织部门', e.message, e.status)
@@ -134,6 +139,7 @@ export class StaffDepartmentService {
         throw new ExistsException(`组织部门 [${data.name}] `)
 
       await this.repository.update({ id }, data)
+      await this.log.write('权限管理', `更新部门「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新组织部门', e.message, e.status)
@@ -148,7 +154,12 @@ export class StaffDepartmentService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const department = await this.repository.findOneBy({ id })
+
+      if (department) {
+        await this.repository.delete({ id })
+        await this.log.write('权限管理', `删除部门「${department.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除组织部门', e.message)

@@ -10,9 +10,9 @@ import {
 } from '@xiaoshop/schema'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
-import { RoleInfoResponse } from '@/staffs/role/dto'
-import { PositionDictResponse } from '@/staffs/position/dto'
-import { DepartmentDictResponse } from '@/staffs/department/dto'
+import { RoleInfoResponse } from '@/staff/role/dto'
+import { PositionDictResponse } from '@/staff/position/dto'
+import { DepartmentDictResponse } from '@/staff/department/dto'
 
 /**
  * 员工账号响应 DTO

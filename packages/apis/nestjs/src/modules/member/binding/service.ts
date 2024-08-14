@@ -10,6 +10,7 @@ import { MemberCardService } from '@/member/card/service'
 import { MemberCardBinding } from '@/member/binding/entity'
 import { SettingsService } from '@/settings/settings.service'
 import { FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberCardBindingService {
@@ -22,6 +23,9 @@ export class MemberCardBindingService {
 
     @Inject(SettingsService)
     private readonly settings: SettingsService,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -115,7 +119,11 @@ export class MemberCardBindingService {
         }
       }
 
-      return await this.repository.save(binding)
+      const newBind = await this.repository.save(binding)
+
+      await this.log.write('会员管理', `会员「${memberId}」绑定会员卡「${cardInfo.name}」`)
+
+      return newBind
     }
     catch (e) {
       throw new FailedException('绑定会员卡', e.message, e.status)

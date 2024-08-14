@@ -2,12 +2,12 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Controller, Get, Query } from '@nestjs/common'
 import { EXCEPTION_FAILED } from '~/common/exception'
 import { ApiExceptionResponse, ApiPaginatedResponse } from '~/common/response/decorators'
-import { GetStaffLogPagesRequest, StaffLogResponse } from '@/staffs/log/dto'
-import { StaffLogService } from '@/staffs/log/service'
+import { GetStaffLogPagesRequest, StaffLogResponse } from '@/staff/log/dto'
+import { StaffLogService } from '@/staff/log/service'
 import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/权限/员工日志')
-@Controller('admin/staffs/log')
+@Controller('admin/staff/log')
 export class StaffLogAdminController {
   constructor(
     private readonly service: StaffLogService,

@@ -9,8 +9,12 @@ import { LogisticsFreightTemplate } from '@/logistics/freight-template/entity'
 import { LogisticsFreightTemplateService } from '@/logistics/freight-template/service'
 import { LogisticsTemplateFreightAdminController } from '@/logistics/freight-template/controller.admin'
 
+import { StaffModule } from '@/staff/staff.module'
+
 @Module({
   imports: [
+    StaffModule,
+
     TypeOrmModule.forFeature([
       LogisticsCompany,
       LogisticsFreightTemplate,

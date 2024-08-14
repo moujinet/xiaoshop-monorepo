@@ -1,7 +1,7 @@
 import type { IStaffDepartmentDict, IStaffPosition, IStaffPositionDict } from '@xiaoshop/schema'
 import { ApiProperty, PickType } from '@nestjs/swagger'
-import { DepartmentDictResponse } from '@/staffs/department/dto'
-import { example } from '@/staffs/position/dto/example'
+import { DepartmentDictResponse } from '@/staff/department/dto'
+import { example } from '@/staff/position/dto/example'
 
 /**
  * 组织职位 - 响应 DTO

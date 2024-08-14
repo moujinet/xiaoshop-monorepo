@@ -5,17 +5,21 @@ import type {
   IMemberTagListItem,
 } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { MemberTag } from '@/member/tag/entity'
 import { GetMemberTagPagesRequest, MemberTagPayload } from '@/member/tag/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberTagService {
   constructor(
     @InjectRepository(MemberTag)
     private readonly repository: Repository<MemberTag>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -109,6 +113,7 @@ export class MemberTagService {
       tag.name = data.name
 
       await this.repository.save(tag)
+      await this.log.write('会员管理', `创建会员标签「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建会员标签', e.message, e.status)
@@ -140,6 +145,7 @@ export class MemberTagService {
         throw new ExistsException(`会员标签「${data.name}」已存在`)
 
       await this.repository.update(id, data)
+      await this.log.write('会员管理', `更新会员标签「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新会员标签', e.message, e.status)
@@ -154,10 +160,12 @@ export class MemberTagService {
    */
   async delete(id: number) {
     try {
-      const founded = await this.repository.existsBy({ id })
+      const tag = await this.repository.findOneBy({ id })
 
-      if (founded)
+      if (tag) {
         await this.repository.delete({ id })
+        await this.log.write('会员管理', `删除会员标签「${tag.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除会员标签', e.message, e.status)

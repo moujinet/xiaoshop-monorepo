@@ -1,18 +1,22 @@
 import { Enabled, type IGoodsSpec } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { Goods } from '@/goods/manage/entity'
 import { GoodsSpec } from '@/goods/spec/entity'
 import { GoodsSpecPayload } from '@/goods/spec/dto'
 import { FailedException } from '~/common/exception'
 import { nanoid } from '~/utils'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsSpecService {
   constructor(
     @InjectRepository(GoodsSpec)
     private readonly repository: Repository<GoodsSpec>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {
   }
 

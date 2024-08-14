@@ -52,6 +52,7 @@ import { GoodsSettings } from '@/goods/goods.settings'
 import { GoodsListener } from '@/goods/goods.listener'
 import { GoodsScheduler } from '@/goods/goods.scheduler'
 import { SettingsModule } from '@/settings/settings.module'
+import { StaffModule } from '@/staff/staff.module'
 
 import {
   GOODS_MODULE_ID,
@@ -61,6 +62,8 @@ import {
 @Global()
 @Module({
   imports: [
+    StaffModule,
+
     forwardRef(() => AssetsModule),
 
     forwardRef(() =>

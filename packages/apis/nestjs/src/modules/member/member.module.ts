@@ -42,9 +42,12 @@ import { MemberScheduler } from '@/member/member.scheduler'
 import { MEMBER_MODULE_ID } from '@/member/constants'
 
 import { SettingsModule } from '@/settings/settings.module'
+import { StaffModule } from '@/staff/staff.module'
 
 @Module({
   imports: [
+    StaffModule,
+
     forwardRef(() =>
       SettingsModule.register({
         keyPrefix: MEMBER_MODULE_ID,

@@ -1,13 +1,19 @@
-import { type IApiPaginationData, type IStaffAccount, type IStaffAccountProfile, StaffAccountStatus } from '@xiaoshop/schema'
+import {
+  type IApiPaginationData,
+  type IStaffAccount,
+  type IStaffAccountProfile,
+  StaffAccountStatus,
+} from '@xiaoshop/schema'
 import * as bcrypt from 'bcrypt'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { StaffRole } from '@/staffs/role/entity'
-import { StaffAccount } from '@/staffs/account/entity'
-import { StaffPosition } from '@/staffs/position/entity'
-import { StaffDepartment } from '@/staffs/department/entity'
-import { GetAccountPagesRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staffs/account/dto'
+import { StaffRole } from '@/staff/role/entity'
+import { StaffAccount } from '@/staff/account/entity'
+import { StaffPosition } from '@/staff/position/entity'
+import { StaffDepartment } from '@/staff/department/entity'
+import { StaffLogService } from '@/staff/log/service'
+import { GetAccountPagesRequest, RegisterAccountPayload, UpdateAccountPayload } from '@/staff/account/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
 import { useQueryPagination } from '~/hooks/pagination'
 
@@ -16,6 +22,9 @@ export class StaffAccountService {
   constructor(
     @InjectRepository(StaffAccount)
     private readonly repository: Repository<StaffAccount>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -229,6 +238,8 @@ export class StaffAccountService {
       }
 
       await this.repository.save(account)
+
+      await this.log.write('权限管理', `创建员工「${data.name}」账号`)
     }
     catch (e) {
       throw new FailedException('创建员工账号', e.message, e.status)
@@ -312,6 +323,8 @@ export class StaffAccountService {
       }
 
       await this.repository.save(account)
+
+      await this.log.write('权限管理', `更新员工「${data.name}」账号`)
     }
     catch (e) {
       throw new FailedException('更新员工账号', e.message, e.status)
@@ -324,7 +337,12 @@ export class StaffAccountService {
    * @param id number
    */
   async updateLoginTime(id: number) {
-    await this.repository.update({ id }, { lastLoginTime: (new Date()).toISOString() })
+    const user = await this.repository.findOneBy({ id })
+
+    if (user) {
+      await this.repository.update({ id }, { lastLoginTime: (new Date()).toISOString() })
+      await this.log.write('权限管理', `员工「${user.name}」登录管理后台`, id)
+    }
   }
 
   /**
@@ -335,7 +353,12 @@ export class StaffAccountService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const user = await this.repository.findOneBy({ id })
+
+      if (user) {
+        await this.repository.delete({ id })
+        await this.log.write('权限管理', `删除员工账号「${user.name}」的账号`)
+      }
     }
     catch (e) {
       throw new FailedException('删除员工账号', e.message)

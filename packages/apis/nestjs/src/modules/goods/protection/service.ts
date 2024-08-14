@@ -1,16 +1,20 @@
 import type { IGoodsProtection, IGoodsProtectionDict, IGoodsProtectionListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsProtection } from '@/goods/protection/entity'
 import { GoodsProtectionPayload } from '@/goods/protection/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsProtectionService {
   constructor(
     @InjectRepository(GoodsProtection)
     private readonly repository: Repository<GoodsProtection>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -115,6 +119,8 @@ export class GoodsProtectionService {
       service.sort = data.sort || 1
 
       await this.repository.save(service)
+
+      await this.log.write('商品管理', `创建商品保障服务「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品保障服务', e.message, e.status)
@@ -155,6 +161,8 @@ export class GoodsProtectionService {
       service.sort = data.sort || 1
 
       await this.repository.save(service)
+
+      await this.log.write('商品管理', `更新商品保障服务「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品保障服务', e.message, e.status)
@@ -168,7 +176,12 @@ export class GoodsProtectionService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const service = await this.repository.findOneBy({ id })
+
+      if (service) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品保障服务「${service.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品保障服务', e.message)

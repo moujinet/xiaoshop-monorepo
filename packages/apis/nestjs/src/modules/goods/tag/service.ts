@@ -1,16 +1,20 @@
 import type { IGoodsTag, IGoodsTagDict, IGoodsTagListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsTag } from '@/goods/tag/entity'
 import { GoodsTagPayload } from '@/goods/tag/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsTagService {
   constructor(
     @InjectRepository(GoodsTag)
     private readonly repository: Repository<GoodsTag>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -110,6 +114,7 @@ export class GoodsTagService {
       goodsTag.sort = data.sort
 
       await this.repository.save(goodsTag)
+      await this.log.write('商品管理', `创建商品标签「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品标签', e.message, e.status)
@@ -148,6 +153,7 @@ export class GoodsTagService {
       goodsTag.sort = data.sort
 
       await this.repository.save(goodsTag)
+      await this.log.write('商品管理', `更新商品标签「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品标签', e.message, e.status)
@@ -161,7 +167,12 @@ export class GoodsTagService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const tag = await this.repository.findOneBy({ id })
+
+      if (tag) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品标签「${tag.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品标签', e.message)

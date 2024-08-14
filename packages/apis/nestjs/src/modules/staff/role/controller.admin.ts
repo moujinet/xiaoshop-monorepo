@@ -2,12 +2,12 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { EXCEPTION_BAD_REQUEST, EXCEPTION_EXISTS, EXCEPTION_FAILED, EXCEPTION_NOT_FOUND } from '~/common/exception'
 import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResponse, ApiPaginatedResponse } from '~/common/response/decorators'
-import { DeleteRoleRequest, GetRolePagesRequest, GetRoleRequest, RoleDictResponse, RolePayload, RoleResponse } from '@/staffs/role/dto'
-import { StaffRoleService } from '@/staffs/role/service'
+import { DeleteRoleRequest, GetRolePagesRequest, GetRoleRequest, RoleDictResponse, RolePayload, RoleResponse } from '@/staff/role/dto'
+import { StaffRoleService } from '@/staff/role/service'
 import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/权限/员工角色')
-@Controller('admin/staffs/role')
+@Controller('admin/staff/role')
 export class StaffRoleAdminController {
   constructor(
     private readonly service: StaffRoleService,
