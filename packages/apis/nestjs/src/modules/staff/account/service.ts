@@ -341,7 +341,7 @@ export class StaffAccountService {
 
     if (user) {
       await this.repository.update({ id }, { lastLoginTime: (new Date()).toISOString() })
-      await this.log.write('权限管理', `员工「${user.name}」登录管理后台`, id)
+      await this.log.write('权限管理', `员工「${user.name}」登录管理后台`, user.id)
     }
   }
 

@@ -14,7 +14,7 @@ import { ApiDoneResponse, ApiExceptionResponse, ApiListedResponse, ApiObjectResp
 import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/物流发货/运费模板')
-@Controller('admin/freight-template')
+@Controller('admin/logistics/freight-template')
 export class LogisticsTemplateFreightAdminController {
   constructor(
     private readonly service: LogisticsFreightTemplateService,

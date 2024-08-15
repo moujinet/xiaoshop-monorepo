@@ -897,13 +897,20 @@ export class GoodsService {
 
       goods.updatedTime = (new Date()).toISOString()
 
-      await this.repository.update({ id: In(ids) }, goods)
+      await Promise.all(
+        ids.map((id) => {
+          this.repository.update(id, goods)
+
+          this.eventEmitter.emitAsync(
+            GoodsUpdateEvent.name,
+            new GoodsUpdateEvent(id),
+          )
+
+          return true
+        }),
+      )
 
       await this.log.write('商品管理', `批量更新商品「${ids.join(',')}」`)
-
-      for (const id of ids) {
-        this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id))
-      }
     }
     catch (e) {
       throw new FailedException('批量更新商品', e.message, e.status)

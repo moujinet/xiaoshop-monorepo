@@ -56,7 +56,7 @@ export class StaffAccount implements IStaffAccount {
   @Column({ name: 'last_login_time', type: 'datetime', default: null, comment: '最后登录时间' })
   lastLoginTime: string
 
-  @ManyToMany(() => StaffRole, { createForeignKeyConstraints: false })
+  @ManyToMany(() => StaffRole, { cascade: true, createForeignKeyConstraints: false })
   @JoinTable({ name: 'manage_staff_account_has_roles', joinColumn: { name: 'staff_id' }, inverseJoinColumn: { name: 'role_id' } })
   roles: IStaffRoleInfo[]
 

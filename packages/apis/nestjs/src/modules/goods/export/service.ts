@@ -106,8 +106,6 @@ export class GoodsExportRecordService {
         count,
         result: result || '',
       })
-
-      await this.log.write('商品管理', `导出记录「${id}」${status === 'success' ? '成功' : '失败'}`)
     }
     catch (e) {
       throw new FailedException('更新导出记录', e.message)

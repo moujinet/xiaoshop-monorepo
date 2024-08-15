@@ -195,15 +195,15 @@ export class Goods implements IGoods {
   @JoinColumn({ name: 'brand_id' })
   brand: GoodsBrand
 
-  @ManyToMany(() => GoodsCategory, { createForeignKeyConstraints: false })
+  @ManyToMany(() => GoodsCategory, { cascade: true, createForeignKeyConstraints: false })
   @JoinTable({ name: 'shop_goods_has_categories', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'category_id' } })
   categories: GoodsCategory[]
 
-  @ManyToMany(() => GoodsProtection, { createForeignKeyConstraints: false })
+  @ManyToMany(() => GoodsProtection, { cascade: true, createForeignKeyConstraints: false })
   @JoinTable({ name: 'shop_goods_has_protections', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'protection_id' } })
   protections: GoodsProtection[]
 
-  @ManyToMany(() => GoodsAddition, { createForeignKeyConstraints: false })
+  @ManyToMany(() => GoodsAddition, { cascade: true, createForeignKeyConstraints: false })
   @JoinTable({ name: 'shop_goods_has_additions', joinColumn: { name: 'goods_id' }, inverseJoinColumn: { name: 'addition_id' } })
   additions: GoodsAddition[]
 

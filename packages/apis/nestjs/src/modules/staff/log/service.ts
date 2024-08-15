@@ -152,15 +152,15 @@ export class StaffLogService {
       const log = new StaffLog()
       const staff = new StaffAccount()
 
-      staff.id = user.id || staffId
+      staff.id = user ? user.id : staffId
 
       log.staff = staff
       log.type = type
       log.module = module
       log.content = content
       log.extra = {
-        os: ua.os.name,
-        ua: `${ua.browser.name}/${ua.browser.version}`,
+        os: ua.os.name || 'unknown',
+        ua: ua.browser.name ? `${ua.browser.name}/${ua.browser.version}` : 'unknown',
         ip,
       }
 

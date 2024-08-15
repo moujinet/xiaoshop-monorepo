@@ -26,6 +26,6 @@ export class StaffPosition implements IStaffPosition {
   updatedTime: string
 
   @ManyToOne(() => StaffDepartment, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'department_id' })
   department: IStaffDepartmentDict
 }

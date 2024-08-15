@@ -8,6 +8,7 @@ const mysql = configuration().db.mysql
 export const config = {
   ...mysql,
   synchronize: false,
+  timezone: '+08:00',
   entities: [
     join(__dirname, '../..', 'src/modules', '**', '*.entity.{ts,js}'),
     join(__dirname, '../..', 'src/modules', '**', 'entity.{ts,js}'),
