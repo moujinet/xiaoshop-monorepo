@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { GoodsService } from '@/goods/manage/service'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsScheduler {
@@ -9,6 +10,9 @@ export class GoodsScheduler {
   constructor(
     @Inject(GoodsService)
     private readonly goods: GoodsService,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -19,8 +23,12 @@ export class GoodsScheduler {
     try {
       const goodsIds = await this.goods.updateSoldOutGoods()
 
-      if (goodsIds.length > 0)
+      if (goodsIds.length > 0) {
+        this.log.writeCrontabLog('商品管理', `售馨商品自动下架成功, 商品ID: ${goodsIds.join(',')}`)
+
         this.logger.debug('下架售馨商品', goodsIds)
+        // TODO: 通知商家
+      }
     }
     catch (e) {
       this.logger.error(e.message)

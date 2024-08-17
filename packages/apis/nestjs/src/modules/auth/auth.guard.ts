@@ -56,6 +56,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException()
 
       this.cls.set<IStaffLoginProfile>('USER', payload.user)
+      request.user = payload.user
     }
     catch (e) {
       throw new UnauthorizedException(e.message)

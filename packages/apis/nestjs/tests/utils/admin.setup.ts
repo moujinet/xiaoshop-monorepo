@@ -9,6 +9,7 @@ import { GoodsModule } from '@/goods/goods.module'
 import { LogisticsModule } from '@/logistics/logistics.module'
 import { MemberModule } from '@/member/member.module'
 import { UploadModule } from '@/upload/upload.module'
+import { PointsModule } from '@/points/points.module'
 
 let app: INestApplication
 let token: string = ''
@@ -18,6 +19,7 @@ async function getApp() {
     app = await createTestingApplication([
       SettingsModule.register(),
       AuthModule,
+      PointsModule,
       StaffModule,
       AssetsModule,
       UploadModule,

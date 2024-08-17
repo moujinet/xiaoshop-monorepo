@@ -19,7 +19,7 @@ withDefaults(defineProps<{
       {{ prefix }}
     </small>
 
-    {{ type === 'text' ? value : formatNumber(type === 'price' ? Number(value).toFixed(2) : value || '') }}
+    {{ type === 'text' ? value : formatNumber(type === 'price' ? Number(value).toFixed(2) : value === 0 ? 0 : value || '') }}
 
     <small v-if="suffix" class="text-$color-text-3 font-normal ml-0.5" v-html="suffix" />
   </span>

@@ -9,6 +9,7 @@ import { GoodsService } from '@/goods/manage/service'
 import { GoodsExportRecordService } from '@/goods/export/service'
 import { GOODS_EXPORT_TASK, GOODS_QUEUE_ID } from '@/goods/constants'
 import { ensureDir } from '~/utils/path'
+import { StaffLogService } from '@/staff/log/service'
 
 @Processor(GOODS_QUEUE_ID)
 export class GoodsExportTask {
@@ -23,6 +24,9 @@ export class GoodsExportTask {
 
     @Inject(ConfigService)
     private readonly config: ConfigService,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   @Process(GOODS_EXPORT_TASK)
@@ -70,6 +74,8 @@ export class GoodsExportTask {
           result.length,
           filename,
         )
+
+        this.log.writeSystemLog('商品管理', `导出任务「${id}」导出商品成功, 文件: ${filename}`)
       }
       else {
         this.exportRecord.updateStatusAndCount(
@@ -78,17 +84,14 @@ export class GoodsExportTask {
           result.length,
           '没有符合条件的商品',
         )
+
+        this.log.writeSystemLog('商品管理', `导出任务「${id}」导出商品操失败, 没有符合条件的商品`)
       }
     }
     catch (e) {
       this.logger.error(e.message)
-
-      this.exportRecord.updateStatusAndCount(
-        id,
-        GoodsExportRecordStatus.FAILED,
-        0,
-        e.message,
-      )
+      this.exportRecord.updateStatusAndCount(id, GoodsExportRecordStatus.FAILED, 0, e.message)
+      this.log.writeSystemLog('商品管理', `导出任务「${id}」导出商品失败, ${e.message}`)
     }
   }
 

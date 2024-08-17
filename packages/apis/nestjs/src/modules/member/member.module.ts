@@ -25,10 +25,6 @@ import { MemberTag } from '@/member/tag/entity'
 import { MemberTagService } from '@/member/tag/service'
 import { MemberTagAdminController } from '@/member/tag/controller.admin'
 
-import { MemberPointsRule } from '@/member/points-rule/entity'
-import { MemberPointsRuleService } from '@/member/points-rule/service'
-import { MemberPointsRuleAdminController } from '@/member/points-rule/controller.admin'
-
 import { MemberAddress } from '@/member/address/entity'
 import { MemberAddressService } from '@/member/address/service'
 import { MemberAddressAdminController } from '@/member/address/controller.admin'
@@ -63,7 +59,6 @@ import { StaffModule } from '@/staff/staff.module'
       MemberGroup,
       MemberTag,
       MemberAddress,
-      MemberPointsRule,
       MemberLogout,
     ]),
 
@@ -78,7 +73,6 @@ import { StaffModule } from '@/staff/staff.module'
     MemberCardAdminController,
     MemberGroupAdminController,
     MemberTagAdminController,
-    MemberPointsRuleAdminController,
     MemberAddressAdminController,
     MemberLogoutAdminController,
   ],
@@ -91,11 +85,14 @@ import { StaffModule } from '@/staff/staff.module'
     MemberGroupService,
     MemberTagService,
     MemberAddressService,
-    MemberPointsRuleService,
     MemberLogoutService,
 
     // Scheduler
     MemberScheduler,
+  ],
+
+  exports: [
+    MemberAccountService,
   ],
 })
 export class MemberModule {}

@@ -195,7 +195,7 @@ function handleBatchSoldOut(ids: IGoods['id'][]) {
 
     <CommonCard>
       <template #extra>
-        <a-affix :offset-top="133" @change="(val) => (isAffix = val)">
+        <a-affix :offset-top="133" @change="(val: boolean) => (isAffix = val)">
           <div class="pt-4 px-4" :class="{ 'bg-white pb-4 border-solid border-0 border-b-1 border-$color-border-2': isAffix }">
             <a-tabs v-model:active-key="searchForm.status" type="card" size="large" class="mb-4" hide-content @change="handleTabsChange">
               <a-tab-pane key="all" title="全部" />

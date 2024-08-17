@@ -101,15 +101,13 @@ export class StaffLogService {
    *
    * @param module 日志模块
    * @param content 日志内容
-   * @param staffId 操作员工 ID
    * @throws {FailedException} 写入员工日志失败
    */
   async writeCrontabLog(
     module: string,
     content: string,
-    staffId?: number,
   ) {
-    await this.writeLog(StaffLogType.CRONTAB, module, content, staffId)
+    await this.writeLog(StaffLogType.CRONTAB, module, content)
   }
 
   /**
@@ -117,15 +115,13 @@ export class StaffLogService {
    *
    * @param module 日志模块
    * @param content 日志内容
-   * @param staffId 操作员工 ID
    * @throws {FailedException} 写入员工日志失败
    */
   async writeSystemLog(
     module: string,
     content: string,
-    staffId?: number,
   ) {
-    await this.writeLog(StaffLogType.SYSTEM, module, content, staffId)
+    await this.writeLog(StaffLogType.SYSTEM, module, content)
   }
 
   /**
@@ -141,7 +137,7 @@ export class StaffLogService {
     type: IStaffLogType,
     module: string,
     content: string,
-    staffId: number,
+    staffId: number = 0,
   ) {
     try {
       const user = this.cls.get<IStaffLoginProfile>('USER')
@@ -150,24 +146,27 @@ export class StaffLogService {
       const ua = new UAParser(agent).getResult()
 
       const log = new StaffLog()
-      const staff = new StaffAccount()
 
-      staff.id = user ? user.id : staffId
-
-      log.staff = staff
       log.type = type
       log.module = module
       log.content = content
-      log.extra = {
-        os: ua.os.name || 'unknown',
-        ua: ua.browser.name ? `${ua.browser.name}/${ua.browser.version}` : 'unknown',
-        ip,
+
+      if (type === StaffLogType.MANUAL) {
+        const staff = new StaffAccount()
+        staff.id = user ? user.id : staffId
+        log.staff = staff
+
+        log.extra = {
+          os: ua.os.name || 'unknown',
+          ua: ua.browser.name ? `${ua.browser.name}/${ua.browser.version}` : 'unknown',
+          ip,
+        }
       }
 
       await this.repository.save(log)
     }
     catch (e) {
-      throw new FailedException('写入员工日志', e.message)
+      throw new FailedException(`写入员工日志: ${e.message}`, e.message)
     }
   }
 }

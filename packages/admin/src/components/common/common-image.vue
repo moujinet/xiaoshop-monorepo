@@ -8,18 +8,15 @@ const props = defineProps<{
   isLocal?: boolean
 }>()
 
-const { getOptions } = useSettings()
+const { getFullUrl } = useAsset()
 
-const local = getOptions('upload', {}, ['customDomain'])
-const storage = getOptions('upload.storage.aliyun', {}, ['enable', 'enableCustomDomain', 'customDomain'])
+const url = getFullUrl(props.src)
 
 const imageSrc = computed(() => {
   if (props.isLocal)
     return props.src
 
-  return `${(storage.enable && storage.enableCustomDomain
-    ? storage.customDomain
-    : local.customDomain).replace(/\/$/, '')}/${props.src}`
+  return url
 })
 </script>
 

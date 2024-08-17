@@ -8,11 +8,12 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 // Modules
-import { AuthModule } from '@/auth/auth.module'
 import { AssetsModule } from '@/assets/assets.module'
+import { AuthModule } from '@/auth/auth.module'
 import { GoodsModule } from '@/goods/goods.module'
 import { LogisticsModule } from '@/logistics/logistics.module'
 import { MemberModule } from '@/member/member.module'
+import { PointsModule } from '@/points/points.module'
 import { SettingsModule } from '@/settings/settings.module'
 import { StaffModule } from '@/staff/staff.module'
 import { UploadModule } from '@/upload/upload.module'
@@ -82,6 +83,7 @@ import configuration from '~/configs'
     AuthModule,
     SettingsModule.register(),
     MemberModule,
+    PointsModule,
     GoodsModule,
     AssetsModule,
     LogisticsModule,

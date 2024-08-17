@@ -171,6 +171,23 @@ export type IMemberListItem = Pick<
 }
 
 /**
+ * 会员信息
+ */
+export type IMemberInfo = Pick<
+  IMember,
+  | 'id'
+  | 'status'
+  | 'cardNo'
+  | 'card'
+  | 'tags'
+  | 'group'
+  | 'gender'
+  | 'avatar'
+  | 'nickname'
+  | 'location'
+>
+
+/**
  * 会员徽章类型
  *
  * @see {@link IMemberCard}

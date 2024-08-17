@@ -3,18 +3,33 @@ defineOptions({
   name: 'LayoutHeaderUserMenus',
 })
 
+const router = useRouter()
 const greeting = getGreeting()
 
 const usermenus = [
   { name: '个人资料', icon: 'mingcute:user-1', url: '' },
-  { name: '退出登录', icon: 'mingcute:exit', url: '' },
+  { name: '退出登录', icon: 'mingcute:exit', url: '#logout' },
 ]
+
+const { profile, logout } = useSession()
+
+function handleSelect(value: string) {
+  if (value === '#logout') {
+    logout().then(() => {
+      useMessage({
+        onClose: () => {
+          router.push({ path: '/login' })
+        },
+      }).success('退出登录成功')
+    })
+  }
+}
 </script>
 
 <template>
-  <a-dropdown position="br">
+  <a-dropdown position="br" @select="handleSelect">
     <div class="layout-header__usermenus">
-      {{ greeting }}, Administrator
+      {{ greeting }}, {{ profile?.name }}
       <CommonIcon name="mingcute:down" />
     </div>
     <template #content>

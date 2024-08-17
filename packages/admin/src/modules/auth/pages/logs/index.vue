@@ -31,9 +31,9 @@ const searchForm = reactive<{
 })
 
 const columns: TableColumnData[] = [
-  { title: '日志操作', dataIndex: 'action', width: 140 },
+  { title: '日志操作', dataIndex: 'module', width: 140 },
   { title: '日志内容', dataIndex: 'content' },
-  { title: '操作人', dataIndex: 'staff', slotName: 'staff', width: 100 },
+  { title: '操作人', dataIndex: 'staff', slotName: 'staff', width: 140 },
   { title: '日志类型', dataIndex: 'type', slotName: 'type', width: 140 },
   { title: '额外信息', dataIndex: 'extra', slotName: 'extra', width: 160 },
   { title: '操作时间', dataIndex: 'createdTime', slotName: 'createdTime', width: 180 },
@@ -106,7 +106,7 @@ function handlePageSizeChange(size: number) {
         </template>
 
         <template #staff="{ record }">
-          {{ record.staff.name }}
+          {{ record.staff ? record.staff.name : '-' }}
         </template>
 
         <template #extra="{ record }">

@@ -84,17 +84,6 @@ describe('Member Module - Account', () => {
     expect(body.code).toEqual(0)
   })
 
-  it('Update Member Points Account', async () => {
-    const { body } = await getRequest('put', '/member/account/points/update')
-      .query({ id: 1 })
-      .send({
-        points: 1000,
-      })
-      .expect(200)
-
-    expect(body.code).toEqual(0)
-  })
-
   it('Bind Member Card', async () => {
     const { body } = await getRequest('put', '/member/card/bind')
       .send({

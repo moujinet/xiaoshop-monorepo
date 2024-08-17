@@ -19,6 +19,7 @@ export { getRequest } from './admin.setup'
 const dataSourceOptions: DataSourceOptions = {
   ...configuration().db.mysql,
   timezone: '+08:00',
+  keepAlive: true,
   autoLoadEntities: true,
   synchronize: true,
   logging: false,
@@ -63,7 +64,9 @@ export async function createTestingModule(modules: any[]) {
         useClass: QueueConfigService,
       }),
 
-      EventEmitterModule.forRoot(),
+      EventEmitterModule.forRoot({
+        global: true,
+      }),
 
       // CLS
       ClsModule.forRoot({

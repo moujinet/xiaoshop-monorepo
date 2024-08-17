@@ -13,7 +13,7 @@ import type {
 export function defineMiddleware(middleware: IMiddleware): IMiddlewareInstaller {
   return ({ router }) => {
     router.beforeEach((to, from, next) => {
-      if (!middleware(to, from))
+      if (!middleware(to, from, next))
         next()
     })
   }

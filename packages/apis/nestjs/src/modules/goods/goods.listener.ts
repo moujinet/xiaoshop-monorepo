@@ -13,6 +13,7 @@ import {
 import { GoodsService } from '@/goods/manage/service'
 import { GoodsSkuService } from '@/goods/sku/service'
 import { GoodsSpecService } from '@/goods/spec/service'
+import { StaffLogService } from '@/staff/log/service'
 import { GOODS_EXPORT_TASK, GOODS_QUEUE_ID } from '@/goods/constants'
 
 @Injectable()
@@ -31,6 +32,9 @@ export class GoodsListener {
 
     @InjectQueue(GOODS_QUEUE_ID)
     private readonly queue: Queue<IGoodsExportJob>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   @OnEvent(GoodsCopyEvent.name)
@@ -41,6 +45,8 @@ export class GoodsListener {
       const goodsId = await this.goods.copyToDraft(payload.id)
       const specs = await this.spec.cloneTo(payload.id, goodsId)
       await this.sku.cloneTo(payload.id, goodsId, specs)
+
+      await this.log.writeSystemLog('商品管理', `复制商品至草稿成功, 商品ID: ${goodsId}`)
     }
     catch (e) {
       this.logger.error(e.message)
@@ -67,6 +73,7 @@ export class GoodsListener {
 
   @OnEvent(GoodsExportEvent.name)
   async handleGoodsExport(payload: GoodsExportEvent) {
+    await this.log.writeSystemLog('商品管理', `开始导出商品, 导出任务 ID: ${payload.id}`)
     await this.queue.add(GOODS_EXPORT_TASK, payload)
   }
 }

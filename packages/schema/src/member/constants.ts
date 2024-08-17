@@ -311,63 +311,51 @@ export const MEMBER_LOGOUT_STATUSES = [
 ]
 
 // -----------------------------------------------
-// 会员 - 会员积分 - 变更类型
+// 会员 - 历史记录 - 记录类型
 // -----------------------------------------------
 
 /**
- * 枚举: 会员积分 - 变更类型
+ * 枚举: 历史记录类型
  *
- * - `ADD`: 增加
- * - `DEDUCT`: 扣除
- * - `SET`: 变更
+ * - `VISIT`: 访问
+ * - `FAVORITE`: 收藏
  */
-export enum MemberPointsOperator {
-  ADD = 'add',
-  DEDUCT = 'deduct',
-  SET = 'set',
+export enum MemberHistoryLogType {
+  VISIT = 'visit',
+  FAVORITE = 'favorite',
 }
 
 /**
- * 字典: 会员积分 - 变更类型
+ * 字典: 历史记录类型
  *
- * @see {@link IMemberPointsOperator}
+ * @see {@link IMemberHistoryLogType}
  */
-export const MEMBER_POINTS_OPERATORS = [
-  { label: '增加', value: MemberPointsOperator.ADD },
-  { label: '扣除', value: MemberPointsOperator.DEDUCT },
-  { label: '变更', value: MemberPointsOperator.SET },
+export const MEMBER_HISTORY_LOG_TYPES = [
+  { label: '访问', value: MemberHistoryLogType.VISIT },
+  { label: '收藏', value: MemberHistoryLogType.FAVORITE },
 ]
 
 // -----------------------------------------------
-// 会员 - 会员积分规则 - 标识
+// 会员 - 操作日志 - 操作类型
 // -----------------------------------------------
 
 /**
- * 枚举: 会员积分规则标识
+ * 枚举: 操作日志操作类型
  *
- * - `REGISTER`: 注册奖励
- * - `ORDERING`: 消费奖励
- * - `BIRTHDAY`: 生日有礼
- * - `SIGN_IN`: 签到奖励
- * - `DEDUCTION`: 积分抵现
+ * - `USER`: 用户
+ * - `SYSTEM`: 系统
  */
-export enum MemberPointsRuleKey {
-  REGISTER = 'register',
-  ORDERING = 'ordering',
-  BIRTHDAY = 'birthday',
-  SIGN_IN = 'sign_in',
-  DEDUCTION = 'deduction',
+export enum MemberOperationLogType {
+  USER = 'user',
+  SYSTEM = 'system',
 }
 
 /**
- * 字典: 会员积分规则 - 标识
+ * 字典: 操作日志操作类型
  *
- * @see {@link IMemberPointsRuleKey}
+ * @see {@link IMemberOperationLogType}
  */
-export const MEMBER_POINTS_RULE_KEYS = [
-  { label: '注册奖励', value: MemberPointsRuleKey.REGISTER },
-  { label: '消费奖励', value: MemberPointsRuleKey.ORDERING },
-  { label: '生日有礼', value: MemberPointsRuleKey.BIRTHDAY },
-  { label: '签到奖励', value: MemberPointsRuleKey.SIGN_IN },
-  { label: '积分抵现', value: MemberPointsRuleKey.DEDUCTION },
+export const MEMBER_OPERATION_LOG_TYPES = [
+  { label: '用户', value: MemberOperationLogType.USER },
+  { label: '系统', value: MemberOperationLogType.SYSTEM },
 ]

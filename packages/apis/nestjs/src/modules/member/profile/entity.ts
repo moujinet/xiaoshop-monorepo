@@ -64,7 +64,7 @@ export class Member implements IMember {
   location: ILocationPath
 
   @OneToMany(() => MemberAccount, account => account.member, { cascade: true, createForeignKeyConstraints: false })
-  @JoinColumn({ name: 'account_id' })
+  @JoinColumn()
   account: MemberAccount[]
 
   @OneToOne(() => MemberCardBinding, { cascade: true, createForeignKeyConstraints: false })

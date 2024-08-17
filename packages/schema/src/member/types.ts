@@ -5,9 +5,9 @@ import type {
   MemberGender,
   MemberGroupCondKey,
   MemberGroupCondOperator,
+  MemberHistoryLogType,
   MemberLogoutStatus,
-  MemberPointsOperator,
-  MemberPointsRuleKey,
+  MemberOperationLogType,
   MemberSource,
   MemberStatus,
 } from '@/member/constants'
@@ -88,30 +88,6 @@ export type IMemberCardType = `${MemberCardType}` | MemberCardType
 export type IMemberCardPlanType = `${MemberCardPlanType}` | MemberCardPlanType
 
 /**
- * 会员积分 - 变更类型
- *
- * - `ADD`: 增加
- * - `DEDUCT`: 扣除
- * - `SET`: 设置
- *
- * @see {@link MemberPointsOperator}
- */
-export type IMemberPointsOperator = `${MemberPointsOperator}` | MemberPointsOperator
-
-/**
- * 会员积分规则 - 标识
- *
- * - `REGISTER`: 注册奖励
- * - `ORDERING`: 消费奖励
- * - `BIRTHDAY`: 生日有礼
- * - `SIGN_IN`: 签到奖励
- * - `DEDUCTION`: 积分抵扣
- *
- * @see {@link MemberPointsRuleKey}
- */
-export type IMemberPointsRuleKey = `${MemberPointsRuleKey}` | MemberPointsRuleKey
-
-/**
  * 会员群体 - 筛选条件 - 操作符
  *
  * - `IN`: 包含
@@ -150,3 +126,24 @@ export type IMemberGroupCondKey = `${MemberGroupCondKey}` | MemberGroupCondKey
  * @see {@link MemberLogoutStatus}
  */
 export type IMemberLogoutStatus = `${MemberLogoutStatus}` | MemberLogoutStatus
+
+/**
+ * 会员历史记录 - 类型
+ *
+ * - `VISIT`: 访问
+ * - `FAVORITE`: 收藏
+ *
+ * @see {@link MemberHistoryLogType}
+ */
+export type IMemberHistoryLogType = `${MemberHistoryLogType}` | MemberHistoryLogType
+
+/**
+ * 会员操作日志 - 类型
+ *
+ * - `USER`: 用户
+ * - `SYSTEM`: 系统
+ * - `CUSTOMER_SERVICE`: 客服
+ *
+ * @see {@link MemberOperationLogType}
+ */
+export type IMemberOperationLogType = `${MemberOperationLogType}` | MemberOperationLogType

@@ -9,16 +9,9 @@ const props = defineProps<{
   src: string
 }>()
 
-const { getOptions } = useSettings()
+const { getFullUrl } = useAsset()
 
-const local = getOptions('upload', {}, ['customDomain'])
-const storage = getOptions('upload.storage.aliyun', {}, ['enable', 'enableCustomDomain', 'customDomain'])
-
-const videoSrc = computed(() => {
-  return `${(storage.enable && storage.enableCustomDomain
-    ? storage.customDomain
-    : local.customDomain).replace(/\/$/, '')}/${props.src}`
-})
+const video = getFullUrl(props.src)
 </script>
 
 <template>
@@ -26,7 +19,7 @@ const videoSrc = computed(() => {
     class="video-player vjs-theme-city"
     :sources="[
       {
-        src: videoSrc,
+        src: video,
         type: 'video/mp4',
       },
     ]"

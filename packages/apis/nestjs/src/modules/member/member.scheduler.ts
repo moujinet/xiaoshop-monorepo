@@ -6,6 +6,7 @@ import { MemberLogoutEvent } from '@/member/member.events'
 import { MemberGroupService } from '@/member/group/service'
 import { MemberLogoutService } from '@/member/logout/service'
 import { SettingsService } from '@/settings/settings.service'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class MemberScheduler {
@@ -23,6 +24,9 @@ export class MemberScheduler {
 
     @Inject(SettingsService)
     private readonly settings: SettingsService,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
 
     private readonly eventEmitter: EventEmitter2,
   ) {}
@@ -43,8 +47,10 @@ export class MemberScheduler {
 
           const total = await this.member.countMemberByGroupConditions(group.conditions)
 
-          if (total !== group.total)
+          if (total !== group.total) {
             await this.group.updateTotal(group.id, total)
+            await this.log.writeCrontabLog('会员管理', `刷新「${group.name}」会员群体统计完成, 总数: ${total}`)
+          }
 
           this.logger.debug(`刷新「${group.name}」会员群体统计完成, 总数: ${total}`)
         }

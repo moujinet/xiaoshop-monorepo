@@ -22,11 +22,13 @@ export function handleConfigureBaseUrl(config: InternalAxiosRequestConfig): Inte
  * @returns InternalAxiosRequestConfig
  */
 export function handleConfigureAuthHeaders(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
-  const { token } = useToken()
+  const { isLogin, token } = useSession()
 
-  config.headers = Object.assign(config.headers || {}, {
-    Authorization: token.value,
-  })
+  if (isLogin.value) {
+    config.headers = Object.assign(config.headers || {}, {
+      Authorization: `Bearer ${token.value}`,
+    })
+  }
 
   return config
 }
