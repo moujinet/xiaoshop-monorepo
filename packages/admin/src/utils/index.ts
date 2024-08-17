@@ -219,3 +219,13 @@ export function dict<
 export function titleCase(value: string): string {
   return `${value.charAt(0).toUpperCase()}${value.slice(1).toLowerCase()}`
 }
+
+/**
+ * 简易深拷贝
+ *
+ * @param data any
+ * @returns any
+ */
+export function cloneDeep<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data)) as T
+}

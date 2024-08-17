@@ -27,26 +27,29 @@ export const STAFF_ACCOUNT_STATUSES = [
 ]
 
 // -----------------------------------------------
-// 员工 - 员工日志 - 类型
+// 员工日志 - 动作类型
 // -----------------------------------------------
 
 /**
- * 枚举: 员工日志 - 类型
+ * 枚举: 员工日志类型
  *
- * - `LOGIN`: 登录登出
- * - `OPERATE`: 操作日志
+ * - `SYSTEM`: 系统
+ * - `CRONTAB`: 定时
+ * - `MANUAL`: 手动
  */
 export enum StaffLogType {
-  LOGIN = 'login',
-  OPERATE = 'operate',
+  SYSTEM = 'system',
+  CRONTAB = 'crontab',
+  MANUAL = 'manual',
 }
 
 /**
- * 字典: 员工日志 - 类型
+ * 字典: 员工日志类型
  *
  * @see {@link IStaffLogType}
  */
 export const STAFF_LOG_TYPES = [
-  { label: '登录日志', value: StaffLogType.LOGIN, color: 'orange' },
-  { label: '操作日志', value: StaffLogType.OPERATE, color: 'arcoblue' },
+  { label: '系统', value: StaffLogType.SYSTEM, color: 'purple' },
+  { label: '定时', value: StaffLogType.CRONTAB, color: 'orange' },
+  { label: '手动', value: StaffLogType.MANUAL, color: 'arcoblue' },
 ]

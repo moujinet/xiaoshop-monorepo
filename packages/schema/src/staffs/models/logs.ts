@@ -1,4 +1,4 @@
-import type { IStaffLogType } from '@/staffs/types'
+import type { IStaffLogType } from '../types'
 import type { IStaffAccountInfo } from '@/staffs/models/account'
 
 /**
@@ -28,11 +28,9 @@ export interface IStaffLog {
    */
   id: number
   /**
-   * 日志类型
-   *
-   * @see {@link IStaffLogType}
+   * 员工 ID
    */
-  type: IStaffLogType
+  staffId: number
   /**
    * 员工信息
    *
@@ -40,9 +38,15 @@ export interface IStaffLog {
    */
   staff: IStaffAccountInfo
   /**
-   * 日志操作
+   * 日志类型
+   *
+   * @see {@link IStaffLogType}
    */
-  action: string
+  type: IStaffLogType
+  /**
+   * 日志模块
+   */
+  module: string
   /**
    * 日志内容
    */

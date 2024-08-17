@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Entity('shop_goods_brand', {
   comment: '商品品牌表',
 })
-@Index('idx_shop_goods_brand', ['sort', 'updatedTime'])
+@Index('IDX_shop_goods_brand', ['sort', 'updatedTime'])
 export class GoodsBrand implements IGoodsBrand {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_shop_goods_brand' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_goods_brand' })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '品牌名称' })

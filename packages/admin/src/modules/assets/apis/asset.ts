@@ -1,17 +1,25 @@
-import { AssetType, type IAsset, type IAssetInfo, type IAssetUploadOptions } from '@xiaoshop/schema'
+import {
+  AssetType,
+  type IApiPaginationData,
+  type IAsset,
+  type IAssetInfo,
+  type IAssetUploadOptions,
+} from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取素材分页列表
  *
- * @api get /assets/pages
+ * @api get /admin/assets/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IAsset>>
+ * @returns IUseRequestReturn<IApiPaginationData<IAsset>>
  */
-export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IAsset>> {
-  return useRequest<IApiPaginationResult<IAsset>>({
+export function fetchAssetPages(
+  params?: Record<string, any>,
+): IUseRequestReturn<IApiPaginationData<IAsset>> {
+  return useRequest<IApiPaginationData<IAsset>>({
     method: 'get',
-    url: '/assets/pages',
+    url: '/admin/assets/pages',
     params,
   })
 }
@@ -19,14 +27,16 @@ export function fetchAssetPages(params?: Record<string, any>): IUseRequestReturn
 /**
  * 获取素材详情
  *
- * @api get /assets/detail
+ * @api get /admin/assets/detail
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAssetInfo>
  */
-export function fetchAssetInfo(id: IAsset['id']): IUseRequestReturn<IAssetInfo> {
+export function fetchAssetInfo(
+  id: IAsset['id'],
+): IUseRequestReturn<IAssetInfo> {
   return useRequest<IAssetInfo>({
     method: 'get',
-    url: '/assets/info',
+    url: '/admin/assets/info',
     params: {
       id,
     },
@@ -36,14 +46,16 @@ export function fetchAssetInfo(id: IAsset['id']): IUseRequestReturn<IAssetInfo> 
 /**
  * 获取素材详情
  *
- * @api get /assets/detail
+ * @api get /admin/assets/detail
  * @param id IAsset['id']
  * @returns IUseRequestReturn<IAsset>
  */
-export function fetchAssetDetail(id: IAsset['id']): IUseRequestReturn<IAsset> {
+export function fetchAssetDetail(
+  id: IAsset['id'],
+): IUseRequestReturn<IAsset> {
   return useRequest<IAsset>({
     method: 'get',
-    url: '/assets/detail',
+    url: '/admin/assets/detail',
     params: {
       id,
     },
@@ -83,9 +95,9 @@ export function uploadAsset(
   data: IAssetUploadOptions,
   options: IUploadAssetOptions,
 ) {
-  const url = [AssetType.IMAGE].includes(data.type)
-    ? '/assets/upload/image'
-    : '/assets/upload/video'
+  const url = data.type === AssetType.IMAGE
+    ? '/admin/assets/upload/image'
+    : '/admin/assets/upload/video'
 
   return useUploadRequest<IAssetUploadOptions>({
     url,
@@ -98,14 +110,14 @@ export function uploadAsset(
 /**
  * 删除素材
  *
- * @api delete /assets/delete
+ * @api delete /admin/assets/delete
  * @param id IAsset['id']
  * @returns Promise<any>
  */
 export function deleteAsset(id: IAsset['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/assets/delete',
+    url: '/admin/assets/delete',
     data: {
       id,
     },

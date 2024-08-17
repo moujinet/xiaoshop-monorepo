@@ -1,16 +1,20 @@
 import type { IGoodsGroup, IGoodsGroupDict } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsGroup } from '@/goods/group/entity'
 import { GoodsGroupPayload } from '@/goods/group/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsGroupService {
   constructor(
     @InjectRepository(GoodsGroup)
     private readonly repository: Repository<GoodsGroup>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -104,6 +108,7 @@ export class GoodsGroupService {
       goodsGroup.sort = data.sort
 
       await this.repository.save(goodsGroup)
+      await this.log.write('商品管理', `创建商品分组「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品分组', e.message, e.status)
@@ -142,6 +147,7 @@ export class GoodsGroupService {
       goodsGroup.sort = data.sort
 
       await this.repository.save(goodsGroup)
+      await this.log.write('商品管理', `更新商品分组「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品分组', e.message, e.status)
@@ -155,7 +161,12 @@ export class GoodsGroupService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const group = await this.repository.findOneBy({ id })
+
+      if (group) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品分组「${group.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品分组', e.message)

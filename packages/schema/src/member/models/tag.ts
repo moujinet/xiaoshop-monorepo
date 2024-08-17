@@ -14,9 +14,18 @@ export interface IMemberTag {
    * 创建时间
    */
   createdTime: string
+  /**
+   * 更新时间
+   */
+  updatedTime: string
 }
 
 /**
  * 字典 - 会员标签
  */
 export type IMemberTagDict = Pick<IMemberTag, 'id' | 'name'>
+
+/**
+ * 会员标签列表
+ */
+export type IMemberTagListItem = Pick<IMemberTag, 'id' | 'name' | 'updatedTime'>

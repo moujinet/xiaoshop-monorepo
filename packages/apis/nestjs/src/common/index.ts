@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumberString, IsOptional } from 'class-validator'
+import { ILocation, ILocationCode } from '@xiaoshop/schema'
+import { IsNumberString, IsOptional, IsString } from 'class-validator'
 
 /**
  * 分页请求 DTO
@@ -20,4 +21,23 @@ export class PaginationQueryDto {
   @IsOptional()
   @IsNumberString()
   pagesize: number
+}
+
+/**
+ * 地区 DTO
+ */
+export class LocationDto implements ILocation {
+  /**
+   * 地区编码
+   */
+  @ApiProperty({ description: '地区编码', default: '11' })
+  @IsString()
+  readonly code: ILocationCode
+
+  /**
+   * 地区名称
+   */
+  @ApiProperty({ description: '地区名称', default: '北京市' })
+  @IsString()
+  readonly name: string
 }

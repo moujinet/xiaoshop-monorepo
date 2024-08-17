@@ -48,8 +48,13 @@ function handleModalCancel(ev: Event) {
     unmount-on-close
     @cancel="handleModalCancel"
   >
-    <template v-if="$slots.title" #title>
-      <slot name="title" />
+    <template #title>
+      <div class="flex-(~ v-center between) w-full">
+        <slot name="title">
+          {{ title }}
+        </slot>
+        <slot name="actions" />
+      </div>
     </template>
 
     <div v-if="visible" class="flex-(~ center)">

@@ -1,16 +1,20 @@
 import type { IGoodsAttributeTemplate, IGoodsAttributeTemplateDict, IGoodsAttributeTemplateListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { GoodsAttributeTemplate } from '@/goods/attribute-template/entity'
 import { GoodsAttributeTemplatePayload } from '@/goods/attribute-template/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsAttributeTemplateService {
   constructor(
     @InjectRepository(GoodsAttributeTemplate)
     private readonly repository: Repository<GoodsAttributeTemplate>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -104,6 +108,7 @@ export class GoodsAttributeTemplateService {
       template.options = []
 
       await this.repository.save(template)
+      await this.log.write('商品管理', `创建商品参数模板「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建商品参数模板', e.message, e.status)
@@ -142,6 +147,7 @@ export class GoodsAttributeTemplateService {
       template.options = data.options || []
 
       await this.repository.save(template)
+      await this.log.write('商品管理', `更新商品参数模板「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新商品参数模板', e.message, e.status)
@@ -155,7 +161,12 @@ export class GoodsAttributeTemplateService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete({ id })
+      const template = await this.repository.findOneBy({ id })
+
+      if (template) {
+        await this.repository.delete({ id })
+        await this.log.write('商品管理', `删除商品参数模板「${template.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除商品参数模板', e.message)

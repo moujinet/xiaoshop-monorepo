@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { IArea, IAreaNested } from '@xiaoshop/schema'
+import type { ILocation, ILocationNested } from '@xiaoshop/schema'
 import * as clack from '@clack/prompts'
 import color from 'picocolors'
 import type { IUpdateReturns } from './updater'
@@ -24,7 +24,7 @@ export function exportAll(data: IUpdateReturns) {
   exportData('街道', 'street', streets)
 }
 
-function exportData(label: string, name: string, data: IArea[] | IAreaNested[]) {
+function exportData(label: string, name: string, data: ILocation[] | ILocationNested[]) {
   if (!existsSync(config.dest.path)) {
     mkdirSync(config.dest.path, { recursive: true })
   }

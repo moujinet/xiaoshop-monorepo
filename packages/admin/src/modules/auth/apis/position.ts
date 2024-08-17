@@ -1,4 +1,5 @@
 import type {
+  IApiPaginationData,
   IStaffPosition,
   IStaffPositionDict,
 } from '@xiaoshop/schema'
@@ -7,14 +8,16 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取组织职位分页列表
  *
- * @api get /staffs/position/pages
+ * @api get /admin/staff/position/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IStaffPosition>>
+ * @returns IUseRequestReturn<IApiPaginationData<IStaffPosition>>
  */
-export function fetchPositionPages(params?: Record<string, any>): IUseRequestReturn<IApiPaginationResult<IStaffPosition>> {
-  return useRequest<IApiPaginationResult<IStaffPosition>>({
+export function fetchPositionPages(
+  params?: Record<string, any>,
+): IUseRequestReturn<IApiPaginationData<IStaffPosition>> {
+  return useRequest<IApiPaginationData<IStaffPosition>>({
     method: 'get',
-    url: '/staffs/position/pages',
+    url: '/admin/staff/position/pages',
     params,
   })
 }
@@ -22,13 +25,15 @@ export function fetchPositionPages(params?: Record<string, any>): IUseRequestRet
 /**
  * 获取组织职位列表
  *
- * @api get /staffs/position/list
+ * @api get /admin/staff/position/list
  * @returns IUseRequestReturn<IStaffPositionDict[]>
  */
-export function fetchPositionList(departmentId: number): IUseRequestReturn<IStaffPositionDict[]> {
+export function fetchPositionList(
+  departmentId: number,
+): IUseRequestReturn<IStaffPositionDict[]> {
   return useRequest<IStaffPositionDict[]>({
     method: 'get',
-    url: '/staffs/position/list',
+    url: '/admin/staff/position/list',
     params: {
       departmentId,
     },
@@ -38,14 +43,16 @@ export function fetchPositionList(departmentId: number): IUseRequestReturn<IStaf
 /**
  * 获取组织职位详情
  *
- * @api get /staffs/position/detail
+ * @api get /admin/staff/position/detail
  * @param id IStaffPosition['id']
  * @returns IUseRequestReturn<IStaffPosition>
  */
-export function fetchPositionDetail(id: IStaffPosition['id']): IUseRequestReturn<IStaffPosition> {
+export function fetchPositionDetail(
+  id: IStaffPosition['id'],
+): IUseRequestReturn<IStaffPosition> {
   return useRequest<IStaffPosition>({
     method: 'get',
-    url: '/staffs/position/detail',
+    url: '/admin/staff/position/detail',
     params: {
       id,
     },
@@ -55,14 +62,14 @@ export function fetchPositionDetail(id: IStaffPosition['id']): IUseRequestReturn
 /**
  * 创建组织职位
  *
- * @api post /staffs/position/create
+ * @api post /admin/staff/position/create
  * @param data Record<string, any>
  * @returns Promise<any>
  */
 export function createPosition(data: Record<string, any>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/staffs/position/create',
+    url: '/admin/staff/position/create',
     data,
   })
 }
@@ -70,7 +77,7 @@ export function createPosition(data: Record<string, any>): Promise<any> {
 /**
  * 更新组织职位
  *
- * @api put /staffs/position/update
+ * @api put /admin/staff/position/update
  * @param id IStaffPosition['id']
  * @param data Record<string, any>
  * @returns Promise<any>
@@ -78,7 +85,7 @@ export function createPosition(data: Record<string, any>): Promise<any> {
 export function updatePosition(id: IStaffPosition['id'], data: Record<string, any>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/staffs/position/update',
+    url: '/admin/staff/position/update',
     params: { id },
     data,
   })
@@ -87,14 +94,14 @@ export function updatePosition(id: IStaffPosition['id'], data: Record<string, an
 /**
  * 删除组织职位
  *
- * @api delete /staffs/position/delete
+ * @api delete /admin/staff/position/delete
  * @param id IStaffPosition['id']
  * @returns Promise<any>
  */
 export function deletePosition(id: IStaffPosition['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/staffs/position/delete',
+    url: '/admin/staff/position/delete',
     data: {
       id,
     },

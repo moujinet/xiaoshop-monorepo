@@ -4,27 +4,27 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取物流公司列表
  *
- * @api get /logistics/company/list
+ * @api get /admin/logistics/company/list
  * @returns IUseRequestReturn<ILogisticsCompanyListItem[]>
  */
 export function fetchLogisticsCompanyList(): IUseRequestReturn<ILogisticsCompanyListItem[]> {
   return useRequest<ILogisticsCompanyListItem[]>({
     method: 'get',
-    url: '/logistics/company/list',
+    url: '/admin/logistics/company/list',
   })
 }
 
 /**
  * 获取物流公司详情
  *
- * @api get /logistics/company/detail
+ * @api get /admin/logistics/company/detail
  * @param id number
  * @returns IUseRequestReturn<ILogisticsCompany>
  */
 export function fetchLogisticsCompanyDetail(id: number): IUseRequestReturn<ILogisticsCompany> {
   return useRequest<ILogisticsCompany>({
     method: 'get',
-    url: '/logistics/company/detail',
+    url: '/admin/logistics/company/detail',
     params: {
       id,
     },
@@ -34,7 +34,7 @@ export function fetchLogisticsCompanyDetail(id: number): IUseRequestReturn<ILogi
 /**
  * 创建物流公司
  *
- * @api post /logistics/company/create
+ * @api post /admin/logistics/company/create
  * @param data IFormData<ILogisticsCompany>
  * @returns Promise<any>
  */
@@ -43,7 +43,7 @@ export function createLogisticsCompany(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/logistics/company/create',
+    url: '/admin/logistics/company/create',
     data,
   })
 }
@@ -51,7 +51,7 @@ export function createLogisticsCompany(
 /**
  * 更新物流公司
  *
- * @api put /logistics/company/update
+ * @api put /admin/logistics/company/update
  * @param id ILogisticsCompany['id']
  * @param data IFormData<ILogisticsCompany>
  * @returns Promise<any>
@@ -62,7 +62,7 @@ export function updateLogisticsCompany(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/logistics/company/update',
+    url: '/admin/logistics/company/update',
     data,
     params: {
       id,
@@ -73,14 +73,14 @@ export function updateLogisticsCompany(
 /**
  * 删除物流公司
  *
- * @api delete /logistics/company/delete
+ * @api delete /admin/logistics/company/delete
  * @param id ILogisticsCompany['id']
  * @returns Promise<any>
  */
 export function deleteLogisticsCompany(id: ILogisticsCompany['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/logistics/company/delete',
+    url: '/admin/logistics/company/delete',
     data: {
       id,
     },

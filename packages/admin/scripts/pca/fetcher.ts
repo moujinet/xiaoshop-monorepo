@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { setTimeout } from 'node:timers/promises'
-import type { IArea } from '@xiaoshop/schema'
+import type { ILocation } from '@xiaoshop/schema'
 import * as clack from '@clack/prompts'
 import { minify } from 'html-minifier'
 import { ofetch } from 'ofetch'
@@ -24,7 +24,7 @@ const REG_PROVINCE = /<td><a href='(.*?).html'>(.*?)<br><\/a><\/td>/g
 const REG_CITY = /<tr class='.*?'><td>(.*?)<\/td><td>(.*?)<\/td><\/tr>/g
 const REG_VILLAGE = /<tr class='.*?'><td>(.*?)<\/td><td>.*?<\/td><td>(.*?)<\/td><\/tr>/g
 
-export async function fetch(options: IFetchOptions, useCache = true): Promise<IArea[]> {
+export async function fetch(options: IFetchOptions, useCache = true): Promise<ILocation[]> {
   const {
     code = '',
     type = 'province',
@@ -42,10 +42,10 @@ export async function fetch(options: IFetchOptions, useCache = true): Promise<IA
     const cache = JSON.parse(readFileSync(cacheFile, 'utf-8'))
 
     if (cache.length > 0)
-      return cache as IArea[]
+      return cache as ILocation[]
   }
 
-  const data: IArea[] = []
+  const data: ILocation[] = []
   const html = await fetchPage(page, useCache)
 
   if (html && html.length > 0) {

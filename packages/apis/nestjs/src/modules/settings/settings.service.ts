@@ -4,10 +4,11 @@ import { isNumberString } from 'class-validator'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Inject, Injectable } from '@nestjs/common'
 import type { ISettingsModuleOptions, ISettingsTyped, ISettingsValue } from '@/settings/interface'
-import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { FailedException, NotFoundException } from '~/common/exception'
 import { SETTINGS_OPTIONS } from '@/settings/constants'
 import { SettingsOptionPayload } from '@/settings/dto'
 import { Settings } from '@/settings/settings.entity'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class SettingsService {
@@ -19,6 +20,9 @@ export class SettingsService {
 
     @InjectRepository(Settings)
     private readonly repository: Repository<Settings>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {
   }
 
@@ -38,42 +42,6 @@ export class SettingsService {
     }
     catch (e) {
       throw new FailedException('获取系统设置', e.message)
-    }
-  }
-
-  /**
-   * 创建系统设置
-   *
-   * @param data SettingsOptionPayload[]
-   * @returns Promise<void>
-   * @throws ExistsException
-   * @throws FailedException
-   * @see {@link ISettings}
-   */
-  async create(data: SettingsOptionPayload[]) {
-    try {
-      for (const item of data) {
-        const exists = await this.repository.existsBy({
-          key: item.key,
-        })
-
-        if (exists)
-          throw new ExistsException(`系统设置项 [${item.key}] `)
-      }
-
-      const options: Settings[] = []
-
-      for (const item of data) {
-        const option = new Settings()
-        option.key = item.key
-        option.value = item.value
-        options.push(option)
-      }
-
-      await this.repository.save(data, { chunk: 10 })
-    }
-    catch (e) {
-      throw new FailedException('创建系统设置', e.message, e.status)
     }
   }
 
@@ -100,25 +68,12 @@ export class SettingsService {
           { key: item.key },
           { value: item.value },
         )
+
+        await this.log.write('系统设置', `更新系统设置 ${item.key} = ${item.value}`)
       }
     }
     catch (e) {
       throw new FailedException('更新系统设置', e.message, e.status)
-    }
-  }
-
-  /**
-   * 删除指定 key 的系统设置
-   *
-   * @param keys string[]
-   * @returns Promise<void>
-   */
-  async deleteByKeys(keys: string[]) {
-    try {
-      await this.repository.delete({ key: In(keys) })
-    }
-    catch (e) {
-      throw new FailedException('删除系统设置', e.message)
     }
   }
 

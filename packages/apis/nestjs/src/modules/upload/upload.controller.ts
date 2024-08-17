@@ -1,11 +1,11 @@
-import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Controller, HttpCode, ParseFilePipeBuilder, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { UPLOAD_IMAGE_MIMETYPE, UPLOAD_VIDEO_MIMETYPE } from '@/upload/constants'
 import { UploadService } from '@/upload/upload.service'
 import { exceptionFactory } from '~/common/exception'
 
-@ApiTags('文件上传')
+@ApiTags('通用/文件上传')
 @Controller('upload')
 export class UploadController {
   constructor(
@@ -16,6 +16,7 @@ export class UploadController {
     summary: '上传图片',
     description: `仅支持 \`image/jpg\` \`image/jpeg\` \`image/png\` \`image/gif\` 格式`,
   })
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @Post('image')
@@ -41,6 +42,7 @@ export class UploadController {
     summary: '上传视频',
     description: `仅支持 \`video/mp4\` 格式，最多同时上传 1 个视频文件`,
   })
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @Post('video')

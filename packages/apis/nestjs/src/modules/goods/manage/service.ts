@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Between, Brackets, FindOptionsWhere, In, LessThanOrEqual, Like, Not, Repository } from 'typeorm'
@@ -18,7 +18,7 @@ import {
   type IGoodsBasicInfo,
   type IGoodsDetailInfo,
   type IGoodsExportConditions,
-  IGoodsExportListItem,
+  type IGoodsExportListItem,
   type IGoodsInventoryInfo,
   type IGoodsListItem,
   type IGoodsStatus,
@@ -55,12 +55,17 @@ import { GoodsCategory } from '@/goods/category/entity'
 import { GoodsAddition } from '@/goods/addition/entity'
 import { GoodsProtection } from '@/goods/protection/entity'
 import { nanoNumber, nanoSkuCode, nanoid, unique } from '~/utils'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsService {
   constructor(
     @InjectRepository(Goods)
     private readonly repository: Repository<Goods>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
+
     private readonly eventEmitter: EventEmitter2,
   ) {}
 
@@ -572,6 +577,8 @@ export class GoodsService {
         new GoodsCreateEvent(res.id),
       )
 
+      await this.log.write('商品管理', `商品基本信息:「${res.id}」`)
+
       return {
         id: res.id,
       }
@@ -686,6 +693,8 @@ export class GoodsService {
       }
 
       await this.repository.save(goods)
+
+      await this.log.write('商品管理', `商品基本信息:「${id}」`)
     }
     catch (e) {
       throw new FailedException('更新商品基本信息', e.message, e.status)
@@ -747,10 +756,15 @@ export class GoodsService {
       this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id))
 
       if (goods.status === GoodsStatus.STOCKED) {
+        await this.log.write('商品管理', `更新库存并下架商品「${id}」`)
         this.eventEmitter.emitAsync(GoodsStockedEvent.name, new GoodsStockedEvent(id))
       }
       else if (goods.status === GoodsStatus.IN_STOCK) {
+        await this.log.write('商品管理', `更新库存并上架商品「${id}」`)
         this.eventEmitter.emitAsync(GoodsInStockEvent.name, new GoodsInStockEvent(id))
+      }
+      else {
+        await this.log.write('商品管理', `更新库存「${id}」`)
       }
 
       return goods.skuCode
@@ -781,6 +795,7 @@ export class GoodsService {
       goods.detail = data.detail || ''
 
       await this.repository.save(goods)
+      await this.log.write('商品管理', `更新商品详情「${id}」`)
     }
     catch (e) {
       throw new FailedException('更新商品详情', e.message, e.status)
@@ -882,11 +897,20 @@ export class GoodsService {
 
       goods.updatedTime = (new Date()).toISOString()
 
-      await this.repository.update({ id: In(ids) }, goods)
+      await Promise.all(
+        ids.map((id) => {
+          this.repository.update(id, goods)
 
-      for (const id of ids) {
-        this.eventEmitter.emitAsync(GoodsUpdateEvent.name, new GoodsUpdateEvent(id))
-      }
+          this.eventEmitter.emitAsync(
+            GoodsUpdateEvent.name,
+            new GoodsUpdateEvent(id),
+          )
+
+          return true
+        }),
+      )
+
+      await this.log.write('商品管理', `批量更新商品「${ids.join(',')}」`)
     }
     catch (e) {
       throw new FailedException('批量更新商品', e.message, e.status)
@@ -1000,6 +1024,8 @@ export class GoodsService {
         throw new FailedException('复制商品至草稿')
 
       this.eventEmitter.emitAsync(GoodsCreateEvent.name, new GoodsCreateEvent(res.id))
+
+      await this.log.write('商品管理', `复制商品「${id}」至草稿「${res.id}」`)
 
       return res.id
     }
@@ -1158,6 +1184,8 @@ export class GoodsService {
         },
       )
 
+      await this.log.write('商品管理', `删除商品「${id}」`)
+
       this.eventEmitter.emitAsync(
         GoodsDeleteEvent.name,
         new GoodsDeleteEvent(id),
@@ -1183,6 +1211,8 @@ export class GoodsService {
           isDeleted: Enabled.NO,
         },
       )
+
+      await this.log.write('商品管理', `恢复商品「${id}」`)
 
       this.eventEmitter.emitAsync(
         GoodsRestoreEvent.name,
@@ -1215,6 +1245,8 @@ export class GoodsService {
         },
       )
 
+      await this.log.write('商品管理', `批量删除商品「${ids.join(',')}」`)
+
       for (const id of ids) {
         this.eventEmitter.emitAsync(
           GoodsDeleteEvent.name,
@@ -1246,6 +1278,8 @@ export class GoodsService {
           isDeleted: Enabled.NO,
         },
       )
+
+      await this.log.write('商品管理', `批量恢复商品「${ids.join(',')}」`)
 
       for (const id of ids) {
         this.eventEmitter.emitAsync(

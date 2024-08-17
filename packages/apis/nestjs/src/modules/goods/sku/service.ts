@@ -1,18 +1,22 @@
 import type { IGoodsSku, IGoodsSpec } from '@xiaoshop/schema'
 import { Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Goods } from '@/goods/manage/entity'
 import { GoodsSku } from '@/goods/sku/entity'
 import { GoodsSkuPayload } from '@/goods/sku/dto'
 import { FailedException } from '~/common/exception'
 import { nanoNumber, nanoSkuCode, nanoid } from '~/utils'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class GoodsSkuService {
   constructor(
     @InjectRepository(GoodsSku)
     private readonly repository: Repository<GoodsSku>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {
   }
 
@@ -77,6 +81,7 @@ export class GoodsSkuService {
       }
 
       await this.repository.save(skus, { transaction: true, chunk: 10 })
+      await this.log.write('商品管理', `更新商品规格「${goodsId}」`)
     }
     catch (e) {
       throw new FailedException('更新商品规格', e.message)

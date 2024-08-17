@@ -1,23 +1,27 @@
-import type { IGoodsExportConditions, IGoodsExportListItem } from '@xiaoshop/schema'
+import type {
+  IApiPaginationData,
+  IGoodsExportConditions,
+  IGoodsExportListItem,
+} from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取商品导出分页列表
  *
- * @api get /goods/export/pages
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsExportListItem>>
+ * @api get /admin/goods/export/pages
+ * @returns IUseRequestReturn<IApiPaginationData<IGoodsExportListItem>>
  */
-export function fetchGoodsExportPages(): IUseRequestReturn<IApiPaginationResult<IGoodsExportListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsExportListItem>>({
+export function fetchGoodsExportPages(): IUseRequestReturn<IApiPaginationData<IGoodsExportListItem>> {
+  return useRequest<IApiPaginationData<IGoodsExportListItem>>({
     method: 'get',
-    url: '/goods/export/pages',
+    url: '/admin/goods/export/pages',
   })
 }
 
 /**
  * 创建商品导出记录
  *
- * @api post /goods/export/create
+ * @api post /admin/goods/export/create
  * @param data Partial<IGoodsExportConditions>
  * @returns Promise<any>
  */
@@ -26,7 +30,7 @@ export function createGoodsExport(
 ) {
   return usePromiseRequest<any>({
     method: 'post',
-    url: '/goods/export/create',
+    url: '/admin/goods/export/create',
     data,
   })
 }
@@ -34,14 +38,14 @@ export function createGoodsExport(
 /**
  * 删除商品导出记录
  *
- * @api delete /goods/export/delete
+ * @api delete /admin/goods/export/delete
  * @param id number
  * @returns Promise<any>
  */
 export function deleteGoodsExport(id: number) {
   return usePromiseRequest<any>({
     method: 'delete',
-    url: '/goods/export/delete',
+    url: '/admin/goods/export/delete',
     data: {
       id,
     },

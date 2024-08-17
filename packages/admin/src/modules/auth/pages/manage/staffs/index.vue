@@ -34,74 +34,44 @@ const searchForm = reactive({
 })
 
 const columns: TableColumnData[] = [
-  {
-    title: '员工',
-    dataIndex: 'name',
-    width: 120,
-  },
-  {
-    title: '角色',
-    dataIndex: 'roles',
-    slotName: 'roles',
-  },
-  {
-    title: '部门',
-    dataIndex: 'department',
-    slotName: 'department',
-  },
-  {
-    title: '职位',
-    dataIndex: 'position',
-    slotName: 'position',
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    slotName: 'status',
-    width: 90,
-  },
-  {
-    title: '最后登录时间',
-    dataIndex: 'lastLoginTime',
-    slotName: 'lastLoginTime',
-    width: 180,
-  },
-  {
-    title: '操作',
-    slotName: 'actions',
-    align: 'center',
-    width: 160,
-  },
+  { title: '员工', dataIndex: 'name', width: 120 },
+  { title: '角色', dataIndex: 'roles', slotName: 'roles' },
+  { title: '部门', dataIndex: 'department', slotName: 'department' },
+  { title: '职位', dataIndex: 'position', slotName: 'position' },
+  { title: '状态', dataIndex: 'status', slotName: 'status', width: 90 },
+  { title: '最后登录时间', dataIndex: 'lastLoginTime', slotName: 'lastLoginTime', width: 180 },
+  { title: '操作', slotName: 'actions', align: 'center', width: 160 },
 ]
 
 const { loading, data, refreshData } = fetchAccountPages()
 
+const { query, params, transformQuery } = useSearchForm({
+  form: searchForm,
+  stringKeys: ['name', 'status', 'mobile'],
+})
+
 watch(
   () => route.query,
   () => {
-    const formData = searchForm as Record<string, string | number>
-
-    Object.keys(route.query).forEach((key) => {
-      if (['name', 'status', 'mobile'].includes(key))
-        formData[key] = route.query[key] as string
-      else
-        formData[key] = Number(route.query[key] as string)
-    })
-
-    refreshData(removeEmpty(searchForm, true))
+    transformQuery(route.query)
+    loadData()
   },
   { immediate: true },
 )
 
-function refresh() {
+function loadData() {
+  refreshData(params.value)
+}
+
+function handleRefresh() {
   handleSearch()
 
   if (searchForm.page === 1)
-    refreshData({ ...removeEmpty(searchForm, true) })
+    loadData()
 }
 
 function handleSearch() {
-  router.replace({ query: { ...removeEmpty(searchForm, true), page: 1 } })
+  router.replace({ query: { ...query.value, page: 1 } })
 }
 
 function handlePageChange(current: number) {
@@ -137,7 +107,7 @@ function handleDepartmentChange(departmentId: number) {
 <template>
   <CommonContainer flexible>
     <template #extra>
-      <AccountEditModal @success="refresh">
+      <AccountEditModal @success="handleRefresh">
         <a-button type="primary">
           创建员工
         </a-button>
@@ -195,7 +165,7 @@ function handleDepartmentChange(departmentId: number) {
         </template>
 
         <template #actions="{ record }">
-          <AccountEditModal :id="record.id" @success="refresh">
+          <AccountEditModal :id="record.id" @success="handleRefresh">
             <a-button type="text">
               编辑
             </a-button>
@@ -207,7 +177,7 @@ function handleDepartmentChange(departmentId: number) {
     </CommonCard>
 
     <template #header>
-      <FormSearch :form="searchForm" @search="handleSearch" @reset="refresh">
+      <FormSearch :form="searchForm" @search="handleSearch" @reset="handleRefresh">
         <a-form-item field="name" label="员工姓名" show-colon>
           <a-input v-model="searchForm.name" placeholder="请输入" allow-clear />
         </a-form-item>

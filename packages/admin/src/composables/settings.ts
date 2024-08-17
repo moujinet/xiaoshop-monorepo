@@ -22,7 +22,7 @@ export function useSettings() {
   const [options, _updateOptions] = useCache<IKeyValue<string>>(
     'options',
     {},
-    { storage: sessionStorage, expire: 1500, refreshFn: () => new Promise(() => refresh(true)) },
+    { storage: sessionStorage },
   )
 
   /**
@@ -117,6 +117,8 @@ export function useSettings() {
             item[option.key] = _transformValueType(option.key, option.value)
             return item
           }, {} as IKeyValue))
+        })
+        .catch(() => {
         })
     }
   }

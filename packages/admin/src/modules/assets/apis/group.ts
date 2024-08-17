@@ -4,14 +4,16 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取素材分组树
  *
- * @api get /assets/group/list
+ * @api get /admin/assets/group/list
  * @param type IAssetType
  * @returns IUseRequestReturn<IAssetGroupTreeItem[]>
  */
-export function fetchAssetGroupTree(type: IAssetType): IUseRequestReturn<IAssetGroupTreeItem[]> {
+export function fetchAssetGroupTree(
+  type: IAssetType,
+): IUseRequestReturn<IAssetGroupTreeItem[]> {
   const { data, loading, error, refreshData } = useRequest<IAssetGroupTreeItem[]>({
     method: 'get',
-    url: '/assets/group/list',
+    url: '/admin/assets/group/list',
     params: {
       type,
     },
@@ -28,14 +30,14 @@ export function fetchAssetGroupTree(type: IAssetType): IUseRequestReturn<IAssetG
 /**
  * 获取素材分组根节点
  *
- * @api get /assets/group/root/list
+ * @api get /admin/assets/group/root/list
  * @param type IAssetType
  * @returns IUseRequestReturn<IAssetGroupRootItem[]>
  */
 export function fetchAssetGroupRoots(type: IAssetType): IUseRequestReturn<IAssetGroupRootItem[]> {
   return useRequest<IAssetGroupRootItem[]>({
     method: 'get',
-    url: '/assets/group/root/list',
+    url: '/admin/assets/group/root/list',
     params: {
       type,
     },
@@ -45,14 +47,14 @@ export function fetchAssetGroupRoots(type: IAssetType): IUseRequestReturn<IAsset
 /**
  * 获取素材分组详情
  *
- * @api get /assets/group/detail
+ * @api get /admin/assets/group/detail
  * @param id IAssetGroup['id']
  * @returns IUseRequestReturn<IAssetGroup>
  */
 export function fetchAssetGroupDetail(id: IAssetGroup['id']): IUseRequestReturn<IAssetGroup> {
   return useRequest<IAssetGroup>({
     method: 'get',
-    url: '/assets/group/detail',
+    url: '/admin/assets/group/detail',
     params: {
       id,
     },
@@ -62,14 +64,14 @@ export function fetchAssetGroupDetail(id: IAssetGroup['id']): IUseRequestReturn<
 /**
  * 创建素材分组
  *
- * @api post /assets/group/create
+ * @api post /admin/assets/group/create
  * @param data IFormData<IAssetGroup>
  * @returns Promise<any>
  */
 export function createAssetGroup(data: IFormData<IAssetGroup>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/assets/group/create',
+    url: '/admin/assets/group/create',
     data,
   })
 }
@@ -77,7 +79,7 @@ export function createAssetGroup(data: IFormData<IAssetGroup>): Promise<any> {
 /**
  * 更新素材分组
  *
- * @api put /assets/group/update
+ * @api put /admin/assets/group/update
  * @param id IAssetGroup['id']
  * @param data IFormData<IAssetGroup>
  * @returns Promise<any>
@@ -85,7 +87,7 @@ export function createAssetGroup(data: IFormData<IAssetGroup>): Promise<any> {
 export function updateAssetGroup(id: IAssetGroup['id'], data: IFormData<IAssetGroup>): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/assets/group/update',
+    url: '/admin/assets/group/update',
     params: { id },
     data,
   })
@@ -94,14 +96,14 @@ export function updateAssetGroup(id: IAssetGroup['id'], data: IFormData<IAssetGr
 /**
  * 删除素材分组
  *
- * @api delete /assets/group/delete
+ * @api delete /admin/assets/group/delete
  * @param id IAssetGroup['id']
  * @returns Promise<any>
  */
 export function deleteAssetGroup(id: IAssetGroup['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/assets/group/delete',
+    url: '/admin/assets/group/delete',
     data: {
       id,
     },

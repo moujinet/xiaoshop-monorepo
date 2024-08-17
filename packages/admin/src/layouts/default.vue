@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import 'video.js/dist/video-js.css'
+
 import LayoutHeader from './header/index.vue'
 import LayoutSider from './sider/index.vue'
 import LayoutContent from './content/index.vue'

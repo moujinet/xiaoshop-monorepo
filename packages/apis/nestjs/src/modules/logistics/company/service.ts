@@ -1,16 +1,20 @@
 import type { ILogisticsCompany, ILogisticsCompanyListItem } from '@xiaoshop/schema'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { LogisticsCompany } from '@/logistics/company/entity'
 import { LogisticsCompanyPayload } from '@/logistics/company/dto'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exception'
+import { StaffLogService } from '@/staff/log/service'
 
 @Injectable()
 export class LogisticsCompanyService {
   constructor(
     @InjectRepository(LogisticsCompany)
     private readonly repository: Repository<LogisticsCompany>,
+
+    @Inject(StaffLogService)
+    private readonly log: StaffLogService,
   ) {}
 
   /**
@@ -74,6 +78,7 @@ export class LogisticsCompanyService {
         throw new ExistsException(`物流公司 [${data.name}] `)
 
       await this.repository.save(data)
+      await this.log.write('物流发货', `创建物流公司「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('创建物流公司', e.message, e.status)
@@ -105,6 +110,8 @@ export class LogisticsCompanyService {
         throw new ExistsException(`物流公司 [${data.name}] `)
 
       await this.repository.update(id, data)
+
+      await this.log.write('物流发货', `更新物流公司「${data.name}」`)
     }
     catch (e) {
       throw new FailedException('更新物流公司', e.message, e.status)
@@ -119,7 +126,12 @@ export class LogisticsCompanyService {
    */
   async delete(id: number) {
     try {
-      await this.repository.delete(id)
+      const company = await this.repository.findOneBy({ id })
+
+      if (company) {
+        await this.repository.delete(id)
+        await this.log.write('物流发货', `删除物流公司「${company.name}」`)
+      }
     }
     catch (e) {
       throw new FailedException('删除物流公司', e.message)

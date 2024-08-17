@@ -5,9 +5,9 @@ import { AssetGroup } from '@/assets/group/entity'
 @Entity('app_assets', {
   comment: '素材信息表',
 })
-@Index('idx_app_asset', ['type', 'name'])
+@Index('IDX_app_asset', ['type', 'name'])
 export class Asset implements IAsset {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'pk_app_assets' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_app_assets' })
   id: number
 
   @ManyToOne(() => AssetGroup, { createForeignKeyConstraints: false })

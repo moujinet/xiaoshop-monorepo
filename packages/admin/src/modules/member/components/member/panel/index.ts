@@ -1,0 +1,6 @@
+export { default as MemberAddressPanel } from './address.vue'
+export { default as MemberFavoritePanel } from './favorite.vue'
+export { default as MemberHistoryPanel } from './history.vue'
+export { default as MemberOperationPanel } from './operation.vue'
+export { default as MemberOrdersPanel } from './orders.vue'
+export { default as MemberPointsPanel } from './points.vue'

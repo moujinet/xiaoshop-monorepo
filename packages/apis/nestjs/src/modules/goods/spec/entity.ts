@@ -6,8 +6,11 @@ import { Goods } from '@/goods/manage/entity'
   comment: '商品规格表',
 })
 export class GoodsSpec implements IGoodsSpec {
-  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'pk_shop_goods_spec' })
+  @PrimaryColumn({ type: 'char', length: 32, primaryKeyConstraintName: 'PK_shop_goods_spec' })
   id: string
+
+  @Column({ name: 'goods_id', type: 'char', length: 32, nullable: false, default: '', comment: '商品 ID' })
+  goodsId: string
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '规格名' })
   name: string
@@ -19,6 +22,6 @@ export class GoodsSpec implements IGoodsSpec {
   enableImage: IEnabled
 
   @ManyToOne(() => Goods, { createForeignKeyConstraints: false })
-  @JoinColumn()
+  @JoinColumn({ name: 'goods_id' })
   goods: Goods
 }

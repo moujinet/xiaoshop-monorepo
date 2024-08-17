@@ -1,15 +1,13 @@
 import type {
   MemberAccountKey,
-  MemberAccountStatus,
   MemberCardPlanType,
   MemberCardType,
   MemberGender,
   MemberGroupCondKey,
   MemberGroupCondOperator,
-  MemberLogType,
+  MemberHistoryLogType,
   MemberLogoutStatus,
-  MemberPointsOperator,
-  MemberPointsRuleKey,
+  MemberOperationLogType,
   MemberSource,
   MemberStatus,
 } from '@/member/constants'
@@ -51,16 +49,6 @@ export type IMemberSource = `${MemberSource}` | MemberSource
 export type IMemberGender = `${MemberGender}` | MemberGender
 
 /**
- * 会员账户 - 状态
- *
- * - `ENABLE`: 启用
- * - `DISABLE`: 禁用
- *
- * @see {@link MemberAccountStatus}
- */
-export type IMemberAccountStatus = `${MemberAccountStatus}` | MemberAccountStatus
-
-/**
  * 会员账户 - 标识
  *
  * - `ORDERS`: 订单数
@@ -69,6 +57,7 @@ export type IMemberAccountStatus = `${MemberAccountStatus}` | MemberAccountStatu
  * - `POINTS`: 积分
  * - `BALANCE`: 余额
  * - `SIGN_IN`: 签到
+ * - `LOGIN`: 登录次数
  * - `RED_PACKET`: 红包
  * - `COUPON`: 优惠券
  *
@@ -99,30 +88,6 @@ export type IMemberCardType = `${MemberCardType}` | MemberCardType
 export type IMemberCardPlanType = `${MemberCardPlanType}` | MemberCardPlanType
 
 /**
- * 会员积分 - 变更类型
- *
- * - `ADD`: 增加
- * - `DEDUCT`: 扣除
- * - `SET`: 设置
- *
- * @see {@link MemberPointsOperator}
- */
-export type IMemberPointsOperator = `${MemberPointsOperator}` | MemberPointsOperator
-
-/**
- * 会员积分规则 - 标识
- *
- * - `REGISTER`: 注册奖励
- * - `ORDERING`: 消费奖励
- * - `BIRTHDAY`: 生日有礼
- * - `SIGN_IN`: 签到奖励
- * - `DEDUCTION`: 积分抵扣
- *
- * @see {@link MemberPointsRuleKey}
- */
-export type IMemberPointsRuleKey = `${MemberPointsRuleKey}` | MemberPointsRuleKey
-
-/**
  * 会员群体 - 筛选条件 - 操作符
  *
  * - `IN`: 包含
@@ -135,16 +100,18 @@ export type IMemberGroupCondOperator = `${MemberGroupCondOperator}` | MemberGrou
 /**
  * 会员群体 - 筛选条件
  *
- * - `CARD`: 会员卡
- * - `TAG`: 标签
- * - `GENDER`: 性别
- * - `BIRTHDAY`: 生日
- * - `CREATED_TIME`: 注册时间
- * - `POINTS`: 积分
- * - `EXP`: 成长值
- * - `SIGN_IN`: 签到
- * - `ORDER_COUNT`: 订单数
- * - `ORDER_AMOUNT`: 订单金额
+ * - `SOURCE`: 注册来源 [web]
+ * - `STATUS`: 会员状态 [normal, blocked]
+ * - `CARD`: 会员卡 [cardId, cardPlanId]
+ * - `TAG`: 会员标签 [tagId]
+ * - `GENDER`: 会员性别 [male]
+ * - `BIRTHDAY`: 会员生日 [from, to]
+ * - `CREATED_TIME`: 注册时间 [from, to]
+ * - `POINTS`: 当前积分 [min, max]
+ * - `EXP`: 当前成长值 [min, max]
+ * - `SIGN_IN`: 累计签到数 [min, max]
+ * - `ORDER_COUNT`: 累计订单数 [min, max]
+ * - `ORDER_AMOUNT`: 累计订单金额 [min, max]
  *
  * @see {@link MemberGroupCondKey}
  */
@@ -161,13 +128,22 @@ export type IMemberGroupCondKey = `${MemberGroupCondKey}` | MemberGroupCondKey
 export type IMemberLogoutStatus = `${MemberLogoutStatus}` | MemberLogoutStatus
 
 /**
- * 会员日志 - 类型
+ * 会员历史记录 - 类型
  *
- * - `OPERATE`: 常规操作
- * - `VISIT`: 浏览商品
- * - `FAVORITE`: 收藏商品
- * - `POINTS`: 积分变动
+ * - `VISIT`: 访问
+ * - `FAVORITE`: 收藏
  *
- * @see {@link MemberLogType}
+ * @see {@link MemberHistoryLogType}
  */
-export type IMemberLogType = `${MemberLogType}` | MemberLogType
+export type IMemberHistoryLogType = `${MemberHistoryLogType}` | MemberHistoryLogType
+
+/**
+ * 会员操作日志 - 类型
+ *
+ * - `USER`: 用户
+ * - `SYSTEM`: 系统
+ * - `CUSTOMER_SERVICE`: 客服
+ *
+ * @see {@link MemberOperationLogType}
+ */
+export type IMemberOperationLogType = `${MemberOperationLogType}` | MemberOperationLogType

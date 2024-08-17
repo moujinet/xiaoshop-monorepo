@@ -1,19 +1,19 @@
-import type { IStaffAccountProfile } from '@xiaoshop/schema'
+import type { IApiPaginationData, IStaffAccountProfile } from '@xiaoshop/schema'
 import type { IUseRequestReturn } from '~/utils/request'
 
 /**
  * 获取员工账号分页列表
  *
- * @api get /staffs/account/pages
+ * @api get /admin/staff/account/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IStaffAccountProfile>>
+ * @returns IUseRequestReturn<IApiPaginationData<IStaffAccountProfile>>
  */
 export function fetchAccountPages(
   params?: Record<string, any>,
-): IUseRequestReturn<IApiPaginationResult<IStaffAccountProfile>> {
-  return useRequest<IApiPaginationResult<IStaffAccountProfile>>({
+): IUseRequestReturn<IApiPaginationData<IStaffAccountProfile>> {
+  return useRequest<IApiPaginationData<IStaffAccountProfile>>({
     method: 'get',
-    url: '/staffs/account/pages',
+    url: '/admin/staff/account/pages',
     params,
   })
 }
@@ -21,7 +21,7 @@ export function fetchAccountPages(
 /**
  * 获取员工账号详情
  *
- * @api get /staffs/account/detail
+ * @api get /admin/staff/account/detail
  * @param id IStaffAccountProfile['id']
  * @returns IUseRequestReturn<IStaffAccountProfile>
  */
@@ -30,7 +30,7 @@ export function fetchAccountDetail(
 ): IUseRequestReturn<IStaffAccountProfile> {
   return useRequest<IStaffAccountProfile>({
     method: 'get',
-    url: '/staffs/account/detail',
+    url: '/admin/staff/account/detail',
     params: {
       id,
     },
@@ -40,14 +40,14 @@ export function fetchAccountDetail(
 /**
  * 创建员工账号
  *
- * @api post /staffs/account/create
+ * @api post /admin/staff/account/create
  * @param data Record<string, any>
  * @returns Promise<any>
  */
 export function createAccount(data: Record<string, any>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/staffs/account/create',
+    url: '/admin/staff/account/create',
     data,
   })
 }
@@ -55,7 +55,7 @@ export function createAccount(data: Record<string, any>): Promise<any> {
 /**
  * 更新员工账号
  *
- * @api put /staffs/account/update
+ * @api put /admin/staff/account/update
  * @param id IStaffAccountProfile['id']
  * @param data Record<string, any>
  * @returns Promise<any>
@@ -66,7 +66,7 @@ export function updateAccount(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/staffs/account/update',
+    url: '/admin/staff/account/update',
     params: { id },
     data,
   })
@@ -75,14 +75,14 @@ export function updateAccount(
 /**
  * 删除员工账号
  *
- * @api delete /staffs/account/delete
+ * @api delete /admin/staff/account/delete
  * @param id IStaffAccountProfile['id']
  * @returns Promise<any>
  */
 export function deleteAccount(id: IStaffAccountProfile['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/staffs/account/delete',
+    url: '/admin/staff/account/delete',
     data: {
       id,
     },

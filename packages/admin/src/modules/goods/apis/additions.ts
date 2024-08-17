@@ -8,40 +8,40 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品附加服务列表
  *
- * @api get /goods/addition/list
+ * @api get /admin/goods/addition/list
  * @returns IUseRequestReturn<IGoodsAdditionListItem[]>
  */
 export function fetchGoodsAdditionList(): IUseRequestReturn<IGoodsAdditionListItem[]> {
   return useRequest<IGoodsAdditionListItem[]>({
     method: 'get',
-    url: '/goods/addition/list',
+    url: '/admin/goods/addition/list',
   })
 }
 
 /**
  * 获取商品附加服务字典列表
  *
- * @api get /goods/addition/dict/list
+ * @api get /admin/goods/addition/dict/list
  * @returns IUseRequestReturn<IGoodsAdditionDict[]>
  */
 export function fetchGoodsAdditionDictList(): IUseRequestReturn<IGoodsAdditionDict[]> {
   return useRequest<IGoodsAdditionDict[]>({
     method: 'get',
-    url: '/goods/addition/dict/list',
+    url: '/admin/goods/addition/dict/list',
   })
 }
 
 /**
  * 获取商品附加服务详情
  *
- * @api get /goods/addition/detail
+ * @api get /admin/goods/addition/detail
  * @param id IGoodsAddition['id']
  * @returns IUseRequestReturn<IGoodsAddition>
  */
 export function fetchGoodsAdditionDetail(id: IGoodsAddition['id']): IUseRequestReturn<IGoodsAddition> {
   return useRequest<IGoodsAddition>({
     method: 'get',
-    url: '/goods/addition/detail',
+    url: '/admin/goods/addition/detail',
     params: {
       id,
     },
@@ -51,7 +51,7 @@ export function fetchGoodsAdditionDetail(id: IGoodsAddition['id']): IUseRequestR
 /**
  * 创建商品附加服务
  *
- * @api post /goods/addition/create
+ * @api post /admin/goods/addition/create
  * @param data IFormData<IGoodsAddition>
  * @returns Promise<any>
  */
@@ -60,7 +60,7 @@ export function createGoodsAddition(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/addition/create',
+    url: '/admin/goods/addition/create',
     data,
   })
 }
@@ -68,7 +68,7 @@ export function createGoodsAddition(
 /**
  * 更新商品附加服务
  *
- * @api put /goods/addition/update
+ * @api put /admin/goods/addition/update
  * @param id IGoodsAddition['id']
  * @param data IFormData<IGoodsAddition>
  * @returns Promise<any>
@@ -79,7 +79,7 @@ export function updateGoodsAddition(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/addition/update',
+    url: '/admin/goods/addition/update',
     data,
     params: {
       id,
@@ -90,14 +90,14 @@ export function updateGoodsAddition(
 /**
  * 删除商品附加服务
  *
- * @api delete /goods/addition/delete
+ * @api delete /admin/goods/addition/delete
  * @param id IGoodsAddition['id']
  * @returns Promise<any>
  */
 export function deleteGoodsAddition(id: IGoodsAddition['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/addition/delete',
+    url: '/admin/goods/addition/delete',
     data: {
       id,
     },

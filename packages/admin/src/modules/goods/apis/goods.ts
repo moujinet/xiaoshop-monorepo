@@ -1,4 +1,5 @@
 import type {
+  IApiPaginationData,
   IGoods,
   IGoodsBasicInfo,
   IGoodsBasicInfoFormData,
@@ -13,16 +14,16 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品分页列表
  *
- * @api get /goods/pages
+ * @api get /admin/goods/pages
  * @param params Record<string, any>
- * @returns IUseRequestReturn<IApiPaginationResult<IGoodsListItem>>
+ * @returns IUseRequestReturn<IApiPaginationData<IGoodsListItem>>
  */
 export function fetchGoodsPages(
   params?: Record<string, any>,
-): IUseRequestReturn<IApiPaginationResult<IGoodsListItem>> {
-  return useRequest<IApiPaginationResult<IGoodsListItem>>({
+): IUseRequestReturn<IApiPaginationData<IGoodsListItem>> {
+  return useRequest<IApiPaginationData<IGoodsListItem>>({
     method: 'get',
-    url: '/goods/pages',
+    url: '/admin/goods/pages',
     params,
   })
 }
@@ -30,7 +31,7 @@ export function fetchGoodsPages(
 /**
  * 获取商品基本信息
  *
- * @api get /goods/detail/basic
+ * @api get /admin/goods/detail/basic
  * @param id IGoods['id']
  * @returns IUseRequestReturn<IGoodsBasicInfo>
  */
@@ -39,7 +40,7 @@ export function fetchGoodsBasicInfo(
 ): IUseRequestReturn<IGoodsBasicInfo> {
   return useRequest<IGoodsBasicInfo>({
     method: 'get',
-    url: '/goods/detail/basic',
+    url: '/admin/goods/detail/basic',
     params: {
       id,
     },
@@ -49,7 +50,7 @@ export function fetchGoodsBasicInfo(
 /**
  * 获取商品库存信息
  *
- * @api get /goods/detail/inventory
+ * @api get /admin/goods/detail/inventory
  * @param id IGoods['id']
  * @returns IUseRequestReturn<IGoodsInventoryInfo>
  */
@@ -58,7 +59,7 @@ export function fetchGoodsInventoryInfo(
 ): IUseRequestReturn<IGoodsInventoryInfo> {
   return useRequest<IGoodsInventoryInfo>({
     method: 'get',
-    url: '/goods/detail/inventory',
+    url: '/admin/goods/detail/inventory',
     params: {
       id,
     },
@@ -68,7 +69,7 @@ export function fetchGoodsInventoryInfo(
 /**
  * 获取商品库存信息
  *
- * @api get /goods/detail/content
+ * @api get /admin/goods/detail/content
  * @param id IGoods['id']
  * @returns IUseRequestReturn<IGoodsDetailInfo>
  */
@@ -77,7 +78,7 @@ export function fetchGoodsContent(
 ): IUseRequestReturn<IGoodsDetailInfo> {
   return useRequest<IGoodsDetailInfo>({
     method: 'get',
-    url: '/goods/detail/content',
+    url: '/admin/goods/detail/content',
     params: {
       id,
     },
@@ -87,27 +88,27 @@ export function fetchGoodsContent(
 /**
  * 统计商品预警数量
  *
- * @api get /goods/warning/count
+ * @api get /admin/goods/warning/count
  * @returns Promise<number>
  */
 export function countGoodsWarning(): Promise<number> {
   return usePromiseRequest<number>({
     method: 'get',
-    url: '/goods/warning/count',
+    url: '/admin/goods/warning/count',
   })
 }
 
 /**
  * 创建商品基本信息
  *
- * @api post /goods/basic/create
+ * @api post /admin/goods/basic/create
  * @param data IGoodsBasicInfoFormData
  * @returns Promise<any>
  */
 export function createBasicInfo(data: IGoodsBasicInfoFormData) {
   return usePromiseRequest<any>({
     method: 'post',
-    url: '/goods/basic/create',
+    url: '/admin/goods/basic/create',
     data,
   })
 }
@@ -115,7 +116,7 @@ export function createBasicInfo(data: IGoodsBasicInfoFormData) {
 /**
  * 更新商品基本信息
  *
- * @api put /goods/basic/update
+ * @api put /admin/goods/basic/update
  * @param id IGoods['id']
  * @param data IGoodsBasicInfoFormData
  * @returns Promise<any>
@@ -126,7 +127,7 @@ export function updateBasicInfo(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/basic/update',
+    url: '/admin/goods/basic/update',
     data,
     params: {
       id,
@@ -137,7 +138,7 @@ export function updateBasicInfo(
 /**
  * 更新商品库存信息
  *
- * @api put /goods/inventory/update
+ * @api put /admin/goods/inventory/update
  * @param id IGoods['id']
  * @param data IFormData<IGoodsInventoryInfo>
  * @returns Promise<any>
@@ -148,7 +149,7 @@ export function updateInventoryInfo(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/inventory/update',
+    url: '/admin/goods/inventory/update',
     data,
     params: {
       id,
@@ -159,7 +160,7 @@ export function updateInventoryInfo(
 /**
  * 更新商品详情
  *
- * @api put /goods/detail/update
+ * @api put /admin/goods/detail/update
  * @param id IGoods['id']
  * @param data IFormData<IGoodsDetailInfo>
  * @returns Promise<any>
@@ -170,7 +171,7 @@ export function updateDetailContent(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/detail/update',
+    url: '/admin/goods/detail/update',
     data,
     params: {
       id,
@@ -181,14 +182,14 @@ export function updateDetailContent(
 /**
  * 复制商品至草稿
  *
- * @api post /goods/copy
+ * @api post /admin/goods/copy
  * @param id IGoods['id']
  * @returns Promise<any>
  */
 export function copyToDraft(id: IGoods['id']) {
   return usePromiseRequest<any>({
     method: 'post',
-    url: '/goods/copy',
+    url: '/admin/goods/copy',
     data: {
       id,
     },
@@ -198,14 +199,14 @@ export function copyToDraft(id: IGoods['id']) {
 /**
  * 恢复已删除商品
  *
- * @api put /goods/delete/restore
+ * @api put /admin/goods/delete/restore
  * @param id IGoods['id']
  * @returns Promise<any>
  */
 export function restoreGoods(id: IGoods['id']) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/delete/restore',
+    url: '/admin/goods/delete/restore',
     data: {
       id,
     },
@@ -215,7 +216,7 @@ export function restoreGoods(id: IGoods['id']) {
 /**
  * 批量更新商品
  *
- * @api put /goods/batch/update
+ * @api put /admin/goods/batch/update
  * @param ids IGoods['id'][]
  * @param data Record<string, any>
  * @returns Promise<any>
@@ -226,7 +227,7 @@ export function batchUpdate(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/batch/update',
+    url: '/admin/goods/batch/update',
     data: {
       ids,
       data,
@@ -237,14 +238,14 @@ export function batchUpdate(
 /**
  * 批量软删除商品
  *
- * @api delete /goods/batch/delete/soft
+ * @api delete /admin/goods/batch/delete/soft
  * @param ids IGoods['id'][]
  * @returns Promise<any>
  */
 export function batchSoftDelete(ids: IGoods['id'][]) {
   return usePromiseRequest<any>({
     method: 'delete',
-    url: '/goods/batch/delete/soft',
+    url: '/admin/goods/batch/delete/soft',
     data: {
       ids,
     },
@@ -254,14 +255,14 @@ export function batchSoftDelete(ids: IGoods['id'][]) {
 /**
  * 获取商品规格设置
  *
- * @api get /goods/spec/list
+ * @api get /admin/goods/spec/list
  * @param id IGoods['id']
  * @returns IUseRequestReturn<IGoodsSpec[]>
  */
 export function fetchGoodsSpecList(id: IGoods['id']): IUseRequestReturn<IGoodsSpec[]> {
   return useRequest<IGoodsSpec[]>({
     method: 'get',
-    url: '/goods/spec/list',
+    url: '/admin/goods/spec/list',
     params: {
       id,
     },
@@ -271,7 +272,7 @@ export function fetchGoodsSpecList(id: IGoods['id']): IUseRequestReturn<IGoodsSp
 /**
  * 更新商品规格设置
  *
- * @api put /goods/spec/update
+ * @api put /admin/goods/spec/update
  * @param id IGoods['id']
  * @param data IFormData<IGoodsSpec>
  * @returns Promise<any>
@@ -282,7 +283,7 @@ export function updateGoodsSpecs(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/spec/update',
+    url: '/admin/goods/spec/update',
     data,
     params: {
       id,
@@ -293,14 +294,14 @@ export function updateGoodsSpecs(
 /**
  * 获取商品多规格商品列表
  *
- * @api get /goods/skus/list
+ * @api get /admin/goods/skus/list
  * @param id IGoods['id']
  * @returns IUseRequestReturn<IGoodsSku[]>
  */
 export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku[]> {
   return useRequest<IGoodsSku[]>({
     method: 'get',
-    url: '/goods/skus/list',
+    url: '/admin/goods/skus/list',
     params: {
       id,
     },
@@ -310,7 +311,7 @@ export function fetchGoodsSkuList(id: IGoods['id']): IUseRequestReturn<IGoodsSku
 /**
  * 更新商品多规格商品列表
  *
- * @api put /goods/skus/update
+ * @api put /admin/goods/skus/update
  * @param id IGoods['id']
  * @param data IFormData<IGoodsSku>[]
  * @param skuCode IGoodsSku['skuCode']
@@ -323,7 +324,7 @@ export function updateGoodsSkus(
 ) {
   return usePromiseRequest<any>({
     method: 'put',
-    url: '/goods/skus/update',
+    url: '/admin/goods/skus/update',
     data: {
       skuCode,
       skus: data,

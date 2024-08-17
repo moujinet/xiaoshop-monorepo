@@ -1,5 +1,6 @@
 import type {
   IEnabled,
+  ILocationPath,
   ILogisticsFreightTemplate,
   ILogisticsFreightTemplateCalcMode,
   ILogisticsFreightTemplateDict,
@@ -13,8 +14,8 @@ import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
  * 物流运费模板运费规则响应 DTO
  */
 export class FreightTemplateNormalRuleResponse implements ILogisticsFreightTemplateNormalRule {
-  @ApiProperty({ description: '规则区域', example: ['11', '1100', '110001'] })
-  readonly areas: string[]
+  @ApiProperty({ description: '规则区域', example: [[{ code: '11', name: '北京市' }]] })
+  readonly locations: ILocationPath[]
 
   @ApiProperty({ description: '首重' })
   readonly first: number
@@ -33,8 +34,8 @@ export class FreightTemplateNormalRuleResponse implements ILogisticsFreightTempl
  * 物流运费模板包邮规则响应 DTO
  */
 export class FreightTemplateFreeRuleResponse implements ILogisticsFreightTemplateFreeRule {
-  @ApiProperty({ description: '包邮区域', example: ['11', '1100', '110001'] })
-  readonly areas: string[]
+  @ApiProperty({ description: '包邮区域', example: [[{ code: '11', name: '北京市' }]] })
+  readonly locations: ILocationPath[]
 
   @ApiProperty({ description: '包邮件数' })
   readonly overCount: number

@@ -1,12 +1,14 @@
 import {
   Enabled,
   type IEnabled,
+  type ILocationPath,
   type ILogisticsFreightTemplateCalcMode,
   LogisticsFreightTemplateCalcMode,
 } from '@xiaoshop/schema'
 import { Type } from 'class-transformer'
 import { ApiProperty } from '@nestjs/swagger'
 import { ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength, Min, ValidateIf, ValidateNested } from 'class-validator'
+import { LocationDto } from '~/common'
 
 /**
  * 物流运费模板 - 运费规则 DTO
@@ -14,13 +16,13 @@ import { ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsNumber, IsString, MaxLeng
 export class FreightTemplateNormalRulePayload {
   @ApiProperty({
     description: '规则区域',
-    type: [String],
-    example: ['11'],
+    type: [[LocationDto]],
+    example: [[{ code: '11', name: '北京市' }]],
   })
   @IsArray()
   @ArrayNotEmpty()
-  @IsString({ each: true })
-  areas: string[]
+  @Type(() => LocationDto)
+  locations: ILocationPath[]
 
   @ApiProperty({ description: '首重' })
   @IsNumber()
@@ -45,13 +47,13 @@ export class FreightTemplateNormalRulePayload {
 export class FreightTemplateFreeRulePayload {
   @ApiProperty({
     description: '规则区域',
-    type: [String],
-    example: ['11'],
+    type: [[LocationDto]],
+    example: [[{ code: '11', name: '北京市' }]],
   })
   @IsArray()
   @ArrayNotEmpty()
-  @IsString({ each: true })
-  areas: string[]
+  @Type(() => LocationDto)
+  locations: ILocationPath[]
 
   @ApiProperty({ description: '包邮件数' })
   @Min(0)

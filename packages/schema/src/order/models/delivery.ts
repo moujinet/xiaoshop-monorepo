@@ -1,4 +1,4 @@
-import type { IArea } from '@/common'
+import type { ILocation } from '@/common'
 import type { ILogisticsCompanyDict } from '@/logistics/models'
 import type { ILogisticsDeliveryMode, ILogisticsDeliveryStatus, ILogisticsDeliveryType } from '@/logistics/types'
 
@@ -49,9 +49,9 @@ export interface IOrderDelivery {
   /**
    * 发货地区
    *
-   * @see {@link IArea}
+   * @see {@link ILocation}
    */
-  senderLocation: IArea[]
+  senderLocation: ILocation[]
   /**
    * 发货地址
    */
@@ -67,9 +67,9 @@ export interface IOrderDelivery {
   /**
    * 收货地区
    *
-   * @see {@link IArea}
+   * @see {@link ILocation}
    */
-  receiverLocation: IArea[]
+  receiverLocation: ILocation[]
   /**
    * 收货地址
    */

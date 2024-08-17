@@ -1,5 +1,16 @@
+import type { ILocationPath } from '@/common/models'
 import type { IMemberGender, IMemberSource, IMemberStatus } from '@/member/types'
-import type { IMemberCardBinding, IMemberGroupDict, IMemberTagDict } from '@/member/models'
+import type {
+  IMemberAccount,
+  IMemberAccountKeyValue,
+  IMemberCard,
+  IMemberCardBinding,
+  IMemberCardBindingInfo,
+  IMemberCustomCardListItem,
+  IMemberGroupDict,
+  IMemberLevelListItem,
+  IMemberTagDict,
+} from '@/member/models'
 
 /**
  * 会员信息
@@ -16,6 +27,18 @@ export interface IMember {
    */
   status: IMemberStatus
   /**
+   * 注册来源
+   *
+   * @see {@link IMemberSource}
+   */
+  source: IMemberSource
+  /**
+   * 会员账户
+   *
+   * @see {@link IMemberAccount}
+   */
+  account: IMemberAccount[]
+  /**
    * 会员分组
    *
    * @see {@link IMemberGroupDict}
@@ -26,13 +49,13 @@ export interface IMember {
    *
    * @see {@link IMemberTag}
    */
-  tag: IMemberTagDict
+  tags: IMemberTagDict[]
   /**
-   * 绑定会员卡
+   * 会员卡
    *
    * @see {@link IMemberCardBinding}
    */
-  binding: IMemberCardBinding
+  card: IMemberCardBinding
   /**
    * 会员卡号
    */
@@ -54,11 +77,13 @@ export interface IMember {
    */
   mobile: string
   /**
-   * 注册来源
-   *
-   * @see {@link IMemberSource}
+   * 会员密码
    */
-  source: IMemberSource
+  password: string
+  /**
+   * 会员密码盐值
+   */
+  salt: string
   /**
    * 会员生日
    */
@@ -71,8 +96,10 @@ export interface IMember {
   gender: IMemberGender
   /**
    * 注册城市
+   *
+   * @see {@link ILocationPath}
    */
-  location: string[]
+  location: ILocationPath
   /**
    * 注册时间
    */
@@ -90,7 +117,83 @@ export interface IMember {
 /**
  * 会员信息
  */
+export type IMemberProfile = Pick<
+  IMember,
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'tags'
+  | 'group'
+  | 'card'
+  | 'cardNo'
+  | 'avatar'
+  | 'username'
+  | 'nickname'
+  | 'mobile'
+  | 'birthday'
+  | 'gender'
+  | 'location'
+  | 'createdTime'
+  | 'lastLoginTime'
+>
+
+/**
+ * 会员列表
+ */
+export type IMemberListItem = Pick<
+  IMember,
+  | 'id'
+  | 'status'
+  | 'source'
+  | 'tags'
+  | 'group'
+  | 'cardNo'
+  | 'avatar'
+  | 'username'
+  | 'nickname'
+  | 'mobile'
+  | 'gender'
+  | 'location'
+  | 'lastLoginTime'
+> & {
+  /**
+   * 会员卡
+   *
+   * @see {@link IMemberCardBindingInfo}
+   */
+  card: IMemberCardBindingInfo
+  /**
+   * 会员账户
+   *
+   * @see {@link IMemberAccountKeyValue}
+   */
+  account: IMemberAccountKeyValue
+}
+
+/**
+ * 会员信息
+ */
 export type IMemberInfo = Pick<
   IMember,
-  'id' | 'username' | 'nickname' | 'mobile' | 'avatar' | 'gender' | 'tag' | 'binding'
+  | 'id'
+  | 'status'
+  | 'cardNo'
+  | 'card'
+  | 'tags'
+  | 'group'
+  | 'gender'
+  | 'avatar'
+  | 'nickname'
+  | 'location'
 >
+
+/**
+ * 会员徽章类型
+ *
+ * @see {@link IMemberCard}
+ * @see {@link IMemberLevelListItem}
+ * @see {@link IMemberCustomCardListItem}
+ * @see {@link IMemberCardBinding}
+ * @see {@link IMemberCardBindingInfo}
+ */
+export type IMemberBadgeType = IMemberCard | IMemberLevelListItem | IMemberCustomCardListItem | IMemberCardBinding | IMemberCardBindingInfo

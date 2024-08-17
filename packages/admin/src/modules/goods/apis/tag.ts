@@ -4,40 +4,40 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品标签列表
  *
- * @api get /goods/tag/list
+ * @api get /admin/goods/tag/list
  * @returns IUseRequestReturn<IGoodsTag[]>
  */
 export function fetchGoodsTagList(): IUseRequestReturn<IGoodsTag[]> {
   return useRequest<IGoodsTag[]>({
     method: 'get',
-    url: '/goods/tag/list',
+    url: '/admin/goods/tag/list',
   })
 }
 
 /**
  * 获取商品标签字典列表
  *
- * @api get /goods/tag/dict/list
+ * @api get /admin/goods/tag/dict/list
  * @returns IUseRequestReturn<IGoodsTagDict[]>
  */
 export function fetchGoodsTagDictList(): IUseRequestReturn<IGoodsTagDict[]> {
   return useRequest<IGoodsTagDict[]>({
     method: 'get',
-    url: '/goods/tag/dict/list',
+    url: '/admin/goods/tag/dict/list',
   })
 }
 
 /**
  * 获取商品标签详情
  *
- * @api get /goods/tag/detail
+ * @api get /admin/goods/tag/detail
  * @param id IGoodsTag['id']
  * @returns IUseRequestReturn<IGoodsTag>
  */
 export function fetchGoodsTagDetail(id: IGoodsTag['id']): IUseRequestReturn<IGoodsTag> {
   return useRequest<IGoodsTag>({
     method: 'get',
-    url: '/goods/tag/detail',
+    url: '/admin/goods/tag/detail',
     params: {
       id,
     },
@@ -47,14 +47,14 @@ export function fetchGoodsTagDetail(id: IGoodsTag['id']): IUseRequestReturn<IGoo
 /**
  * 创建商品标签
  *
- * @api post /goods/tag/create
+ * @api post /admin/goods/tag/create
  * @param data IFormData<IGoodsTag>
  * @returns Promise<any>
  */
 export function createGoodsTag(data: IFormData<IGoodsTag>): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/tag/create',
+    url: '/admin/goods/tag/create',
     data,
   })
 }
@@ -62,7 +62,7 @@ export function createGoodsTag(data: IFormData<IGoodsTag>): Promise<any> {
 /**
  * 更新商品标签
  *
- * @api put /goods/tag/update
+ * @api put /admin/goods/tag/update
  * @param id IGoodsTag['id']
  * @param data IFormData<IGoodsTag>
  * @returns Promise<any>
@@ -73,7 +73,7 @@ export function updateGoodsTag(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/tag/update',
+    url: '/admin/goods/tag/update',
     data,
     params: {
       id,
@@ -84,14 +84,14 @@ export function updateGoodsTag(
 /**
  * 删除商品标签
  *
- * @api delete /goods/tag/delete
+ * @api delete /admin/goods/tag/delete
  * @param id IGoodsTag['id']
  * @returns Promise<any>
  */
 export function deleteGoodsTag(id: IGoodsTag['id']): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/tag/delete',
+    url: '/admin/goods/tag/delete',
     data: {
       id,
     },

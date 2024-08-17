@@ -22,64 +22,42 @@ const searchForm = reactive({
 })
 
 const columns: TableColumnData[] = [
-  {
-    title: '职位名称',
-    dataIndex: 'name',
-    width: 200,
-  },
-  {
-    title: '所属部门',
-    dataIndex: 'department',
-    slotName: 'department',
-    width: 200,
-  },
-  {
-    title: '描述',
-    dataIndex: 'desc',
-    slotName: 'desc',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdTime',
-    slotName: 'createdTime',
-    width: 180,
-  },
-  {
-    title: '操作',
-    slotName: 'actions',
-    width: 180,
-    align: 'center',
-  },
+  { title: '职位名称', dataIndex: 'name', width: 200 },
+  { title: '所属部门', dataIndex: 'department', slotName: 'department', width: 200 },
+  { title: '描述', dataIndex: 'desc', slotName: 'desc' },
+  { title: '创建时间', dataIndex: 'createdTime', slotName: 'createdTime', width: 180 },
+  { title: '操作', slotName: 'actions', width: 180, align: 'center' },
 ]
 
 const { loading, data, refreshData } = fetchPositionPages()
 
+const { query, params, transformQuery } = useSearchForm({
+  form: searchForm,
+  stringKeys: ['name'],
+})
+
 watch(
   () => route.query,
   () => {
-    const formData = searchForm as Record<string, string | number>
-
-    Object.keys(route.query).forEach((key) => {
-      if (['name'].includes(key))
-        formData[key] = route.query[key] as string
-      else
-        formData[key] = Number(route.query[key] as string)
-    })
-
-    refreshData(removeEmpty(searchForm, true))
+    transformQuery(route.query)
+    loadData()
   },
   { immediate: true },
 )
 
-function refresh() {
+function loadData() {
+  refreshData(params.value)
+}
+
+function handleRefresh() {
   handleSearch()
 
   if (searchForm.page === 1)
-    refreshData({ ...removeEmpty(searchForm, true) })
+    loadData()
 }
 
 function handleSearch() {
-  router.replace({ query: { ...removeEmpty(searchForm, true), page: 1 } })
+  router.replace({ query: { ...query.value, page: 1 } })
 }
 
 function handlePageChange(current: number) {
@@ -110,7 +88,7 @@ function handleDelete(id: number) {
 <template>
   <CommonContainer flexible>
     <template #extra>
-      <PositionEditModal @success="refresh">
+      <PositionEditModal @success="handleRefresh">
         <a-button type="primary">
           创建职位
         </a-button>
@@ -150,7 +128,7 @@ function handleDelete(id: number) {
         </template>
 
         <template #actions="{ record }">
-          <PositionEditModal :id="record.id" @success="refresh">
+          <PositionEditModal :id="record.id" @success="handleRefresh">
             <a-button type="text">
               编辑
             </a-button>
@@ -162,7 +140,7 @@ function handleDelete(id: number) {
     </CommonCard>
 
     <template #header>
-      <FormSearch :form="searchForm" @search="handleSearch" @reset="refresh">
+      <FormSearch :form="searchForm" @search="handleSearch" @reset="handleRefresh">
         <a-form-item field="name" label="职位名称" show-colon>
           <a-input v-model="searchForm.name" placeholder="请输入" allow-clear />
         </a-form-item>

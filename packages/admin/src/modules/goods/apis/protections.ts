@@ -8,33 +8,33 @@ import type { IUseRequestReturn } from '~/utils/request'
 /**
  * 获取商品服务保障列表
  *
- * @api get /goods/protection/list
+ * @api get /admin/goods/protection/list
  * @returns IUseRequestReturn<IGoodsProtectionListItem[]>
  */
 export function fetchGoodsProtectionList(): IUseRequestReturn<IGoodsProtectionListItem[]> {
   return useRequest<IGoodsProtectionListItem[]>({
     method: 'get',
-    url: '/goods/protection/list',
+    url: '/admin/goods/protection/list',
   })
 }
 
 /**
  * 获取商品服务保障字典列表
  *
- * @api get /goods/protection/dict/list
+ * @api get /admin/goods/protection/dict/list
  * @returns IUseRequestReturn<IGoodsProtectionDict[]>
  */
 export function fetchGoodsProtectionDictList(): IUseRequestReturn<IGoodsProtectionDict[]> {
   return useRequest<IGoodsProtectionDict[]>({
     method: 'get',
-    url: '/goods/protection/dict/list',
+    url: '/admin/goods/protection/dict/list',
   })
 }
 
 /**
  * 获取商品服务保障详情
  *
- * @api get /goods/protection/detail
+ * @api get /admin/goods/protection/detail
  * @param id IGoodsProtection['id']
  * @returns IUseRequestReturn<IGoodsProtection>
  */
@@ -43,7 +43,7 @@ export function fetchGoodsProtectionDetail(
 ): IUseRequestReturn<IGoodsProtection> {
   return useRequest<IGoodsProtection>({
     method: 'get',
-    url: '/goods/protection/detail',
+    url: '/admin/goods/protection/detail',
     params: {
       id,
     },
@@ -53,7 +53,7 @@ export function fetchGoodsProtectionDetail(
 /**
  * 创建商品服务保障
  *
- * @api post /goods/protection/create
+ * @api post /admin/goods/protection/create
  * @param data IFormData<IGoodsProtection>
  * @returns Promise<any>
  */
@@ -62,7 +62,7 @@ export function createGoodsProtection(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'post',
-    url: '/goods/protection/create',
+    url: '/admin/goods/protection/create',
     data,
   })
 }
@@ -70,7 +70,7 @@ export function createGoodsProtection(
 /**
  * 更新商品服务保障
  *
- * @api put /goods/protection/update
+ * @api put /admin/goods/protection/update
  * @param id IGoodsProtection['id']
  * @param data IFormData<IGoodsProtection>
  * @returns Promise<any>
@@ -81,7 +81,7 @@ export function updateGoodsProtection(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'put',
-    url: '/goods/protection/update',
+    url: '/admin/goods/protection/update',
     data,
     params: {
       id,
@@ -92,7 +92,7 @@ export function updateGoodsProtection(
 /**
  * 删除商品服务保障
  *
- * @api delete /goods/protection/delete
+ * @api delete /admin/goods/protection/delete
  * @param id IGoodsProtection['id']
  * @returns Promise<any>
  */
@@ -101,7 +101,7 @@ export function deleteGoodsProtection(
 ): Promise<any> {
   return usePromiseRequest({
     method: 'delete',
-    url: '/goods/protection/delete',
+    url: '/admin/goods/protection/delete',
     data: {
       id,
     },

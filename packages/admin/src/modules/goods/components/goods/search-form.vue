@@ -114,15 +114,15 @@ const search = defineModel('search', {
       </a-form-item>
 
       <a-form-item field="inStockTime" label="上架时间" show-colon>
-        <a-range-picker v-model="search.inStockTime" />
+        <a-range-picker v-model="search.inStockTime" @clear="search.inStockTime = []" />
       </a-form-item>
 
       <a-form-item field="stockedTime" label="下架时间" show-colon>
-        <a-range-picker v-model="search.stockedTime" />
+        <a-range-picker v-model="search.stockedTime" @clear="search.stockedTime = []" />
       </a-form-item>
 
       <a-form-item field="createdTime" label="发布时间" show-colon>
-        <a-range-picker v-model="search.createdTime" />
+        <a-range-picker v-model="search.createdTime" @clear="search.createdTime = []" />
       </a-form-item>
     </template>
 
