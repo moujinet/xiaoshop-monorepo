@@ -21,8 +21,8 @@ export default antfu(
   },
   {
     files: [
-      'packages/apis/nestjs/src/**/*.ts',
-      'packages/apis/nestjs/tests/**/*.test.ts',
+      'packages/api/src/**/*.ts',
+      'packages/api/tests/**/*.test.ts',
     ],
     rules: {
       'no-console': 'off',

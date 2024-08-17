@@ -24,7 +24,7 @@
     "docs:preview": "vitepress preview packages/docs",
     "docs:dbdocs": "dbdocs build packages/docs/database/schema-v1.dbml --project=XiaoShop",
     "run:admin": "pnpm --filter=@xiaoshop/admin",
-    "run:api": "pnpm --filter=@xiaoshop/api-nestjs",
+    "run:api": "pnpm --filter=@xiaoshop/api",
     "commit": "czg",
     "prepare": "simple-git-hooks"
   },
