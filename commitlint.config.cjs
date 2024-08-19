@@ -8,10 +8,6 @@ const scopes = fs
   .filter(dirent => dirent.isDirectory())
   .map(dirent => dirent.name.replace(/s$/, ''))
 
-const apiScopes = fs
-  .readdirSync(path.resolve(__dirname, 'packages/apis'), { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
-
 // precomputed scope
 const scopeComplete = execSync('git status --porcelain || true')
   .toString()
@@ -64,7 +60,7 @@ module.exports = {
     },
     customScopesAlign: !scopeComplete ? 'top' : 'bottom',
     defaultScope: scopeComplete,
-    scopes: [...scopes, ...apiScopes],
+    scopes: [...scopes],
     allowEmptyIssuePrefixs: false,
     allowCustomIssuePrefixs: false,
 
