@@ -1,4 +1,12 @@
-import type { IApiResponse } from './response'
+/**
+ * API 响应结构
+ */
+export interface IApiResponse<T = any> {
+  code: number
+  message: string
+  error?: string
+  data?: T
+}
 
 /**
  * 分页数据响应结构
