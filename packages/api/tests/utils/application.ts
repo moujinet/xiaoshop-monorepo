@@ -29,6 +29,9 @@ import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
 import { AuthModule } from '@/auth/module'
 import { OrganizeModule } from '@/organize/module'
 import { SettingsModule } from '@/settings/module'
+import { LogisticsModule } from '@/logistics/module'
+import { ResourceModule } from '@/resource/module'
+import { UploadModule } from '@/upload/module'
 
 export async function createTestingModule(modules: any[]) {
   const module = Test.createTestingModule({
@@ -105,11 +108,18 @@ export async function getTestApplication() {
       AuthModule,
       OrganizeModule,
       SettingsModule,
+      LogisticsModule,
+      ResourceModule,
+      UploadModule,
     ])
     await app.init()
 
-    await truncateTable(['manage_auth_user'])
-    await runSQL(`INSERT INTO \`manage_auth_user\` (\`is_admin\`, \`status\`, \`username\`, \`name\`, \`password\`, \`salt\`) VALUES ('Y', 'normal', 'admin', 'Admin', '$2b$10$6HjLrj5a0Jefr12T.76SRe/5AISF0uVaCaoL0grW.4mKBI/393zNO', '$2b$10$6HjLrj5a0Jefr12T.76SRe')`)
+    await truncateTable([
+      'manage_auth_user',
+    ])
+    await runSQL([
+      `INSERT INTO \`manage_auth_user\` (\`is_admin\`, \`status\`, \`username\`, \`name\`, \`password\`, \`salt\`) VALUES ('Y', 'normal', 'admin', 'Admin', '$2b$10$6HjLrj5a0Jefr12T.76SRe/5AISF0uVaCaoL0grW.4mKBI/393zNO', '$2b$10$6HjLrj5a0Jefr12T.76SRe')`,
+    ])
 
     globalThis.__APP__ = app
 

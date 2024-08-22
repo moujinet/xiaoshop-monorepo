@@ -17,7 +17,7 @@ export class GenerateMigrateCommand extends CommandRunner {
 
     spinner.start('开始生成迁移文件')
 
-    await $`node bin/typeorm.js -d ./src/db/datasource.ts migration:generate ./src/db/migrations/${name}`
+    await $`node bin/typeorm.js -d ./src/configs/modules/datasource.config.ts migration:generate ./src/database/migrations/${name}`
 
     spinner.stop('生成迁移文件成功')
 

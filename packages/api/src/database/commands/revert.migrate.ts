@@ -14,7 +14,7 @@ export class RevertMigrateCommand extends CommandRunner {
 
     spinner.start('开始还原上次执行的迁移')
 
-    await $`node bin/typeorm.js -d ./src/db/datasource.ts migration:revert`
+    await $`node bin/typeorm.js -d ./src/configs/modules/datasource.config.ts migration:revert`
 
     spinner.stop('还原迁移成功')
   }

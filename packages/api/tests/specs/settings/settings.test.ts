@@ -23,8 +23,7 @@ describe('Settings Module', () => {
       ('map.mobileLocationExpire', '15'),
       ('verifyCode.enableOnAdminLogin', '1'),
       ('verifyCode.enableOnLogin', '1'),
-      ('verifyCode.enableOnRegister', '1')
-    `)
+      ('verifyCode.enableOnRegister', '1')`)
   })
 
   it('Update Setting', async () => {

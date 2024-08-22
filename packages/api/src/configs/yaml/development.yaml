@@ -5,6 +5,8 @@ app:
 
 logger:
   dest: './logs'
+  console: true
+  debug: true
 
 upload:
   dest: './public/upload'
@@ -39,5 +41,9 @@ queue:
     db: 2
 
 jwt:
-  secret: '<XIAOSHOP_JWT_SECRET>'
+  secret: 'XIAOSHOP_JWT_SECRET'
   expiresIn: '1d'
+
+http:
+  timeout: 5000
+  maxRedirects: 5

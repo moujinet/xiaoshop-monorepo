@@ -1,3 +1,4 @@
+import helmet from 'helmet'
 import { mw } from 'request-ip'
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
@@ -15,10 +16,10 @@ async function bootstrap() {
     cors: true,
   })
 
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER))
+
   const config = app.get(ConfigService)
   const prefix = config.get<string>('app.prefix')
-
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER))
 
   app.setGlobalPrefix(prefix)
 
@@ -34,6 +35,15 @@ async function bootstrap() {
 
   // Request IP
   app.use(mw({ attributeName: 'ip' }))
+
+  // Helmet
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        scriptSrc: ['self', 'cdn.jsdelivr.net'],
+      },
+    },
+  }))
 
   // Swagger
   if (config.get<boolean>('app.swagger')) {

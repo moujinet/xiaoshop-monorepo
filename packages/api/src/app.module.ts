@@ -7,7 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ScheduleModule } from '@nestjs/schedule'
 import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
-import configuration from '~/configs'
 
 import {
   BullModuleConfig,
@@ -17,7 +16,15 @@ import {
   WinstonModuleConfig,
 } from '~/configs/modules'
 
+import configuration from '~/configs'
+
 // Modules
+import { AuthModule } from '@/auth/module'
+import { OrganizeModule } from '@/organize/module'
+import { LogisticsModule } from '@/logistics/module'
+import { ResourceModule } from '@/resource/module'
+import { SettingsModule } from '@/settings/module'
+import { UploadModule } from '@/upload/module'
 
 // Commands
 import {
@@ -26,6 +33,7 @@ import {
   RevertMigrateCommand,
   RunMigrateCommand,
 } from '~/database/commands'
+import { SettingsMigrationCommand } from '@/settings/commands/settings.command'
 
 @Module({
   imports: [
@@ -43,6 +51,7 @@ import {
 
     // Cache Manager
     CacheModule.registerAsync({
+      isGlobal: true,
       useClass: CacheModuleConfig,
     }),
 
@@ -50,6 +59,15 @@ import {
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmModuleConfig,
     }),
+
+    // EventEmitter
+    EventEmitterModule.forRoot({
+      wildcard: true,
+      verboseMemoryLeak: true,
+    }),
+
+    // CLS
+    ClsModule.forRoot(ClsModuleConfig),
 
     // Queue
     BullModule.forRootAsync({
@@ -59,19 +77,20 @@ import {
     // Schedule
     ScheduleModule.forRoot(),
 
-    // EventEmitter
-    EventEmitterModule.forRoot(),
-
-    // CLS
-    ClsModule.forRoot(ClsModuleConfig),
-
     // Modules
+    AuthModule,
+    LogisticsModule,
+    OrganizeModule,
+    ResourceModule,
+    SettingsModule,
+    UploadModule,
 
     // Commands
     CreateMigrateCommand,
     RevertMigrateCommand,
     RunMigrateCommand,
     GenerateMigrateCommand,
+    SettingsMigrationCommand,
   ],
 })
 export class AppModule {}

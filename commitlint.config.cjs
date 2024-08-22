@@ -57,6 +57,7 @@ module.exports = {
       d: 'docs: 更新文档',
       b: 'build: 更新依赖',
       c: 'chore: 更新配置',
+      t: 'types(shared): 更新类型',
     },
     customScopesAlign: !scopeComplete ? 'top' : 'bottom',
     defaultScope: scopeComplete,

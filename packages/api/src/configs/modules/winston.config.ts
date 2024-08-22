@@ -17,63 +17,68 @@ export class WinstonModuleConfig implements WinstonModuleOptionsFactory {
   createWinstonModuleOptions(): WinstonModuleOptions {
     const dirname = this.config.get('logger.dest')
 
+    const useConsole = this.config.get<boolean>('logger.console')
+    const useDebug = this.config.get<boolean>('logger.debug')
+
+    const transportsOptions: WinstonModuleOptions['transports'] = []
+
+    const fileLoggerOptions = {
+      dirname,
+      datePattern: 'YYYY-MM-DD',
+      maxFiles: '14d',
+      maxSize: '20m',
+      zippedArchive: true,
+      format: format.combine(
+        format.timestamp({
+          format: 'YYYY/MM/DD HH:mm:ss',
+        }),
+        format.ms(),
+        utilities.format.nestLike('XiaoShop', {
+          colors: false,
+          prettyPrint: true,
+          processId: true,
+          appName: false,
+        }),
+      ),
+    }
+
+    if (useConsole) {
+      transportsOptions.push(new transports.Console({
+        level: 'silly',
+        format: format.combine(
+          format.timestamp({
+            format: 'YYYY/MM/DD HH:mm:ss',
+          }),
+          format.ms(),
+          utilities.format.nestLike('XiaoShop', {
+            colors: true,
+            prettyPrint: true,
+            processId: true,
+            appName: true,
+          }),
+        ),
+      }))
+    }
+
+    if (useDebug) {
+      transportsOptions.push(
+        new transports.DailyRotateFile({
+          level: 'debug',
+          filename: 'debug-%DATE%.log',
+          ...fileLoggerOptions,
+        }),
+      )
+    }
+
     return {
       transports: [
-        // Console Logger
-        new transports.Console({
-          level: 'silly',
-          format: format.combine(
-            format.timestamp(),
-            format.ms(),
-            utilities.format.nestLike('XiaoShop', {
-              colors: true,
-              prettyPrint: true,
-              processId: true,
-              appName: true,
-            }),
-          ),
-        }),
+        ...transportsOptions,
 
-        // Error Logger -> <LOG_DIR>/application-<YYYY-MM-DD>.log
+        // Error Logger -> <LOG_DIR>/errors-<YYYY-MM-DD>.log
         new transports.DailyRotateFile({
           level: 'warn',
-          dirname,
-          filename: 'application-%DATE%.log',
-          datePattern: 'YYYY-MM-DD',
-          maxFiles: '14d',
-          maxSize: '20m',
-          zippedArchive: true,
-          format: format.combine(
-            format.timestamp(),
-            format.ms(),
-            utilities.format.nestLike('XiaoShop', {
-              colors: false,
-              prettyPrint: false,
-              processId: true,
-              appName: true,
-            }),
-          ),
-        }),
-
-        // Info Logger -> <LOG_DIR>/info-<YYYY-MM-DD>.log
-        new transports.DailyRotateFile({
-          level: 'info',
-          dirname,
-          filename: 'info-%DATE%.log',
-          datePattern: 'YYYY-MM-DD',
-          maxFiles: '14d',
-          maxSize: '20m',
-          zippedArchive: true,
-          format: format.combine(
-            format.timestamp(),
-            format.ms(),
-            utilities.format.nestLike('XiaoShop', {
-              colors: false,
-              prettyPrint: false,
-              processId: true,
-              appName: true,
-            }),
-          ),
+          filename: 'errors-%DATE%.log',
+          ...fileLoggerOptions,
         }),
       ],
     }

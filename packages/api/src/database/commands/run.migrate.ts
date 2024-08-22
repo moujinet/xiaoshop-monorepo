@@ -14,7 +14,7 @@ export class RunMigrateCommand extends CommandRunner {
 
     spinner.start('开始执行迁移')
 
-    await $`node bin/typeorm.js -d ./src/db/datasource.ts migration:run`
+    await $`node bin/typeorm.js -d ./src/configs/modules/datasource.config.ts migration:run`
 
     spinner.stop('迁移执行成功')
   }

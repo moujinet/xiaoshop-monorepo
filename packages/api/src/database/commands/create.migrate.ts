@@ -17,7 +17,7 @@ export class CreateMigrateCommand extends CommandRunner {
 
     spinner.start('开始创建迁移文件')
 
-    const { stdout } = await $`node bin/typeorm.js migration:create ./src/db/migrations/${name}`
+    const { stdout } = await $`node bin/typeorm.js migration:create ./src/database/migrations/${name}`
 
     spinner.stop('创建迁移文件成功')
 

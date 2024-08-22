@@ -5,6 +5,8 @@ app:
 
 logger:
   dest: './tests/__fixtures__/logs'
+  console: false
+  debug: true
 
 upload:
   dest: './tests/__fixtures__/upload'
@@ -39,5 +41,9 @@ queue:
     db: 2
 
 jwt:
-  secret: 'xiaoshop.test.jwt'
+  secret: 'XIAOSHOP_JWT_SECRET'
   expiresIn: '1d'
+
+http:
+  timeout: 5000
+  maxRedirects: 5

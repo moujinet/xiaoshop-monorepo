@@ -35,7 +35,7 @@ export function ApiExistsExceptionResponse(options: IApiExceptionResponseOptions
 
   return applyDecorators(
     ApiResponse({
-      status: 200,
+      status: EXCEPTION_EXISTS,
       description: options.description || EXCEPTION_EXISTS_MESSAGE,
       schema: {
         allOf: [
@@ -66,7 +66,7 @@ export function ApiFailedExceptionResponse(options: IApiExceptionResponseOptions
 
   return applyDecorators(
     ApiResponse({
-      status: 200,
+      status: EXCEPTION_FAILED,
       description: options.description || EXCEPTION_FAILED_MESSAGE,
       schema: {
         allOf: [
@@ -97,7 +97,7 @@ export function ApiNotFoundExceptionResponse(options: IApiExceptionResponseOptio
 
   return applyDecorators(
     ApiResponse({
-      status: 200,
+      status: EXCEPTION_NOT_FOUND,
       description: options.description || EXCEPTION_NOT_FOUND_MESSAGE,
       schema: {
         allOf: [
@@ -128,7 +128,7 @@ export function ApiBadRequestExceptionResponse(options: IApiExceptionResponseOpt
 
   return applyDecorators(
     ApiResponse({
-      status: 200,
+      status: EXCEPTION_BAD_REQUEST,
       description: options.description || EXCEPTION_BAD_REQUEST_MESSAGE,
       schema: {
         allOf: [
@@ -159,7 +159,7 @@ export function ApiUnauthorizedExceptionResponse(options: IApiExceptionResponseO
 
   return applyDecorators(
     ApiResponse({
-      status: 200,
+      status: EXCEPTION_UNAUTHORIZED,
       description: options.description || EXCEPTION_UNAUTHORIZED_MESSAGE,
       schema: {
         allOf: [
