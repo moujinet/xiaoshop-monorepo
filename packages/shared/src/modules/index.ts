@@ -1,5 +1,6 @@
 export * from './auth'
-export * from './resource'
 export * from './logistics'
+export * from './member'
 export * from './organize'
+export * from './resource'
 export * from './settings'
