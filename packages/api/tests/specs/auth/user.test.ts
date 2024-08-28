@@ -21,7 +21,7 @@ describe('Auth Module - User', () => {
   })
 
   it('Create User', async () => {
-    const { body } = await useRequest('post', '/auth/user/create')
+    await useRequest('post', '/auth/user/create')
       .send({
         username: 'test',
         password: '123456',
@@ -34,12 +34,13 @@ describe('Auth Module - User', () => {
         status: 'normal',
       })
       .expect(200)
-
-    expect(body.code).toEqual(0)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Update User', async () => {
-    const { body } = await useRequest('put', '/auth/user/update')
+    await useRequest('put', '/auth/user/update')
       .query({ id: 1 })
       .send({
         username: 'test',
@@ -52,8 +53,9 @@ describe('Auth Module - User', () => {
         status: 'normal',
       })
       .expect(200)
-
-    expect(body.code).toEqual(0)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Login User', async () => {

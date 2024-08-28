@@ -1,4 +1,5 @@
 import type {
+  LogisticAddressType,
   LogisticExchangeStatus,
   LogisticsCalcMode,
   LogisticsChargeMode,
@@ -109,3 +110,13 @@ export type ILogisticsChargeMode = `${LogisticsChargeMode}`
  * @see {@link LogisticsCalcMode}
  */
 export type ILogisticsCalcMode = `${LogisticsCalcMode}`
+
+/**
+ * 物流地址类型
+ *
+ * - `send`: 发货地址
+ * - `receive`: 收货地址
+ *
+ * @see {@link LogisticAddressType}
+ */
+export type ILogisticAddressType = `${LogisticAddressType}`

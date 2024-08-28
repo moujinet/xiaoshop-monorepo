@@ -139,6 +139,13 @@ export class SettingsService {
   }
 
   /**
+   * 清除缓存
+   */
+  async cleanCache() {
+    await this.cache.del(SETTINGS_MODULE_CACHE_KEY)
+  }
+
+  /**
    * 将设置数组转换为键值映射
    *
    * @param settings 设置数组

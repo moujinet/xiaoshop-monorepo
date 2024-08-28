@@ -20,8 +20,9 @@ import configuration from '~/configs'
 
 // Modules
 import { AuthModule } from '@/auth/module'
-import { OrganizeModule } from '@/organize/module'
 import { LogisticsModule } from '@/logistics/module'
+import { MemberModule } from '@/member/module'
+import { OrganizeModule } from '@/organize/module'
 import { ResourceModule } from '@/resource/module'
 import { SettingsModule } from '@/settings/module'
 import { UploadModule } from '@/upload/module'
@@ -33,7 +34,9 @@ import {
   RevertMigrateCommand,
   RunMigrateCommand,
 } from '~/database/commands'
-import { SettingsMigrationCommand } from '@/settings/commands/settings.command'
+import {
+  SettingsMigrationCommand,
+} from '@/settings/commands/settings.command'
 
 @Module({
   imports: [
@@ -78,11 +81,12 @@ import { SettingsMigrationCommand } from '@/settings/commands/settings.command'
     ScheduleModule.forRoot(),
 
     // Modules
+    SettingsModule,
     AuthModule,
+    MemberModule,
     LogisticsModule,
     OrganizeModule,
     ResourceModule,
-    SettingsModule,
     UploadModule,
 
     // Commands

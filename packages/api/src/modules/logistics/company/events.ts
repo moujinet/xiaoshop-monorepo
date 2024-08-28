@@ -11,7 +11,7 @@ export class LogisticsCompanyCreatedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建物流公司 ${this.companyName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class LogisticsCompanyUpdatedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建物流公司 ${this.companyName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class LogisticsCompanyDeletedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建物流公司 ${this.companyName}(#${this.id})`
   }
 }

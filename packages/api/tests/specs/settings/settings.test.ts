@@ -30,6 +30,9 @@ describe('Settings Module', () => {
     await useRequest('put', '/settings/update')
       .send([{ key: 'store.name', value: 'XiaoShop Update' }])
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Fetch All Settings', async () => {

@@ -15,6 +15,9 @@ describe('Resource Module - Group', () => {
         enableThumbnail: 'N',
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Update Group', async () => {
@@ -28,6 +31,9 @@ describe('Resource Module - Group', () => {
         enableThumbnail: 'N',
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Fetch Group', async () => {

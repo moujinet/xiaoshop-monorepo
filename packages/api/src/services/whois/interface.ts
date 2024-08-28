@@ -2,14 +2,9 @@
  * Whois 信息
  */
 export interface IWhoisInfo {
-  ip: string
-  pro: string
-  proCode: string
-  city: string
-  cityCode: string
   region: string
-  regionCode: string
-  addr: string
-  regionNames: string
-  err: string
+  country?: string
+  province?: string
+  city?: string
+  isp?: string
 }

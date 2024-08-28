@@ -23,10 +23,10 @@ export class AuthListener {
   @OnEvent('**', { async: true })
   async handleLogs(payload: ILogBasedEvent) {
     try {
-      const log = payload.getLogs()
+      const log = payload.getAuthLogs()
 
       if (log) {
-        if (payload.type === AuthLogType.SYSTEM) {
+        if (payload.authLogType === AuthLogType.SYSTEM) {
           await this.log.writeSystemLog(payload.module, log)
         }
         else {

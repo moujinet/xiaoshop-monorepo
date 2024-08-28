@@ -54,7 +54,7 @@ export interface IMemberAccountChangeLog {
  *
  * @see {@link IMemberAccountChangeLog}
  */
-export type IMemberAccountChangeLogFullListItem = Pick<
+export type IMemberAccountChangeLogListItem = Pick<
   IMemberAccountChangeLog,
   | 'id'
   | 'member'
@@ -68,4 +68,4 @@ export type IMemberAccountChangeLogFullListItem = Pick<
 /**
  * 会员账户变更日志 (会员)
  */
-export type IMemberAccountChangeLogListItem = Omit<IMemberAccountChangeLogFullListItem, 'member'>
+export type IMemberAccountChangeLogMemberListItem = Omit<IMemberAccountChangeLogListItem, 'member'>

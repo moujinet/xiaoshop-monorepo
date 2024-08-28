@@ -13,6 +13,9 @@ describe('Organize Module - Department', () => {
         name: 'test',
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Update Department', async () => {
@@ -22,6 +25,9 @@ describe('Organize Module - Department', () => {
         name: 'test update',
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Fetch Department Detail', async () => {

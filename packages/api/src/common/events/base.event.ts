@@ -13,13 +13,13 @@ export interface ILogBasedEvent {
    *
    * @see {@link AuthLogType}
    */
-  type: IAuthLogType
+  authLogType: IAuthLogType
   /**
-   * 获取日志内容
+   * 获取系统日志内容
    *
    * @returns string | false
    */
-  getLogs: () => string | false
+  getAuthLogs: () => string | false
 }
 
 /**
@@ -38,15 +38,15 @@ export abstract class BaseEvent implements ILogBasedEvent {
      *
      * @see {@link AuthLogType}
      */
-    public readonly type: IAuthLogType = AuthLogType.USER,
+    public readonly authLogType: IAuthLogType = AuthLogType.USER,
   ) {}
 
   /**
-   * 获取日志内容
+   * 获取系统日志内容
    *
    * @returns string | false
    */
-  getLogs(): string | false {
+  getAuthLogs(): string | false {
     return false
   }
 }

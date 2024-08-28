@@ -11,7 +11,7 @@ export class SettingsUpdatedEvent extends BaseEvent {
     super('系统设置')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `更新系统设置 ${this.key} = ${this.value}`
   }
 }

@@ -58,7 +58,10 @@ describe('Resource Module - Resource', () => {
 
   it('Delete Resource', async () => {
     await useRequest('delete', '/resource/delete')
-      .query({ id: 1 })
+      .send({ id: 1 })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 })

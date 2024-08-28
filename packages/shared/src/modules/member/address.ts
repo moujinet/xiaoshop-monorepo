@@ -5,7 +5,7 @@ import type {
 } from '~/common'
 
 /**
- * 会员地址
+ * 会员收货地址信息
  */
 export interface IMemberAddress {
   /**
@@ -25,7 +25,7 @@ export interface IMemberAddress {
   /**
    * 联系人
    */
-  contractName: string
+  name: string
   /**
    * 手机号
    */
@@ -41,7 +41,13 @@ export interface IMemberAddress {
    */
   address: string
   /**
+   * 邮政编码
+   */
+  postalCode: string
+  /**
    * 是否默认 (N:否 Y:是)
+   *
+   * @see {@link IYesOrNo}
    */
   isDefault: IYesOrNo
   /**
@@ -55,26 +61,32 @@ export interface IMemberAddress {
 }
 
 /**
- * 会员地址信息
- *
- * @see {@link IMemberAddress}
+ * 会员收货地址列表
  */
-export type IMemberAddressInfo = Pick<
+export type IMemberAddressListItem = Pick<
   IMemberAddress,
   | 'id'
-  | 'contractName'
+  | 'member'
+  | 'name'
   | 'mobile'
   | 'location'
   | 'address'
+  | 'postalCode'
+  | 'isDefault'
+  | 'updatedTime'
 >
 
 /**
- * 会员地址列表
- *
- * @see {@link IMemberAddressInfo}
+ * 会员收货地址列表 - 会员
  */
-export type IMemberAddressListItem = IMemberAddressInfo & Pick<
+export type IMemberAddressMemberListItem = Pick<
   IMemberAddress,
+  | 'id'
+  | 'name'
+  | 'mobile'
+  | 'location'
+  | 'address'
+  | 'postalCode'
   | 'isDefault'
   | 'updatedTime'
 >

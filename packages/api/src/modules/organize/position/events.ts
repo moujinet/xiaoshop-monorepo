@@ -11,7 +11,7 @@ export class OrganizePositionCreatedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建组织职位 ${this.positionName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class OrganizePositionUpdatedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `更新组织职位 ${this.positionName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class OrganizePositionDeletedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `删除组织职位 ${this.positionName}(#${this.id})`
   }
 }

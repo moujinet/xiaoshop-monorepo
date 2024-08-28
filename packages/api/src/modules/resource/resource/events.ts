@@ -14,7 +14,7 @@ export class ResourceUploadedEvent extends BaseEvent {
     super('素材管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     const typeName = RESOURCE_TYPES.find(t => t.value === this.fileType)?.label
     return `上传${typeName}素材 ${this.fileName}(${this.filePath})`
   }
@@ -32,7 +32,7 @@ export class ResourceDeletedEvent extends BaseEvent {
     super('素材管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     const typeName = RESOURCE_TYPES.find(t => t.value === this.fileType)?.label
     return `删除${typeName}素材 ${this.fileName}(${this.filePath})`
   }

@@ -13,7 +13,7 @@ import {
 } from '~/common/decorators'
 import { exceptionFactory } from '~/common/exceptions'
 
-@ApiTags('文件上传/通用')
+@ApiTags('通用/文件上传')
 @Controller('upload')
 export class UploadController {
   constructor(

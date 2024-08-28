@@ -274,3 +274,30 @@ export const LOGISTICS_CALC_MODES = [
   { label: '按体积计费', name: '体积', unit: 'm<sup>3</sup>', value: LogisticsCalcMode.VOLUME, color: 'purple' },
   { label: '按件数计费', name: '件数', unit: '件', value: LogisticsCalcMode.COUNT, color: 'arcoblue' },
 ]
+
+// --------------------------------
+// 物流 - 地址管理 - 地址类型
+// --------------------------------
+
+/**
+ * 地址类型 - 枚举
+ *
+ * - `SEND` - 发货地址
+ * - `RECEIVE` - 收货地址
+ *
+ * @see {@link ILogisticAddressType}
+ */
+export enum LogisticAddressType {
+  SEND = 'send',
+  RECEIVE = 'receive',
+}
+
+/**
+ * 地址类型 - 字典
+ *
+ * @see {@link ILogisticAddressType}
+ */
+export const LOGISTIC_ADDRESS_TYPES = [
+  { label: '发货地址', value: LogisticAddressType.SEND, color: 'arcoblue' },
+  { label: '收货地址', value: LogisticAddressType.RECEIVE, color: 'purple' },
+]

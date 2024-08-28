@@ -15,6 +15,9 @@ describe('Auth Module - Role', () => {
         permissions: ['test.1', 'test.2'],
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Update Role', async () => {
@@ -26,6 +29,9 @@ describe('Auth Module - Role', () => {
         permissions: ['test.1'],
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Fetch Role Detail', async () => {

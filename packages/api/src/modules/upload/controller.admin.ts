@@ -10,7 +10,7 @@ import {
   ApiFailedExceptionResponse,
 } from '~/common/decorators'
 
-@ApiTags('文件上传/管理')
+@ApiTags('管理/文件上传')
 @Controller('admin/upload')
 export class UploadAdminController {
   constructor(

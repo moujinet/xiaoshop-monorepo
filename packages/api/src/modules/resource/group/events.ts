@@ -11,7 +11,7 @@ export class ResourceGroupCreatedEvent extends BaseEvent {
     super('素材管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建素材分组 ${this.groupName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class ResourceGroupUpdatedEvent extends BaseEvent {
     super('素材管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建素材分组 ${this.groupName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class ResourceGroupDeletedEvent extends BaseEvent {
     super('素材管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建素材分组 ${this.groupName}(#${this.id})`
   }
 }

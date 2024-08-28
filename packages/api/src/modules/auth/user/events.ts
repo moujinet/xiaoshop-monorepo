@@ -11,7 +11,7 @@ export class AuthUserLoginEvent extends BaseEvent {
     super('员工登录')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `员工登录 ${this.userName}(#${this.id})`
   }
 }
@@ -39,7 +39,7 @@ export class AuthUserLockedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `密码错误超过 5 次, 员工账号 ${this.userName}(#${this.id}) 被系统锁定`
   }
 }
@@ -55,7 +55,7 @@ export class AuthUserUnlockedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `锁定时间超过 60 分钟, 员工账号 ${this.userName}(#${this.id}) 被系统解锁`
   }
 }
@@ -71,7 +71,7 @@ export class AuthUserBlockedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `禁用员工账号 ${this.userName}(#${this.id})`
   }
 }
@@ -87,7 +87,7 @@ export class AuthUserUnblockedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `恢复员工账号 ${this.userName}(#${this.id})`
   }
 }
@@ -103,7 +103,7 @@ export class AuthUserCreatedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建员工账号 ${this.userName}(#${this.id})`
   }
 }
@@ -119,7 +119,7 @@ export class AuthUserUpdatedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `更新员工账号 ${this.userName}(#${this.id})`
   }
 }
@@ -135,7 +135,7 @@ export class AuthUserDeletedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `删除员工账号 ${this.userName}(#${this.id})`
   }
 }

@@ -11,7 +11,7 @@ export class LogisticsTemplateCreatedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建运费模板 ${this.templateName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class LogisticsTemplateUpdatedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建运费模板 ${this.templateName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class LogisticsTemplateDeletedEvent extends BaseEvent {
     super('物流发货')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建运费模板 ${this.templateName}(#${this.id})`
   }
 }

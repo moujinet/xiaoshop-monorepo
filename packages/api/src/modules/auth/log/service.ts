@@ -139,7 +139,7 @@ export class AuthLogService {
       if (type === AuthLogType.USER) {
         log.userId = user ? user.id : userId
         log.device = ua.os.name ? `${ua.os.name} | ${ua.browser.name}` : '未知'
-        log.ip = `${ip} (${whois.addr || '未知'})`
+        log.ip = `${ip} (${whois.region})`
       }
 
       await this.repository.save(log)

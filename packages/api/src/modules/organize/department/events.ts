@@ -11,7 +11,7 @@ export class OrganizeDepartmentCreatedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建组织部门 ${this.departmentName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class OrganizeDepartmentUpdatedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `更新组织部门 ${this.departmentName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class OrganizeDepartmentDeletedEvent extends BaseEvent {
     super('组织管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `删除组织部门 ${this.departmentName}(#${this.id})`
   }
 }

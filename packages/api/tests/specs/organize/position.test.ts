@@ -19,6 +19,9 @@ describe('Organize Module - Position', () => {
         departmentId: 1,
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Update Position', async () => {
@@ -29,6 +32,9 @@ describe('Organize Module - Position', () => {
         departmentId: 2,
       })
       .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
+      })
   })
 
   it('Fetch Position Detail', async () => {

@@ -1,7 +1,6 @@
 import { JwtModule } from '@nestjs/jwt'
 import { Module } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
-import { HttpModule } from '@nestjs/axios'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AuthUser } from '@/auth/user/entity'
@@ -20,21 +19,17 @@ import { AuthGuard } from '@/auth/guard'
 import { AuthListener } from '@/auth/listener'
 import { AuthScheduler } from '@/auth/scheduler'
 
-import { HttpModuleConfig, JwtModuleConfig } from '~/configs/modules'
+import { JwtModuleConfig } from '~/configs/modules'
 import { WhoisService } from '~/services/whois'
 
 @Module({
   imports: [
+
     TypeOrmModule.forFeature([
       AuthUser,
       AuthRole,
       AuthLog,
     ]),
-
-    // Http
-    HttpModule.registerAsync({
-      useClass: HttpModuleConfig,
-    }),
 
     JwtModule.registerAsync({
       global: true,
@@ -49,12 +44,12 @@ import { WhoisService } from '~/services/whois'
   ],
 
   providers: [
+    // Services
+    WhoisService,
+
     AuthUserService,
     AuthRoleService,
     AuthLogService,
-
-    // Services
-    WhoisService,
 
     // Listener
     AuthListener,

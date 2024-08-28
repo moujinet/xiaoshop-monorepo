@@ -11,7 +11,7 @@ export class AuthRoleCreatedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `创建员工角色 ${this.roleName}(#${this.id})`
   }
 }
@@ -27,7 +27,7 @@ export class AuthRoleUpdatedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `更新员工角色 ${this.roleName}(#${this.id})`
   }
 }
@@ -43,7 +43,7 @@ export class AuthRoleDeletedEvent extends BaseEvent {
     super('员工管理')
   }
 
-  getLogs() {
+  getAuthLogs() {
     return `删除员工角色 ${this.roleName}(#${this.id})`
   }
 }
