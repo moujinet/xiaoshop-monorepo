@@ -4,7 +4,7 @@ export const EXCEPTION_EXISTS = 1003
 export const EXCEPTION_EXISTS_MESSAGE = '#NAME#已存在'
 
 /**
- * 数据已存在
+ * 数据已存在 - 1003
  *
  * @see {@link https://docs.nestjs.com/exception-filters#custom-exceptions}
  */

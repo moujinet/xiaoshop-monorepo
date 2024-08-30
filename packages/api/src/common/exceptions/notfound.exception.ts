@@ -4,7 +4,7 @@ export const EXCEPTION_NOT_FOUND = 1002
 export const EXCEPTION_NOT_FOUND_MESSAGE = '#NAME#不存在'
 
 /**
- * 数据不存在
+ * 数据不存在 - 1002
  *
  * @see {@link https://docs.nestjs.com/exception-filters#custom-exceptions}
  */

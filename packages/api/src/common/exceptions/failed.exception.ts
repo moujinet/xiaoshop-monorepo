@@ -4,7 +4,7 @@ export const EXCEPTION_FAILED = 1004
 export const EXCEPTION_FAILED_MESSAGE = '#NAME#失败'
 
 /**
- * 操作失败
+ * 操作失败 - 1004
  *
  * @see {@link https://docs.nestjs.com/exception-filters#custom-exceptions}
  */
