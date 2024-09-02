@@ -12,7 +12,7 @@ import { MemberAccount } from '@/member/account/entity'
 })
 @Index('IDX_shop_member_address', ['memberId', 'isDefault', 'updatedTime'])
 export class MemberAddress implements IMemberAddress {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_address' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID' })

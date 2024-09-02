@@ -14,7 +14,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 })
 @Index('IDX_manage_logistics_template', ['sort', 'updatedTime'])
 export class LogisticsFreightTemplate implements ILogisticsTemplate {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_logistics_template' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '模板名称' })

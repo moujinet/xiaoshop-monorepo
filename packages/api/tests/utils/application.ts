@@ -33,6 +33,7 @@ import { LogisticsModule } from '@/logistics/module'
 import { ResourceModule } from '@/resource/module'
 import { UploadModule } from '@/upload/module'
 import { MemberModule } from '@/member/module'
+import { ProductModule } from '@/product/module'
 
 export async function createTestingModule(modules: any[]) {
   const module = Test.createTestingModule({
@@ -113,6 +114,7 @@ export async function getTestApplication() {
       ResourceModule,
       UploadModule,
       MemberModule,
+      ProductModule,
     ])
     await app.init()
 

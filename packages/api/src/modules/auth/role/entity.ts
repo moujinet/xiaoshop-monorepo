@@ -6,7 +6,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 })
 @Index('IDX_manage_auth_role', ['sort', 'updatedTime'])
 export class AuthRole implements IAuthRole {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_auth_role' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '角色名称' })

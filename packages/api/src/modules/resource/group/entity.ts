@@ -12,7 +12,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 })
 @Index('IDX_app_resource_group', ['type', 'parentId', 'updatedTime'])
 export class ResourceGroup implements IResourceGroup {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_app_resource_group' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: ResourceType.IMAGE, comment: '素材类型' })

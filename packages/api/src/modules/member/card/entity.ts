@@ -17,7 +17,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Index('IDX_shop_member_card_custom', ['type', 'key', 'updatedTime'])
 @Index('IDX_shop_member_card_dict', ['enable', 'type', 'key', 'updatedTime'])
 export class MemberCard implements IMemberCard {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_card' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '类型' })

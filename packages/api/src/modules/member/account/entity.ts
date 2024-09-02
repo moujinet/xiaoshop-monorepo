@@ -18,7 +18,7 @@ import { MemberTag } from '@/member/tag/entity'
 })
 @Index('IDX_shop_member_account', ['status', 'username', 'updatedTime'])
 export class MemberAccount implements IMemberAccount {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_account' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberStatus.NORMAL, comment: '状态' })

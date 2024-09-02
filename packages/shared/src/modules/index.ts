@@ -1,4 +1,5 @@
 export * from './auth'
+export * from './product'
 export * from './logistics'
 export * from './member'
 export * from './organize'

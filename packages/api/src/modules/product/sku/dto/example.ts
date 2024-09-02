@@ -1,0 +1,22 @@
+export const example = {
+  id: 1,
+  uuid: '11111111-1111-1111-1111-111111111111',
+  productId: 1,
+  productUuid: '11111111-1111-1111-1111-111111111111',
+  skuCode: '111111111111',
+  name: 'SKU Name',
+  attributes: [
+    { name: '颜色', value: '红色' },
+    { name: '尺寸', value: 'L' },
+  ],
+  image: 'https://example.com/image.png',
+  price: 100,
+  originalPrice: 200,
+  costPrice: 50,
+  inventory: 100,
+  inventoryEarlyWarning: 10,
+  weight: 1,
+  volume: 1,
+  unit: '个',
+  sales: 100,
+}

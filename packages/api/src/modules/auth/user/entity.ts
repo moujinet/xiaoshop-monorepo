@@ -18,7 +18,7 @@ import { OrganizeDepartment } from '@/organize/department/entity'
 })
 @Index('IDX_manage_auth_user', ['status', 'username', 'departmentId', 'positionId', 'lastLoginTime'])
 export class AuthUser implements IAuthUser {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_auth_user' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ name: 'is_admin', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否管理员 (N: 否 Y: 是)' })

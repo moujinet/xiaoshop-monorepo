@@ -11,7 +11,7 @@ import { OrganizeDepartment } from '@/organize/department/entity'
 })
 @Index('IDX_manage_organize_position', ['departmentId', 'sort', 'updatedTime'])
 export class OrganizePosition implements IOrganizePosition {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_organize_position' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ name: 'department_id', type: 'int', default: 0, unsigned: true, comment: '所属部门 ID' })

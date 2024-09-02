@@ -16,10 +16,10 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
 @Index('IDX_shop_member_binding', ['memberId'])
 @Index('IDX_shop_member_binding_card', ['cardId', 'cardType'])
 export class MemberBinding implements IMemberBinding {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_binding' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID' })
+  @Column({ name: 'member_id', type: 'int', primary: true, unique: true, unsigned: true, default: 0, comment: '会员 ID' })
   memberId: number
 
   @Column({ name: 'card_id', type: 'int', unsigned: true, default: 0, comment: '会员卡 ID (冗余)' })

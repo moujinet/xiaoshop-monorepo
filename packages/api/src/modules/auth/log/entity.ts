@@ -10,7 +10,7 @@ import { AuthUser } from '@/auth/user/entity'
 })
 @Index('IDX_manage_auth_log', ['type', 'module', 'createdTime'])
 export class AuthLog implements IAuthLog {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_auth_log' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: 'manual', comment: '日志类型' })

@@ -6,7 +6,7 @@ import {
   MemberCardPlanType,
   YesOrNo,
 } from '@xiaoshop/shared'
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { IsEnum, IsHexColor, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { card, plan } from './example'
@@ -22,11 +22,13 @@ export class MemberCardBadgePayload implements Partial<IMemberCardBadgeStyle> {
 
   @ApiProperty({ required: false, description: '文字颜色', example: card.badgeStyle.textColor })
   @IsString({ message: '文字颜色必须为字符串' })
+  @IsHexColor({ message: '文字颜色必须为十六进制颜色' })
   @IsOptional()
   readonly textColor: string
 
   @ApiProperty({ required: false, description: '背景颜色', example: card.badgeStyle.bgColor })
   @IsString({ message: '背景颜色必须为字符串' })
+  @IsHexColor({ message: '背景颜色必须为十六进制颜色' })
   @IsOptional()
   readonly bgColor: string
 }
@@ -42,11 +44,13 @@ export class MemberCardStylesPayload implements Partial<IMemberCardStyle> {
 
   @ApiProperty({ required: false, description: '文字颜色', example: card.cardStyle.textColor })
   @IsString({ message: '文字颜色必须为字符串' })
+  @IsHexColor({ message: '文字颜色必须为十六进制颜色' })
   @IsOptional()
   readonly textColor: string
 
   @ApiProperty({ required: false, description: '背景颜色', example: card.cardStyle.bgColor })
   @IsString({ message: '背景颜色必须为字符串' })
+  @IsHexColor({ message: '背景颜色必须为十六进制颜色' })
   @IsOptional()
   readonly bgColor: string
 

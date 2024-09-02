@@ -12,7 +12,7 @@ describe('Auth Module - User', () => {
 
     await runSQL([
       // Roles
-      `INSERT INTO manage_auth_role (\`name\`, \`permissions\`) VALUES ('角色', '["test.1", "test.2"]')`,
+      `INSERT INTO manage_auth_role (\`name\`, \`permissions\`) VALUES ('角色', '["test.1", "test.2"]'), ('角色 1', '["test.1", "test.2"]')`,
       // Departments
       'INSERT INTO manage_organize_department (`name`) VALUES ("部门 1"), ("部门 2")',
       // Positions
@@ -46,7 +46,7 @@ describe('Auth Module - User', () => {
         username: 'test',
         name: 'Test',
         mobile: '13400009988',
-        roleIds: [1],
+        roleIds: [1, 2],
         departmentId: 2,
         positionId: 2,
         isAdmin: 'N',

@@ -12,7 +12,7 @@ import { ResourceGroup } from '@/resource/group/entity'
 })
 @Index('IDX_app_resource', ['type', 'name', 'createdTime'])
 export class Resource implements IResource {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_app_resource' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: ResourceType.IMAGE, comment: '素材类型' })

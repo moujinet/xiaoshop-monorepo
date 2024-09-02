@@ -6,7 +6,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 })
 @Index('IDX_manage_settings', ['key'], { unique: true })
 export class SettingOption implements ISettingOption {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_manage_settings' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true, default: '', comment: '设置名' })

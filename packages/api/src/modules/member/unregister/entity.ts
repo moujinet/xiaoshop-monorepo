@@ -13,10 +13,10 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 
 @Index('IDX_shop_member_unregister', ['createdTime'])
 @Index('IDX_shop_member_unregister_member', ['memberId', 'createdTime'])
 export class MemberUnregister implements IMemberUnregister {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_unregister' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID' })
+  @Column({ name: 'member_id', type: 'int', primary: true, unique: true, unsigned: true, default: 0, comment: '会员 ID' })
   memberId: number
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: MemberUnregisterStatus.PENDING, comment: '注销状态' })

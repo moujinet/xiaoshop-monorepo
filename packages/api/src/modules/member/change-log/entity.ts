@@ -11,7 +11,7 @@ import { MemberAccount } from '@/member/account/entity'
 })
 @Index('IDX_shop_member_account_change', ['memberId', 'createdTime'])
 export class MemberAccountChangeLog implements IMemberAccountChangeLog {
-  @PrimaryGeneratedColumn({ type: 'int', unsigned: true, primaryKeyConstraintName: 'PK_shop_member_account_change' })
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ name: 'member_id', type: 'int', unsigned: true, default: 0, comment: '会员 ID' })

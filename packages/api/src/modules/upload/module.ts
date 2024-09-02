@@ -12,8 +12,8 @@ import { SettingsModule } from '@/settings/module'
   ],
 
   controllers: [
-    UploadController,
     UploadAdminController,
+    UploadController,
   ],
 
   providers: [
