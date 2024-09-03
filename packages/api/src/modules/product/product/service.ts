@@ -5,11 +5,12 @@ import {
   type IProductExportConditions,
   type IProductExportListItem,
   type IProductListItem,
-  IProductSku,
+  type IProductSku,
   ProductBuyBtnType,
   ProductFreightChargeMode,
   ProductInventoryDeductMode,
   ProductPublishMode,
+  ProductRatingGrade,
   ProductReturnsFreightBy,
   ProductSource,
   ProductStatus,
@@ -373,6 +374,10 @@ export class ProductService {
       product.buyBtnName = data.buyBtnName || BUY_BUTTON_DEFAULT_NAME
       product.detail = data.detail || ''
       product.sort = data.sort || 1
+      product.overallGrade = ProductRatingGrade.HIGH
+      product.overallLogisticsScore = 5
+      product.overallProductScore = 5
+      product.overallServiceScore = 5
 
       product.status = product.publishMode === ProductPublishMode.DIRECT
         ? ProductStatus.ON_SALE

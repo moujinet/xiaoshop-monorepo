@@ -16,14 +16,14 @@ export const MemberSettings: ISettingOptionMap = {
   'logout.enableAudit': '1',
 
   // 积分规则
-  'points.register': 'Y',
+  'points.register': '1',
   'points.register.rule': '{"points": 100}',
-  'points.order': 'Y',
+  'points.order': '1',
   'points.order.rule': '{"perOrderRatio": 100}',
-  'points.birthday': 'Y',
+  'points.birthday': '1',
   'points.birthday.rule': '{"points": 500}',
-  'points.signIn': 'Y',
+  'points.signIn': '1',
   'points.signIn.rule': '{"points": 10, "perWeekRatio": 1.5, "perMonthRatio": 3}',
-  'points.deduct': 'Y',
+  'points.deduct': '1',
   'points.deduct.rule': '{"limit": 10000, "ratio": 10}',
 }
