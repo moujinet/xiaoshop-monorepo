@@ -1,25 +1,25 @@
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import type {
-  ILogisticsDeliveryMethod,
   IProductAdditionDict,
   IProductAttribute,
   IProductBrandDict,
-  IProductBuyBtnType,
   IProductCategoryDict,
   IProductCommitmentDict,
-  IProductFreightChargeMode,
   IProductGroupDict,
-  IProductInventoryDeductMode,
   IProductListItem,
-  IProductPublishMode,
-  IProductRatingGrade,
-  IProductReturnsFreightBy,
   IProductSkuInfo,
-  IProductSource,
-  IProductStatus,
   IProductTagDict,
-  IProductType,
-  IYesOrNo,
+  LogisticsDeliveryMethod,
+  ProductBuyBtnType,
+  ProductFreightChargeMode,
+  ProductInventoryDeductMode,
+  ProductPublishMode,
+  ProductRatingGrade,
+  ProductReturnsFreightBy,
+  ProductSource,
+  ProductStatus,
+  ProductType,
+  YesOrNo,
 } from '@xiaoshop/shared'
 import { example } from './example'
 
@@ -31,13 +31,13 @@ export class ProductResponse {
   readonly uuid: string
 
   @ApiProperty({ description: '商品类型', example: example.type })
-  readonly type: IProductType
+  readonly type: ProductType
 
   @ApiProperty({ description: '商品状态', example: example.status })
-  readonly status: IProductStatus
+  readonly status: ProductStatus
 
   @ApiProperty({ description: '商品来源', example: example.source })
-  readonly source: IProductSource
+  readonly source: ProductSource
 
   @ApiProperty({ description: '商品 SKU', example: example.skus })
   readonly skus: IProductSkuInfo[]
@@ -94,10 +94,10 @@ export class ProductResponse {
   readonly inventory: number
 
   @ApiProperty({ description: '是否启用会员折扣', example: example.enableVipDiscount })
-  readonly enableVipDiscount: IYesOrNo
+  readonly enableVipDiscount: YesOrNo
 
   @ApiProperty({ description: '是否启用限购', example: example.enablePurchaseLimits })
-  readonly enablePurchaseLimits: IYesOrNo
+  readonly enablePurchaseLimits: YesOrNo
 
   @ApiProperty({ description: '限购数量', example: example.purchaseMaxQty })
   readonly purchaseMaxQty: number
@@ -106,13 +106,13 @@ export class ProductResponse {
   readonly purchaseMinQty: number
 
   @ApiProperty({ description: '库存扣减方式', example: example.inventoryDeductMode })
-  readonly inventoryDeductMode: IProductInventoryDeductMode
+  readonly inventoryDeductMode: ProductInventoryDeductMode
 
   @ApiProperty({ description: '发货方式', example: example.deliveryMethods })
-  readonly deliveryMethods: ILogisticsDeliveryMethod[]
+  readonly deliveryMethods: LogisticsDeliveryMethod[]
 
   @ApiProperty({ description: '运费计算方式', example: example.freightChargeMode })
-  readonly freightChargeMode: IProductFreightChargeMode
+  readonly freightChargeMode: ProductFreightChargeMode
 
   @ApiProperty({ description: '统一运费', example: example.freight })
   readonly freight: number
@@ -121,16 +121,16 @@ export class ProductResponse {
   readonly freightTemplateId: number
 
   @ApiProperty({ description: '退货运费承担方', example: example.returnsFreightBy })
-  readonly returnsFreightBy: IProductReturnsFreightBy
+  readonly returnsFreightBy: ProductReturnsFreightBy
 
   @ApiProperty({ description: '发布方式', example: example.publishMode })
-  readonly publishMode: IProductPublishMode
+  readonly publishMode: ProductPublishMode
 
   @ApiProperty({ description: '自动上架时间', example: example.autoInStockAt })
   readonly autoInStockAt: string
 
   @ApiProperty({ description: '购买按钮名称类型', example: example.buyBtnNameType })
-  readonly buyBtnNameType: IProductBuyBtnType
+  readonly buyBtnNameType: ProductBuyBtnType
 
   @ApiProperty({ description: '购买按钮名称', example: example.buyBtnName })
   readonly buyBtnName: string
@@ -151,7 +151,7 @@ export class ProductResponse {
   readonly favorites: number
 
   @ApiProperty({ description: '综合评价', example: example.overallGrade })
-  readonly overallGrade: IProductRatingGrade
+  readonly overallGrade: ProductRatingGrade
 
   @ApiProperty({ description: '商品评分', example: example.overallProductScore })
   readonly overallProductScore: number
@@ -163,13 +163,13 @@ export class ProductResponse {
   readonly overallLogisticsScore: number
 
   @ApiProperty({ description: '是否为多规格商品', example: example.isMultiSkus })
-  readonly isMultiSkus: IYesOrNo
+  readonly isMultiSkus: YesOrNo
 
   @ApiProperty({ description: '是否已删除', example: example.isDeleted })
-  readonly isDeleted: IYesOrNo
+  readonly isDeleted: YesOrNo
 
   @ApiProperty({ description: '是否预警', example: example.isWarning })
-  readonly isWarning: IYesOrNo
+  readonly isWarning: YesOrNo
 
   @ApiProperty({ description: '创建时间' })
   readonly createdTime: string

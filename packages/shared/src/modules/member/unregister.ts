@@ -1,7 +1,7 @@
 import type {
-  IMemberSource,
-  IMemberUnregisterStatus,
-} from '@/member/types'
+  MemberSource,
+  MemberUnregisterStatus,
+} from '@/member/constants'
 
 /**
  * 会员注销申请
@@ -18,9 +18,9 @@ export interface IMemberUnregister {
   /**
    * 注销状态
    *
-   * @see {@link IMemberUnregisterStatus}
+   * @see {@link MemberUnregisterStatus}
    */
-  status: IMemberUnregisterStatus
+  status: MemberUnregisterStatus
   /**
    * 会员账号
    */
@@ -40,9 +40,9 @@ export interface IMemberUnregister {
   /**
    * 注销来源
    *
-   * @see {@link IMemberSource}
+   * @see {@link MemberSource}
    */
-  source: IMemberSource
+  source: MemberSource
   /**
    * 申请时间
    */

@@ -1,6 +1,4 @@
 import {
-  type IResourceType,
-  type IYesOrNo,
   ResourceType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -18,9 +16,7 @@ export class ResourceGroupPayload {
 
   @ApiProperty({ enum: ResourceType, description: '素材类型', default: ResourceType.IMAGE })
   @IsEnum(ResourceType, { message: '素材类型不正确' })
-  @IsNotEmpty({ message: '素材类型不允许为空' })
-  @IsString({ message: '素材类型必须为字符串' })
-  readonly type: IResourceType
+  readonly type: ResourceType
 
   @ApiProperty({ description: '分组名称' })
   @MaxLength(32, { message: '分组名称最大长度为 32 位' })
@@ -30,19 +26,13 @@ export class ResourceGroupPayload {
 
   @ApiProperty({ enum: YesOrNo, description: '启用图片压缩', default: YesOrNo.NO })
   @IsEnum(YesOrNo, { message: '启用图片压缩不正确' })
-  @IsNotEmpty({ message: '启用图片压缩不允许为空' })
-  @IsString({ message: '启用图片压缩必须为字符串' })
-  readonly enableCompress: IYesOrNo
+  readonly enableCompress: YesOrNo
 
   @ApiProperty({ enum: YesOrNo, description: '启用图片水印', default: YesOrNo.NO })
   @IsEnum(YesOrNo, { message: '启用图片水印不正确' })
-  @IsNotEmpty({ message: '启用图片水印不允许为空' })
-  @IsString({ message: '启用图片水印必须为字符串' })
-  readonly enableWatermark: IYesOrNo
+  readonly enableWatermark: YesOrNo
 
   @ApiProperty({ enum: YesOrNo, description: '启用图片缩略图', default: YesOrNo.NO })
   @IsEnum(YesOrNo, { message: '启用图片缩略图不正确' })
-  @IsNotEmpty({ message: '启用图片缩略图不允许为空' })
-  @IsString({ message: '启用图片缩略图必须为字符串' })
-  readonly enableThumbnail: IYesOrNo
+  readonly enableThumbnail: YesOrNo
 }

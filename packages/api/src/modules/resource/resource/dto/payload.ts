@@ -1,9 +1,6 @@
-import {
-  type IYesOrNo,
-  YesOrNo,
-} from '@xiaoshop/shared'
+import { YesOrNo } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsNotEmpty, IsNumberString, IsString } from 'class-validator'
+import { IsNumberString } from 'class-validator'
 
 /**
  * 上传素材文件信息 DTO
@@ -28,26 +25,19 @@ export class ResourceUploadFilePayload {
 export class ResourceUploadImageOptionsPayload {
   @ApiProperty({ description: '素材分组 ID', example: 1 })
   @IsNumberString({}, { message: '素材分组 ID 必须为数字' })
-  @IsNotEmpty({ message: '素材分组 ID 不能为空' })
   readonly groupId: number
 
   @ApiProperty({ description: '是否开启压缩', enum: YesOrNo, default: YesOrNo.NO })
-  @IsEnum(YesOrNo, { message: '是否开启压缩 必须为 Y 或 N' })
-  @IsString({ message: '是否开启压缩 必须为 Y 或 N' })
-  @IsNotEmpty({ message: '是否开启压缩 不能为空' })
-  readonly enableCompress: IYesOrNo
+  @IsNumberString({}, { message: '是否开启压缩不正确' })
+  readonly enableCompress: YesOrNo
 
   @ApiProperty({ description: '是否开启缩略图', enum: YesOrNo, default: YesOrNo.NO })
-  @IsEnum(YesOrNo, { message: '是否开启缩略图 必须为 Y 或 N' })
-  @IsString({ message: '是否开启缩略图 必须为 Y 或 N' })
-  @IsNotEmpty({ message: '是否开启缩略图 不能为空' })
-  readonly enableThumbnail: IYesOrNo
+  @IsNumberString({}, { message: '是否开启缩略图不正确' })
+  readonly enableThumbnail: YesOrNo
 
   @ApiProperty({ description: '是否开启水印', enum: YesOrNo, default: YesOrNo.NO })
-  @IsEnum(YesOrNo, { message: '是否开启水印 必须为 Y 或 N' })
-  @IsString({ message: '是否开启水印 必须为 Y 或 N' })
-  @IsNotEmpty({ message: '是否开启水印 不能为空' })
-  readonly enableWatermark: IYesOrNo
+  @IsNumberString({}, { message: '是否开启水印不正确' })
+  readonly enableWatermark: YesOrNo
 }
 
 /**
@@ -56,6 +46,5 @@ export class ResourceUploadImageOptionsPayload {
 export class ResourceUploadVideoOptionsPayload {
   @ApiProperty({ description: '素材分组 ID', example: 1 })
   @IsNumberString({}, { message: '素材分组 ID 必须为数字' })
-  @IsNotEmpty({ message: '素材分组 ID 不能为空' })
   readonly groupId: number
 }

@@ -8,11 +8,11 @@ describe('Resource Module - Group', () => {
   it('Create Group', async () => {
     await useRequest('post', '/resource/group/create')
       .send({
-        type: 'image',
+        type: 1,
         name: 'test',
-        enableCompress: 'N',
-        enableWatermark: 'N',
-        enableThumbnail: 'N',
+        enableCompress: 0,
+        enableWatermark: 0,
+        enableThumbnail: 0,
       })
       .expect(200)
       .then(({ body }) => {
@@ -24,11 +24,11 @@ describe('Resource Module - Group', () => {
     await useRequest('put', '/resource/group/update')
       .query({ id: 1 })
       .send({
-        type: 'image',
+        type: 1,
         name: 'test update',
-        enableCompress: 'N',
-        enableWatermark: 'N',
-        enableThumbnail: 'N',
+        enableCompress: 0,
+        enableWatermark: 0,
+        enableThumbnail: 0,
       })
       .expect(200)
       .then(({ body }) => {
@@ -46,7 +46,7 @@ describe('Resource Module - Group', () => {
 
   it('Fetch Group List', async () => {
     const { body } = await useRequest('get', '/resource/group/list')
-      .query({ type: 'image' })
+      .query({ type: 1 })
       .expect(200)
 
     expect(body.data.length).toEqual(1)
@@ -54,7 +54,7 @@ describe('Resource Module - Group', () => {
 
   it('Fetch Group Root List', async () => {
     const { body } = await useRequest('get', '/resource/group/root/list')
-      .query({ type: 'image' })
+      .query({ type: 1 })
       .expect(200)
 
     expect(body.data.length).toEqual(1)

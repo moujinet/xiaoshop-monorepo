@@ -5,7 +5,7 @@ import type {
   IMemberAddress,
   IMemberAddressListItem,
   IMemberAddressMemberListItem,
-  IYesOrNo,
+  YesOrNo,
 } from '@xiaoshop/shared'
 
 /**
@@ -37,7 +37,7 @@ export class MemberAddressResponse implements IMemberAddress {
   readonly postalCode: string
 
   @ApiProperty({ description: '是否默认 (N:否 Y:是)' })
-  readonly isDefault: IYesOrNo
+  readonly isDefault: YesOrNo
 
   @ApiProperty({ description: '创建时间' })
   readonly createdTime: string

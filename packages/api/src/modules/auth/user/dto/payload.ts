@@ -1,7 +1,5 @@
 import {
   AuthUserStatus,
-  type IAuthUserStatus,
-  type IYesOrNo,
   YesOrNo,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
@@ -50,13 +48,11 @@ export class CreateAuthUserPayload {
 
   @ApiProperty({ description: '是否管理员', enum: YesOrNo, default: YesOrNo.NO })
   @IsEnum(YesOrNo, { message: '是否管理员必须为 YesOrNo 类型' })
-  @IsNotEmpty({ message: '是否管理员不能为空' })
-  readonly isAdmin: IYesOrNo
+  readonly isAdmin: YesOrNo
 
   @ApiProperty({ description: '员工状态', enum: AuthUserStatus, default: AuthUserStatus.NORMAL })
   @IsEnum(AuthUserStatus, { message: '员工状态必须为 AuthUserStatus 类型' })
-  @IsNotEmpty({ message: '员工状态不能为空' })
-  readonly status: IAuthUserStatus
+  readonly status: AuthUserStatus
 }
 
 /**

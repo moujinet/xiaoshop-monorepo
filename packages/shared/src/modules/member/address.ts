@@ -1,7 +1,7 @@
 import type { IMemberAccountInfo } from './account'
 import type {
   ILocationPath,
-  IYesOrNo,
+  YesOrNo,
 } from '~/common'
 
 /**
@@ -47,9 +47,9 @@ export interface IMemberAddress {
   /**
    * 是否默认 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  isDefault: IYesOrNo
+  isDefault: YesOrNo
   /**
    * 创建时间
    */

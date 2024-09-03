@@ -1,7 +1,7 @@
 import type { IMemberCardBadgeStyle, IMemberCardStyle } from './styles'
 import type { IMemberCardPlan } from './plan'
-import type { IMemberCardType } from '@/member/types'
-import type { IYesOrNo } from '~/common'
+import type { MemberCardType } from '@/member/constants'
+import type { YesOrNo } from '~/common'
 
 /**
  * 会员卡信息
@@ -14,21 +14,15 @@ export interface IMemberCard {
   /**
    * 会员卡类型
    *
-   * - `level`: 会员等级
-   * - `custom`: 超级会员卡
-   *
-   * @see {@link IMemberCardType}
+   * @see {@link MemberCardType}
    */
-  type: IMemberCardType
+  type: MemberCardType
   /**
    * 是否启用
    *
-   * - `Y`: 启用
-   * - `N`: 停用
-   *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enable: IYesOrNo
+  enable: YesOrNo
   /**
    * 会员卡标识
    */
@@ -44,21 +38,18 @@ export interface IMemberCard {
   /**
    * 会员卡卡片样式
    *
-   * @simple-json
    * @see {@link IMemberCardStyle}
    */
   cardStyle: IMemberCardStyle
   /**
    * 会员卡徽章样式
    *
-   * @simple-json
    * @see {@link IMemberCardBadgeStyle}
    */
   badgeStyle: IMemberCardBadgeStyle
   /**
    * 会员卡有效期
    *
-   * @simple-json
    * @see {@link IMemberCardPlan}
    */
   plans: IMemberCardPlan[]
@@ -77,9 +68,9 @@ export interface IMemberCard {
   /**
    * 是否包邮 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  freeShipping: IYesOrNo
+  freeShipping: YesOrNo
   /**
    * 开通会员数
    *

@@ -2,8 +2,8 @@ import type {
   IApiPaginationData,
   IMemberAccountChangeLogListItem,
   IMemberAccountChangeLogMemberListItem,
-  IMemberAccountChangeType,
   IMemberAccountKeys,
+  MemberAccountChangeType,
 } from '@xiaoshop/shared'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -149,7 +149,7 @@ export class MemberAccountChangeLogService {
   async create(
     memberId: number,
     key: IMemberAccountKeys,
-    type: IMemberAccountChangeType,
+    type: MemberAccountChangeType,
     value: number,
     reason: string,
   ) {

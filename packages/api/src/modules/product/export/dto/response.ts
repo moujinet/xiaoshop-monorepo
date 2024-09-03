@@ -1,7 +1,6 @@
 import {
   type IProductExport,
   type IProductExportConditions,
-  type IProductExportStatus,
   ProductExportStatus,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
@@ -11,7 +10,7 @@ export class ProductExportResponse implements IProductExport {
   readonly id: number
 
   @ApiProperty({ description: '导出状态', enum: ProductExportStatus, example: ProductExportStatus.PENDING })
-  readonly status: IProductExportStatus
+  readonly status: ProductExportStatus
 
   @ApiProperty({ description: '导出条件', example: { status: 'in-stock' } })
   readonly conditions: IProductExportConditions

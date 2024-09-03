@@ -4,10 +4,10 @@ import type {
   IMemberCardDict,
   IMemberCardPlan,
   IMemberCardStyle,
-  IMemberCardType,
   IMemberCustomCardListItem,
   IMemberLevelCardListItem,
-  IYesOrNo,
+  MemberCardType,
+  YesOrNo,
 } from '@xiaoshop/shared'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { card } from './example'
@@ -20,10 +20,10 @@ export class MemberCardResponse implements IMemberCard {
   readonly id: number
 
   @ApiProperty({ description: '会员卡类型', example: card.type })
-  readonly type: IMemberCardType
+  readonly type: MemberCardType
 
   @ApiProperty({ description: '会员卡状态', example: card.enable })
-  readonly enable: IYesOrNo
+  readonly enable: YesOrNo
 
   @ApiProperty({ description: '会员卡标识', example: card.key })
   readonly key: string
@@ -56,7 +56,7 @@ export class MemberCardResponse implements IMemberCard {
   readonly pointsRatio: number
 
   @ApiProperty({ description: '是否包邮', example: card.freeShipping })
-  readonly freeShipping: IYesOrNo
+  readonly freeShipping: YesOrNo
 
   @ApiProperty({ description: '创建时间' })
   readonly createdTime: string

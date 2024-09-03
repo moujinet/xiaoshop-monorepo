@@ -1,7 +1,5 @@
-import {
-  type IResourceGroup,
-  type IResourceType,
-  type IYesOrNo,
+import type {
+  IResourceGroup,
   ResourceType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -15,8 +13,8 @@ export class ResourceGroup implements IResourceGroup {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: ResourceType.IMAGE, comment: '素材类型' })
-  type: IResourceType
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '素材类型' })
+  type: ResourceType
 
   @Column({ name: 'parent_id', type: 'int', default: 0, unsigned: true, comment: '上级分组 ID' })
   parentId: number
@@ -24,14 +22,14 @@ export class ResourceGroup implements IResourceGroup {
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '分组名称' })
   name: string
 
-  @Column({ name: 'enable_compress', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '启用图片压缩 (N:否 Y:是)' })
-  enableCompress: IYesOrNo
+  @Column({ name: 'enable_compress', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片压缩' })
+  enableCompress: YesOrNo
 
-  @Column({ name: 'enable_watermark', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '启用图片水印 (N:否 Y:是)' })
-  enableWatermark: IYesOrNo
+  @Column({ name: 'enable_watermark', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片水印' })
+  enableWatermark: YesOrNo
 
-  @Column({ name: 'enable_thumbnail', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '启用图片缩略图 (N:否 Y:是)' })
-  enableThumbnail: IYesOrNo
+  @Column({ name: 'enable_thumbnail', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片缩略图' })
+  enableThumbnail: YesOrNo
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', comment: '创建时间' })
   createdTime: string

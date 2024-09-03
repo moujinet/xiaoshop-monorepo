@@ -3,13 +3,13 @@ import type {
   IMemberAccountInfo,
   IMemberAccountListItem,
   IMemberBindingInfo,
-  IMemberGender,
   IMemberGroupDict,
   IMemberLoginInfo,
   IMemberProfile,
-  IMemberSource,
-  IMemberStatus,
   IMemberTagDict,
+  MemberGender,
+  MemberSource,
+  MemberStatus,
 } from '@xiaoshop/shared'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { example } from './example'
@@ -24,10 +24,10 @@ export class MemberProfileResponse implements IMemberProfile {
   readonly id: number
 
   @ApiProperty({ description: '会员状态', example: example.status })
-  readonly status: IMemberStatus
+  readonly status: MemberStatus
 
   @ApiProperty({ description: '注册来源', example: example.source })
-  readonly source: IMemberSource
+  readonly source: MemberSource
 
   @ApiProperty({ description: '会员分组', example: example.group })
   readonly group: IMemberGroupDict
@@ -57,7 +57,7 @@ export class MemberProfileResponse implements IMemberProfile {
   readonly birthday: string
 
   @ApiProperty({ description: '会员性别', example: example.gender })
-  readonly gender: IMemberGender
+  readonly gender: MemberGender
 
   @ApiProperty({ description: '会员地址', example: example.location })
   readonly location: ILocationPath
@@ -127,7 +127,7 @@ export class MemberAccountInfoResponse
  */
 export class MemberAccountListResponse extends MemberAccountInfoResponse implements IMemberAccountListItem {
   @ApiProperty({ description: '注册来源', example: example.source })
-  readonly source: IMemberSource
+  readonly source: MemberSource
 
   @ApiProperty({ description: '会员积分', example: example.points })
   readonly points: number

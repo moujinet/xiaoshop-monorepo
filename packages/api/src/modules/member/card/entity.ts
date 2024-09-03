@@ -1,10 +1,8 @@
-import {
-  type IMemberCard,
-  type IMemberCardBadgeStyle,
-  type IMemberCardPlan,
-  type IMemberCardStyle,
-  type IMemberCardType,
-  type IYesOrNo,
+import type {
+  IMemberCard,
+  IMemberCardBadgeStyle,
+  IMemberCardPlan,
+  IMemberCardStyle,
   MemberCardType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -20,11 +18,11 @@ export class MemberCard implements IMemberCard {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '类型' })
-  type: IMemberCardType
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '类型' })
+  type: MemberCardType
 
-  @Column({ type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否启用' })
-  enable: IYesOrNo
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '是否启用' })
+  enable: YesOrNo
 
   @Column({ type: 'varchar', length: 16, nullable: false, default: '', comment: '标识' })
   key: string
@@ -53,8 +51,8 @@ export class MemberCard implements IMemberCard {
   @Column({ name: 'points_ratio', type: 'float', unsigned: true, default: 0, comment: '获得积分倍率' })
   pointsRatio: number
 
-  @Column({ name: 'free_shipping', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否包邮 (N:否 Y:是)' })
-  freeShipping: IYesOrNo
+  @Column({ name: 'free_shipping', type: 'tinyint', unsigned: true, default: 0, comment: '是否包邮' })
+  freeShipping: YesOrNo
 
   @VirtualColumn({ query: alias => `SELECT COUNT(id) FROM \`shop_member_binding\` WHERE \`card_id\` = ${alias}.id` })
   total: number

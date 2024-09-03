@@ -1,7 +1,7 @@
 import type {
-  IMemberGroupCondKey,
-  IMemberGroupCondOperator,
-} from './types'
+  MemberGroupCondKey,
+  MemberGroupCondOperator,
+} from './constants'
 
 /**
  * 会员群体信息
@@ -50,31 +50,15 @@ export interface IMemberGroupCondition {
   /**
    * 筛选条件标识
    *
-   * - `source`: 注册来源 [web]
-   * - `status`: 会员状态 [normal, blocked]
-   * - `card`: 会员卡 [CardId, cardPlanId]
-   * - `tag`: 会员标签 [tagId]
-   * - `gender`: 会员性别 [male]
-   * - `birthday`: 会员生日 [from, to]
-   * - `created_time`: 注册时间 [from, to]
-   * - `points`: 当前积分 [min, max]
-   * - `exp`: 当前成长值 [min, max]
-   * - `sign_in`: 累计签到数 [min, max]
-   * - `order_count`: 累计订单数 [min, max]
-   * - `order_amount`: 累计订单金额 [min, max]
-   *
-   * @see {@link IMemberGroupCondKey}
+   * @see {@link MemberGroupCondKey}
    */
-  key: IMemberGroupCondKey
+  key: MemberGroupCondKey
   /**
    * 筛选条件运算符
    *
-   * - `in`: 包含
-   * - `not_in`: 不包含
-   *
-   * @see {@link IMemberGroupCondOperator}
+   * @see {@link MemberGroupCondOperator}
    */
-  operator: IMemberGroupCondOperator
+  operator: MemberGroupCondOperator
   /**
    * 筛选条件名
    */

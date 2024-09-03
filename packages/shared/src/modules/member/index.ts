@@ -1,5 +1,4 @@
 export * from './constants'
-export * from './types'
 export * from './account'
 export * from './binding'
 export * from './card'

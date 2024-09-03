@@ -1,6 +1,6 @@
 export const example = {
   key: 'register',
-  enable: 'Y',
+  enable: 1,
   rule: {
     points: 10,
   },

@@ -1,7 +1,4 @@
-import {
-  AuthUserStatus,
-  type IAuthUserStatus,
-} from '@xiaoshop/shared'
+import { AuthUserStatus } from '@xiaoshop/shared'
 import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -39,7 +36,7 @@ export class GetAuthUserPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '员工状态', enum: AuthUserStatus, example: AuthUserStatus.NORMAL })
   @IsEnum(AuthUserStatus, { message: '员工状态必须为 AuthUserStatus 类型' })
   @IsOptional()
-  readonly status: IAuthUserStatus
+  readonly status: AuthUserStatus
 }
 
 /**

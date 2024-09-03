@@ -7,12 +7,12 @@ describe('Resource Module - Resource', () => {
     await truncateTable(['app_resource', 'app_resource_group'])
 
     const defaultGroups = [
-      { name: '设计素材', parentId: 0, type: 'image' },
-      { name: '图标', parentId: 1, type: 'image' },
-      { name: '广告', parentId: 1, type: 'image' },
-      { name: '商品图片', parentId: 0, type: 'image' },
-      { name: '商品主图', parentId: 4, type: 'image' },
-      { name: '商品视频', parentId: 0, type: 'video' },
+      { name: '设计素材', parentId: 0, type: 1 },
+      { name: '图标', parentId: 1, type: 1 },
+      { name: '广告', parentId: 1, type: 1 },
+      { name: '商品图片', parentId: 0, type: 1 },
+      { name: '商品主图', parentId: 4, type: 1 },
+      { name: '商品视频', parentId: 0, type: 2 },
     ]
 
     for (const group of defaultGroups) {
@@ -28,9 +28,9 @@ describe('Resource Module - Resource', () => {
     await useRequest('post', '/resource/upload/image')
       .attach('file', `${basePath}/tmp/image/pass/1.jpg`)
       .field('groupId', 1)
-      .field('enableCompress', 'N')
-      .field('enableThumbnail', 'N')
-      .field('enableWatermark', 'N')
+      .field('enableCompress', 0)
+      .field('enableThumbnail', 0)
+      .field('enableWatermark', 0)
       .expect(200)
       .then(({ body }) => {
         expect(body.data).toBeDefined()
@@ -49,7 +49,7 @@ describe('Resource Module - Resource', () => {
     const { body } = await useRequest('get', '/resource/pages')
       .query({
         groupId: 1,
-        type: 'image',
+        type: 1,
       })
       .expect(200)
 

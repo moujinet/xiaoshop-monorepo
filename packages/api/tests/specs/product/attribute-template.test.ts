@@ -12,7 +12,7 @@ describe('Product Module - Attribute Template', () => {
       .send({
         name: 'test',
         options: [
-          { name: 'test', type: 'text', options: [], defaultValue: [''] },
+          { name: 'test', type: 1, options: [], defaultValue: [''] },
         ],
       })
       .expect(200)
@@ -27,7 +27,7 @@ describe('Product Module - Attribute Template', () => {
       .send({
         name: 'test update',
         options: [
-          { name: 'test', type: 'text', options: [], defaultValue: [''] },
+          { name: 'test', type: 1, options: [], defaultValue: [''] },
         ],
       })
       .expect(200)

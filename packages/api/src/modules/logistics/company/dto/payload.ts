@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 
 /**
  * 创建/更新物流公司 DTO

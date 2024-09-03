@@ -1,7 +1,4 @@
-import {
-  AuthLogType,
-  type IAuthLogType,
-} from '@xiaoshop/shared'
+import { AuthLogType } from '@xiaoshop/shared'
 
 export interface ILogBasedEvent {
   /**
@@ -13,7 +10,7 @@ export interface ILogBasedEvent {
    *
    * @see {@link AuthLogType}
    */
-  authLogType: IAuthLogType
+  authLogType: AuthLogType
   /**
    * 获取系统日志内容
    *
@@ -38,7 +35,7 @@ export abstract class BaseEvent implements ILogBasedEvent {
      *
      * @see {@link AuthLogType}
      */
-    public readonly authLogType: IAuthLogType = AuthLogType.USER,
+    public readonly authLogType: AuthLogType = AuthLogType.USER,
   ) {}
 
   /**

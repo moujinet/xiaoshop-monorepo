@@ -3,10 +3,10 @@ import type {
   IMemberCardStyle,
 } from './card/styles'
 import type {
-  IMemberCardPlanType,
-  IMemberCardType,
-} from '@/member/types'
-import type { IYesOrNo } from '~/common'
+  MemberCardPlanType,
+  MemberCardType,
+} from '@/member/constants'
+import type { YesOrNo } from '~/common'
 
 /**
  * 会员卡 - 绑定信息
@@ -27,9 +27,9 @@ export interface IMemberBinding {
   /**
    * 会员卡类型
    *
-   * @see {@link IMemberCardType}
+   * @see {@link MemberCardType}
    */
-  cardType: IMemberCardType
+  cardType: MemberCardType
   /**
    * 会员卡有效期 ID
    */
@@ -37,9 +37,9 @@ export interface IMemberBinding {
   /**
    * 会员卡有效期类型
    *
-   * @see {@link IMemberCardPlanType}
+   * @see {@link MemberCardPlanType}
    */
-  planType: IMemberCardPlanType
+  planType: MemberCardPlanType
   /**
    * 会员卡标识
    */
@@ -79,15 +79,15 @@ export interface IMemberBinding {
   /**
    * 是否包邮 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  freeShipping: IYesOrNo
+  freeShipping: YesOrNo
   /**
    * 是否可升级 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  upgradeable: IYesOrNo
+  upgradeable: YesOrNo
   /**
    * 会员卡使用次数
    */

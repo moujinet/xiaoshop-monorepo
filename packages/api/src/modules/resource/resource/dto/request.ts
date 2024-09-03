@@ -1,9 +1,8 @@
 import {
-  type IResourceType,
   ResourceType,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, MaxLength } from 'class-validator'
+import { IsNumber, IsNumberString, IsOptional, IsString, MaxLength } from 'class-validator'
 import { PaginationRequest } from '~/common/dto'
 
 /**
@@ -11,10 +10,8 @@ import { PaginationRequest } from '~/common/dto'
  */
 export class GetResourcePagesRequest extends PaginationRequest {
   @ApiProperty({ description: '素材类型', enum: ResourceType, default: ResourceType.IMAGE })
-  @IsEnum(ResourceType, { message: '素材类型 必须为 image 或 video' })
-  @IsNotEmpty({ message: '素材类型 不能为空' })
-  @IsString({ message: '素材类型 必须为 image 或 video' })
-  readonly type: IResourceType
+  @IsNumberString({}, { message: '素材类型不正确' })
+  readonly type: ResourceType
 
   @ApiProperty({ required: false, description: '素材分组 ID', example: 0 })
   @IsNumberString({}, { message: '素材分组 ID 必须为数字' })

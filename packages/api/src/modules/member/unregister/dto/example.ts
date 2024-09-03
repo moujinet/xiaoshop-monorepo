@@ -1,7 +1,7 @@
 export const example = {
   id: 1,
-  status: 'pending',
-  source: 'manual',
+  status: 1,
+  source: 1,
   memberId: 1,
   username: '张三',
   nickname: '张三',

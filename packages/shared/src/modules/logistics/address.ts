@@ -1,7 +1,7 @@
-import type { ILogisticAddressType } from './types'
+import type { LogisticAddressType } from './constants'
 import type {
   ILocationPath,
-  IYesOrNo,
+  YesOrNo,
 } from '~/common'
 
 /**
@@ -15,12 +15,9 @@ export interface ILogisticsAddress {
   /**
    * 地址类型
    *
-   * - `send`: 发货地址
-   * - `receive`: 收货地址
-   *
-   * @see {@link ILogisticAddressType}
+   * @see {@link LogisticAddressType}
    */
-  type: ILogisticAddressType
+  type: LogisticAddressType
   /**
    * 联系人
    */
@@ -46,9 +43,12 @@ export interface ILogisticsAddress {
   /**
    * 是否默认 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * - `NO`: 否
+   * - `YES`: 是
+   *
+   * @see {@link YesOrNo}
    */
-  isDefault: IYesOrNo
+  isDefault: YesOrNo
   /**
    * 创建时间
    */

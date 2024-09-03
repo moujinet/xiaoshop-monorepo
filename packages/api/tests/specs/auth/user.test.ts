@@ -1,3 +1,4 @@
+import { AuthUserStatus } from '@xiaoshop/shared'
 import { runSQL, truncateTable, useRequest } from '~~/tests/utils'
 
 describe('Auth Module - User', () => {
@@ -30,8 +31,8 @@ describe('Auth Module - User', () => {
         roleIds: [1],
         departmentId: 1,
         positionId: 1,
-        isAdmin: 'N',
-        status: 'normal',
+        isAdmin: 0,
+        status: 1,
       })
       .expect(200)
       .then(({ body }) => {
@@ -49,8 +50,8 @@ describe('Auth Module - User', () => {
         roleIds: [1, 2],
         departmentId: 2,
         positionId: 2,
-        isAdmin: 'N',
-        status: 'normal',
+        isAdmin: 0,
+        status: 1,
       })
       .expect(200)
       .then(({ body }) => {
@@ -86,7 +87,7 @@ describe('Auth Module - User', () => {
       .query({ id: 1 })
       .expect(200)
 
-    expect(body.data.status).toEqual('blocked')
+    expect(body.data.status).toEqual(AuthUserStatus.BLOCKED)
   })
 
   it('Unblock User', async () => {
@@ -98,7 +99,7 @@ describe('Auth Module - User', () => {
       .query({ id: 1 })
       .expect(200)
 
-    expect(body.data.status).toEqual('normal')
+    expect(body.data.status).toEqual(AuthUserStatus.NORMAL)
   })
 
   it('Fetch User Pages', async () => {

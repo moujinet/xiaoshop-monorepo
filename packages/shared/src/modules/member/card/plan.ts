@@ -1,4 +1,4 @@
-import type { IMemberCardPlanType } from '@/member/types'
+import type { MemberCardPlanType } from '@/member/constants'
 
 /**
  * 会员卡 - 有效期
@@ -11,9 +11,9 @@ export interface IMemberCardPlan {
   /**
    * 会员卡套餐类型
    *
-   * @see {@link IMemberCardPlanType}
+   * @see {@link MemberCardPlanType}
    */
-  type: IMemberCardPlanType
+  type: MemberCardPlanType
   /**
    * 会员卡套餐有效期
    */

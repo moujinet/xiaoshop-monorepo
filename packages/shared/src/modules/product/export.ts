@@ -1,9 +1,9 @@
 import type {
-  IProductExportStatus,
-  IProductSource,
-  IProductStatus,
-  IProductType,
-} from './types'
+  ProductExportStatus,
+  ProductSource,
+  ProductStatus,
+  ProductType,
+} from './constants'
 
 /**
  * 商品导出记录
@@ -16,9 +16,9 @@ export interface IProductExport {
   /**
    * 导出状态
    *
-   * @see {@link IProductExportStatus}
+   * @see {@link ProductExportStatus}
    */
-  status: IProductExportStatus
+  status: ProductExportStatus
   /**
    * 导出条件
    *
@@ -46,21 +46,21 @@ export interface IProductExportConditions {
   /**
    * 商品类型
    *
-   * @see {@link IProductType}
+   * @see {@link ProductType}
    */
-  type: IProductType
+  type: ProductType
   /**
    * 商品状态
    *
-   * @see {@link IProductStatus}
+   * @see {@link ProductStatus}
    */
-  status: IProductStatus
+  status: ProductStatus
   /**
    * 商品来源
    *
-   * @see {@link IProductSource}
+    @see {@link ProductSource}
    */
-  source: IProductSource
+  source: ProductSource
   /**
    * 商品分类
    */

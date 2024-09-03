@@ -1,19 +1,15 @@
 /**
  * 全局定义 - 是否 - 枚举
  *
+ * - `NO`: 否
+ * - `YES`: 是
+ *
  * @see {@link IYesOrNo}
  */
 export enum YesOrNo {
-  YES = 'Y',
-  NO = 'N',
+  NO,
+  YES,
 }
-
-/**
- * 全局定义 - 是否
- *
- * @see {@link YesOrNo}
- */
-export type IYesOrNo = `${YesOrNo}`
 
 /**
  * 全局定义 - 颜色 - 枚举

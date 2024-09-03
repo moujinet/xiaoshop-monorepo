@@ -1,8 +1,8 @@
 import {
   type IMemberPointsRuleKey,
   type IMemberPointsRuleOptions,
-  type IYesOrNo,
   MEMBER_POINTS_RULE_KEYS,
+  YesOrNo,
 } from '@xiaoshop/shared'
 import { BaseEvent } from '~/common/events'
 
@@ -32,7 +32,7 @@ export class MemberPointsRuleUpdatedEvent extends BaseEvent {
 export class MemberPointsRuleStatusUpdatedEvent extends BaseEvent {
   constructor(
     public readonly key: IMemberPointsRuleKey,
-    public readonly enable: IYesOrNo,
+    public readonly enable: YesOrNo,
   ) {
     super('会员积分')
   }
@@ -42,6 +42,6 @@ export class MemberPointsRuleStatusUpdatedEvent extends BaseEvent {
       ({ value }) => value === this.key,
     )?.label
 
-    return `更新会员积分规则 ${ruleName} 状态 - ${this.enable === 'Y' ? '启用' : '禁用'}`
+    return `更新会员积分规则 ${ruleName} 状态 - ${this.enable === YesOrNo.YES ? '启用' : '禁用'}`
   }
 }

@@ -1,6 +1,4 @@
-import type {
-  IProductAttributeTemplateOptionType,
-} from './types'
+import type { ProductAttributeTemplateOptionType } from './constants'
 
 /**
  * 商品参数信息
@@ -59,13 +57,9 @@ export interface IProductAttributeTemplateOption {
   /**
    * 选项类型
    *
-   * - `text`: 文本
-   * - `radio`: 单选
-   * - `checkbox`: 多选
-   *
-   * @see {@link IProductAttributeTemplateOptionType}
+   * @see {@link ProductAttributeTemplateOptionType}
    */
-  type: IProductAttributeTemplateOptionType
+  type: ProductAttributeTemplateOptionType
   /**
    * 选项值
    */

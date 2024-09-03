@@ -1,10 +1,10 @@
 export const example = {
-  type: 'user',
+  type: 1,
   userId: 1,
   user: {
     name: '员工姓名',
-    status: 'normal',
-    isAdmin: 'N',
+    status: 1,
+    isAdmin: 0,
   },
   module: '权限管理',
   content: '日志内容',

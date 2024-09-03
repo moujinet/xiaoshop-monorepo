@@ -2,11 +2,9 @@ import {
   AuthUserStatus,
   type IAuthRolePermissions,
   type IAuthUserProfile,
-  type IAuthUserStatus,
   type IAuthUserToken,
   type IOrganizeDepartmentDict,
   type IOrganizePositionDict,
-  type IYesOrNo,
   YesOrNo,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
@@ -23,10 +21,10 @@ export class AuthUserResponse implements IAuthUserProfile {
   readonly id: number
 
   @ApiProperty({ description: '是否管理员', enum: YesOrNo, default: YesOrNo.NO })
-  readonly isAdmin: IYesOrNo
+  readonly isAdmin: YesOrNo
 
   @ApiProperty({ description: '员工状态', enum: AuthUserStatus, default: AuthUserStatus.NORMAL })
-  readonly status: IAuthUserStatus
+  readonly status: AuthUserStatus
 
   @ApiProperty({ type: [AuthRolePermissionsResponse], description: '员工角色' })
   readonly roles: IAuthRolePermissions[]

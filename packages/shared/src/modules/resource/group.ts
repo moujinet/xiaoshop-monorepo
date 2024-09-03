@@ -1,5 +1,5 @@
-import type { IResourceType } from './types'
-import type { IYesOrNo } from '~/common'
+import type { ResourceType } from './constants'
+import type { YesOrNo } from '~/common'
 
 /**
  * 素材分组
@@ -16,12 +16,9 @@ export interface IResourceGroup {
   /**
    * 分组类型
    *
-   * - `image`: 图片
-   * - `video`: 视频
-   *
-   * @see {@link IResourceType}
+   * @see {@link ResourceType}
    */
-  type: IResourceType
+  type: ResourceType
   /**
    * 分组名称
    */
@@ -29,22 +26,22 @@ export interface IResourceGroup {
   /**
    * 是否启用压缩 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableCompress: IYesOrNo
+  enableCompress: YesOrNo
   /**
    * 是否启用水印 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableWatermark: IYesOrNo
+  enableWatermark: YesOrNo
   /**
    * s
    * 是否启用缩略图 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableThumbnail: IYesOrNo
+  enableThumbnail: YesOrNo
   /**
    * 创建时间
    */

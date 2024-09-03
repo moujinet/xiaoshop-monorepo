@@ -1,9 +1,9 @@
-import {
-  type ILocationPath,
-  type IMemberAccount,
-  type IMemberGender,
-  type IMemberSource,
-  type IMemberStatus,
+import type {
+  ILocationPath,
+  IMemberAccount,
+  IMemberBinding,
+  IMemberGroup,
+  IMemberTag,
   MemberGender,
   MemberSource,
   MemberStatus,
@@ -21,31 +21,31 @@ export class MemberAccount implements IMemberAccount {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberStatus.NORMAL, comment: '状态' })
-  status: IMemberStatus
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '状态' })
+  status: MemberStatus
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberSource.WECHAT_MP, comment: '来源' })
-  source: IMemberSource
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '来源' })
+  source: MemberSource
 
   @Column({ name: 'group_id', type: 'int', unsigned: true, default: 0, comment: '群体 ID' })
   groupId: number
 
   @OneToOne(() => MemberGroup, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'group_id' })
-  group: MemberGroup
+  group: IMemberGroup
 
   @ManyToMany(() => MemberTag, { createForeignKeyConstraints: false })
   @JoinTable({ name: 'shop_member_has_tags', joinColumn: { name: 'member_id' }, inverseJoinColumn: { name: 'tag_id' } })
-  tags: MemberTag[]
+  tags: IMemberTag[]
 
   @Column({ name: 'card_id', type: 'int', unsigned: true, default: 0, comment: '会员绑定 ID' })
   cardId: number
 
   @OneToOne(() => MemberBinding, { cascade: true, createForeignKeyConstraints: false })
   @JoinColumn({ name: 'card_id' })
-  card: MemberBinding
+  card: IMemberBinding
 
-  @Column({ name: 'card_no', type: 'varchar', length: 16, nullable: false, default: '', comment: '会员卡号' })
+  @Column({ name: 'card_no', type: 'char', length: 16, nullable: false, default: '', comment: '会员卡号' })
   cardNo: string
 
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '会员头像' })
@@ -69,8 +69,8 @@ export class MemberAccount implements IMemberAccount {
   @Column({ type: 'date', default: null, comment: '会员生日' })
   birthday: string
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberGender.UNKNOWN, comment: '会员性别' })
-  gender: IMemberGender
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '会员性别' })
+  gender: MemberGender
 
   @Column({ type: 'simple-json', default: null, comment: '注册城市' })
   location: ILocationPath

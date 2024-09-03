@@ -35,8 +35,8 @@ describe('Product Module - Product', () => {
   it('Create Product', async () => {
     await useRequest('post', '/product/create')
       .send({
-        type: 'entity',
-        source: 'manual',
+        type: 1,
+        source: 1,
         skus: [
           {
             skuCode: 'test code 1',
@@ -82,19 +82,19 @@ describe('Product Module - Product', () => {
         ],
         commitmentIds: [1],
         additionIds: [1],
-        enableVipDiscount: 'Y',
-        enablePurchaseLimits: 'Y',
+        enableVipDiscount: 1,
+        enablePurchaseLimits: 1,
         purchaseMaxQty: 10,
         purchaseMinQty: 1,
-        inventoryDeductMode: 'order',
-        deliveryMethods: ['express'],
-        freightChargeMode: 'template',
+        inventoryDeductMode: 1,
+        deliveryMethods: [1],
+        freightChargeMode: 1,
         freightTemplateId: 1,
         freight: 0,
-        returnsFreightBy: 'buyer',
-        publishMode: 'stocked',
-        autoInStockAt: '',
-        buyBtnNameType: 'custom',
+        returnsFreightBy: 1,
+        publishMode: 2,
+        autoInStockAt: '2022-01-01T00:00:00.000Z',
+        buyBtnNameType: 2,
         buyBtnName: 'Buy Now',
         detail: 'test detail',
         sort: 100,
@@ -109,8 +109,8 @@ describe('Product Module - Product', () => {
     await useRequest('put', '/product/update')
       .query({ id: 1 })
       .send({
-        type: 'entity',
-        source: 'manual',
+        type: 1,
+        source: 1,
         skus: [
           {
             id: 1,
@@ -172,19 +172,19 @@ describe('Product Module - Product', () => {
         ],
         commitmentIds: [1, 2],
         additionIds: [1, 2],
-        enableVipDiscount: 'Y',
-        enablePurchaseLimits: 'Y',
+        enableVipDiscount: 1,
+        enablePurchaseLimits: 1,
         purchaseMaxQty: 10,
         purchaseMinQty: 1,
-        inventoryDeductMode: 'order',
-        deliveryMethods: ['express'],
-        freightChargeMode: 'template',
+        inventoryDeductMode: 1,
+        deliveryMethods: [1],
+        freightChargeMode: 1,
         freightTemplateId: 1,
         freight: 0,
-        returnsFreightBy: 'buyer',
-        publishMode: 'stocked',
-        autoInStockAt: '',
-        buyBtnNameType: 'custom',
+        returnsFreightBy: 1,
+        publishMode: 2,
+        autoInStockAt: '2022-01-01T00:00:00.000Z',
+        buyBtnNameType: 2,
         buyBtnName: 'Buy Now',
         detail: 'test detail',
         sort: 100,
@@ -218,8 +218,8 @@ describe('Product Module - Product', () => {
       .send({
         ids: [1, 2],
         data: {
-          enableVipDiscount: 'Y',
-          enablePurchaseLimits: 'Y',
+          enableVipDiscount: 1,
+          enablePurchaseLimits: 1,
           purchaseMaxQty: 10,
           purchaseMinQty: 1,
           categoryIds: [1],
@@ -237,7 +237,7 @@ describe('Product Module - Product', () => {
     await useRequest('put', '/product/status/batch/update')
       .send({
         ids: [1, 2],
-        status: 'draft',
+        status: 4,
       })
       .expect(200)
       .then(({ body }) => {
@@ -246,8 +246,7 @@ describe('Product Module - Product', () => {
   })
 
   it('Fetch Product Pages', async () => {
-    const { body } = await useRequest('get', '/product/pages')
-      .expect(200)
+    const { body } = await useRequest('get', '/product/pages').expect(200)
 
     expect(body.data.total).toEqual(2)
     expect(body.data.result[0].categories.length).toEqual(1)
@@ -274,7 +273,7 @@ describe('Product Module - Product', () => {
 
   it('Fetch Product Pages After Soft Delete', async () => {
     const { body } = await useRequest('get', '/product/pages')
-      .query({ isDeleted: 'Y' })
+      .query({ isDeleted: 1 })
       .expect(200)
 
     expect(body.data.total).toEqual(2)
@@ -292,8 +291,7 @@ describe('Product Module - Product', () => {
   })
 
   it('Fetch Product Pages After Restore Delete', async () => {
-    const { body } = await useRequest('get', '/product/pages')
-      .expect(200)
+    const { body } = await useRequest('get', '/product/pages').expect(200)
 
     expect(body.data.total).toEqual(1)
   })
@@ -311,7 +309,7 @@ describe('Product Module - Product', () => {
 
   it('Fetch Product Pages After Real Delete', async () => {
     const { body } = await useRequest('get', '/product/pages')
-      .query({ isDeleted: 'Y' })
+      .query({ isDeleted: 1 })
       .expect(200)
 
     expect(body.data.total).toEqual(0)

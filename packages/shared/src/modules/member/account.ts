@@ -1,8 +1,8 @@
 import type {
-  IMemberGender,
-  IMemberSource,
-  IMemberStatus,
-} from './types'
+  MemberGender,
+  MemberSource,
+  MemberStatus,
+} from './constants'
 import type { IMemberTagDict } from './tag'
 import type { IMemberGroupDict } from './group'
 import type { IMemberBindingInfo } from './binding'
@@ -19,19 +19,15 @@ export interface IMemberAccount {
   /**
    * 会员状态
    *
-   * - `normal`: 正常
-   * - `locked`: 锁定
-   * - `blocked`: 冻结
-   *
-   * @see {@link IMemberStatus}
+   * @see {@link MemberStatus}
    */
-  status: IMemberStatus
+  status: MemberStatus
   /**
    * 注册来源
    *
-   * @see {@link IMemberSource}
+   * @see {@link MemberSource}
    */
-  source: IMemberSource
+  source: MemberSource
   /**
    * 会员标签
    *
@@ -93,9 +89,9 @@ export interface IMemberAccount {
   /**
    * 会员性别
    *
-   * @see {@link IMemberGender}
+   * @see {@link MemberGender}
    */
-  gender: IMemberGender
+  gender: MemberGender
   /**
    * 注册城市
    *

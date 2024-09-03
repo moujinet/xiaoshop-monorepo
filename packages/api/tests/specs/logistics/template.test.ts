@@ -1,3 +1,4 @@
+import { LogisticsCalcMode } from '@xiaoshop/shared'
 import { truncateTable, useRequest } from '~~/tests/utils'
 
 describe('Logistics Module - Template', () => {
@@ -9,7 +10,7 @@ describe('Logistics Module - Template', () => {
     await useRequest('post', '/logistics/template/create')
       .send({
         name: 'test 1',
-        calcMode: 'count',
+        calcMode: LogisticsCalcMode.COUNT,
         rules: [
           {
             locations: [[{ code: '11', name: '北京市' }]],
@@ -19,7 +20,7 @@ describe('Logistics Module - Template', () => {
             continuePrice: 5,
           },
         ],
-        enableFreeRules: 'N',
+        enableFreeRules: 0,
       })
       .expect(200)
       .then(({ body }) => {
@@ -29,7 +30,7 @@ describe('Logistics Module - Template', () => {
     await useRequest('post', '/logistics/template/create')
       .send({
         name: 'test 2',
-        calcMode: 'count',
+        calcMode: LogisticsCalcMode.COUNT,
         rules: [
           {
             locations: [[{ code: '11', name: '北京市' }]],
@@ -39,7 +40,7 @@ describe('Logistics Module - Template', () => {
             continuePrice: 5,
           },
         ],
-        enableFreeRules: 'Y',
+        enableFreeRules: 1,
         freeRules: [
           {
             locations: [[{ code: '11', name: '北京市' }]],
@@ -59,7 +60,7 @@ describe('Logistics Module - Template', () => {
       .query({ id: 1 })
       .send({
         name: 'test 1 update',
-        calcMode: 'weight',
+        calcMode: LogisticsCalcMode.WEIGHT,
         rules: [
           {
             locations: [[{ code: '11', name: '北京市' }]],
@@ -69,7 +70,7 @@ describe('Logistics Module - Template', () => {
             continuePrice: 5,
           },
         ],
-        enableFreeRules: 'Y',
+        enableFreeRules: 1,
         freeRules: [
           {
             locations: [[{ code: '11', name: '北京市' }]],
@@ -77,6 +78,10 @@ describe('Logistics Module - Template', () => {
             overAmount: 100,
           },
         ],
+      })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.code).toEqual(0)
       })
   })
 
@@ -86,8 +91,8 @@ describe('Logistics Module - Template', () => {
       .expect(200)
 
     expect(body.data.name).toEqual('test 1 update')
-    expect(body.data.calcMode).toEqual('weight')
-    expect(body.data.enableFreeRules).toEqual('Y')
+    expect(body.data.calcMode).toEqual(LogisticsCalcMode.WEIGHT)
+    expect(body.data.enableFreeRules).toEqual(1)
     expect(body.data.freeRules.length).toEqual(1)
   })
 

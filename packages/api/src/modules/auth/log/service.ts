@@ -2,13 +2,12 @@ import {
   AuthLogType,
   type IApiPaginationData,
   type IAuthLog,
-  type IAuthLogType,
   type IAuthUserProfile,
 } from '@xiaoshop/shared'
-import { ClsService } from 'nestjs-cls'
 import { UAParser } from 'ua-parser-js'
-import { Inject, Injectable } from '@nestjs/common'
+import { ClsService } from 'nestjs-cls'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Inject, Injectable } from '@nestjs/common'
 import { Between, FindOptionsWhere, Like, Repository } from 'typeorm'
 import { AuthLog } from '@/auth/log/entity'
 import { GetAuthLogPagesRequest } from '@/auth/log/dto'
@@ -118,7 +117,7 @@ export class AuthLogService {
    * @throws {FailedException} 写入员工日志失败
    */
   async writeLog(
-    type: IAuthLogType,
+    type: AuthLogType,
     module: string,
     content: string,
     userId: number = 0,

@@ -1,6 +1,4 @@
 import {
-  type IMemberGroupCondKey,
-  type IMemberGroupCondOperator,
   type IMemberGroupCondition,
   MemberGroupCondKey,
   MemberGroupCondOperator,
@@ -16,13 +14,11 @@ import { example } from './example'
 export class MemberGroupConditionPayload implements IMemberGroupCondition {
   @ApiProperty({ description: '会员群体条件标识', enum: MemberGroupCondKey, example: example.conditions[0].key })
   @IsEnum(MemberGroupCondKey, { message: '会员群体条件标识不正确' })
-  @IsNotEmpty({ message: '会员群体条件标识不能为空' })
-  readonly key: IMemberGroupCondKey
+  readonly key: MemberGroupCondKey
 
   @ApiProperty({ description: '会员群体条件运算符', enum: MemberGroupCondOperator, example: example.conditions[0].operator })
   @IsEnum(MemberGroupCondOperator, { message: '会员群体条件运算符不正确' })
-  @IsNotEmpty({ message: '会员群体条件运算符不能为空' })
-  readonly operator: IMemberGroupCondOperator
+  readonly operator: MemberGroupCondOperator
 
   @ApiProperty({ description: '会员群体条件名', example: example.conditions[0].name })
   @IsString({ message: '会员群体条件名称必须为字符串' })

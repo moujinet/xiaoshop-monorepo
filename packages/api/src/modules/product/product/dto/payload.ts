@@ -1,16 +1,6 @@
 import {
-  type ILogisticsDeliveryMethod,
   type IProductAttribute,
-  type IProductBuyBtnType,
-  type IProductFreightChargeMode,
-  type IProductInventoryDeductMode,
-  type IProductPublishMode,
-  type IProductReturnsFreightBy,
   type IProductSkuAttribute,
-  type IProductSource,
-  type IProductStatus,
-  type IProductType,
-  type IYesOrNo,
   LogisticsDeliveryMethod,
   ProductBuyBtnType,
   ProductFreightChargeMode,
@@ -118,14 +108,14 @@ export class ProductSkuPayload {
 
 export class ProductPayload {
   @ApiProperty({ required: false, description: '商品类型', enum: ProductType, example: example.type })
-  @IsEnum(ProductType, { message: '商品类型不正确' })
+  @IsNumber({}, { message: '商品类型不正确' })
   @IsOptional()
-  readonly type?: IProductType
+  readonly type?: ProductType
 
   @ApiProperty({ required: false, description: '商品来源', enum: ProductSource, example: example.source })
-  @IsEnum(ProductSource, { message: '商品来源不正确' })
+  @IsNumber({}, { message: '商品来源不正确' })
   @IsOptional()
-  readonly source?: IProductSource
+  readonly source?: ProductSource
 
   @ApiProperty({ type: [ProductSkuPayload], description: '商品 SKU', example: example.skus })
   @ValidateNested({ message: '商品 SKU 信息格式不正确' })
@@ -205,14 +195,14 @@ export class ProductPayload {
   readonly additionIds?: number[]
 
   @ApiProperty({ required: false, description: '是否开启会员折扣', enum: YesOrNo, example: example.enableVipDiscount })
-  @IsEnum(YesOrNo, { message: '是否开启会员折扣格式不正确' })
+  @IsNumber({}, { message: '是否开启会员折扣格式不正确' })
   @IsOptional()
-  readonly enableVipDiscount?: IYesOrNo
+  readonly enableVipDiscount?: YesOrNo
 
   @ApiProperty({ required: false, description: '是否开启限购', enum: YesOrNo, example: example.enablePurchaseLimits })
-  @IsEnum(YesOrNo, { message: '是否开启限购格式不正确' })
+  @IsNumber({}, { message: '是否开启限购格式不正确' })
   @IsOptional()
-  readonly enablePurchaseLimits?: IYesOrNo
+  readonly enablePurchaseLimits?: YesOrNo
 
   @ApiProperty({ required: false, description: '限购数量', example: example.purchaseMaxQty })
   @ValidateIf(o => o.purchaseMaxQty === YesOrNo.YES)
@@ -226,20 +216,20 @@ export class ProductPayload {
   readonly purchaseMinQty: number
 
   @ApiProperty({ required: false, description: '库存扣减模式', enum: ProductInventoryDeductMode, example: example.inventoryDeductMode })
-  @IsEnum(ProductInventoryDeductMode, { message: '库存扣减模式不正确' })
+  @IsNumber({}, { message: '库存扣减模式不正确' })
   @IsOptional()
-  readonly inventoryDeductMode: IProductInventoryDeductMode
+  readonly inventoryDeductMode: ProductInventoryDeductMode
 
   @ApiProperty({ description: '发货方式', example: example.deliveryMethods })
-  @IsEnum(LogisticsDeliveryMethod, { each: true, message: '发货方式格式不正确' })
+  @IsNumber({}, { each: true, message: '发货方式格式不正确' })
   @IsArray({ message: '发货方式必须为数组' })
   @ArrayNotEmpty({ message: '发货方式不能为空' })
-  readonly deliveryMethods: ILogisticsDeliveryMethod[]
+  readonly deliveryMethods: LogisticsDeliveryMethod[]
 
   @ApiProperty({ required: false, description: '运费计算方式', enum: ProductFreightChargeMode, example: example.freightChargeMode })
-  @IsEnum(ProductFreightChargeMode, { message: '运费计算方式不正确' })
+  @IsNumber({}, { message: '运费计算方式不正确' })
   @IsOptional()
-  readonly freightChargeMode: IProductFreightChargeMode
+  readonly freightChargeMode: ProductFreightChargeMode
 
   @ApiProperty({ required: false, description: '统一运费', example: example.freight })
   @ValidateIf(o => o.freightChargeMode === ProductFreightChargeMode.STD)
@@ -254,14 +244,14 @@ export class ProductPayload {
   readonly freightTemplateId?: number
 
   @ApiProperty({ required: false, description: '退货运费承担方', enum: ProductReturnsFreightBy, example: example.returnsFreightBy })
-  @IsEnum(ProductReturnsFreightBy, { message: '退货运费承担方不正确' })
+  @IsNumber({}, { message: '退货运费承担方不正确' })
   @IsOptional()
-  readonly returnsFreightBy?: IProductReturnsFreightBy
+  readonly returnsFreightBy?: ProductReturnsFreightBy
 
   @ApiProperty({ required: false, description: '发布方式', enum: ProductPublishMode, example: example.publishMode })
-  @IsEnum(ProductPublishMode, { message: '发布方式不正确' })
+  @IsNumber({}, { message: '发布方式不正确' })
   @IsOptional()
-  readonly publishMode?: IProductPublishMode
+  readonly publishMode?: ProductPublishMode
 
   @ApiProperty({ required: false, description: '自动上架时间', example: example.autoInStockAt })
   @ValidateIf(o => o.publishMode === ProductPublishMode.AUTO)
@@ -270,9 +260,9 @@ export class ProductPayload {
   readonly autoInStockAt?: string
 
   @ApiProperty({ required: false, description: '商品购买按钮类型', enum: ProductBuyBtnType, example: example.buyBtnNameType })
-  @IsEnum(ProductBuyBtnType, { message: '商品购买按钮类型不正确' })
+  @IsNumber({}, { message: '商品购买按钮类型不正确' })
   @IsOptional()
-  readonly buyBtnNameType?: IProductBuyBtnType
+  readonly buyBtnNameType?: ProductBuyBtnType
 
   @ApiProperty({ required: false, description: '购买按钮名称', example: example.buyBtnName })
   @ValidateIf(o => o.buyBtnNameType === ProductBuyBtnType.CUSTOM)
@@ -340,5 +330,5 @@ export class BatchUpdateProductStatusPayload {
   @ApiProperty({ required: false, description: '商品状态', enum: ProductStatus, example: example.status })
   @IsEnum(ProductStatus, { message: '商品状态不正确' })
   @IsOptional()
-  readonly status?: IProductStatus
+  readonly status?: ProductStatus
 }

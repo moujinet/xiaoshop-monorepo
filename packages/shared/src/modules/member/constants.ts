@@ -1,3 +1,5 @@
+import { ColorName } from '~/common'
+
 // --------------------------------
 // 会员默认密码
 // --------------------------------
@@ -14,24 +16,22 @@ export const MEMBER_DEFAULT_PASSWORD = '123456'
  * - `NORMAL`: 正常
  * - `LOCKED`: 锁定
  * - `BLOCKED`: 冻结
- *
- * @see {@link IMemberStatus}
  */
 export enum MemberStatus {
-  NORMAL = 'normal',
-  LOCKED = 'locked',
-  BLOCKED = 'blocked',
+  NORMAL = 1,
+  LOCKED,
+  BLOCKED,
 }
 
 /**
  * 会员状态 - 字典
  *
- * @see {@link IMemberStatus}
+ * @see {@link MemberStatus}
  */
 export const MEMBER_STATUSES = [
-  { label: '正常', value: MemberStatus.NORMAL, color: 'green' },
-  { label: '锁定', value: MemberStatus.LOCKED, color: 'red' },
-  { label: '冻结', value: MemberStatus.BLOCKED, color: 'gray' },
+  { label: '正常', value: MemberStatus.NORMAL, color: ColorName.GREEN },
+  { label: '锁定', value: MemberStatus.LOCKED, color: ColorName.RED },
+  { label: '冻结', value: MemberStatus.BLOCKED, color: ColorName.GRAY },
 ]
 
 // --------------------------------
@@ -48,32 +48,30 @@ export const MEMBER_STATUSES = [
  * - `WEB`: 网页端
  * - `APP_ANDROID`: Android APP
  * - `APP_IOS`: iOS APP
- *
- * @see {@link IMemberSource}
  */
 export enum MemberSource {
-  WECHAT_MP = 'wechat_mp',
-  WECHAT_OA = 'wechat_oa',
-  H5 = 'h5',
-  MANUAL = 'manual',
-  WEB = 'web',
-  APP_ANDROID = 'android',
-  APP_IOS = 'ios',
+  WECHAT_MP = 1,
+  WECHAT_OA,
+  H5,
+  MANUAL,
+  WEB,
+  APP_ANDROID,
+  APP_IOS,
 }
 
 /**
  * 会员注册来源 - 字典
  *
- * @see {@link IMemberSource}
+ * @see {@link MemberSource}
  */
 export const MEMBER_SOURCES = [
-  { label: '微信小程序', value: MemberSource.WECHAT_MP, color: 'gray', icon: 'mingcute:wechat-miniprogram' },
-  { label: '微信公众号', value: MemberSource.WECHAT_OA, color: 'green', icon: 'mingcute:wechat' },
-  { label: '手机端', value: MemberSource.H5, color: 'blue', icon: 'mingcute:cellphone' },
-  { label: '后台创建', value: MemberSource.MANUAL, color: 'blue', icon: 'mingcute:layout' },
-  { label: '网页端', value: MemberSource.WEB, color: 'blue', icon: 'mingcute:laptop' },
-  { label: 'iOS APP', value: MemberSource.APP_IOS, color: 'gray', icon: 'mingcute:apple' },
-  { label: 'Android APP', value: MemberSource.APP_ANDROID, color: 'cyan', icon: 'mingcute:android-2' },
+  { label: '微信小程序', value: MemberSource.WECHAT_MP, color: ColorName.GRAY, icon: 'mingcute:wechat-miniprogram' },
+  { label: '微信公众号', value: MemberSource.WECHAT_OA, color: ColorName.GREEN, icon: 'mingcute:wechat' },
+  { label: '手机端', value: MemberSource.H5, color: ColorName.ARCOBLUE, icon: 'mingcute:cellphone' },
+  { label: '后台创建', value: MemberSource.MANUAL, color: ColorName.ARCOBLUE, icon: 'mingcute:layout' },
+  { label: '网页端', value: MemberSource.WEB, color: ColorName.ARCOBLUE, icon: 'mingcute:laptop' },
+  { label: 'iOS APP', value: MemberSource.APP_IOS, color: ColorName.GRAY, icon: 'mingcute:apple' },
+  { label: 'Android APP', value: MemberSource.APP_ANDROID, color: ColorName.CYAN, icon: 'mingcute:android-2' },
 ]
 
 // --------------------------------
@@ -86,24 +84,22 @@ export const MEMBER_SOURCES = [
  * - `UNKNOWN`: 保密
  * - `MALE`: 先生
  * - `FEMALE`: 女士
- *
- * @see {@link IMemberGender}
  */
 export enum MemberGender {
-  UNKNOWN = 'unknown',
-  MALE = 'male',
-  FEMALE = 'female',
+  UNKNOWN,
+  MALE,
+  FEMALE,
 }
 
 /**
  * 会员性别 - 字典
  *
- * @see {@link IMemberGender}
+ * @see {@link MemberGender}
  */
 export const MEMBER_GENDERS = [
-  { label: '保密', value: MemberGender.UNKNOWN, color: 'gray', icon: '' },
-  { label: '先生', value: MemberGender.MALE, color: 'blue', icon: 'mingcute:male' },
-  { label: '女士', value: MemberGender.FEMALE, color: 'red', icon: 'mingcute:female' },
+  { label: '保密', value: MemberGender.UNKNOWN, color: ColorName.GRAY, icon: '' },
+  { label: '先生', value: MemberGender.MALE, color: ColorName.ARCOBLUE, icon: 'mingcute:male' },
+  { label: '女士', value: MemberGender.FEMALE, color: ColorName.RED, icon: 'mingcute:female' },
 ]
 
 // --------------------------------
@@ -116,13 +112,11 @@ export const MEMBER_GENDERS = [
  * - `ADD`: 增加
  * - `SUB`: 减少
  * - `SET`: 设置
- *
- * @see {@link IMemberAccountChangeType}
  */
 export enum MemberAccountChangeType {
-  ADD = 'add',
-  SUB = 'sub',
-  SET = 'set',
+  ADD = 1,
+  SUB,
+  SET,
 }
 
 /**
@@ -152,8 +146,6 @@ export const MEMBER_ACCOUNT_CHANGE_TYPES = [
  * - `coupon`: 优惠券数量
  * - `signInTimes`: 签到次数
  * - `loginTime`: 登录次数
- *
- * @see {@link IMemberAccountKeys}
  */
 export const MEMBER_ACCOUNT_KEYS = [
   { label: '积分', value: 'points' },
@@ -176,18 +168,16 @@ export const MEMBER_ACCOUNT_KEYS = [
  *
  * - `LEVEL`: 会员等级
  * - `CUSTOM`: 超级会员卡
- *
- * @see {@link IMemberCardType}
  */
 export enum MemberCardType {
-  LEVEL = 'level',
-  CUSTOM = 'custom',
+  LEVEL = 1,
+  CUSTOM,
 }
 
 /**
  * 会员卡类型 - 字典
  *
- * @see {@link IMemberCardType}
+ * @see {@link MemberCardType}
  */
 export const MEMBER_CARD_TYPES = [
   { label: '会员等级', value: MemberCardType.LEVEL },
@@ -205,20 +195,18 @@ export const MEMBER_CARD_TYPES = [
  * - `DAY`: 天数
  * - `MONTH`: 月数
  * - `YEAR`: 年数
- *
- * @see {@link IMemberCardPlanType}
  */
 export enum MemberCardPlanType {
-  TIMES = 'times',
-  DAY = 'day',
-  MONTH = 'month',
-  YEAR = 'year',
+  TIMES = 1,
+  DAY,
+  MONTH,
+  YEAR,
 }
 
 /**
  * 会员卡套餐类型 - 字典
  *
- * @see {@link IMemberCardPlanType}
+ * @see {@link MemberCardPlanType}
  */
 export const MEMBER_CARD_PLAN_TYPES = [
   { label: '次数', name: '次卡', unit: '次', value: MemberCardPlanType.TIMES },
@@ -246,28 +234,26 @@ export const MEMBER_CARD_PLAN_TYPES = [
  * - `SIGN_IN`: 累计签到数 [min, max]
  * - `ORDER_COUNT`: 累计订单数 [min, max]
  * - `ORDER_AMOUNT`: 累计订单金额 [min, max]
- *
- * @see {@link IMemberGroupCondKey}
  */
 export enum MemberGroupCondKey {
-  SOURCE = 'source',
-  STATUS = 'status',
-  CARD = 'card',
-  TAG = 'tag',
-  GENDER = 'gender',
-  BIRTHDAY = 'birthday',
-  CREATED_TIME = 'created_time',
-  POINTS = 'points',
-  EXP = 'exp',
-  SIGN_IN = 'sign_in',
-  ORDER_COUNT = 'order_count',
-  ORDER_AMOUNT = 'order_amount',
+  SOURCE = 1,
+  STATUS,
+  CARD,
+  TAG,
+  GENDER,
+  BIRTHDAY,
+  CREATED_TIME,
+  POINTS,
+  EXP,
+  SIGN_IN,
+  ORDER_COUNT,
+  ORDER_AMOUNT,
 }
 
 /**
  * 会员群体筛选条件项 - 字典
  *
- * @see {@link IMemberGroupCondKey}
+ * @see {@link MemberGroupCondKey}
  */
 export const MEMBER_GROUP_COND_KEYS = [
   { label: '注册来源', value: MemberGroupCondKey.SOURCE },
@@ -293,18 +279,16 @@ export const MEMBER_GROUP_COND_KEYS = [
  *
  * - `IN`: 包含
  * - `NOT_IN`: 排除
- *
- * @see {@link IMemberGroupCondOperator}
  */
 export enum MemberGroupCondOperator {
-  IN = 'in',
-  NOT_IN = 'not_in',
+  IN = 1,
+  NOT_IN,
 }
 
 /**
  * 会员群体筛选条件操作符 - 字典
  *
- * @see {@link IMemberGroupCondOperator}
+ * @see {@link MemberGroupCondOperator}
  */
 export const MEMBER_GROUP_COND_OPERATORS = [
   { label: '包含', value: MemberGroupCondOperator.IN },
@@ -322,26 +306,24 @@ export const MEMBER_GROUP_COND_OPERATORS = [
  * - `APPROVED`: 已通过
  * - `REJECTED`: 已拒绝
  * - `FINISHED`: 已注销
- *
- * @see {@link IMemberUnregisterStatus}
  */
 export enum MemberUnregisterStatus {
-  PENDING = 'pending',
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
-  FINISHED = 'finished',
+  PENDING,
+  APPROVED,
+  REJECTED,
+  FINISHED,
 }
 
 /**
  * 会员注销申请状态 - 字典
  *
- * @see {@link IMemberUnregisterStatus}
+ * @see {@link MemberUnregisterStatus}
  */
 export const MEMBER_UNREGISTER_STATUSES = [
-  { label: '待处理', value: MemberUnregisterStatus.PENDING, color: 'blue' },
-  { label: '已通过', value: MemberUnregisterStatus.APPROVED, color: 'orange' },
-  { label: '已拒绝', value: MemberUnregisterStatus.REJECTED, color: 'red' },
-  { label: '已注销', value: MemberUnregisterStatus.FINISHED, color: 'gray' },
+  { label: '待处理', value: MemberUnregisterStatus.PENDING, color: ColorName.ARCOBLUE },
+  { label: '已通过', value: MemberUnregisterStatus.APPROVED, color: ColorName.ORANGERED },
+  { label: '已拒绝', value: MemberUnregisterStatus.REJECTED, color: ColorName.RED },
+  { label: '已注销', value: MemberUnregisterStatus.FINISHED, color: ColorName.GRAY },
 ]
 
 // --------------------------------
@@ -368,9 +350,14 @@ export enum MemberPointsRuleKey {
 }
 
 /**
+ * 会员积分规则标识 - 字符串
+ */
+export type IMemberPointsRuleKey = `${MemberPointsRuleKey}`
+
+/**
  * 会员积分规则标识 - 字典
  *
- * @see {@link IMemberPointsRuleKey}
+ * @see {@link MemberPointsRuleKey}
  */
 export const MEMBER_POINTS_RULE_KEYS = [
   { label: '注册奖励', desc: '注册会员时赠送的积分', icon: 'mingcute:user-add-2', value: MemberPointsRuleKey.REGISTER },

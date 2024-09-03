@@ -1,4 +1,4 @@
-import type { IYesOrNo } from '@xiaoshop/shared'
+import type { YesOrNo } from '@xiaoshop/shared'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import {
@@ -119,7 +119,7 @@ export class MemberCardAdminController {
   @Put('status/update')
   async updateStatus(
     @Query() query: GetMemberCardRequest,
-    @Body('status') status: IYesOrNo,
+    @Body('status') status: YesOrNo,
   ) {
     return this.service.updateStatus(+query.id, status)
   }

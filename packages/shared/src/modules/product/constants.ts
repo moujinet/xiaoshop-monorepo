@@ -15,20 +15,18 @@ export const BUY_BUTTON_DEFAULT_NAME = '立即购买'
  * - `STOCKED`: 仓库
  * - `SOLD_OUT`: 售罄
  * - `DRAFT`: 草稿
- *
- * @see {@link IProductStatus}
  */
 export enum ProductStatus {
-  ON_SALE = 'on_sale',
-  STOCKED = 'stocked',
-  SOLD_OUT = 'sold_out',
-  DRAFT = 'draft',
+  ON_SALE = 1,
+  STOCKED,
+  SOLD_OUT,
+  DRAFT,
 }
 
 /**
  * 商品状态 - 字典
  *
- * @see {@link IProductStatus}
+ * @see {@link ProductStatus}
  */
 export const PRODUCT_STATUSES = [
   { label: '在售', value: ProductStatus.ON_SALE, color: 'arcoblue' },
@@ -47,19 +45,17 @@ export const PRODUCT_STATUSES = [
  * - `ENTITY`: 实物商品
  * - `VIRTUAL`: 虚拟商品
  * - `CARD`: 电子卡密
- *
- * @see {@link IProductType}
  */
 export enum ProductType {
-  ENTITY = 'entity',
-  VIRTUAL = 'virtual',
-  CARD = 'card',
+  ENTITY = 1,
+  VIRTUAL,
+  CARD,
 }
 
 /**
  * 商品类型 - 字典
  *
- * @see {@link IProductType}
+ * @see {@link ProductType}
  */
 export const PRODUCT_TYPES = [
   { label: '实物商品', desc: '需要物流', value: ProductType.ENTITY, color: 'arcoblue' },
@@ -78,20 +74,18 @@ export const PRODUCT_TYPES = [
  * - `IMPORT`: 导入商品
  * - `CLAWER`: 采集商品
  * - `CONNECT`: 云链商品
- *
- * @see {@link IProductSource}
  */
 export enum ProductSource {
-  MANUAL = 'manual',
-  IMPORT = 'import',
-  CLAWER = 'clawer',
-  CONNECT = 'connect',
+  MANUAL = 1,
+  IMPORT,
+  CLAWER,
+  CONNECT,
 }
 
 /**
  * 商品来源 - 字典
  *
- * @see {@link IProductSource}
+ * @see {@link ProductSource}
  */
 export const PRODUCT_SOURCES = [
   { label: '手动创建', value: ProductSource.MANUAL, color: 'blue', icon: 'mingcute:file-check' },
@@ -109,18 +103,16 @@ export const PRODUCT_SOURCES = [
  *
  * - `ORDER`: 拍下减库存
  * - `PAID`: 付款减库存
- *
- * @see {@link IProductInventoryDeductMode}
  */
 export enum ProductInventoryDeductMode {
-  ORDER = 'order',
-  PAID = 'paid',
+  ORDER = 1,
+  PAID,
 }
 
 /**
  * 商品库存扣减方式 - 字典
  *
- * @see {@link IProductInventoryDeductMode}
+ * @see {@link ProductInventoryDeductMode}
  */
 export const PRODUCT_INVENTORY_DEDUCT_MODES = [
   { value: ProductInventoryDeductMode.ORDER, label: '拍下减库存' },
@@ -137,19 +129,17 @@ export const PRODUCT_INVENTORY_DEDUCT_MODES = [
  * - `STD`: 统一运费
  * - `TEMPLATE`: 模板
  * - `COD`: 货到付款
- *
- * @see {@link IProductFreightChargeMode}
  */
 export enum ProductFreightChargeMode {
-  STD = 'std',
-  TEMPLATE = 'template',
-  COD = 'cod',
+  STD = 1,
+  TEMPLATE,
+  COD,
 }
 
 /**
  * 商品运费支付方式 - 字典
  *
- * @see {@link IProductFreightChargeMode}
+ * @see {@link ProductFreightChargeMode}
  */
 export const PRODUCT_FREIGHT_CHARGE_MODES = [
   { value: ProductFreightChargeMode.STD, label: '统一运费' },
@@ -166,18 +156,16 @@ export const PRODUCT_FREIGHT_CHARGE_MODES = [
  *
  * - `SELLER`: 卖家
  * - `BUYER`: 买家
- *
- * @see {@link IProductReturnsFreightBy}
  */
 export enum ProductReturnsFreightBy {
-  SELLER = 'seller',
-  BUYER = 'buyer',
+  SELLER = 1,
+  BUYER,
 }
 
 /**
  * 商品退货运费承担方 - 字典
  *
- * @see {@link IProductReturnsFreightBy}
+ * @see {@link ProductReturnsFreightBy}
  */
 export const PRODUCT_RETURNS_FREIGHT_BYS = [
   { value: ProductReturnsFreightBy.SELLER, label: '商家承担退费运费' },
@@ -194,19 +182,17 @@ export const PRODUCT_RETURNS_FREIGHT_BYS = [
  * - `DIRECT`: 立即上架
  * - `AUTO`: 自定义上架
  * - `STOCKED`: 暂不售卖, 放入仓库
- *
- * @see {@link IProductPublishMode}
  */
 export enum ProductPublishMode {
-  DIRECT = 'direct',
-  AUTO = 'auto',
-  STOCKED = 'stocked',
+  DIRECT = 1,
+  AUTO,
+  STOCKED,
 }
 
 /**
  * 商品上架方式 - 字典
  *
- * @see {@link IProductPublishMode}
+ * @see {@link ProductPublishMode}
  */
 export const PRODUCT_PUBLISH_MODES = [
   { value: ProductPublishMode.DIRECT, label: '立即上架' },
@@ -223,18 +209,16 @@ export const PRODUCT_PUBLISH_MODES = [
  *
  * - `DEFAULT`: 默认名称
  * - `CUSTOM`: 自定义名称
- *
- * @see {@link IProductBuyBtnType}
  */
 export enum ProductBuyBtnType {
-  DEFAULT = 'default',
-  CUSTOM = 'custom',
+  DEFAULT,
+  CUSTOM,
 }
 
 /**
  * 商品购买按钮类型 - 字典
  *
- * @see {@link IProductBuyBtnType}
+ * @see {@link ProductBuyBtnType}
  */
 export const PRODUCT_BUY_BTN_TYPES = [
   { value: ProductBuyBtnType.DEFAULT, label: '默认名称' },
@@ -251,19 +235,17 @@ export const PRODUCT_BUY_BTN_TYPES = [
  * - `HIGH`: 好评
  * - `NORMAL`: 中评
  * - `LOW`: 差评
- *
- * @see {@link IProductRatingGrade}
  */
 export enum ProductRatingGrade {
-  HIGH = 'high',
-  NORMAL = 'normal',
-  LOW = 'low',
+  LOW = 1,
+  NORMAL,
+  HIGH,
 }
 
 /**
  * 商品评价综合评级 - 字典
  *
- * @see {@link IProductRatingGrade}
+ * @see {@link ProductRatingGrade}
  */
 export const PRODUCT_RATING_GRADES = [
   { value: ProductRatingGrade.HIGH, label: '好评', color: 'gold', icon: 'mingcute:emoji-2' },
@@ -281,19 +263,17 @@ export const PRODUCT_RATING_GRADES = [
  * - `TEXT`: 文本
  * - `RADIO`: 单选
  * - `CHECKBOX`: 多选
- *
- * @see {@link IProductAttributeTemplateOptionType}
  */
 export enum ProductAttributeTemplateOptionType {
-  TEXT = 'text',
-  RADIO = 'radio',
-  CHECKBOX = 'checkbox',
+  TEXT = 1,
+  RADIO,
+  CHECKBOX,
 }
 
 /**
  * 商品参数模板选项类型 - 字典
  *
- * @see {@link IProductAttributeTemplateOptionType}
+ * @see {@link ProductAttributeTemplateOptionType}
  */
 export const PRODUCT_ATTRIBUTE_TEMPLATE_OPTION_TYPES = [
   { label: '文本', value: ProductAttributeTemplateOptionType.TEXT },
@@ -311,19 +291,17 @@ export const PRODUCT_ATTRIBUTE_TEMPLATE_OPTION_TYPES = [
  * - `PENDING`: 待导出
  * - `COMPLETED`: 导出完成
  * - `FAILED`: 导出失败
- *
- * @see {@link IProductExportStatus}
  */
 export enum ProductExportStatus {
-  PENDING = 'pending',
-  COMPLETED = 'completed',
-  FAILED = 'failed',
+  PENDING,
+  COMPLETED,
+  FAILED,
 }
 
 /**
  * 商品导出记录 - 导出状态 - 字典
  *
- * @see {@link IProductExportStatus}
+ * @see {@link ProductExportStatus}
  */
 export const PRODUCT_EXPORT_STATUSES = [
   { label: '待导出', value: ProductExportStatus.PENDING, color: 'arcoblue' },

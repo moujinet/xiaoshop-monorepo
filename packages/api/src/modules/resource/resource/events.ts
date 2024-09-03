@@ -1,4 +1,7 @@
-import { IResourceType, RESOURCE_TYPES } from '@xiaoshop/shared'
+import {
+  RESOURCE_TYPES,
+  type ResourceType,
+} from '@xiaoshop/shared'
 import { BaseEvent } from '~/common/events'
 
 /**
@@ -7,7 +10,7 @@ import { BaseEvent } from '~/common/events'
 export class ResourceUploadedEvent extends BaseEvent {
   constructor(
     public readonly id: number,
-    public readonly fileType: IResourceType,
+    public readonly fileType: ResourceType,
     public readonly fileName: string,
     public readonly filePath: string,
   ) {
@@ -25,7 +28,7 @@ export class ResourceUploadedEvent extends BaseEvent {
  */
 export class ResourceDeletedEvent extends BaseEvent {
   constructor(
-    public readonly fileType: IResourceType,
+    public readonly fileType: ResourceType,
     public readonly fileName: string,
     public readonly filePath: string,
   ) {

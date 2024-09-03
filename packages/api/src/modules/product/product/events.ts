@@ -1,5 +1,4 @@
 import {
-  type IProductStatus,
   ProductStatus,
 } from '@xiaoshop/shared'
 import {
@@ -79,7 +78,7 @@ export class ProductPropertiesUpdatedEvent extends BaseEvent {
 export class ProductStatusUpdatedEvent extends BaseEvent {
   constructor(
     public readonly ids: number[],
-    public readonly status: IProductStatus,
+    public readonly status: ProductStatus,
   ) {
     super('商品管理')
   }

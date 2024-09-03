@@ -1,7 +1,5 @@
 import {
   type IResourceGroup,
-  type IResourceType,
-  type IYesOrNo,
   ResourceType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -18,19 +16,19 @@ export class ResourceGroupResponse implements IResourceGroup {
   readonly parentId: number
 
   @ApiProperty({ description: '素材类型', example: ResourceType.IMAGE })
-  readonly type: IResourceType
+  readonly type: ResourceType
 
   @ApiProperty({ description: '分组名称', example: '图片' })
   readonly name: string
 
   @ApiProperty({ description: '启用图片压缩', default: YesOrNo.NO })
-  readonly enableCompress: IYesOrNo
+  readonly enableCompress: YesOrNo
 
   @ApiProperty({ description: '启用图片水印', default: YesOrNo.NO })
-  readonly enableWatermark: IYesOrNo
+  readonly enableWatermark: YesOrNo
 
   @ApiProperty({ description: '启用图片缩略图', default: YesOrNo.NO })
-  readonly enableThumbnail: IYesOrNo
+  readonly enableThumbnail: YesOrNo
 
   @ApiProperty({ description: '创建时间' })
   readonly createdTime: string

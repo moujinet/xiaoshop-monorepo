@@ -1,7 +1,6 @@
 import {
   AuthLogType,
   type IAuthLog,
-  type IAuthLogType,
   type IAuthUserInfo,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
@@ -15,7 +14,7 @@ export class AuthLogResponse implements IAuthLog {
   readonly id: number
 
   @ApiProperty({ description: '日志类型', enum: AuthLogType, example: example.type })
-  readonly type: IAuthLogType
+  readonly type: AuthLogType
 
   @ApiProperty({ description: '操作员工 ID', example: 1 })
   readonly userId: number

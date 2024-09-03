@@ -1,4 +1,4 @@
-import type { IMemberAccountChangeType } from '@/member/types'
+import type { MemberAccountChangeType } from '@/member/constants'
 import type { IMemberAccountInfo, IMemberAccountKeys } from '@/member/account'
 
 /**
@@ -28,13 +28,9 @@ export interface IMemberAccountChangeLog {
   /**
    * 变更类型
    *
-   * - `add`: 增加
-   * - `sub`: 减少
-   * - `set`: 设置
-   *
-   * @see {@link IMemberAccountChangeType}
+   * @see {@link MemberAccountChangeType}
    */
-  type: IMemberAccountChangeType
+  type: MemberAccountChangeType
   /**
    * 变更值
    */

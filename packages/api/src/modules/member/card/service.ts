@@ -3,7 +3,6 @@ import {
   type IMemberCardDict,
   type IMemberCustomCardListItem,
   type IMemberLevelCardListItem,
-  type IYesOrNo,
   MemberCardPlanType,
   MemberCardType,
   YesOrNo,
@@ -307,7 +306,7 @@ export class MemberCardService {
    * @throws {NotFoundException} 会员卡不存在
    * @event MemberCardStatusUpdatedEvent
    */
-  async updateStatus(id: number, status: IYesOrNo) {
+  async updateStatus(id: number, status: YesOrNo) {
     try {
       const card = await this.repository.findOneBy({ id })
 

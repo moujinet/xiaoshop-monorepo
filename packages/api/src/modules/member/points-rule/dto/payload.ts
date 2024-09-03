@@ -1,7 +1,6 @@
 import {
   type IMemberPointsRuleKey,
   type IMemberPointsRuleOptions,
-  type IYesOrNo,
   MemberPointsRuleKey,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -71,7 +70,6 @@ export class UpdateMemberPointsRuleStatusPayload {
   readonly key: IMemberPointsRuleKey
 
   @ApiProperty({ required: false, description: '积分规则选项', enum: YesOrNo, example: example.enable })
-  @IsEnum(YesOrNo, { message: '积分规则启用状态不正确' })
-  @IsNotEmpty({ message: '积分规则启用状态不能为空' })
-  readonly enable: IYesOrNo
+  @IsNumber({}, { message: '积分规则启用状态不正确' })
+  readonly enable: YesOrNo
 }

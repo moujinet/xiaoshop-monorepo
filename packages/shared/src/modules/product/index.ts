@@ -1,5 +1,4 @@
 export * from './constants'
-export * from './types'
 export * from './product'
 export * from './sku'
 export * from './category'

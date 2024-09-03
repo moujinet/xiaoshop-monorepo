@@ -5,8 +5,8 @@ import type {
   IAuthRoleListItem,
 } from '@xiaoshop/shared'
 import { Not, Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Inject, Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { AuthRole } from '@/auth/role/entity'
 import {
@@ -31,6 +31,7 @@ export class AuthRoleService {
     @InjectRepository(AuthRole)
     private readonly repository: Repository<AuthRole>,
 
+    @Inject(EventEmitter2)
     private readonly event: EventEmitter2,
   ) {}
 

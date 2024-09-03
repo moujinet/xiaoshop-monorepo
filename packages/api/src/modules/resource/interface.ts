@@ -1,4 +1,4 @@
-import type { IYesOrNo } from '@xiaoshop/shared'
+import type { YesOrNo } from '@xiaoshop/shared'
 
 /**
  * 素材图片处理任务
@@ -15,19 +15,19 @@ export interface IResourceImageProcessJob {
   /**
    * 是否开启压缩
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableCompress: IYesOrNo
+  enableCompress: YesOrNo
   /**
    * 是否开启缩略图
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableThumbnail: IYesOrNo
+  enableThumbnail: YesOrNo
   /**
    * 是否开启水印
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableWatermark: IYesOrNo
+  enableWatermark: YesOrNo
 }

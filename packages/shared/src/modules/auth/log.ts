@@ -1,4 +1,4 @@
-import type { IAuthLogType } from './types'
+import type { AuthLogType } from './constants'
 import type { IAuthUserInfo } from './user'
 
 /**
@@ -12,9 +12,9 @@ export interface IAuthLog {
   /**
    * 日志类型
    *
-   * @see {@link IAuthLogType}
+   * @see {@link AuthLogType}
    */
-  type: IAuthLogType
+  type: AuthLogType
   /**
    * 操作员工 ID
    */

@@ -1,7 +1,8 @@
 import type {
+  IMemberAccount,
   IMemberAccountChangeLog,
-  IMemberAccountChangeType,
   IMemberAccountKeys,
+  MemberAccountChangeType,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { MemberAccount } from '@/member/account/entity'
@@ -19,13 +20,13 @@ export class MemberAccountChangeLog implements IMemberAccountChangeLog {
 
   @OneToOne(() => MemberAccount, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'member_id' })
-  member: MemberAccount
+  member: IMemberAccount
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '变更账户' })
   key: IMemberAccountKeys
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '变更类型' })
-  type: IMemberAccountChangeType
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '变更类型' })
+  type: MemberAccountChangeType
 
   @Column({ type: 'int', unsigned: true, default: 0, comment: '变更值' })
   value: number

@@ -1,7 +1,6 @@
-import {
-  type IResource,
-  type IResourceGroupInfo,
-  type IResourceType,
+import type {
+  IResource,
+  IResourceGroupInfo,
   ResourceType,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
@@ -15,8 +14,8 @@ export class Resource implements IResource {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: ResourceType.IMAGE, comment: '素材类型' })
-  type: IResourceType
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '素材类型' })
+  type: ResourceType
 
   @Column({ name: 'group_id', type: 'int', default: 0, unsigned: true, comment: '素材分组 ID' })
   groupId: number

@@ -1,5 +1,5 @@
 import type { IProductInfo } from './product'
-import type { IYesOrNo } from '~/common'
+import type { YesOrNo } from '~/common'
 
 /**
  * 商品 SKU 信息
@@ -114,9 +114,9 @@ export interface IProductSkuAttributeSchema {
   /**
    * 是否启用图片 (N: 否 Y: 是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableImage: IYesOrNo
+  enableImage: YesOrNo
 }
 
 /**

@@ -25,16 +25,16 @@ export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name)
 
   constructor(
-    @Inject()
+    @Inject(JwtService)
     private readonly jwt: JwtService,
 
-    @Inject()
+    @Inject(Reflector)
     private readonly reflector: Reflector,
 
-    @Inject()
+    @Inject(ConfigService)
     private readonly config: ConfigService,
 
-    @Inject()
+    @Inject(ClsService)
     private readonly cls: ClsService,
   ) {}
 

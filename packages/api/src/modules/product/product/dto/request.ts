@@ -1,32 +1,30 @@
 import {
-  type IProductSource,
-  type IYesOrNo,
   ProductSource,
   YesOrNo,
 } from '@xiaoshop/shared'
-import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
 import { PaginationRequest } from '~/common/dto'
 
 enum ProductStatusAndWarning {
-  ON_SALE = 'on_sale',
-  STOCKED = 'stocked',
-  SOLD_OUT = 'sold_out',
-  DRAFT = 'draft',
-  WARNING = 'warning',
+  ON_SALE = 1,
+  STOCKED = 2,
+  SOLD_OUT = 3,
+  DRAFT = 4,
+  WARNING = 5,
 }
 
 export class GetProductPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '商品是否删除', enum: YesOrNo, example: 'N' })
-  @IsEnum(YesOrNo, { message: '商品是否删除不正确' })
+  @IsNumberString({}, { message: '商品是否删除不正确' })
   @IsOptional()
-  readonly isDeleted: IYesOrNo
+  readonly isDeleted: YesOrNo
 
   @ApiProperty({ required: false, description: '商品状态', enum: ProductStatusAndWarning, example: example.status })
-  @IsEnum(ProductStatusAndWarning, { message: '商品状态不正确' })
+  @IsNumberString({}, { message: '商品状态不正确' })
   @IsOptional()
-  readonly status: `${ProductStatusAndWarning}`
+  readonly status: ProductStatusAndWarning
 
   @ApiProperty({ required: false, description: '商品名称', example: example.name })
   @IsString({ message: '商品名称不正确' })
@@ -59,9 +57,9 @@ export class GetProductPagesRequest extends PaginationRequest {
   readonly tagId: number
 
   @ApiProperty({ required: false, description: '商品来源', enum: ProductSource, example: example.source })
-  @IsEnum(ProductSource, { message: '商品来源不正确' })
+  @IsNumberString({}, { message: '商品来源不正确' })
   @IsOptional()
-  readonly source: IProductSource
+  readonly source: ProductSource
 
   @ApiProperty({ required: false, description: '商品价格', example: '10,20' })
   @IsString({ message: '商品价格不正确' })

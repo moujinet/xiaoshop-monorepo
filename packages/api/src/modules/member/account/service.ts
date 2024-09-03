@@ -5,7 +5,6 @@ import {
   type IMemberAccountValues,
   type IMemberGroupCondition,
   type IMemberProfile,
-  type IMemberStatus,
   MEMBER_DEFAULT_PASSWORD,
   MemberAccountChangeType,
   MemberGender,
@@ -359,7 +358,7 @@ export class MemberAccountService {
       }
     }
     catch (e) {
-      throw new FailedException('创建会员失败', e.message, e.status)
+      throw new FailedException('创建会员', e.message, e.status)
     }
   }
 
@@ -516,7 +515,7 @@ export class MemberAccountService {
    * @throws {FailedException} 更新会员状态失败
    * @event MemberStatusChangedEvent
    */
-  async updateMemberStatus(id: number, status: IMemberStatus) {
+  async updateMemberStatus(id: number, status: MemberStatus) {
     try {
       const founded = await this.repository.findOneBy({ id })
 

@@ -2,9 +2,9 @@ import type {
   IMemberAccountChangeLog,
   IMemberAccountChangeLogListItem,
   IMemberAccountChangeLogMemberListItem,
-  IMemberAccountChangeType,
   IMemberAccountInfo,
   IMemberAccountKeys,
+  MemberAccountChangeType,
 } from '@xiaoshop/shared'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { example } from './example'
@@ -27,7 +27,7 @@ export class MemberAccountChangeLogResponse implements IMemberAccountChangeLog {
   readonly key: IMemberAccountKeys
 
   @ApiProperty({ description: '变更类型', example: example.type })
-  readonly type: IMemberAccountChangeType
+  readonly type: MemberAccountChangeType
 
   @ApiProperty({ description: '变更值', example: example.value })
   readonly value: number

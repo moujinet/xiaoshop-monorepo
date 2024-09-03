@@ -1,7 +1,7 @@
-import {
-  type ILocationPath,
-  type IMemberAddress,
-  type IYesOrNo,
+import type {
+  ILocationPath,
+  IMemberAccount,
+  IMemberAddress,
   YesOrNo,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
@@ -20,7 +20,7 @@ export class MemberAddress implements IMemberAddress {
 
   @OneToOne(() => MemberAccount, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'member_id' })
-  member: MemberAccount
+  member: IMemberAccount
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '联系人' })
   name: string
@@ -34,11 +34,11 @@ export class MemberAddress implements IMemberAddress {
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '详细地址' })
   address: string
 
-  @Column({ name: 'postal_code', type: 'varchar', length: 16, nullable: false, default: '', comment: '邮政编码' })
+  @Column({ name: 'postal_code', type: 'char', length: 6, nullable: false, default: '', comment: '邮政编码' })
   postalCode: string
 
-  @Column({ name: 'is_default', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否默认 (N:否 Y:是)' })
-  isDefault: IYesOrNo
+  @Column({ name: 'is_default', type: 'tinyint', unsigned: true, default: 0, comment: '是否默认' })
+  isDefault: YesOrNo
 
   @CreateDateColumn({ name: 'created_time', type: 'datetime', default: null, update: false, comment: '创建时间' })
   createdTime: string

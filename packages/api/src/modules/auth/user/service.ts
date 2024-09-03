@@ -9,8 +9,8 @@ import {
 } from '@xiaoshop/shared'
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
-import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Inject, Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { FindOptionsWhere, Like, Not, Repository } from 'typeorm'
 import { AuthRole } from '@/auth/role/entity'
@@ -45,8 +45,10 @@ export class AuthUserService {
     @InjectRepository(AuthUser)
     private readonly repository: Repository<AuthUser>,
 
+    @Inject(JwtService)
     private readonly jwt: JwtService,
 
+    @Inject(EventEmitter2)
     private readonly event: EventEmitter2,
   ) {}
 

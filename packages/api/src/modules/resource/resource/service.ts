@@ -2,7 +2,7 @@ import type {
   IApiPaginationData,
   IResource,
   IResourceListItem,
-  IResourceType,
+  ResourceType,
 } from '@xiaoshop/shared'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -130,7 +130,7 @@ export class ResourceService {
    * @event ResourceUploadedEvent
    */
   async create(
-    type: IResourceType,
+    type: ResourceType,
     file: ResourceUploadFilePayload,
     options: ResourceUploadImageOptionsPayload | ResourceUploadVideoOptionsPayload,
   ) {

@@ -1,9 +1,7 @@
 import {
   type ILocationPath,
-  type ILogisticsCalcMode,
   type ILogisticsTemplateFreeRule,
   type ILogisticsTemplateRule,
-  type IYesOrNo,
   LogisticsCalcMode,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -96,7 +94,7 @@ export class LogisticsTemplatePayload {
   @ApiProperty({ description: '运费计算方式', enum: LogisticsCalcMode, default: LogisticsCalcMode.COUNT })
   @IsEnum(LogisticsCalcMode, { message: '运费计算方式不正确' })
   @IsNotEmpty({ message: '运费计算方式不能为空' })
-  readonly calcMode: ILogisticsCalcMode
+  readonly calcMode: LogisticsCalcMode
 
   @ApiProperty({ type: [LogisticsTemplateRulePayload], description: '运费规则' })
   @ValidateNested({ message: '运费规则不正确' })
@@ -106,7 +104,7 @@ export class LogisticsTemplatePayload {
   @ApiProperty({ description: '启用包邮地区', enum: YesOrNo, default: YesOrNo.NO })
   @IsEnum(YesOrNo, { message: '启用包邮地区不正确' })
   @IsNotEmpty({ message: '启用包邮地区不能为空' })
-  readonly enableFreeRules: IYesOrNo
+  readonly enableFreeRules: YesOrNo
 
   @ApiProperty({ type: [LogisticsTemplateFreeRulePayload], description: '包邮规则' })
   @ValidateIf(o => o.enableFreeRules === YesOrNo.YES)

@@ -1,12 +1,9 @@
 import {
-  type IMemberGender,
-  type IMemberSource,
-  type IMemberStatus,
   MemberGender,
   MemberSource,
   MemberStatus,
 } from '@xiaoshop/shared'
-import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
 import { PaginationRequest } from '~/common/dto'
@@ -16,14 +13,14 @@ import { PaginationRequest } from '~/common/dto'
  */
 export class GetMemberAccountPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '注册来源', example: example.source })
-  @IsEnum(MemberSource, { message: '注册来源错误' })
+  @IsNumberString({}, { message: '注册来源错误' })
   @IsOptional()
-  readonly source: IMemberSource
+  readonly source: MemberSource
 
   @ApiProperty({ required: false, description: '会员状态', example: example.status })
-  @IsEnum(MemberStatus, { message: '会员状态错误' })
+  @IsNumberString({}, { message: '会员状态错误' })
   @IsOptional()
-  readonly status: IMemberStatus
+  readonly status: MemberStatus
 
   @ApiProperty({ required: false, description: '会员账号', example: example.username })
   @IsString({ message: '会员账号必须为字符串' })
@@ -46,9 +43,9 @@ export class GetMemberAccountPagesRequest extends PaginationRequest {
   readonly cardNo: string
 
   @ApiProperty({ required: false, description: '会员性别', enum: MemberGender, example: example.gender })
-  @IsEnum(MemberGender, { message: '会员性别错误' })
+  @IsNumberString({}, { message: '会员性别错误' })
   @IsOptional()
-  readonly gender: IMemberGender
+  readonly gender: MemberGender
 
   @ApiProperty({ required: false, description: '会员分组', example: 1 })
   @IsNumberString({}, { message: '会员分组 ID 必须为数字' })

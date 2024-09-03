@@ -1,6 +1,4 @@
 import {
-  type IMemberSource,
-  type IMemberUnregisterStatus,
   MemberSource,
   MemberUnregisterStatus,
 } from '@xiaoshop/shared'
@@ -31,12 +29,12 @@ export class GetMemberUnregisterPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '申请状态', enum: MemberUnregisterStatus, example: example.status })
   @IsEnum(MemberUnregisterStatus, { message: '申请状态不正确' })
   @IsOptional()
-  readonly status: IMemberUnregisterStatus
+  readonly status: MemberUnregisterStatus
 
   @ApiProperty({ required: false, description: '注销来源', enum: MemberSource, example: example.source })
   @IsEnum(MemberSource, { message: '注销来源不正确' })
   @IsOptional()
-  readonly source: IMemberSource
+  readonly source: MemberSource
 
   @ApiProperty({ required: false, description: '申请时间', example: '2022-01-01,2022-01-02' })
   @IsString({ message: '申请时间格式不正确' })

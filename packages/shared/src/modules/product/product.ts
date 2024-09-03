@@ -1,14 +1,14 @@
 import type {
-  IProductBuyBtnType,
-  IProductFreightChargeMode,
-  IProductInventoryDeductMode,
-  IProductPublishMode,
-  IProductRatingGrade,
-  IProductReturnsFreightBy,
-  IProductSource,
-  IProductStatus,
-  IProductType,
-} from './types'
+  ProductBuyBtnType,
+  ProductFreightChargeMode,
+  ProductInventoryDeductMode,
+  ProductPublishMode,
+  ProductRatingGrade,
+  ProductReturnsFreightBy,
+  ProductSource,
+  ProductStatus,
+  ProductType,
+} from './constants'
 import type { IProductSkuInfo } from './sku'
 import type { IProductTagDict } from './tag'
 import type { IProductBrandDict } from './brand'
@@ -17,8 +17,8 @@ import type { IProductAttribute } from './attribute'
 import type { IProductAdditionDict } from './addition'
 import type { IProductCategoryDict } from './category'
 import type { IProductCommitmentDict } from './commitment'
-import type { ILogisticsDeliveryMethod } from '@/logistics'
-import type { IYesOrNo } from '~/common'
+import type { LogisticsDeliveryMethod } from '@/logistics'
+import type { YesOrNo } from '~/common'
 
 /**
  * 商品信息
@@ -35,35 +35,21 @@ export interface IProduct {
   /**
    * 商品类型
    *
-   * - `entity`: 实物商品
-   * - `virtual`: 虚拟商品
-   * - `card`: 电子卡密
-   *
-   * @see {@link IProductType}
+   * @see {@link ProductType}
    */
-  type: IProductType
+  type: ProductType
   /**
    * 商品状态
    *
-   * - `on_sale`: 在售
-   * - `stocked`: 仓库
-   * - `sold_out`: 售罄
-   * - `draft`: 草稿
-   *
-   * @see {@link IProductStatus}
+   * @see {@link ProductStatus}
    */
-  status: IProductStatus
+  status: ProductStatus
   /**
    * 商品来源
    *
-   * - `manual`: 手动添加
-   * - `import`: 导入商品
-   * - `clawer`: 采集商品
-   * - `connect`: 云链商品
-   *
-   * @see {@link IProductSource}
+   * @see {@link ProductSource}
    */
-  source: IProductSource
+  source: ProductSource
   /**
    * 商品 SKU
    *
@@ -155,15 +141,15 @@ export interface IProduct {
   /**
    * 是否开启会员折扣 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableVipDiscount: IYesOrNo
+  enableVipDiscount: YesOrNo
   /**
    * 是否开启限购 (N:否 Y:是)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enablePurchaseLimits: IYesOrNo
+  enablePurchaseLimits: YesOrNo
   /**
    * 限购数量
    */
@@ -175,33 +161,21 @@ export interface IProduct {
   /**
    * 库存扣减方式
    *
-   * - `order`: 拍下减库存
-   * - `paid`: 付款减库存
-   *
-   * @see {@link IProductInventoryDeductMode}
+   * @see {@link ProductInventoryDeductMode}
    */
-  inventoryDeductMode: IProductInventoryDeductMode
+  inventoryDeductMode: ProductInventoryDeductMode
   /**
    * 发货方式
    *
-   * - `express`: 物流快递
-   * - `self`: 到店自提
-   * - `local`: 同城配送
-   * - `none`: 无需发货
-   *
-   * @see {@link ILogisticsDeliveryMethod}
+   * @see {@link LogisticsDeliveryMethod}
    */
-  deliveryMethods: ILogisticsDeliveryMethod[]
+  deliveryMethods: LogisticsDeliveryMethod[]
   /**
    * 运费计算方式
    *
-   * - `std`: 统一运费
-   * - `template`: 模板
-   * - `cod`: 货到付款
-   *
-   * @see {@link IProductFreightChargeMode}
+   * @see {@link ProductFreightChargeMode}
    */
-  freightChargeMode: IProductFreightChargeMode
+  freightChargeMode: ProductFreightChargeMode
   /**
    * 统一运费
    */
@@ -213,22 +187,15 @@ export interface IProduct {
   /**
    * 退货运费承担方
    *
-   * - `seller`: 卖家
-   * - `buyer`: 买家
-   *
-   * @see {@link IProductReturnsFreightBy}
+   * @see {@link ProductReturnsFreightBy}
    */
-  returnsFreightBy: IProductReturnsFreightBy
+  returnsFreightBy: ProductReturnsFreightBy
   /**
    * 发布方式
    *
-   * - `direct`: 立即上架
-   * - `auto`: 自定义上架
-   * - `stocked`: 暂不售卖, 放入仓库
-   *
-   * @see {@link IProductPublishMode}
+   * @see {@link ProductPublishMode}
    */
-  publishMode: IProductPublishMode
+  publishMode: ProductPublishMode
   /**
    * 自动上架时间
    */
@@ -236,12 +203,9 @@ export interface IProduct {
   /**
    * 购买按钮名称类型
    *
-   * - `default`: 默认名称
-   * - `custom`: 自定义名称
-   *
-   * @see {@link IProductBuyBtnType}
+   * @see {@link ProductBuyBtnType}
    */
-  buyBtnNameType: IProductBuyBtnType
+  buyBtnNameType: ProductBuyBtnType
   /**
    * 购买按钮名称
    */
@@ -269,13 +233,9 @@ export interface IProduct {
   /**
    * 综合评价
    *
-   * - `high`: 好评
-   * - `normal`: 中评
-   * - `low`: 差评
-   *
-   * @see {@link IProductRatingGrade}
+   * @see {@link ProductRatingGrade}
    */
-  overallGrade: IProductRatingGrade
+  overallGrade: ProductRatingGrade
   /**
    * 商品评分
    */
@@ -291,21 +251,21 @@ export interface IProduct {
   /**
    * 是否为多规格商品
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  isMultiSkus: IYesOrNo
+  isMultiSkus: YesOrNo
   /**
    * 是否已删除
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  isDeleted: IYesOrNo
+  isDeleted: YesOrNo
   /**
    * 是否预警
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  isWarning: IYesOrNo
+  isWarning: YesOrNo
   /**
    * 创建时间
    */
@@ -352,6 +312,25 @@ export type IProductInfo = Pick<
   | 'group'
   | 'tag'
   | 'brand'
+  | 'commitments'
+  | 'additions'
+>
+
+/**
+ * 购物车商品信息
+ *
+ * @see {@link IProduct}
+ */
+export type IProductCartInfo = Pick<
+  IProduct,
+  | 'id'
+  | 'uuid'
+  | 'type'
+  | 'status'
+  | 'name'
+  | 'slogan'
+  | 'images'
+  | 'tag'
   | 'commitments'
   | 'additions'
 >

@@ -1,5 +1,4 @@
 import {
-  type IMemberAccountChangeType,
   type IMemberAccountKeys,
   MemberAccountChangeType,
 } from '@xiaoshop/shared'
@@ -24,7 +23,7 @@ export class GetMemberAccountChangeLogPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '变更类型', enum: MemberAccountChangeType, default: '' })
   @IsEnum(MemberAccountChangeType, { message: '变更类型错误' })
   @IsOptional()
-  readonly type: IMemberAccountChangeType
+  readonly type: MemberAccountChangeType
 }
 
 /**
@@ -39,5 +38,5 @@ export class GetAllMemberAccountChangeLogPagesRequest extends PaginationRequest 
   @ApiProperty({ required: false, description: '变更类型', enum: MemberAccountChangeType, default: '' })
   @IsEnum(MemberAccountChangeType, { message: '变更类型错误' })
   @IsOptional()
-  readonly type: IMemberAccountChangeType
+  readonly type: MemberAccountChangeType
 }

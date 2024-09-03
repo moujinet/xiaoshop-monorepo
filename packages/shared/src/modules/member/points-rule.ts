@@ -1,5 +1,5 @@
-import type { IMemberPointsRuleKey } from '@/member/types'
-import type { IYesOrNo } from '~/common'
+import type { IMemberPointsRuleKey } from '@/member/constants'
+import type { YesOrNo } from '~/common'
 
 /**
  * 会员积分规则设置
@@ -8,24 +8,15 @@ export interface IMemberPointsRule {
   /**
    * 积分规则标识
    *
-   * - `register`: 注册奖励
-   * - `order`: 消费奖励
-   * - `birthday`: 生日有礼
-   * - `signIn`: 签到奖励
-   * - `deduct`: 积分抵现
-   *
    * @see {@link IMemberPointsRuleKey}
    */
   key: IMemberPointsRuleKey
   /**
    * 是否启用
    *
-   * - `Y`: 启用
-   * - `N`: 禁用
-   *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enable: IYesOrNo
+  enable: YesOrNo
   /**
    * 积分规则选项
    *

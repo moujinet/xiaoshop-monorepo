@@ -1,5 +1,4 @@
 import {
-  type IMemberCardType,
   MemberCardType,
 } from '@xiaoshop/shared'
 import { BaseEvent } from '~/common/events'
@@ -12,7 +11,7 @@ export class MemberBindingCardEvent extends BaseEvent {
     public readonly memberId: number,
     public readonly cardId: number,
     public readonly cardName: string,
-    public readonly cardType: IMemberCardType,
+    public readonly cardType: MemberCardType,
   ) {
     super('会员管理')
   }

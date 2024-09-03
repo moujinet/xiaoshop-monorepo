@@ -1,7 +1,7 @@
-import type { IAuthUserStatus } from './types'
+import type { AuthUserStatus } from './constants'
 import type { IAuthRolePermissions } from './role'
 import type { IOrganizeDepartmentDict, IOrganizePositionDict } from '@/organize'
-import type { IYesOrNo } from '~/common'
+import type { YesOrNo } from '~/common'
 
 /**
  * 员工账号
@@ -13,14 +13,16 @@ export interface IAuthUser {
   id: number
   /**
    * 是否管理员  (N: 否; Y: 是)
+   *
+   * @see {@link YesOrNo}
    */
-  isAdmin: IYesOrNo
+  isAdmin: YesOrNo
   /**
    * 员工状态
    *
-   * @see {@link IAuthUserStatus}
+   * @see {@link AuthUserStatus}
    */
-  status: IAuthUserStatus
+  status: AuthUserStatus
   /**
    * 员工账号
    */
@@ -124,6 +126,8 @@ export interface IAuthUserLoginSignPayload {
   scope: string
   /**
    * 登录用户
+   *
+   * @see {@link IAuthUserProfile}
    */
   user: IAuthUserProfile
 }

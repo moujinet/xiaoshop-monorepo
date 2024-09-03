@@ -2,10 +2,8 @@ import {
   AuthUserStatus,
   type IAuthRolePermissions,
   type IAuthUser,
-  type IAuthUserStatus,
   type IOrganizeDepartmentDict,
   type IOrganizePositionDict,
-  type IYesOrNo,
   YesOrNo,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
@@ -21,15 +19,25 @@ export class AuthUser implements IAuthUser {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ name: 'is_admin', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否管理员 (N: 否 Y: 是)' })
-  isAdmin: IYesOrNo
+  @Column({ name: 'is_admin', type: 'tinyint', unsigned: true, default: YesOrNo.NO, comment: '是否管理员' })
+  isAdmin: YesOrNo
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: AuthUserStatus.NORMAL, comment: '员工状态' })
-  status: IAuthUserStatus
+  @Column({ type: 'tinyint', unsigned: true, default: AuthUserStatus.NORMAL, comment: '员工状态' })
+  status: AuthUserStatus
 
-  @ManyToMany(() => AuthRole, { cascade: true, createForeignKeyConstraints: false })
-  @JoinTable({ name: 'manage_auth_user_has_roles', joinColumn: { name: 'user_id' }, inverseJoinColumn: { name: 'role_id' } })
-  roles: IAuthRolePermissions[]
+  @Column({ name: 'department_id', type: 'int', unsigned: true, default: 0, comment: '部门 ID' })
+  departmentId: number
+
+  @OneToOne(() => OrganizeDepartment, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'department_id' })
+  department: IOrganizeDepartmentDict
+
+  @Column({ name: 'position_id', type: 'int', unsigned: true, default: 0, comment: '职位 ID' })
+  positionId: number
+
+  @OneToOne(() => OrganizePosition, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'position_id' })
+  position: IOrganizePositionDict
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '员工账号' })
   username: string
@@ -46,19 +54,9 @@ export class AuthUser implements IAuthUser {
   @Column({ type: 'varchar', length: 16, nullable: false, default: '', comment: '员工手机' })
   mobile: string
 
-  @Column({ name: 'department_id', type: 'int', unsigned: true, default: 0, comment: '部门 ID' })
-  departmentId: number
-
-  @OneToOne(() => OrganizeDepartment, { createForeignKeyConstraints: false })
-  @JoinColumn({ name: 'department_id' })
-  department: IOrganizeDepartmentDict
-
-  @Column({ name: 'position_id', type: 'int', unsigned: true, default: 0, comment: '职位 ID' })
-  positionId: number
-
-  @OneToOne(() => OrganizePosition, { createForeignKeyConstraints: false })
-  @JoinColumn({ name: 'position_id' })
-  position: IOrganizePositionDict
+  @ManyToMany(() => AuthRole, { cascade: true, createForeignKeyConstraints: false })
+  @JoinTable({ name: 'manage_auth_user_has_roles', joinColumn: { name: 'user_id' }, inverseJoinColumn: { name: 'role_id' } })
+  roles: IAuthRolePermissions[]
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string

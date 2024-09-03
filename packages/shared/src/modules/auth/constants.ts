@@ -1,3 +1,5 @@
+import { ColorName } from '~/common'
+
 // --------------------------------
 // 权限 - 员工 - 状态
 // --------------------------------
@@ -7,27 +9,26 @@
  *
  * - `NORMAL`: 正常
  * - `LOCKED`: 锁定
+ * - `BLOCKED`: 禁用
  * - `QUITTED`: 离职
- *
- * @see {@link IAuthUserStatus}
  */
 export enum AuthUserStatus {
-  NORMAL = 'normal',
-  LOCKED = 'locked',
-  BLOCKED = 'blocked',
-  QUITTED = 'quitted',
+  NORMAL = 1,
+  LOCKED,
+  BLOCKED,
+  QUITTED,
 }
 
 /**
  * 字典: 员工状态
  *
- * @see {@link IAuthUserStatus}
+ * @see {@link AuthUserStatus}
  */
 export const USER_STATUSES = [
-  { label: '正常', value: AuthUserStatus.NORMAL, color: 'blue' },
-  { label: '锁定', value: AuthUserStatus.LOCKED, color: 'orange' },
-  { label: '禁用', value: AuthUserStatus.BLOCKED, color: 'red' },
-  { label: '离职', value: AuthUserStatus.QUITTED, color: 'red' },
+  { label: '正常', value: AuthUserStatus.NORMAL, color: ColorName.ARCOBLUE },
+  { label: '锁定', value: AuthUserStatus.LOCKED, color: ColorName.ORANGERED },
+  { label: '禁用', value: AuthUserStatus.BLOCKED, color: ColorName.RED },
+  { label: '离职', value: AuthUserStatus.QUITTED, color: ColorName.GRAY },
 ]
 
 // --------------------------------
@@ -39,20 +40,18 @@ export const USER_STATUSES = [
  *
  * - `USER`: 用户
  * - `SYSTEM`: 系统
- *
- * @see {@link IAuthLogType}
  */
 export enum AuthLogType {
-  USER = 'user',
-  SYSTEM = 'system',
+  USER = 1,
+  SYSTEM,
 }
 
 /**
  * 字典: 日志类型
  *
- * @see {@link IAuthLogType}
+ * @see {@link AuthLogType}
  */
 export const AUTH_LOG_TYPES = [
-  { label: '用户', value: AuthLogType.USER, color: 'arcoblue' },
-  { label: '系统', value: AuthLogType.SYSTEM, color: 'purple' },
+  { label: '用户', value: AuthLogType.USER, color: ColorName.ARCOBLUE },
+  { label: '系统', value: AuthLogType.SYSTEM, color: ColorName.PURPLE },
 ]

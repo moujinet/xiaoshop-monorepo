@@ -16,7 +16,7 @@ describe('Member Module - Groups', () => {
         name: 'test',
         desc: 'test',
         conditions: [
-          { key: 'gender', operator: 'in', name: '性别', value: 'male' },
+          { key: 1, operator: 1, name: '性别', value: 1 },
         ],
       })
       .expect(200)
@@ -32,7 +32,7 @@ describe('Member Module - Groups', () => {
         name: 'test update',
         desc: 'test update',
         conditions: [
-          { key: 'gender', operator: 'in', name: '性别', value: 'male' },
+          { key: 1, operator: 1, name: '性别', value: 1 },
         ],
       })
       .expect(200)

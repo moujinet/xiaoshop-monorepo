@@ -1,14 +1,14 @@
 export const plan = {
   id: 1,
-  type: 'times',
+  type: 1,
   due: 0,
   price: 1900,
 }
 
 export const card = {
   id: 1,
-  type: 'level',
-  enable: 'Y',
+  type: 1,
+  enable: 1,
   key: 'lv0',
   name: 'Member Level 0',
   desc: 'Member Level 0',
@@ -29,5 +29,5 @@ export const card = {
   needExp: 0,
   discount: 0,
   pointsRatio: 0,
-  freeShipping: 'Y',
+  freeShipping: 1,
 }

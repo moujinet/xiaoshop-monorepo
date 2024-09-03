@@ -1,7 +1,7 @@
 import type {
-  IMemberSource,
   IMemberUnregister,
-  IMemberUnregisterStatus,
+  MemberSource,
+  MemberUnregisterStatus,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -14,10 +14,10 @@ export class MemberUnIMemberUnregisterResponse implements IMemberUnregister {
   readonly id: number
 
   @ApiProperty({ description: '注销状态', example: example.status })
-  readonly status: IMemberUnregisterStatus
+  readonly status: MemberUnregisterStatus
 
   @ApiProperty({ description: '注销来源', example: example.source })
-  readonly source: IMemberSource
+  readonly source: MemberSource
 
   @ApiProperty({ description: '会员 ID', example: example.memberId })
   readonly memberId: number

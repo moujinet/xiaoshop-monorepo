@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsNumberString } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 import { PaginationRequest } from '~/common/dto'
 
 /**

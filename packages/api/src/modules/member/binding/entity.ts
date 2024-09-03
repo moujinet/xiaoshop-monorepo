@@ -1,10 +1,8 @@
-import {
-  type IMemberBinding,
-  type IMemberCardBadgeStyle,
-  type IMemberCardPlanType,
-  type IMemberCardStyle,
-  type IMemberCardType,
-  type IYesOrNo,
+import type {
+  IMemberBinding,
+  IMemberCardBadgeStyle,
+  IMemberCardStyle,
+  MemberCardPlanType,
   MemberCardType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -25,14 +23,14 @@ export class MemberBinding implements IMemberBinding {
   @Column({ name: 'card_id', type: 'int', unsigned: true, default: 0, comment: '会员卡 ID (冗余)' })
   cardId: number
 
-  @Column({ name: 'card_type', type: 'varchar', length: 32, nullable: false, default: MemberCardType.CUSTOM, comment: '会员卡类型 (冗余)' })
-  cardType: IMemberCardType
+  @Column({ name: 'card_type', type: 'tinyint', unsigned: true, default: 0, comment: '会员卡类型 (冗余)' })
+  cardType: MemberCardType
 
   @Column({ name: 'plan_id', type: 'int', unsigned: true, default: 0, comment: '会员卡有效期 ID (冗余)' })
   planId: number
 
-  @Column({ name: 'plan_type', type: 'varchar', length: 32, nullable: false, default: '', comment: '会员卡有效期类型 (冗余)' })
-  planType: IMemberCardPlanType
+  @Column({ name: 'plan_type', type: 'tinyint', unsigned: true, default: 0, comment: '会员卡有效期类型 (冗余)' })
+  planType: MemberCardPlanType
 
   @Column({ type: 'varchar', length: 16, nullable: false, default: '', comment: '会员卡标识 (冗余)' })
   key: string
@@ -58,11 +56,11 @@ export class MemberBinding implements IMemberBinding {
   @Column({ name: 'next_level_exp', type: 'int', unsigned: true, default: 0, comment: '下级升级所需成长值' })
   nextLevelExp: number
 
-  @Column({ name: 'free_shipping', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否包邮 (N:否 Y:是) (冗余)' })
-  freeShipping: IYesOrNo
+  @Column({ name: 'free_shipping', type: 'tinyint', unsigned: true, default: 0, comment: '是否包邮 (冗余)' })
+  freeShipping: YesOrNo
 
-  @Column({ type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '是否可升级 (N:否 Y:是)' })
-  upgradeable: IYesOrNo
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '是否可升级' })
+  upgradeable: YesOrNo
 
   @Column({ type: 'int', unsigned: true, default: 0, comment: '会员卡使用次数' })
   times: number

@@ -1,4 +1,4 @@
-import { AuthLogType, type IAuthLogType } from '@xiaoshop/shared'
+import { AuthLogType } from '@xiaoshop/shared'
 import { IsEnum, IsMobilePhone, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { example } from './example'
@@ -11,7 +11,7 @@ export class GetAuthLogPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '日志类型', enum: AuthLogType, example: example.type })
   @IsEnum(AuthLogType, { message: '日志类型不正确' })
   @IsOptional()
-  readonly type: IAuthLogType
+  readonly type: AuthLogType
 
   @ApiProperty({ required: false, description: '日志模块', example: 'module' })
   @IsString({ message: '日志模块不正确' })

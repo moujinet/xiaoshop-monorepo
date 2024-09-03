@@ -4,9 +4,9 @@ export const example = {
   conditions: [
     {
       name: '会员性别',
-      key: 'gender',
-      operator: 'in',
-      value: ['male', 'female'],
+      key: 1,
+      operator: 1,
+      value: [1, 2],
     },
   ],
   total: 0,

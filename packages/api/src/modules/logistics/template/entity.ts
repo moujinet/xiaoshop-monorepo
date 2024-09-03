@@ -1,9 +1,7 @@
-import {
-  type ILogisticsCalcMode,
-  type ILogisticsTemplate,
-  type ILogisticsTemplateFreeRule,
-  type ILogisticsTemplateRule,
-  type IYesOrNo,
+import type {
+  ILogisticsTemplate,
+  ILogisticsTemplateFreeRule,
+  ILogisticsTemplateRule,
   LogisticsCalcMode,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -26,14 +24,14 @@ export class LogisticsFreightTemplate implements ILogisticsTemplate {
   @Column({ type: 'int', unsigned: true, default: 1, comment: '排序' })
   sort: number
 
-  @Column({ name: 'calc_mode', type: 'varchar', length: 32, nullable: false, default: LogisticsCalcMode.COUNT, comment: '运费计算方式' })
-  calcMode: ILogisticsCalcMode
+  @Column({ name: 'calc_mode', type: 'tinyint', unsigned: true, default: 0, comment: '运费计算方式' })
+  calcMode: LogisticsCalcMode
 
   @Column({ type: 'simple-json', default: null, comment: '运费规则 (JSON)' })
   rules: ILogisticsTemplateRule[]
 
-  @Column({ name: 'enable_free_rules', type: 'char', length: 1, nullable: false, default: YesOrNo.NO, comment: '启用包邮地区 (N:否 Y:是)' })
-  enableFreeRules: IYesOrNo
+  @Column({ name: 'enable_free_rules', type: 'tinyint', unsigned: true, default: 0, comment: '启用包邮地区' })
+  enableFreeRules: YesOrNo
 
   @Column({ name: 'free_rules', type: 'simple-json', default: null, comment: '包邮规则 (JSON)' })
   freeRules: ILogisticsTemplateFreeRule[]

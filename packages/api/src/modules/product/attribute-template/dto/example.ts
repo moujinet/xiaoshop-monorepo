@@ -4,7 +4,7 @@ export const example = {
   options: [
     {
       name: '树种',
-      type: 'checkbox',
+      type: 1,
       options: ['黑胡桃', '橡木', '榆木'],
       defaultValue: ['黑胡桃'],
     },

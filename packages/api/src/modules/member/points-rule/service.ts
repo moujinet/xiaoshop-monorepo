@@ -2,8 +2,8 @@ import {
   type IMemberPointsRule,
   type IMemberPointsRuleKey,
   type IMemberPointsRuleOptions,
-  type IYesOrNo,
   MEMBER_POINTS_RULE_KEYS,
+  YesOrNo,
 } from '@xiaoshop/shared'
 import { Inject, Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
@@ -44,8 +44,8 @@ export class MemberPointsRuleService {
       for (const { value } of MEMBER_POINTS_RULE_KEYS) {
         if (settings[`member.points.${value}`]) {
           list.push({
-            key: value as IMemberPointsRuleKey,
-            enable: settings[`member.points.${value}`] as IYesOrNo,
+            key: value,
+            enable: Number(settings[`member.points.${value}`]) as YesOrNo,
             rule: settings[`member.points.${value}.rule`],
           })
         }
@@ -116,11 +116,11 @@ export class MemberPointsRuleService {
    * @throws {FailedException} 更新会员积分规则状态失败
    * @throws {NotFoundException} 会员积分规则不存在
    */
-  async updateStatus(key: IMemberPointsRuleKey, enable: IYesOrNo) {
+  async updateStatus(key: IMemberPointsRuleKey, enable: YesOrNo) {
     try {
       if (await this.findByKey(key)) {
         await this.settings.update([
-          { key: `member.points.${key}`, value: enable },
+          { key: `member.points.${key}`, value: `${enable}` },
         ])
 
         this.event.emit(

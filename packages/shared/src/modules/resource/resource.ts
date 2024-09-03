@@ -1,5 +1,5 @@
 import type { IResourceGroupInfo } from './group'
-import type { IResourceType } from './types'
+import type { ResourceType } from './constants'
 
 /**
  * 素材信息
@@ -12,12 +12,9 @@ export interface IResource {
   /**
    * 素材类型
    *
-   * - `image`: 图片
-   * - `video`: 视频
-   *
-   * @see {@link IResourceType}
+   * @see {@link ResourceType}
    */
-  type: IResourceType
+  type: ResourceType
   /**
    * 素材分组 ID
    */

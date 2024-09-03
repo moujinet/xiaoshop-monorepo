@@ -1,8 +1,5 @@
 import {
   type IProductExportConditions,
-  type IProductSource,
-  type IProductStatus,
-  type IProductType,
   ProductSource,
   ProductStatus,
   ProductType,
@@ -14,17 +11,17 @@ export class ProductExportConditionsPayload implements IProductExportConditions 
   @ApiProperty({ required: false, description: '商品类型', enum: ProductType })
   @IsEnum(ProductType, { message: '商品类型不正确' })
   @IsOptional()
-  readonly type: IProductType
+  readonly type: ProductType
 
   @ApiProperty({ required: false, description: '商品状态', enum: ProductStatus })
   @IsEnum(ProductStatus, { message: '商品状态不正确' })
   @IsOptional()
-  readonly status: IProductStatus
+  readonly status: ProductStatus
 
   @ApiProperty({ required: false, description: '商品来源', enum: ProductSource })
   @IsEnum(ProductSource, { message: '商品来源不正确' })
   @IsOptional()
-  readonly source: IProductSource
+  readonly source: ProductSource
 
   @ApiProperty({ required: false, type: [Number], description: '商品分类' })
   @IsNumber({}, { each: true, message: '商品分类必须为数字' })

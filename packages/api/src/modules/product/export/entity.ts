@@ -1,7 +1,6 @@
-import {
-  type IProductExport,
-  type IProductExportConditions,
-  type IProductExportStatus,
+import type {
+  IProductExport,
+  IProductExportConditions,
   ProductExportStatus,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
@@ -15,8 +14,8 @@ export class ProductExport implements IProductExport {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: ProductExportStatus.PENDING, comment: '导出状态' })
-  status: IProductExportStatus
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '导出状态' })
+  status: ProductExportStatus
 
   @Column({ type: 'simple-json', default: null, comment: '导出条件' })
   conditions: IProductExportConditions

@@ -45,4 +45,8 @@ export interface IOrganizePosition {
  *
  * @see {@link IOrganizePosition}
  */
-export type IOrganizePositionDict = Pick<IOrganizePosition, 'id' | 'name'>
+export type IOrganizePositionDict = Pick<
+  IOrganizePosition,
+  | 'id'
+  | 'name'
+>

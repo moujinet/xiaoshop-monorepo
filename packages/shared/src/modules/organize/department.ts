@@ -46,13 +46,22 @@ export interface IOrganizeDepartmentTreeItem extends IOrganizeDepartment {
  *
  * @see {@link IOrganizeDepartment}
  */
-export type IOrganizeDepartmentDict = Pick<IOrganizeDepartment, 'id' | 'name'>
+export type IOrganizeDepartmentDict = Pick<
+  IOrganizeDepartment,
+  | 'id'
+  | 'name'
+>
 
 /**
  * 组织架构 - 部门字典树
  *
  * @see {@link IOrganizeDepartment}
  */
-export type IOrganizeDepartmentDictTreeItem = Pick<IOrganizeDepartment, 'id' | 'parentId' | 'name'> & {
+export type IOrganizeDepartmentDictTreeItem = Pick<
+  IOrganizeDepartment,
+  | 'id'
+  | 'parentId'
+  | 'name'
+> & {
   children?: IOrganizeDepartmentDictTreeItem[]
 }

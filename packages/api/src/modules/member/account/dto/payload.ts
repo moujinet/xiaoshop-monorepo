@@ -1,14 +1,11 @@
 import {
   type ILocationPath,
-  type IMemberAccountChangeType,
   type IMemberAccountKeys,
-  type IMemberGender,
-  type IMemberStatus,
   MemberAccountChangeType,
   MemberGender,
   MemberStatus,
 } from '@xiaoshop/shared'
-import { IsEnum, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateIf } from 'class-validator'
+import { ArrayNotEmpty, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateIf } from 'class-validator'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { example } from './example'
@@ -45,9 +42,9 @@ export class MemberAccountPayload {
   readonly avatar: string
 
   @ApiProperty({ required: false, enum: MemberGender, description: '会员性别', example: example.gender })
-  @IsEnum(MemberGender, { message: '会员性别错误' })
+  @IsNumber({}, { message: '会员性别错误' })
   @IsOptional()
-  readonly gender: IMemberGender
+  readonly gender: MemberGender
 
   @ApiProperty({ required: false, type: [Location], description: '注册城市', example: example.location })
   @Type(() => Location)
@@ -80,9 +77,8 @@ export class MemberAccountPayload {
  */
 export class UpdateMemberStatusPayload {
   @ApiProperty({ description: '会员状态', example: MemberStatus.NORMAL })
-  @IsEnum(MemberStatus, { message: '会员状态错误' })
-  @IsNotEmpty({ message: '会员状态不能为空' })
-  readonly status: IMemberStatus
+  @IsNumber({}, { message: '会员状态错误' })
+  readonly status: MemberStatus
 }
 
 /**
@@ -97,7 +93,7 @@ export class UpdateMemberTagsPayload
 export class BatchUpdateMemberTagsPayload extends UpdateMemberTagsPayload {
   @ApiProperty({ description: '会员 ID 列表', example: [1, 2, 3] })
   @IsNumber({}, { each: true, message: '会员 ID 必须为数字' })
-  @IsNotEmpty({ message: '会员 ID 列表不能为空' })
+  @ArrayNotEmpty({ message: '会员 ID 列表不能为空' })
   readonly memberIds: number[]
 }
 
@@ -116,17 +112,16 @@ export class ResetMemberPasswordPayload {
 export class UpdateMemberAccountPayload {
   @ApiProperty({ description: '会员 ID 列表', example: [1, 2, 3] })
   @IsNumber({}, { each: true, message: '会员 ID 必须为数字' })
-  @IsNotEmpty({ message: '会员 ID 列表不能为空' })
+  @ArrayNotEmpty({ message: '会员 ID 列表不能为空' })
   readonly memberIds: number[]
 
   @ApiProperty({ description: '账户类型', example: 'points' })
   @IsNotEmpty({ message: '账户类型不能为空' })
   readonly key: IMemberAccountKeys
 
-  @ApiProperty({ description: '变更类型', enum: MemberAccountChangeType, example: 'add' })
-  @IsEnum(MemberAccountChangeType, { message: '变更类型错误' })
-  @IsNotEmpty({ message: '变更类型不能为空' })
-  readonly type: IMemberAccountChangeType
+  @ApiProperty({ description: '变更类型', enum: MemberAccountChangeType, example: 1 })
+  @IsNumber({}, { message: '变更类型错误' })
+  readonly type: MemberAccountChangeType
 
   @ApiProperty({ description: '变化积分', example: 100 })
   @IsNumber({}, { message: '变化积分必须为数字' })

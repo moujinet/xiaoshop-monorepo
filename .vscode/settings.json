@@ -82,10 +82,12 @@
     "realname",
     "skus",
     "svip",
+    "tinyint",
     "uniapp",
     "vueup",
     "weapp",
     "wepay",
-    "wxwork"
+    "wxwork",
+    "yuanbao"
   ]
 }

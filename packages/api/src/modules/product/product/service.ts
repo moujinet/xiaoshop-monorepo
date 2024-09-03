@@ -6,8 +6,6 @@ import {
   type IProductExportListItem,
   type IProductListItem,
   IProductSku,
-  type IProductStatus,
-  type IYesOrNo,
   ProductBuyBtnType,
   ProductFreightChargeMode,
   ProductInventoryDeductMode,
@@ -87,11 +85,11 @@ export class ProductService {
         isDeleted: query.isDeleted || YesOrNo.NO,
       }
 
-      if (query.status === 'warning') {
+      if (query.status > ProductStatus.DRAFT) {
         where.isWarning = YesOrNo.YES
       }
       else if (query.status) {
-        where.status = query.status
+        where.status = Number(query.status)
       }
 
       if (query.name) {
@@ -974,7 +972,7 @@ export class ProductService {
    * @throws {FailedException} 批量更新商品状态失败
    * @event ProductStatusUpdatedEvent
    */
-  async batchUpdateStatus(ids: number[], status: IProductStatus) {
+  async batchUpdateStatus(ids: number[], status: ProductStatus) {
     try {
       await this.repository.update({
         id: In(ids),
@@ -1003,7 +1001,7 @@ export class ProductService {
    * @param status 状态
    * @throws {FailedException} 更新库存预警状态失败
    */
-  async updateWarningStatus(ids: number[], status: IYesOrNo) {
+  async updateWarningStatus(ids: number[], status: YesOrNo) {
     try {
       await this.repository.update({
         id: In(ids),

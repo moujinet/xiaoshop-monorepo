@@ -1,11 +1,10 @@
 import {
   AuthLogType,
-  type IMemberAccountChangeType,
   type IMemberAccountKeys,
-  type IMemberStatus,
   type IMemberTagDict,
   MEMBER_ACCOUNT_CHANGE_TYPES,
   MEMBER_STATUSES,
+  MemberAccountChangeType,
   MemberStatus,
 } from '@xiaoshop/shared'
 import { BaseEvent } from '~/common/events'
@@ -33,7 +32,7 @@ export class MemberAccountChangedEvent extends BaseEvent {
   constructor(
     public readonly memberId: number,
     public readonly nickname: string,
-    public readonly changeType: IMemberAccountChangeType,
+    public readonly changeType: MemberAccountChangeType,
     public readonly key: IMemberAccountKeys,
     public readonly value: number,
     public readonly reason: string,
@@ -75,7 +74,7 @@ export class MemberStatusChangedEvent extends BaseEvent {
   constructor(
     public readonly memberId: number,
     public readonly nickname: string,
-    public readonly status: IMemberStatus,
+    public readonly status: MemberStatus,
   ) {
     super(
       '会员管理',

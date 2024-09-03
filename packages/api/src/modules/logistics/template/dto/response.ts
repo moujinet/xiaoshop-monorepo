@@ -1,12 +1,10 @@
 import {
   type ILocationPath,
-  type ILogisticsCalcMode,
   type ILogisticsTemplate,
   type ILogisticsTemplateDict,
   type ILogisticsTemplateFreeRule,
   type ILogisticsTemplateListItem,
   type ILogisticsTemplateRule,
-  type IYesOrNo,
   LogisticsCalcMode,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -63,13 +61,13 @@ export class LogisticsTemplateResponse implements ILogisticsTemplate {
   readonly sort: number
 
   @ApiProperty({ description: '运费计算方式', example: LogisticsCalcMode.COUNT })
-  readonly calcMode: ILogisticsCalcMode
+  readonly calcMode: LogisticsCalcMode
 
   @ApiProperty({ description: '运费规则', type: [LogisticsTemplateRuleResponse] })
   readonly rules: ILogisticsTemplateRule[]
 
   @ApiProperty({ description: '启用包邮地区', example: YesOrNo.NO })
-  readonly enableFreeRules: IYesOrNo
+  readonly enableFreeRules: YesOrNo
 
   @ApiProperty({ description: '包邮规则', type: [LogisticsTemplateFreeRuleResponse] })
   readonly freeRules: ILogisticsTemplateFreeRule[]

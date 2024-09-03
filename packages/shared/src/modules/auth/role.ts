@@ -37,18 +37,34 @@ export interface IAuthRole {
  *
  * @see {@link IAuthRole}
  */
-export type IAuthRoleListItem = Omit<IAuthRole, 'permissions' | 'createdTime'>
+export type IAuthRoleListItem = Pick<
+  IAuthRole,
+  | 'id'
+  | 'name'
+  | 'desc'
+  | 'sort'
+  | 'updatedTime'
+>
 
 /**
  * 员工角色 - 字典信息
  *
  * @see {@link IAuthRole}
  */
-export type IAuthRoleDict = Pick<IAuthRole, 'id' | 'name'>
+export type IAuthRoleDict = Pick<
+  IAuthRole,
+  | 'id'
+  | 'name'
+>
 
 /**
  * 员工角色 - 权限信息
  *
  * @see {@link IAuthRole}
  */
-export type IAuthRolePermissions = Pick<IAuthRole, 'id' | 'name' | 'permissions'>
+export type IAuthRolePermissions = Pick<
+  IAuthRole,
+  | 'id'
+  | 'name'
+  | 'permissions'
+>

@@ -1,7 +1,5 @@
-import {
-  type IMemberSource,
-  type IMemberUnregister,
-  type IMemberUnregisterStatus,
+import type {
+  IMemberUnregister,
   MemberSource,
   MemberUnregisterStatus,
 } from '@xiaoshop/shared'
@@ -19,8 +17,8 @@ export class MemberUnregister implements IMemberUnregister {
   @Column({ name: 'member_id', type: 'int', primary: true, unique: true, unsigned: true, default: 0, comment: '会员 ID' })
   memberId: number
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberUnregisterStatus.PENDING, comment: '注销状态' })
-  status: IMemberUnregisterStatus
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '注销状态' })
+  status: MemberUnregisterStatus
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '会员账号' })
   username: string
@@ -34,8 +32,8 @@ export class MemberUnregister implements IMemberUnregister {
   @Column({ type: 'varchar', length: 255, nullable: false, default: '', comment: '注销原因' })
   reason: string
 
-  @Column({ type: 'varchar', length: 32, nullable: false, default: MemberSource.WECHAT_MP, comment: '注销来源' })
-  source: IMemberSource
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '注销来源' })
+  source: MemberSource
 
   @CreateDateColumn({ name: 'created_time', update: false, type: 'datetime', default: null, comment: '创建时间' })
   createdTime: string

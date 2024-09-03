@@ -1,5 +1,5 @@
-import type { ILogisticsCalcMode } from './types'
-import type { ILocationPath, IYesOrNo } from '~/common'
+import type { LogisticsCalcMode } from './constants'
+import type { ILocationPath, YesOrNo } from '~/common'
 
 /**
  * 物流运费模板
@@ -24,13 +24,9 @@ export interface ILogisticsTemplate {
   /**
    * 运费计算方式
    *
-   * - `weight`: 重量
-   * - `volume`: 体积
-   * - `count`: 数量
-   *
-   * @see {@link ILogisticsCalcMode}
+   * @see {@link LogisticsCalcMode}
    */
-  calcMode: ILogisticsCalcMode
+  calcMode: LogisticsCalcMode
   /**
    * 运费规则 (JSON)
    *
@@ -40,9 +36,9 @@ export interface ILogisticsTemplate {
   /**
    * 是否开启包邮规则 (Y:是  N:否)
    *
-   * @see {@link IYesOrNo}
+   * @see {@link YesOrNo}
    */
-  enableFreeRules: IYesOrNo
+  enableFreeRules: YesOrNo
   /**
    * 包邮规则 (JSON)
    *

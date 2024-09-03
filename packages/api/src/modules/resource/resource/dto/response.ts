@@ -2,7 +2,6 @@ import {
   type IResource,
   type IResourceGroupInfo,
   type IResourceListItem,
-  type IResourceType,
   ResourceType,
 } from '@xiaoshop/shared'
 import { ApiProperty, PickType } from '@nestjs/swagger'
@@ -21,7 +20,7 @@ export class ResourceResponse implements IResource {
   readonly group: IResourceGroupInfo
 
   @ApiProperty({ description: '素材类型', enum: ResourceType, example: ResourceType.IMAGE })
-  readonly type: IResourceType
+  readonly type: ResourceType
 
   @ApiProperty({ description: '文件名称', example: 'image.png' })
   readonly name: string

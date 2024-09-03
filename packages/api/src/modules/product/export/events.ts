@@ -1,7 +1,4 @@
-import {
-  type IProductExportStatus,
-  ProductExportStatus,
-} from '@xiaoshop/shared'
+import { ProductExportStatus } from '@xiaoshop/shared'
 import { ProductExportConditionsPayload } from './dto'
 import { BaseEvent } from '~/common/events'
 
@@ -27,7 +24,7 @@ export class ProductExportCreatedEvent extends BaseEvent {
 export class ProductExportCompletedEvent extends BaseEvent {
   constructor(
     public readonly id: number,
-    public readonly status: IProductExportStatus,
+    public readonly status: ProductExportStatus,
     public readonly count: number,
     public readonly filePath: string,
   ) {

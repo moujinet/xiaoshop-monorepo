@@ -7,18 +7,16 @@
  *
  * - `IMAGE`: 图片
  * - `VIDEO`: 视频
- *
- * @see {@link IResourceType}
  */
 export enum ResourceType {
-  IMAGE = 'image',
-  VIDEO = 'video',
+  IMAGE = 1,
+  VIDEO,
 }
 
 /**
  * 素材类型 - 字典
  *
- * @see {@link IResourceType}
+ * @see {@link ResourceType}
  */
 export const RESOURCE_TYPES = [
   { value: ResourceType.IMAGE, label: '图片', icon: 'mingcute:pic', accept: 'image/png,image/jpg,image/jpeg,image/gif' },

@@ -1,8 +1,6 @@
 import {
   type IMemberCardBadgeStyle,
-  type IMemberCardPlanType,
   type IMemberCardStyle,
-  type IYesOrNo,
   MemberCardPlanType,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -72,7 +70,7 @@ export class MemberCardPlanPayload {
   @ApiProperty({ description: '会员卡类型', enum: MemberCardPlanType, example: plan.type })
   @IsEnum(MemberCardPlanType, { message: '会员卡类型必须为枚举值' })
   @IsNotEmpty({ message: '会员卡类型必填' })
-  readonly type: IMemberCardPlanType
+  readonly type: MemberCardPlanType
 
   @ApiProperty({ description: '会员卡套餐有效期', example: plan.due })
   @IsNumber({}, { message: '会员卡套餐有效期必须为数字' })
@@ -127,7 +125,7 @@ export class MemberCardPayload {
   @ApiProperty({ required: false, description: '是否包邮', enum: YesOrNo, example: card.freeShipping })
   @IsEnum(YesOrNo, { message: '是否包邮必须为枚举值' })
   @IsOptional()
-  readonly freeShipping: IYesOrNo
+  readonly freeShipping: YesOrNo
 
   @ApiProperty({ required: false, description: '会员卡有效期', type: [MemberCardPlanPayload], example: card.plans })
   @ValidateNested({ message: '会员卡套餐必须为数组' })

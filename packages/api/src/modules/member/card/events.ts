@@ -1,4 +1,4 @@
-import { type IYesOrNo, YesOrNo } from '@xiaoshop/shared'
+import { YesOrNo } from '@xiaoshop/shared'
 import { BaseEvent } from '~/common/events'
 
 /**
@@ -56,7 +56,7 @@ export class MemberCardStatusUpdatedEvent extends BaseEvent {
   constructor(
     public readonly id: number,
     public readonly cardName: string,
-    public readonly enable: IYesOrNo,
+    public readonly enable: YesOrNo,
   ) {
     super('会员管理')
   }

@@ -1,6 +1,5 @@
 import {
   type IProductAttributeTemplateOption,
-  type IProductAttributeTemplateOptionType,
   ProductAttributeTemplateOptionType,
 } from '@xiaoshop/shared'
 import { IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator'
@@ -17,7 +16,7 @@ export class ProductAttributeTemplateOptionPayload implements IProductAttributeT
   @ApiProperty({ enum: ProductAttributeTemplateOptionType, description: '商品参数选项类型', default: ProductAttributeTemplateOptionType.TEXT })
   @IsEnum(ProductAttributeTemplateOptionType, { message: '商品参数选项不正确' })
   @IsNotEmpty({ message: '商品参数选项不能为空' })
-  readonly type: IProductAttributeTemplateOptionType
+  readonly type: ProductAttributeTemplateOptionType
 
   @ApiProperty({ description: '商品参数选项', example: example.options[0].options })
   @IsString({ each: true, message: '商品参数选项必须为字符串数组' })
