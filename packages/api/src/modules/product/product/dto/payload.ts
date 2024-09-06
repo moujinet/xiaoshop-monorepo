@@ -302,10 +302,10 @@ export class UpdateProductPropertiesPayload
     'returnsFreightBy',
     'buyBtnNameType',
     'buyBtnName',
-  ]) {}
+  ] as const) {}
 
 export class UpdateProductSkusPayload
-  extends PickType(ProductPayload, ['skus']) {}
+  extends PickType(ProductPayload, ['skus'] as const) {}
 
 export class BatchUpdateProductPropertiesPayload {
   @ApiProperty({ description: '商品 ID 列表', example: [1, 2] })

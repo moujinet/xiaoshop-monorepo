@@ -215,5 +215,5 @@ export class ProductListResponse
     'views',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductListItem {}

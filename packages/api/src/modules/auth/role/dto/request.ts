@@ -12,7 +12,7 @@ export class GetAuthRolePagesRequest extends PaginationRequest {}
  */
 export class GetAuthRoleRequest {
   @ApiProperty({ description: '员工角色 ID', example: 1 })
-  @IsNumberString()
+  @IsNumberString({}, { message: '员工角色 ID 必须为数字' })
   readonly id: number
 }
 
@@ -21,6 +21,6 @@ export class GetAuthRoleRequest {
  */
 export class DeleteAuthRoleRequest {
   @ApiProperty({ description: '员工角色 ID', example: 1 })
-  @IsNumber()
+  @IsNumber({}, { message: '员工角色 ID 必须为数字' })
   readonly id: number
 }

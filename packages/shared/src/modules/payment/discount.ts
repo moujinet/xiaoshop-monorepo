@@ -1,4 +1,5 @@
 import type { PaymentDiscountType } from './constants'
+import type { IPayment } from './payment'
 
 /**
  * 支付折扣信息
@@ -11,7 +12,7 @@ export interface IPaymentDiscount {
   /**
    * 支付 ID
    */
-  paymentId: number
+  paymentId: IPayment['id']
   /**
    * 促销 ID
    */

@@ -116,7 +116,7 @@ export class MemberAccountInfoResponse
       'gender',
       'birthday',
       'location',
-    ],
+    ] as const,
   )
   implements IMemberAccountInfo {}
 

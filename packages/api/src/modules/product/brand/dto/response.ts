@@ -33,7 +33,7 @@ export class ProductBrandDictResponse
   extends PickType(ProductBrandResponse, [
     'id',
     'name',
-  ])
+  ] as const)
   implements IProductBrandDict {}
 
 export class ProductBrandListResponse
@@ -44,5 +44,5 @@ export class ProductBrandListResponse
     'desc',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductBrandListItem {}

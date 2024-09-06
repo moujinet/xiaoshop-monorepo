@@ -29,7 +29,7 @@ export class ProductTagDictResponse
     'id',
     'name',
     'color',
-  ])
+  ] as const)
   implements IProductTagDict {}
 
 export class ProductTagListResponse
@@ -38,5 +38,5 @@ export class ProductTagListResponse
     'name',
     'color',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductTagListItem {}

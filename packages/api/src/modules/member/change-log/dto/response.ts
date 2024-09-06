@@ -51,7 +51,8 @@ export class MemberAccountChangeLogListResponse
     'value',
     'reason',
     'createdTime',
-  ]) implements IMemberAccountChangeLogListItem {}
+  ] as const)
+  implements IMemberAccountChangeLogListItem {}
 
 /**
  * 会员积分变更日志列表响应 (会员)
@@ -64,4 +65,5 @@ export class MemberAccountChangeLogMemberListResponse
     'value',
     'reason',
     'createdTime',
-  ]) implements IMemberAccountChangeLogMemberListItem {}
+  ] as const)
+  implements IMemberAccountChangeLogMemberListItem {}

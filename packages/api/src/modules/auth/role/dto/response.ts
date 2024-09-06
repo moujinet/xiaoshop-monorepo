@@ -37,19 +37,32 @@ export class AuthRoleResponse implements IAuthRole {
  * 员工角色 - 列表 - 响应 DTO
  */
 export class AuthRoleListResponse
-  extends PickType(AuthRoleResponse, ['id', 'name', 'desc', 'sort', 'updatedTime'] as const)
+  extends PickType(AuthRoleResponse, [
+    'id',
+    'name',
+    'desc',
+    'sort',
+    'updatedTime',
+  ] as const)
   implements IAuthRoleListItem {}
 
 /**
  * 员工角色 - 权限信息 - 响应 DTO
  */
 export class AuthRolePermissionsResponse
-  extends PickType(AuthRoleResponse, ['id', 'name', 'permissions'] as const)
+  extends PickType(AuthRoleResponse, [
+    'id',
+    'name',
+    'permissions',
+  ] as const)
   implements IAuthRolePermissions {}
 
 /**
  * 员工角色 - 字典 - 响应 DTO
  */
 export class AuthRoleDictResponse
-  extends PickType(AuthRoleResponse, ['id', 'name'] as const)
+  extends PickType(AuthRoleResponse, [
+    'id',
+    'name',
+  ] as const)
   implements IAuthRoleDict {}

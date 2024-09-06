@@ -1,4 +1,3 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
 import type {
   ILocationPath,
   IMemberAccountInfo,
@@ -7,6 +6,7 @@ import type {
   IMemberAddressMemberListItem,
   YesOrNo,
 } from '@xiaoshop/shared'
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger'
 
 /**
  * 获取会员收货地址响应 DTO

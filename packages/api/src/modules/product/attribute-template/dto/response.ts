@@ -28,9 +28,9 @@ export class ProductAttributeTemplateResponse implements IProductAttributeTempla
 }
 
 export class ProductAttributeTemplateListResponse
-  extends OmitType(ProductAttributeTemplateResponse, ['options', 'createdTime'])
+  extends OmitType(ProductAttributeTemplateResponse, ['options', 'createdTime'] as const)
   implements IProductAttributeTemplateListItem {}
 
 export class ProductAttributeTemplateDictResponse
-  extends PickType(ProductAttributeTemplateResponse, ['id', 'name'])
+  extends PickType(ProductAttributeTemplateResponse, ['id', 'name'] as const)
   implements IProductAttributeTemplateDict {}

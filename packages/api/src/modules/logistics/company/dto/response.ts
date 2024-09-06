@@ -34,5 +34,7 @@ export class LogisticsCompanyResponse implements ILogisticsCompany {
  * 获取物流公司列表响应 DTO
  */
 export class LogisticsCompanyListResponse
-  extends OmitType(LogisticsCompanyResponse, ['createdTime'] as const)
+  extends OmitType(LogisticsCompanyResponse, [
+    'createdTime',
+  ] as const)
   implements ILogisticsCompanyListItem {}

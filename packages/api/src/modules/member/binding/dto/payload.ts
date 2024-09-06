@@ -22,7 +22,7 @@ export class BindMemberCardPayload {
 /**
  * 批量绑定会员卡请求 DTO
  */
-export class BatchBindMemberCardPayload extends OmitType(BindMemberCardPayload, ['memberId']) {
+export class BatchBindMemberCardPayload extends OmitType(BindMemberCardPayload, ['memberId'] as const) {
   @ApiProperty({ description: '会员 ID 数组', example: [1, 2] })
   @IsArray({ message: '会员 IDs 必须为数组' })
   @IsNumber({}, { each: true, message: '会员 ID 必须为数字' })

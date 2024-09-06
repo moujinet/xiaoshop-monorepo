@@ -3,7 +3,7 @@ import {
   YesOrNo,
 } from '@xiaoshop/shared'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from 'class-validator'
+import { IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from 'class-validator'
 import { example } from './example'
 
 /**
@@ -47,11 +47,11 @@ export class CreateAuthUserPayload {
   readonly positionId: number
 
   @ApiProperty({ description: '是否管理员', enum: YesOrNo, default: YesOrNo.NO })
-  @IsEnum(YesOrNo, { message: '是否管理员必须为 YesOrNo 类型' })
+  @IsNumber({}, { message: '是否管理员必须为 YesOrNo 类型' })
   readonly isAdmin: YesOrNo
 
   @ApiProperty({ description: '员工状态', enum: AuthUserStatus, default: AuthUserStatus.NORMAL })
-  @IsEnum(AuthUserStatus, { message: '员工状态必须为 AuthUserStatus 类型' })
+  @IsNumber({}, { message: '员工状态必须为 AuthUserStatus 类型' })
   readonly status: AuthUserStatus
 }
 

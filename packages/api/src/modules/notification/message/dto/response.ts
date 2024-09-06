@@ -46,5 +46,5 @@ export class NotificationMessageListResponse
     'content',
     'extras',
     'sentTime',
-  ])
+  ] as const)
   implements INotificationMessageListItem {}

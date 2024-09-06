@@ -37,7 +37,7 @@ export class ProductCategoryDictResponse
     'id',
     'parentId',
     'name',
-  ])
+  ] as const)
   implements IProductCategoryDict {}
 
 export class ProductCategoryListResponse
@@ -49,5 +49,5 @@ export class ProductCategoryListResponse
     'desc',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductCategoryListItem {}

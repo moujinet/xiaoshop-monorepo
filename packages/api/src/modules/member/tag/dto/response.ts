@@ -33,7 +33,7 @@ export class MemberTagResponse implements IMemberTag {
  * @see {@link IMemberTagDict}
  */
 export class MemberTagDictResponse
-  extends PickType(MemberTagResponse, ['id', 'name', 'color'])
+  extends PickType(MemberTagResponse, ['id', 'name', 'color'] as const)
   implements IMemberTagDict {}
 
 /**
@@ -42,5 +42,5 @@ export class MemberTagDictResponse
  * @see {@link IMemberTagListItem}
  */
 export class MemberTagListResponse
-  extends PickType(MemberTagResponse, ['id', 'name', 'color', 'updatedTime'])
+  extends PickType(MemberTagResponse, ['id', 'name', 'color', 'updatedTime'] as const)
   implements IMemberTagListItem {}

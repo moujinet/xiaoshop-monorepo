@@ -30,7 +30,7 @@ export class ProductGroupDictResponse
   extends PickType(ProductGroupResponse, [
     'id',
     'name',
-  ])
+  ] as const)
   implements IProductGroupDict {}
 
 export class ProductGroupListResponse
@@ -40,5 +40,5 @@ export class ProductGroupListResponse
     'desc',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductGroupListItem {}

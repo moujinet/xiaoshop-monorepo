@@ -38,7 +38,7 @@ export class ProductAdditionDictResponse
     'name',
     'icon',
     'price',
-  ])
+  ] as const)
   implements IProductAdditionDict {}
 
 export class ProductAdditionListResponse
@@ -50,5 +50,5 @@ export class ProductAdditionListResponse
     'price',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductAdditionListItem {}

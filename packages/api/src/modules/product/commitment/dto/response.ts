@@ -34,7 +34,7 @@ export class ProductCommitmentDictResponse
     'id',
     'name',
     'icon',
-  ])
+  ] as const)
   implements IProductCommitmentDict {}
 
 export class ProductCommitmentListResponse
@@ -45,5 +45,5 @@ export class ProductCommitmentListResponse
     'desc',
     'sort',
     'updatedTime',
-  ])
+  ] as const)
   implements IProductCommitmentListItem {}

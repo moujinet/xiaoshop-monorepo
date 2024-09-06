@@ -1,3 +1,5 @@
+import type { IPayment } from './payment'
+
 /**
  * 支付积分抵扣信息
  */
@@ -9,7 +11,7 @@ export interface IPaymentDeduct {
   /**
    * 支付 ID
    */
-  paymentId: number
+  paymentId: IPayment['id']
   /**
    * 抵扣积分
    */

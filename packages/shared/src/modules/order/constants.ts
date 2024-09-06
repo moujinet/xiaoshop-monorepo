@@ -110,3 +110,43 @@ export const ORDER_SOURCES = [
   { label: '代客下单', value: OrderSource.MANUAL, color: ColorName.ORANGE, icon: 'mingcute:user-edit' },
   { label: '收银台', value: OrderSource.CASHIER, color: ColorName.PURPLE, icon: 'mingcute:barcode-scan' },
 ]
+
+// --------------------------------
+// 订单 - 商品 - 状态
+// --------------------------------
+
+/**
+ * 订单商品状态 - 枚举
+ *
+ * - `PENDING`: 待付款
+ * - `PAID`: 已付款
+ * - `DELIVERED`: 已发货
+ * - `RECEIVED`: 已收货
+ * - `FINISHED`: 已完成
+ * - `AFTER_SALE`: 售后中
+ * - `REFUNDED`: 已退款
+ */
+export enum OrderProductStatus {
+  PENDING,
+  PAID,
+  DELIVERED,
+  RECEIVED,
+  FINISHED,
+  AFTER_SALE,
+  REFUNDED,
+}
+
+/**
+ * 订单商品状态 - 字典
+ *
+ * @see {@link OrderProductStatus}
+ */
+export const ORDER_PRODUCT_STATUSES = [
+  { label: '待付款', value: OrderProductStatus.PENDING, color: ColorName.ARCOBLUE },
+  { label: '已付款', value: OrderProductStatus.PAID, color: ColorName.GREEN },
+  { label: '已发货', value: OrderProductStatus.DELIVERED, color: ColorName.ORANGE },
+  { label: '已收货', value: OrderProductStatus.RECEIVED, color: ColorName.ORANGERED },
+  { label: '已完成', value: OrderProductStatus.FINISHED, color: ColorName.GRAY },
+  { label: '售后中', value: OrderProductStatus.AFTER_SALE, color: ColorName.RED },
+  { label: '已退款', value: OrderProductStatus.REFUNDED, color: ColorName.PURPLE },
+]

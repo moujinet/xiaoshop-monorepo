@@ -1,13 +1,16 @@
+import type { IMemberAccount } from '@/member'
 import type {
+  IProduct,
   IProductCartInfo,
+  IProductSku,
   IProductSkuInfo,
 } from '@/product'
 import type { YesOrNo } from '~/common'
 
 /**
- * 购物车
+ * 购物车商品信息
  */
-export interface ICart {
+export interface ICartProduct {
   /**
    * 购物车 ID
    */
@@ -15,11 +18,11 @@ export interface ICart {
   /**
    * 会员 ID
    */
-  memberId: number
+  memberId: IMemberAccount['id']
   /**
    * 商品 ID
    */
-  productId: number
+  productId: IProduct['id']
   /**
    * 商品信息
    *
@@ -29,7 +32,7 @@ export interface ICart {
   /**
    * 商品 SKU ID
    */
-  skuId: number
+  skuId: IProductSku['id']
   /**
    * 商品 SKU
    *

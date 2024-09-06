@@ -52,5 +52,5 @@ export class ResourceListResponse
     'path',
     'size',
     'createdTime',
-  ])
+  ] as const)
   implements IResourceListItem {}

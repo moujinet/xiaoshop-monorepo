@@ -3,7 +3,11 @@ import type {
   OrderStatus,
   OrderType,
 } from './constants'
-import type { IMemberAccountInfo } from '@/member'
+import type {
+  IMemberAccount,
+  IMemberAccountInfo,
+} from '@/member'
+import type { YesOrNo } from '~/common'
 
 /**
  * 订单信息
@@ -14,9 +18,9 @@ export interface IOrder {
    */
   id: number
   /**
-   * 订单 UUID
+   * 订单云链 ID
    */
-  uuid: string
+  connectId: string
   /**
    * 订单状态
    *
@@ -38,13 +42,19 @@ export interface IOrder {
   /**
    * 会员 ID
    */
-  memberId: number
+  memberId: IMemberAccount['id']
   /**
    * 会员信息
    *
    * @see {@link IMemberAccountInfo}
    */
   member: IMemberAccountInfo
+  /**
+   * 是否已发票
+   *
+   * @see {@link YesOrNo}
+   */
+  isInvoiced: YesOrNo
   /**
    * 创建时间
    */

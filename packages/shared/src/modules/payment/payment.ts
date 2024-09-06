@@ -2,6 +2,8 @@ import type {
   PaymentMethod,
   PaymentStatus,
 } from './constants'
+import type { IOrder } from '@/order'
+import type { IMemberAccount } from '@/member'
 
 /**
  * 支付信息
@@ -11,6 +13,10 @@ export interface IPayment {
    * 支付 ID
    */
   id: number
+  /**
+   * 交易 ID
+   */
+  transactionId: string
   /**
    * 支付状态
    *
@@ -26,47 +32,15 @@ export interface IPayment {
   /**
    * 会员 ID
    */
-  memberId: number
+  memberId: IMemberAccount['id']
   /**
    * 订单 ID
    */
-  orderId: number
-  /**
-   * 订单金额
-   */
-  orderAmount: number
-  /**
-   * 优惠金额
-   */
-  discountAmount: number
-  /**
-   * 积分抵扣金额
-   */
-  deductedAmount: number
-  /**
-   * 优惠券抵扣金额
-   */
-  couponAmount: number
-  /**
-   * 运费金额
-   */
-  freightAmount: number
+  orderId: IOrder['id']
   /**
    * 实际支付金额
    */
   actualAmount: number
-  /**
-   * 修改金额
-   */
-  changeAmount: number
-  /**
-   * 改价原因
-   */
-  changeReason: string
-  /**
-   * 改价时间
-   */
-  changedTime: string
   /**
    * 创建时间
    */

@@ -9,17 +9,17 @@ import { PaginationRequest } from '~/common/dto'
  */
 export class GetAuthUserPagesRequest extends PaginationRequest {
   @ApiProperty({ required: false, description: '员工角色 ID' })
-  @IsNumberString({ no_symbols: true }, { message: '员工角色 ID 必须为数字' })
+  @IsNumberString({}, { message: '员工角色 ID 必须为数字' })
   @IsOptional()
   readonly roleId: number
 
   @ApiProperty({ required: false, description: '员工部门 ID' })
-  @IsNumberString({ no_symbols: true }, { message: '员工部门 ID 必须为数字' })
+  @IsNumberString({}, { message: '员工部门 ID 必须为数字' })
   @IsOptional()
   readonly departmentId: number
 
   @ApiProperty({ required: false, description: '员工职位 ID' })
-  @IsNumberString({ no_symbols: true }, { message: '员工职位 ID 必须为数字' })
+  @IsNumberString({}, { message: '员工职位 ID 必须为数字' })
   @IsOptional()
   readonly positionId: number
 
@@ -44,7 +44,7 @@ export class GetAuthUserPagesRequest extends PaginationRequest {
  */
 export class GetAuthUserRequest {
   @ApiProperty({ description: '员工 ID' })
-  @IsNumberString({ no_symbols: true }, { message: '员工 ID 必须为数字' })
+  @IsNumberString({}, { message: '员工 ID 必须为数字' })
   @IsNotEmpty({ message: '员工 ID 不能为空' })
   readonly id: number
 }

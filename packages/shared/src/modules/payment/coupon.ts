@@ -1,3 +1,5 @@
+import type { IPayment } from './payment'
+
 /**
  * 支付优惠券信息
  */
@@ -9,7 +11,7 @@ export interface IPaymentCoupon {
   /**
    * 支付 ID
    */
-  paymentId: number
+  paymentId: IPayment['id']
   /**
    * 优惠券 ID
    */
