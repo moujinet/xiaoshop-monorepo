@@ -83,6 +83,7 @@
     "skus",
     "svip",
     "tinyint",
+    "UNCATEGORIZED",
     "uniapp",
     "vueup",
     "weapp",
