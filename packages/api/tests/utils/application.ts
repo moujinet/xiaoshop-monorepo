@@ -34,6 +34,7 @@ import { ResourceModule } from '@/resource/module'
 import { UploadModule } from '@/upload/module'
 import { MemberModule } from '@/member/module'
 import { ProductModule } from '@/product/module'
+import { NotificationModule } from '@/notification/module'
 
 export async function createTestingModule(modules: any[]) {
   const module = Test.createTestingModule({
@@ -115,6 +116,7 @@ export async function getTestApplication() {
       UploadModule,
       MemberModule,
       ProductModule,
+      NotificationModule,
     ])
     await app.init()
 

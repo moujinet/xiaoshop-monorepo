@@ -2,6 +2,7 @@ import {
   type IApiPaginationData,
   type IMemberAccountKeys,
   type IMemberAccountListItem,
+  IMemberAccountNotificationInfo,
   type IMemberAccountValues,
   type IMemberGroupCondition,
   type IMemberProfile,
@@ -243,6 +244,32 @@ export class MemberAccountService {
     }
     catch (e) {
       throw new FailedException('获取会员资料', e.message)
+    }
+  }
+
+  /**
+   * 获取会员联系信息
+   *
+   * @param id 会员 ID
+   * @returns Promise<IMemberAccountNotificationInfo>
+   * @throws {NotFoundException} 未找到会员
+   */
+  async findInfoById(id: number): Promise<IMemberAccountNotificationInfo> {
+    try {
+      const profile = await this.repository.findOne({
+        select: ['nickname', 'mobile'],
+        where: {
+          id,
+        },
+      })
+
+      if (!profile)
+        throw new NotFoundException('会员不存在')
+
+      return profile
+    }
+    catch (e) {
+      throw new FailedException('获取会员昵称', e.message, e.status)
     }
   }
 

@@ -20,10 +20,11 @@ import configuration from '~/configs'
 
 // Modules
 import { AuthModule } from '@/auth/module'
-import { ProductModule } from '@/product/module'
 import { LogisticsModule } from '@/logistics/module'
 import { MemberModule } from '@/member/module'
+import { NotificationModule } from '@/notification/module'
 import { OrganizeModule } from '@/organize/module'
+import { ProductModule } from '@/product/module'
 import { ResourceModule } from '@/resource/module'
 import { SettingsModule } from '@/settings/module'
 import { UploadModule } from '@/upload/module'
@@ -86,6 +87,7 @@ import {
     ProductModule,
     MemberModule,
     LogisticsModule,
+    NotificationModule,
     AuthModule,
     OrganizeModule,
     ResourceModule,

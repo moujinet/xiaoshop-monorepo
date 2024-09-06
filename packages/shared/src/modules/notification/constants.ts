@@ -61,7 +61,7 @@ export const NOTIFICATION_STATUSES = [
  * - `FAILED`: 发送失败
  */
 export enum NotificationSendStatus {
-  SUCCESS,
+  SUCCESS = 1,
   FAILED,
 }
 
