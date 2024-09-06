@@ -243,6 +243,12 @@ export type IMemberAccountListItem = IMemberAccountInfo & Pick<
   | 'lastLoginTime'
 >
 
+export type IMemberAccountNotificationInfo = Pick<
+  IMemberAccount,
+  | 'nickname'
+  | 'mobile'
+>
+
 /**
  * 登录会员账户信息
  *
