@@ -27,8 +27,8 @@ export class ProductResponse {
   @ApiProperty({ description: '商品 ID', example: 1 })
   readonly id: number
 
-  @ApiProperty({ description: '商品 UUID', example: example.uuid })
-  readonly uuid: string
+  @ApiProperty({ description: '云链 ID', example: example.connectId })
+  readonly connectId: string
 
   @ApiProperty({ description: '商品类型', example: example.type })
   readonly type: ProductType
@@ -193,7 +193,7 @@ export class ProductResponse {
 export class ProductListResponse
   extends PickType(ProductResponse, [
     'id',
-    'uuid',
+    'connectId',
     'type',
     'status',
     'source',

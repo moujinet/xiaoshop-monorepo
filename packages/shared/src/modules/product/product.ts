@@ -29,9 +29,9 @@ export interface IProduct {
    */
   id: number
   /**
-   * 商品 UUID
+   * 云链 ID
    */
-  uuid: string
+  connectId: string
   /**
    * 商品类型
    *
@@ -300,7 +300,7 @@ export interface IProduct {
 export type IProductInfo = Pick<
   IProduct,
   | 'id'
-  | 'uuid'
+  | 'connectId'
   | 'type'
   | 'status'
   | 'source'
@@ -324,7 +324,7 @@ export type IProductInfo = Pick<
 export type IProductCartInfo = Pick<
   IProduct,
   | 'id'
-  | 'uuid'
+  | 'connectId'
   | 'type'
   | 'status'
   | 'name'

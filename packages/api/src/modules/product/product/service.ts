@@ -153,7 +153,7 @@ export class ProductService {
       const [result, total] = await this.repository.findAndCount({
         select: {
           id: true,
-          uuid: true,
+          connectId: true,
           type: true,
           status: true,
           source: true,
@@ -243,9 +243,9 @@ export class ProductService {
           sales: true,
           skus: {
             id: true,
-            uuid: true,
+            connectId: true,
             productId: true,
-            productUuid: true,
+            productConnectId: true,
             skuCode: true,
             name: true,
             attributes: true,
@@ -297,9 +297,9 @@ export class ProductService {
           additions: { id: true, name: true, icon: true, price: true },
           skus: {
             id: true,
-            uuid: true,
+            connectId: true,
             productId: true,
-            productUuid: true,
+            productConnectId: true,
             skuCode: true,
             name: true,
             attributes: true,
@@ -349,7 +349,7 @@ export class ProductService {
 
       const product = new Product()
 
-      product.uuid = uuid()
+      product.connectId = uuid()
       product.type = data.type || ProductType.ENTITY
       product.source = data.source || ProductSource.MANUAL
       product.name = data.name
@@ -435,8 +435,8 @@ export class ProductService {
         data.skus.forEach((item, index) => {
           const sku = new ProductSku()
 
-          sku.uuid = uuid()
-          sku.productUuid = product.uuid
+          sku.connectId = uuid()
+          sku.productConnectId = product.connectId
           sku.skuCode = item.skuCode || nanoSkuCode(index)
           sku.name = item.name || ''
           sku.attributes = item.attributes || []
@@ -465,7 +465,7 @@ export class ProductService {
 
       this.event.emit(
         toEventName(ProductCreatedEvent.name),
-        new ProductCreatedEvent(created.id, created.name),
+        new ProductCreatedEvent(created.connectId, created.name),
       )
     }
     catch (e) {
@@ -609,7 +609,7 @@ export class ProductService {
 
       this.event.emit(
         toEventName(ProductUpdatedEvent.name),
-        new ProductUpdatedEvent(id, product.name),
+        new ProductUpdatedEvent(product.connectId, product.name),
       )
     }
     catch (e) {
@@ -628,11 +628,7 @@ export class ProductService {
   async updateSkus(id: number, skus: ProductSkuPayload[]) {
     try {
       const product = await this.repository.findOne({
-        select: [
-          'id',
-          'uuid',
-          'skus',
-        ],
+        select: ['id', 'connectId', 'skus'],
         where: {
           id,
           isDeleted: YesOrNo.NO,
@@ -665,9 +661,9 @@ export class ProductService {
           updateSku.unit = sku.unit
 
           if (!sku.id) {
-            updateSku.uuid = uuid()
+            updateSku.connectId = uuid()
             updateSku.productId = id
-            updateSku.productUuid = product.uuid
+            updateSku.productConnectId = product.connectId
             updateSku.skuCode = nanoSkuCode(index)
           }
 
@@ -707,7 +703,7 @@ export class ProductService {
 
       const draft = new Product()
 
-      draft.uuid = uuid()
+      draft.connectId = uuid()
       draft.type = product.type
       draft.source = ProductSource.MANUAL
       draft.status = ProductStatus.DRAFT
@@ -783,9 +779,9 @@ export class ProductService {
           sku.id = undefined
           sku.productId = undefined
 
-          sku.uuid = uuid()
+          sku.connectId = uuid()
           sku.skuCode = nanoSkuCode(index)
-          sku.productUuid = draft.uuid
+          sku.productConnectId = draft.connectId
 
           draft.skus.push(sku)
         })
@@ -795,7 +791,7 @@ export class ProductService {
 
       this.event.emit(
         toEventName(ProductCopiedEvent.name),
-        new ProductCopiedEvent(id, created.id, product.name),
+        new ProductCopiedEvent(product.connectId, created.connectId, product.name),
       )
 
       return created.id
@@ -1052,7 +1048,7 @@ export class ProductService {
         for (const product of products) {
           this.event.emit(
             toEventName(ProductSoldOutEvent.name),
-            new ProductSoldOutEvent(product.id, product.name),
+            new ProductSoldOutEvent(product.connectId, product.name),
           )
         }
       }
@@ -1126,7 +1122,7 @@ export class ProductService {
       for (const product of products) {
         this.event.emit(
           toEventName(ProductDeletedEvent.name),
-          new ProductDeletedEvent(product.id, product.name),
+          new ProductDeletedEvent(product.connectId, product.name),
         )
       }
     }
@@ -1166,7 +1162,7 @@ export class ProductService {
       for (const product of products) {
         this.event.emit(
           toEventName(ProductRestoredEvent.name),
-          new ProductRestoredEvent(product.id, product.name),
+          new ProductRestoredEvent(product.connectId, product.name),
         )
       }
     }
@@ -1202,7 +1198,7 @@ export class ProductService {
       for (const product of products) {
         this.event.emit(
           toEventName(ProductDeletedEvent.name),
-          new ProductDeletedEvent(product.id, product.name, true),
+          new ProductDeletedEvent(product.connectId, product.name, true),
         )
       }
     }

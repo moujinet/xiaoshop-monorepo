@@ -9,14 +9,14 @@ export class ProductSkuInfoResponse implements IProductSkuInfo {
   @ApiProperty({ description: 'SKU ID', example: example.id })
   readonly id: number
 
-  @ApiProperty({ description: 'SKU UUID', example: example.uuid })
-  readonly uuid: string
+  @ApiProperty({ description: '云链 ID', example: example.connectId })
+  readonly connectId: string
 
   @ApiProperty({ description: '商品 ID', example: example.productId })
   readonly productId: number
 
-  @ApiProperty({ description: '商品 UUID', example: example.productUuid })
-  readonly productUuid: string
+  @ApiProperty({ description: '商品云链 ID', example: example.productConnectId })
+  readonly productConnectId: string
 
   @ApiProperty({ description: 'SKU 编码', example: example.skuCode })
   readonly skuCode: string

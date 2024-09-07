@@ -5,7 +5,7 @@ import { BaseEvent } from '~/common/events'
  */
 export class ProductSkuInventoryWarningEvent extends BaseEvent {
   constructor(
-    public readonly productId: number,
+    public readonly productConnectId: string,
     public readonly productName: string,
     public readonly skuCode: string,
     public readonly inventory: number,
@@ -14,6 +14,6 @@ export class ProductSkuInventoryWarningEvent extends BaseEvent {
   }
 
   getAuthLogs() {
-    return `商品 ${this.productName}(#${this.productId}) 的 SKU ${this.skuCode} 库存低于预警值 - 库存 ${this.inventory}`
+    return `商品 ${this.productName} 的 SKU ${this.skuCode} 库存低于预警值 - 库存 ${this.inventory}`
   }
 }

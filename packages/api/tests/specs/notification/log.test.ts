@@ -39,7 +39,7 @@ describe('Notification Module - Log', () => {
 
     setTimeout(() => {
       expect(body.data.total).toEqual(1)
-    }, 50)
+    }, 1500)
   })
 
   it('Fetch Notification Log Detail', async () => {

@@ -10,17 +10,17 @@ export interface IProductSku {
    */
   id: number
   /**
-   * 商品 SKU UUID
+   * 云链 ID
    */
-  uuid: string
+  connectId: string
   /**
    * 商品 ID
    */
   productId: number
   /**
-   * 商品 UUID
+   * 商品云链 ID
    */
-  productUuid: string
+  productConnectId: string
   /**
    * 商品信息
    *
@@ -141,9 +141,9 @@ export interface IProductSkuAttributeSchemaValue {
 export type IProductSkuInfo = Pick<
   IProductSku,
   | 'id'
-  | 'uuid'
+  | 'connectId'
   | 'productId'
-  | 'productUuid'
+  | 'productConnectId'
   | 'skuCode'
   | 'name'
   | 'attributes'

@@ -33,11 +33,11 @@ describe('Product Module - Export', () => {
       // Brand
       `INSERT INTO \`shop_product_brand\` (\`name\`) VALUES ('brand 1'), ('brand 2')`,
       // Product
-      `INSERT INTO \`shop_product\` (\`uuid\`, \`type\`, \`source\`, \`is_multi_skus\`, \`name\`, \`tag_id\`, \`group_id\`, \`brand_id\`) VALUES
+      `INSERT INTO \`shop_product\` (\`connect_id\`, \`type\`, \`source\`, \`is_multi_skus\`, \`name\`, \`tag_id\`, \`group_id\`, \`brand_id\`) VALUES
       ('uuid-1', 1, 1, 1, 'test product 1', 1, 1, 1),
       ('uuid-2', 1, 1, 1, 'test product 2', 2, 2, 2)`,
       // Product Skus
-      `INSERT INTO \`shop_product_sku\` (\`uuid\`, \`product_id\`, \`product_uuid\`, \`name\`, \`sku_code\`, \`price\`, \`attributes\`, \`original_price\`, \`cost_price\`, \`inventory\`, \`inventory_early_warning\`, \`weight\`, \`volume\`, \`unit\`) VALUES
+      `INSERT INTO \`shop_product_sku\` (\`connect_id\`, \`product_id\`, \`product_connect_id\`, \`name\`, \`sku_code\`, \`price\`, \`attributes\`, \`original_price\`, \`cost_price\`, \`inventory\`, \`inventory_early_warning\`, \`weight\`, \`volume\`, \`unit\`) VALUES
       ('sku-uuid-1', 1, 'uuid-1', 'product-1-sku-1', 'sku-code-1', 100, '[{"name":"color","value":"blue"}]', 200, 10, 100, 10, 1, 1, 'kg'),
       ('sku-uuid-2', 2, 'uuid-2', 'product-2-sku-2', 'sku-code-2', 100, '[{"name":"color","value":"red"}]', 200, 10, 100, 10, 1, 1, 'kg')`,
 

@@ -1,7 +1,7 @@
 import { example as sku } from '@/product/sku/dto/example'
 
 export const example = {
-  uuid: '1111-1111-1111-1111',
+  connectId: '1111-1111-1111-1111',
   type: 1,
   status: 1,
   source: 1,

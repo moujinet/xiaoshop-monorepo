@@ -46,13 +46,13 @@ import { ProductCommitment } from '@/product/commitment/entity'
   comment: '商品信息表',
 })
 @Index('IDX_shop_product', ['isDeleted', 'status', 'tagId', 'brandId', 'groupId', 'price', 'inventory', 'sort', 'createdTime'])
-@Index('IDX_shop_product_uuid', ['uuid'], { unique: true })
+@Index('IDX_shop_product_connect', ['connectId'], { unique: true })
 export class Product implements IProduct {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'char', length: 36, nullable: false, default: '', comment: '商品 UUID' })
-  uuid: string
+  @Column({ name: 'connect_id', type: 'char', length: 36, nullable: false, default: '', comment: '云链 ID' })
+  connectId: string
 
   @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '商品类型' })
   type: ProductType

@@ -1,8 +1,8 @@
 export const example = {
   id: 1,
-  uuid: '11111111-1111-1111-1111-111111111111',
+  connectId: '11111111-1111-1111-1111-111111111111',
   productId: 1,
-  productUuid: '11111111-1111-1111-1111-111111111111',
+  productConnectId: '11111111-1111-1111-1111-111111111111',
   skuCode: '111111111111',
   name: 'SKU Name',
   attributes: [

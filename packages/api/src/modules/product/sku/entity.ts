@@ -11,18 +11,19 @@ import { Product } from '@/product/product/entity'
   comment: '商品 SKU 信息表',
 })
 @Index('IDX_shop_product_sku', ['productId', 'skuCode', 'price', 'inventory', 'sales'])
+@Index('IDX_shop_product_sku_connect', ['connectId', 'productConnectId'], { unique: true })
 export class ProductSku implements IProductSku {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'char', length: 36, primary: true, unique: true, nullable: false, default: '', comment: 'SKU UUID' })
-  uuid: string
+  @Column({ name: 'connect_id', type: 'char', length: 36, primary: true, unique: true, nullable: false, default: '', comment: '云链 ID' })
+  connectId: string
 
   @Column({ name: 'product_id', type: 'int', unsigned: true, default: 0, comment: '商品 ID' })
   productId: number
 
-  @Column({ name: 'product_uuid', type: 'char', length: 36, nullable: false, default: '', comment: '商品 UUID' })
-  productUuid: string
+  @Column({ name: 'product_connect_id', type: 'char', length: 36, nullable: false, default: '', comment: '云链商品 ID' })
+  productConnectId: string
 
   @ManyToOne(() => Product, product => product.skus, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'product_id' })

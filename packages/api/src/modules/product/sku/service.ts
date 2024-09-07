@@ -35,9 +35,9 @@ export class ProductSkuService {
       return await this.repository.find({
         select: [
           'id',
-          'uuid',
+          'connectId',
           'productId',
-          'productUuid',
+          'productConnectId',
           'skuCode',
           'name',
           'attributes',
@@ -100,7 +100,7 @@ export class ProductSkuService {
           this.event.emit(
             toEventName(ProductSkuInventoryWarningEvent.name),
             new ProductSkuInventoryWarningEvent(
-              sku.productId,
+              sku.productConnectId,
               sku.product.name,
               sku.skuCode,
               sku.inventory,

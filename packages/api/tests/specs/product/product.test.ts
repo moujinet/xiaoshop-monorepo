@@ -202,6 +202,7 @@ describe('Product Module - Product', () => {
 
     expect(body.data.price).toEqual(50)
     expect(body.data.skus.length).toEqual(3)
+    expect(body.data.skus[0].id).toEqual(1)
   })
 
   it('Copy Product', async () => {

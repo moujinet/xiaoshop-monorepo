@@ -12,14 +12,14 @@ import { BaseEvent } from '~/common/events'
  */
 export class ProductCreatedEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
+    public readonly connectId: string,
     public readonly productName: string,
   ) {
     super('商品管理')
   }
 
   getAuthLogs() {
-    return `创建商品 ${this.productName}(#${this.id})`
+    return `创建商品 ${this.productName}`
   }
 }
 
@@ -28,14 +28,14 @@ export class ProductCreatedEvent extends BaseEvent {
  */
 export class ProductUpdatedEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
+    public readonly connectId: string,
     public readonly productName: string,
   ) {
     super('商品管理')
   }
 
   getAuthLogs() {
-    return `更新商品 ${this.productName}(#${this.id})`
+    return `更新商品 ${this.productName}`
   }
 }
 
@@ -44,15 +44,15 @@ export class ProductUpdatedEvent extends BaseEvent {
  */
 export class ProductCopiedEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
-    public readonly newId: number,
+    public readonly connectId: string,
+    public readonly newConnectId: string,
     public readonly productName: string,
   ) {
     super('商品管理')
   }
 
   getAuthLogs() {
-    return `复制商品 ${this.productName}(#${this.id} -> #${this.newId})`
+    return `复制商品 ${this.productName}(#${this.connectId} -> #${this.newConnectId})`
   }
 }
 
@@ -100,14 +100,14 @@ export class ProductStatusUpdatedEvent extends BaseEvent {
  */
 export class ProductSoldOutEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
+    public readonly connectId: string,
     public readonly productName: string,
   ) {
     super('商品管理')
   }
 
   getAuthLogs() {
-    return `商品 ${this.productName}(#${this.id}) 已售罄，被系统自动下架`
+    return `商品 ${this.productName} 已售罄，被系统自动下架`
   }
 }
 
@@ -116,7 +116,7 @@ export class ProductSoldOutEvent extends BaseEvent {
  */
 export class ProductDeletedEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
+    public readonly connectId: string,
     public readonly productName: string,
     public readonly isHard?: boolean,
   ) {
@@ -124,7 +124,7 @@ export class ProductDeletedEvent extends BaseEvent {
   }
 
   getAuthLogs() {
-    return `商品${this.isHard ? '删除' : '放入回收站'} ${this.productName}(#${this.id})`
+    return `商品${this.isHard ? '删除' : '放入回收站'} ${this.productName}`
   }
 }
 
@@ -133,14 +133,14 @@ export class ProductDeletedEvent extends BaseEvent {
  */
 export class ProductRestoredEvent extends BaseEvent {
   constructor(
-    public readonly id: number,
+    public readonly connectId: string,
     public readonly productName: string,
   ) {
     super('商品管理')
   }
 
   getAuthLogs() {
-    return `恢复商品 ${this.productName}(#${this.id}), 该商品已被放入草稿箱`
+    return `恢复商品 ${this.productName}, 该商品已被放入草稿箱`
   }
 }
 
@@ -165,6 +165,7 @@ export class ProductTrashClearedEvent extends BaseEvent {
 export class ProductSkusUpdatedEvent extends BaseEvent {
   constructor(
     public readonly id: number,
+    public readonly connectId: string,
     public readonly skus: ProductSkuPayload[],
   ) {
     super('商品管理')
