@@ -1,9 +1,10 @@
 import {
   AuthUserStatus,
   type IApiPaginationData,
-  type IAuthUserLocked,
-  type IAuthUserLoginSignPayload,
-  type IAuthUserProfile,
+  type IAuthUserInfo,
+  type IAuthUserList,
+  type IAuthUserLockedInfo,
+  type IAuthUserLoginPayload,
   type IAuthUserToken,
   YesOrNo,
 } from '@xiaoshop/shared'
@@ -13,8 +14,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Inject, Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { FindOptionsWhere, Like, Not, Repository } from 'typeorm'
-import { AuthRole } from '@/auth/role/entity'
-import { AuthUser } from '@/auth/user/entity'
 import {
   CreateAuthUserPayload,
   GetAuthUserPagesRequest,
@@ -31,12 +30,14 @@ import {
   AuthUserUnlockedEvent,
   AuthUserUpdatedEvent,
 } from '@/auth/user/events'
+import { AuthRole } from '@/auth/role/entity'
+import { AuthUser } from '@/auth/user/entity'
+import { AUTH_ADMIN_KEY } from '@/auth/constants'
 import {
   ExistsException,
   FailedException,
   NotFoundException,
 } from '~/common/exceptions'
-import { AUTH_ADMIN_KEY } from '@/auth/constants'
 import { toEventName } from '~/utils/transformers'
 
 @Injectable()
@@ -57,12 +58,12 @@ export class AuthUserService {
    *
    * @param query 查询条件
    * @throws {FailedException} 获取员工账号分页列表失败
-   * @returns Promise<IApiPaginationData<IAuthUserProfile>>
-   * @see {@link IAuthUserProfile}
+   * @returns Promise<IApiPaginationData<IAuthUserList>>
+   * @see {@link IAuthUserList}
    */
   async findPages(
     query: GetAuthUserPagesRequest,
-  ): Promise<IApiPaginationData<IAuthUserProfile>> {
+  ): Promise<IApiPaginationData<IAuthUserList>> {
     try {
       const where: FindOptionsWhere<AuthUser> = {}
 
@@ -100,13 +101,13 @@ export class AuthUserService {
           lastLoginTime: true,
         },
         where,
-        relations: [
-          'roles',
-          'position',
-          'department',
-        ],
+        relations: ['roles', 'position', 'department'],
         skip: (page - 1) * pagesize,
         take: pagesize,
+        order: {
+          status: 'ASC',
+          lastLoginTime: 'DESC',
+        },
       })
 
       return { result, total, page, pagesize }
@@ -122,10 +123,10 @@ export class AuthUserService {
    * @param id 员工账号 ID
    * @throws {FailedException} 获取员工账号详情失败
    * @throws {NotFoundException} 员工账号不存在
-   * @returns Promise<IAuthUserProfile>
-   * @see {@link IAuthUserProfile}
+   * @returns Promise<IAuthUserInfo>
+   * @see {@link IAuthUserInfo}
    */
-  async findById(id: number): Promise<IAuthUserProfile> {
+  async findById(id: number): Promise<IAuthUserInfo> {
     try {
       const detail = await this.repository.findOne({
         select: {
@@ -140,14 +141,8 @@ export class AuthUserService {
           position: { id: true, name: true },
           lastLoginTime: true,
         },
-        where: {
-          id,
-        },
-        relations: [
-          'roles',
-          'position',
-          'department',
-        ],
+        where: { id },
+        relations: ['roles', 'position', 'department'],
       })
 
       if (!detail)
@@ -186,20 +181,16 @@ export class AuthUserService {
         status: AuthUserStatus.NORMAL,
         username,
       },
-      relations: [
-        'roles',
-        'position',
-        'department',
-      ],
+      relations: ['roles', 'position', 'department'],
     })
   }
 
   /**
    * 获取锁定状态的超级管理员列表
    *
-   * @returns Promise<IAuthUserLocked[]>
+   * @returns Promise<IAuthUserLockedInfo[]>
    */
-  async findLockedAdminList(): Promise<IAuthUserLocked[]> {
+  async findLockedAdminList(): Promise<IAuthUserLockedInfo[]> {
     return await this.repository.find({
       select: ['id', 'name', 'lockedTime'],
       where: {
@@ -395,7 +386,7 @@ export class AuthUserService {
         throw new FailedException('密码错误')
       }
 
-      const payload: IAuthUserLoginSignPayload = {
+      const payload: IAuthUserLoginPayload = {
         scope: AUTH_ADMIN_KEY,
         user: {
           id: user.id,

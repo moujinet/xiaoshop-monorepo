@@ -1,7 +1,7 @@
 /**
  * 员工角色
  */
-export interface IAuthRole {
+export interface IAuthRoleInfo {
   /**
    * 角色 ID
    */
@@ -22,37 +22,33 @@ export interface IAuthRole {
    * 排序
    */
   sort: number
-  /**
-   * 创建日期
-   */
-  createdTime: string
-  /**
-   * 更新日期
-   */
-  updatedTime: string
 }
 
 /**
  * 员工角色 - 列表
  *
- * @see {@link IAuthRole}
+ * @see {@link IAuthRoleInfo}
  */
-export type IAuthRoleListItem = Pick<
-  IAuthRole,
+export type IAuthRoleList = Pick<
+  IAuthRoleInfo,
   | 'id'
   | 'name'
   | 'desc'
   | 'sort'
-  | 'updatedTime'
->
+> & {
+  /**
+   * 更新时间
+   */
+  updatedTime: string
+}
 
 /**
  * 员工角色 - 字典信息
  *
- * @see {@link IAuthRole}
+ * @see {@link IAuthRoleInfo}
  */
 export type IAuthRoleDict = Pick<
-  IAuthRole,
+  IAuthRoleInfo,
   | 'id'
   | 'name'
 >
@@ -60,10 +56,10 @@ export type IAuthRoleDict = Pick<
 /**
  * 员工角色 - 权限信息
  *
- * @see {@link IAuthRole}
+ * @see {@link IAuthRoleInfo}
  */
 export type IAuthRolePermissions = Pick<
-  IAuthRole,
+  IAuthRoleInfo,
   | 'id'
   | 'name'
   | 'permissions'

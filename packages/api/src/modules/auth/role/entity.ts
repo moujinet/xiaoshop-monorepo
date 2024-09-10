@@ -1,11 +1,10 @@
-import type { IAuthRole } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('manage_auth_role', {
   comment: '员工角色表',
 })
 @Index('IDX_manage_auth_role', ['sort', 'updatedTime'])
-export class AuthRole implements IAuthRole {
+export class AuthRole {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 

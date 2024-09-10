@@ -1,4 +1,3 @@
-import type { IOrganizeDepartment } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity({
@@ -6,7 +5,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Update
   comment: '部门信息表',
 })
 @Index('IDX_manage_organize_department', ['sort', 'updatedTime'])
-export class OrganizeDepartment implements IOrganizeDepartment {
+export class OrganizeDepartment {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 

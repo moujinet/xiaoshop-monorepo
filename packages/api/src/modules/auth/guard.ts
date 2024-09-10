@@ -1,13 +1,12 @@
 import type {
-  IAuthUserLoginSignPayload,
-  IAuthUserProfile,
+  IAuthUserInfo,
+  IAuthUserLoginPayload,
 } from '@xiaoshop/shared'
 import {
   type CanActivate,
   ExecutionContext,
   Inject,
   Injectable,
-  Logger,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { ClsService } from 'nestjs-cls'
@@ -22,8 +21,6 @@ import {
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private readonly logger = new Logger(AuthGuard.name)
-
   constructor(
     @Inject(JwtService)
     private readonly jwt: JwtService,
@@ -57,7 +54,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException()
 
     try {
-      const payload = await this.jwt.verifyAsync<IAuthUserLoginSignPayload>(token, {
+      const payload = await this.jwt.verifyAsync<IAuthUserLoginPayload>(token, {
         secret: this.config.get<string>('jwt.secret'),
       })
 
@@ -66,7 +63,7 @@ export class AuthGuard implements CanActivate {
       if (isAdmin && payload.scope !== AUTH_ADMIN_KEY)
         throw new UnauthorizedException()
 
-      this.cls.set<IAuthUserProfile>('USER', payload.user)
+      this.cls.set<IAuthUserInfo>('USER', payload.user)
     }
     catch (e) {
       throw new UnauthorizedException(e.message)

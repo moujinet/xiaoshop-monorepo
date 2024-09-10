@@ -1,8 +1,8 @@
 import type {
   IApiPaginationData,
-  IAuthRole,
   IAuthRoleDict,
-  IAuthRoleListItem,
+  IAuthRoleInfo,
+  IAuthRoleList,
 } from '@xiaoshop/shared'
 import { Not, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -40,12 +40,12 @@ export class AuthRoleService {
    *
    * @param query 查询条件
    * @throws {FailedException} 获取员工角色列表失败
-   * @returns Promise<IApiPaginationData<IAuthRoleListItem>>
-   * @see {@link IAuthRoleListItem}
+   * @returns Promise<IApiPaginationData<IAuthRoleList>>
+   * @see {@link IAuthRoleList}
    */
   async findPages(
     query: GetAuthRolePagesRequest,
-  ): Promise<IApiPaginationData<IAuthRoleListItem>> {
+  ): Promise<IApiPaginationData<IAuthRoleList>> {
     try {
       const page = query.page || 1
       const pagesize = query.pagesize || 10
@@ -94,12 +94,15 @@ export class AuthRoleService {
    * @param id 角色 ID
    * @throws {FailedException} 获取员工角色详情失败
    * @throws {NotFoundException} 员工角色不存在
-   * @returns Promise<IAuthRole>
-   * @see {@link IAuthRole}
+   * @returns Promise<IAuthRoleInfo>
+   * @see {@link IAuthRoleInfo}
    */
-  async findById(id: number): Promise<IAuthRole> {
+  async findById(id: number): Promise<IAuthRoleInfo> {
     try {
-      const detail = await this.repository.findOneBy({ id })
+      const detail = await this.repository.findOne({
+        select: ['id', 'name', 'desc', 'permissions', 'sort'],
+        where: { id },
+      })
 
       if (!detail)
         throw new NotFoundException('员工角色')

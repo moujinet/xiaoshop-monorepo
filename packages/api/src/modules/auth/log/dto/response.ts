@@ -16,9 +16,6 @@ export class AuthLogResponse implements IAuthLog {
   @ApiProperty({ description: '日志类型', enum: AuthLogType, example: example.type })
   readonly type: AuthLogType
 
-  @ApiProperty({ description: '操作员工 ID', example: 1 })
-  readonly userId: number
-
   @ApiProperty({ description: '操作员工', example: example.user })
   readonly user: IAuthUserInfo
 

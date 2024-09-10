@@ -1,7 +1,7 @@
 /**
- * 组织架构 - 部门
+ * 组织架构 - 部门列表
  */
-export interface IOrganizeDepartment {
+export interface IOrganizeDepartmentList {
   /**
    * 部门 ID
    */
@@ -23,31 +23,18 @@ export interface IOrganizeDepartment {
    */
   sort: number
   /**
-   * 创建日期
-   */
-  createdTime: string
-  /**
    * 更新日期
    */
   updatedTime: string
 }
 
 /**
- * 组织架构 - 部门树
- *
- * @see {@link IOrganizeDepartment}
- */
-export interface IOrganizeDepartmentTreeItem extends IOrganizeDepartment {
-  children?: IOrganizeDepartmentTreeItem[]
-}
-
-/**
  * 组织架构 - 部门字典
  *
- * @see {@link IOrganizeDepartment}
+ * @see {@link IOrganizeDepartmentList}
  */
 export type IOrganizeDepartmentDict = Pick<
-  IOrganizeDepartment,
+  IOrganizeDepartmentList,
   | 'id'
   | 'name'
 >
@@ -55,13 +42,27 @@ export type IOrganizeDepartmentDict = Pick<
 /**
  * 组织架构 - 部门字典树
  *
- * @see {@link IOrganizeDepartment}
+ * @see {@link IOrganizeDepartmentList}
  */
-export type IOrganizeDepartmentDictTreeItem = Pick<
-  IOrganizeDepartment,
+export type IOrganizeDepartmentDictTree = Pick<
+  IOrganizeDepartmentList,
   | 'id'
   | 'parentId'
   | 'name'
 > & {
-  children?: IOrganizeDepartmentDictTreeItem[]
+  children?: IOrganizeDepartmentDictTree[]
 }
+
+/**
+ * 组织架构 - 部门详情
+ *
+ * @see {@link IOrganizeDepartmentList}
+ */
+export type IOrganizeDepartmentInfo = Pick<
+  IOrganizeDepartmentList,
+  | 'id'
+  | 'parentId'
+  | 'name'
+  | 'desc'
+  | 'sort'
+>

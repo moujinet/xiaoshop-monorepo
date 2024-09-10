@@ -13,9 +13,9 @@ import {
 } from '~/common/decorators'
 import {
   AuthRoleDictResponse,
+  AuthRoleInfoResponse,
   AuthRoleListResponse,
   AuthRolePayload,
-  AuthRoleResponse,
   DeleteAuthRoleRequest,
   GetAuthRolePagesRequest,
   GetAuthRoleRequest,
@@ -57,7 +57,7 @@ export class AuthRoleAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiObjectResponse(AuthRoleResponse)
+  @ApiObjectResponse(AuthRoleInfoResponse)
   @ApiFailedExceptionResponse({ description: '获取角色详情失败' })
   @ApiNotFoundExceptionResponse({ description: '角色不存在' })
   @Get('detail')

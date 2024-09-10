@@ -1,7 +1,6 @@
 import {
   AuthUserStatus,
   type IAuthRolePermissions,
-  type IAuthUser,
   type IOrganizeDepartmentDict,
   type IOrganizePositionDict,
   YesOrNo,
@@ -15,7 +14,7 @@ import { OrganizeDepartment } from '@/organize/department/entity'
   comment: '员工账号表',
 })
 @Index('IDX_manage_auth_user', ['status', 'username', 'departmentId', 'positionId', 'lastLoginTime'])
-export class AuthUser implements IAuthUser {
+export class AuthUser {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 

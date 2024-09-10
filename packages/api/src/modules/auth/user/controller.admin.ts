@@ -1,5 +1,5 @@
 import type {
-  IAuthUserProfile,
+  IAuthUserInfo,
 } from '@xiaoshop/shared'
 import { ClsService } from 'nestjs-cls'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
@@ -15,7 +15,8 @@ import {
   ApiPaginatedResponse,
 } from '~/common/decorators'
 import {
-  AuthUserResponse,
+  AuthUserInfoResponse,
+  AuthUserListResponse,
   AuthUserTokenResponse,
   CreateAuthUserPayload,
   DeleteAuthUserRequest,
@@ -54,10 +55,10 @@ export class AuthUserAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiObjectResponse(AuthUserResponse)
+  @ApiObjectResponse(AuthUserInfoResponse)
   @Get('profile')
   async profile() {
-    return this.cls.get<IAuthUserProfile>('USER')
+    return this.cls.get<IAuthUserInfo>('USER')
   }
 
   @ApiOperation({
@@ -65,7 +66,7 @@ export class AuthUserAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiPaginatedResponse(AuthUserResponse)
+  @ApiPaginatedResponse(AuthUserListResponse)
   @ApiFailedExceptionResponse({ description: '获取员工账号分页列表失败' })
   @Get('pages')
   async pages(@Query() query: GetAuthUserPagesRequest) {
@@ -77,7 +78,7 @@ export class AuthUserAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiObjectResponse(AuthUserResponse)
+  @ApiObjectResponse(AuthUserInfoResponse)
   @ApiFailedExceptionResponse({ description: '获取员工账号详情失败' })
   @ApiNotFoundExceptionResponse({ description: '员工账号不存在' })
   @Get('detail')

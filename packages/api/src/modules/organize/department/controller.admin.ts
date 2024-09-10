@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { OrganizeDepartmentService } from '@/organize/department/service'
-import { Admin } from '@/auth/decorators'
 import {
   DeleteOrganizeDepartmentByIdRequest,
   GetOrganizeDepartmentByIdRequest,
-  OrganizeDepartmentDictListResponse,
   OrganizeDepartmentDictResponse,
+  OrganizeDepartmentDictTreeResponse,
+  OrganizeDepartmentInfoResponse,
+  OrganizeDepartmentListResponse,
   OrganizeDepartmentPayload,
-  OrganizeDepartmentResponse,
 } from '@/organize/department/dto'
 import {
   ApiDoneResponse,
@@ -18,6 +18,7 @@ import {
   ApiNotFoundExceptionResponse,
   ApiObjectResponse,
 } from '~/common/decorators'
+import { Admin } from '@/auth/decorators'
 
 @ApiTags('管理/组织/部门')
 @Controller('admin/organize/department')
@@ -31,7 +32,7 @@ export class OrganizeDepartmentAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiListedResponse(OrganizeDepartmentResponse)
+  @ApiListedResponse(OrganizeDepartmentListResponse)
   @ApiFailedExceptionResponse({ description: '获取部门列表失败' })
   @Get('list')
   async list() {
@@ -55,7 +56,7 @@ export class OrganizeDepartmentAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiListedResponse(OrganizeDepartmentDictListResponse)
+  @ApiListedResponse(OrganizeDepartmentDictTreeResponse)
   @ApiFailedExceptionResponse({ description: '获取部门字典列表失败' })
   @Get('dict/list')
   async listDict() {
@@ -67,7 +68,7 @@ export class OrganizeDepartmentAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiObjectResponse(OrganizeDepartmentResponse)
+  @ApiObjectResponse(OrganizeDepartmentInfoResponse)
   @ApiFailedExceptionResponse({ description: '获取部门详情失败' })
   @ApiNotFoundExceptionResponse({ description: '部门不存在' })
   @Get('detail')

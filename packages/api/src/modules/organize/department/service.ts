@@ -1,7 +1,8 @@
 import type {
-  IOrganizeDepartment,
   IOrganizeDepartmentDict,
-  IOrganizeDepartmentDictTreeItem,
+  IOrganizeDepartmentDictTree,
+  IOrganizeDepartmentInfo,
+  IOrganizeDepartmentList,
 } from '@xiaoshop/shared'
 import { Not, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
@@ -33,11 +34,11 @@ export class OrganizeDepartmentService {
   /**
    * 获取组织部门列表
    *
-   * @returns Promise<IOrganizeDepartment[]>
+   * @returns Promise<IOrganizeDepartmentList[]>
    * @throws {FailedException} 获取组织部门列表失败
-   * @see {@link IOrganizeDepartment}
+   * @see {@link IOrganizeDepartmentList}
    */
-  async findList(): Promise<IOrganizeDepartment[]> {
+  async findList(): Promise<IOrganizeDepartmentList[]> {
     try {
       return await this.repository.find({
         order: {
@@ -54,9 +55,9 @@ export class OrganizeDepartmentService {
   /**
    * 获取组织部门根列表
    *
-   * @returns Promise<IStaffDepartmentDict[]>
+   * @returns Promise<IOrganizeDepartmentDict[]>
    * @throws {FailedException} 获取组织部门根列表失败
-   * @see {@link IStaffDepartmentDict}
+   * @see {@link IOrganizeDepartmentDict}
    */
   async findRootList(): Promise<IOrganizeDepartmentDict[]> {
     try {
@@ -79,11 +80,11 @@ export class OrganizeDepartmentService {
   /**
    * 获取组织部门字典列表
    *
-   * @returns Promise<IOrganizeDepartmentDictTreeItem[]>
+   * @returns Promise<IOrganizeDepartmentDictTree[]>
    * @throws {FailedException} 获取组织部门字典列表失败
-   * @see {@link IOrganizeDepartmentDictTreeItem}
+   * @see {@link IOrganizeDepartmentDictTree}
    */
-  async findDictList(): Promise<IOrganizeDepartmentDictTreeItem[]> {
+  async findDictList(): Promise<IOrganizeDepartmentDictTree[]> {
     try {
       return await this.repository.find({
         select: ['id', 'parentId', 'name'],
@@ -102,12 +103,12 @@ export class OrganizeDepartmentService {
    * 获取组织部门详情
    *
    * @param id 部门 ID
-   * @returns Promise<IOrganizeDepartment>
+   * @returns Promise<IOrganizeDepartmentInfo>
    * @throws {FailedException} 获取组织部门详情失败
    * @throws {NotFoundException} 组织部门不存在
-   * @see {@link IOrganizeDepartment}
+   * @see {@link IOrganizeDepartmentInfo}
    */
-  async findById(id: number): Promise<IOrganizeDepartment> {
+  async findById(id: number): Promise<IOrganizeDepartmentInfo> {
     try {
       const detail = await this.repository.findOneBy({ id })
 

@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { IsNumber, IsNumberString } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 
 /**
  * 获取组织部门请求 DTO

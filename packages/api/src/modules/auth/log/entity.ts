@@ -1,8 +1,4 @@
-import type {
-  AuthLogType,
-  IAuthLog,
-  IAuthUser,
-} from '@xiaoshop/shared'
+import type { AuthLogType } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { AuthUser } from '@/auth/user/entity'
 
@@ -10,7 +6,7 @@ import { AuthUser } from '@/auth/user/entity'
   comment: '员工操作日志表',
 })
 @Index('IDX_manage_auth_log', ['type', 'module', 'createdTime'])
-export class AuthLog implements IAuthLog {
+export class AuthLog {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
@@ -22,7 +18,7 @@ export class AuthLog implements IAuthLog {
 
   @ManyToOne(() => AuthUser, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'user_id' })
-  user: IAuthUser
+  user: AuthUser
 
   @Column({ type: 'varchar', length: 64, nullable: false, default: '', comment: '日志模块' })
   module: string

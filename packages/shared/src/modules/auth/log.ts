@@ -1,5 +1,5 @@
 import type { AuthLogType } from './constants'
-import type { IAuthUserInfo } from './user'
+import type { IAuthUserDict } from './user'
 
 /**
  * 系统操作日志
@@ -16,15 +16,11 @@ export interface IAuthLog {
    */
   type: AuthLogType
   /**
-   * 操作员工 ID
-   */
-  userId: number
-  /**
    * 操作员工
    *
-   * @see {@link IAuthUserInfo}
+   * @see {@link IAuthUserDict}
    */
-  user: IAuthUserInfo
+  user: IAuthUserDict
   /**
    * 操作模块
    */

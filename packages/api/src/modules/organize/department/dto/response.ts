@@ -1,15 +1,16 @@
 import type {
-  IOrganizeDepartment,
   IOrganizeDepartmentDict,
-  IOrganizeDepartmentDictTreeItem,
+  IOrganizeDepartmentDictTree,
+  IOrganizeDepartmentInfo,
+  IOrganizeDepartmentList,
 } from '@xiaoshop/shared'
 import { ApiProperty, PickType } from '@nestjs/swagger'
 import { example } from './example'
 
 /**
- * 组织部门 - 响应 DTO
+ * 组织部门列表
  */
-export class OrganizeDepartmentResponse implements IOrganizeDepartment {
+export class OrganizeDepartmentListResponse implements IOrganizeDepartmentList {
   @ApiProperty({ description: '组织部门 ID', example: 1 })
   readonly id: number
 
@@ -25,23 +26,40 @@ export class OrganizeDepartmentResponse implements IOrganizeDepartment {
   @ApiProperty({ description: '排序', example: 1 })
   readonly sort: number
 
-  @ApiProperty({ type: 'datetime', description: '创建日期' })
-  readonly createdTime: string
-
   @ApiProperty({ type: 'datetime', description: '更新日期' })
   readonly updatedTime: string
 }
 
 /**
- * 组织部门 - 字典 DTO
+ * 组织部门
  */
 export class OrganizeDepartmentDictResponse
-  extends PickType(OrganizeDepartmentResponse, ['id', 'name'] as const)
+  extends PickType(OrganizeDepartmentListResponse, [
+    'id',
+    'name',
+  ] as const)
   implements IOrganizeDepartmentDict {}
 
 /**
- * 组织部门树 - 字典 DTO
+ * 组织部门树
  */
-export class OrganizeDepartmentDictListResponse
-  extends PickType(OrganizeDepartmentResponse, ['id', 'parentId', 'name'] as const)
-  implements IOrganizeDepartmentDictTreeItem {}
+export class OrganizeDepartmentDictTreeResponse
+  extends PickType(OrganizeDepartmentListResponse, [
+    'id',
+    'parentId',
+    'name',
+  ] as const)
+  implements IOrganizeDepartmentDictTree {}
+
+/**
+ * 组织部门详情
+ */
+export class OrganizeDepartmentInfoResponse
+  extends PickType(OrganizeDepartmentListResponse, [
+    'id',
+    'parentId',
+    'name',
+    'desc',
+    'sort',
+  ] as const)
+  implements IOrganizeDepartmentInfo {}

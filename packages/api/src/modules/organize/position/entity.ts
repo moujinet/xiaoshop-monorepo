@@ -1,6 +1,5 @@
 import type {
   IOrganizeDepartmentDict,
-  IOrganizePosition,
 } from '@xiaoshop/shared'
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { OrganizeDepartment } from '@/organize/department/entity'
@@ -10,7 +9,7 @@ import { OrganizeDepartment } from '@/organize/department/entity'
   comment: '职位信息表',
 })
 @Index('IDX_manage_organize_position', ['departmentId', 'sort', 'updatedTime'])
-export class OrganizePosition implements IOrganizePosition {
+export class OrganizePosition {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 

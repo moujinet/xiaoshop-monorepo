@@ -1,7 +1,8 @@
 import type {
   IApiPaginationData,
-  IOrganizePosition,
   IOrganizePositionDict,
+  IOrganizePositionInfo,
+  IOrganizePositionList,
 } from '@xiaoshop/shared'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Inject, Injectable } from '@nestjs/common'
@@ -34,6 +35,7 @@ export class OrganizePositionService {
     @Inject(OrganizeDepartmentService)
     private readonly department: OrganizeDepartmentService,
 
+    @Inject(EventEmitter2)
     private readonly event: EventEmitter2,
   ) {}
 
@@ -41,12 +43,12 @@ export class OrganizePositionService {
    * 获取职位列表
    *
    * @param query 查询条件
-   * @returns Promise<IApiPaginationData<IOrganizePosition>>
+   * @returns Promise<IApiPaginationData<IOrganizePositionList>>
    * @throws {FailedException} 获取职位列表失败
    */
   async findPages(
     query: GetOrganizePositionPagesRequest,
-  ): Promise<IApiPaginationData<IOrganizePosition>> {
+  ): Promise<IApiPaginationData<IOrganizePositionList>> {
     try {
       const where: FindOptionsWhere<OrganizePosition> = {}
 
@@ -106,15 +108,15 @@ export class OrganizePositionService {
    * 获取职位详情
    *
    * @param id 职位 ID
-   * @returns Promise<IOrganizePosition>
+   * @returns Promise<IOrganizePositionInfo>
    * @throws {FailedException} 获取职位详情失败
    * @throws {NotFoundException} 职位不存在
    */
-  async findById(id: number): Promise<IOrganizePosition> {
+  async findById(id: number): Promise<IOrganizePositionInfo> {
     try {
       const detail = await this.repository.findOne({
+        select: ['id', 'departmentId', 'name', 'desc', 'sort'],
         where: { id },
-        relations: ['department'],
       })
 
       if (!detail)

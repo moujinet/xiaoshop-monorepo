@@ -1,22 +1,20 @@
 import {
   AuthUserStatus,
   type IAuthRolePermissions,
-  type IAuthUserProfile,
+  type IAuthUserInfo,
+  type IAuthUserList,
   type IAuthUserToken,
   type IOrganizeDepartmentDict,
   type IOrganizePositionDict,
   YesOrNo,
 } from '@xiaoshop/shared'
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, PickType } from '@nestjs/swagger'
 import { example } from './example'
 import { AuthRolePermissionsResponse } from '@/auth/role/dto'
 import { OrganizePositionDictResponse } from '@/organize/position/dto'
 import { OrganizeDepartmentDictResponse } from '@/organize/department/dto'
 
-/**
- * 员工账号响应 DTO
- */
-export class AuthUserResponse implements IAuthUserProfile {
+export class AuthUserListResponse implements IAuthUserList {
   @ApiProperty({ description: '员工 ID' })
   readonly id: number
 
@@ -48,9 +46,21 @@ export class AuthUserResponse implements IAuthUserProfile {
   readonly lastLoginTime: string
 }
 
-/**
- * 登录员工账号响应 DTO
- */
+export class AuthUserInfoResponse
+  extends PickType(AuthUserListResponse, [
+    'id',
+    'isAdmin',
+    'status',
+    'roles',
+    'username',
+    'name',
+    'mobile',
+    'department',
+    'position',
+    'lastLoginTime',
+  ] as const)
+  implements IAuthUserInfo {}
+
 export class AuthUserTokenResponse implements IAuthUserToken {
   @ApiProperty({ description: 'TOKEN' })
   readonly token: string

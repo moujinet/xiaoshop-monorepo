@@ -2,7 +2,7 @@ import {
   AuthLogType,
   type IApiPaginationData,
   type IAuthLog,
-  type IAuthUserProfile,
+  type IAuthUserInfo,
 } from '@xiaoshop/shared'
 import { UAParser } from 'ua-parser-js'
 import { ClsService } from 'nestjs-cls'
@@ -61,7 +61,14 @@ export class AuthLogService {
       const pagesize = query.pagesize || 10
       const [result, total] = await this.repository.findAndCount({
         select: {
-          user: { name: true, status: true, isAdmin: true },
+          id: true,
+          type: true,
+          user: { id: true, name: true, status: true, isAdmin: true },
+          module: true,
+          content: true,
+          device: true,
+          ip: true,
+          createdTime: true,
         },
         where,
         relations: ['user'],
@@ -123,7 +130,7 @@ export class AuthLogService {
     userId: number = 0,
   ) {
     try {
-      const user = this.cls.get<IAuthUserProfile>('USER')
+      const user = this.cls.get<IAuthUserInfo>('USER')
       const ip = this.cls.get<string>('IP')
       const agent = this.cls.get<string>('AGENT')
       const ua = new UAParser(agent).getResult()

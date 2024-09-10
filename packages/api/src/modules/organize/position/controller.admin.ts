@@ -8,8 +8,9 @@ import {
   GetOrganizePositionPagesRequest,
   GetOrganizePositionRequest,
   OrganizePositionDictResponse,
+  OrganizePositionInfoResponse,
+  OrganizePositionListResponse,
   OrganizePositionPayload,
-  OrganizePositionResponse,
 } from '@/organize/position/dto'
 import {
   ApiDoneResponse,
@@ -33,7 +34,7 @@ export class OrganizePositionAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiPaginatedResponse(OrganizePositionResponse)
+  @ApiPaginatedResponse(OrganizePositionListResponse)
   @ApiFailedExceptionResponse({ description: '获取职位列表分页失败' })
   @Get('pages')
   async pages(@Query() query: GetOrganizePositionPagesRequest) {
@@ -57,7 +58,7 @@ export class OrganizePositionAdminController {
   })
   @Admin()
   @ApiBearerAuth()
-  @ApiObjectResponse(OrganizePositionResponse)
+  @ApiObjectResponse(OrganizePositionInfoResponse)
   @ApiFailedExceptionResponse({ description: '获取职位详情失败' })
   @ApiNotFoundExceptionResponse({ description: '职位不存在' })
   @Get('detail')
