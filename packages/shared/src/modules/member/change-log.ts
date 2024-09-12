@@ -1,18 +1,14 @@
-import type { MemberAccountChangeType } from '@/member/constants'
 import type { IMemberAccountInfo, IMemberAccountKeys } from '@/member/account'
+import type { MemberAccountChangeType } from '@/member/constants'
 
 /**
  * 会员账户变更日志
  */
-export interface IMemberAccountChangeLog {
+export interface IMemberAccountChangeLogList {
   /**
    * 日志 ID
    */
   id: number
-  /**
-   * 会员 ID
-   */
-  memberId: number
   /**
    * 会员信息
    *
@@ -46,22 +42,11 @@ export interface IMemberAccountChangeLog {
 }
 
 /**
- * 会员账户变更日志列表 (全部)
- *
- * @see {@link IMemberAccountChangeLog}
- */
-export type IMemberAccountChangeLogListItem = Pick<
-  IMemberAccountChangeLog,
-  | 'id'
-  | 'member'
-  | 'key'
-  | 'type'
-  | 'value'
-  | 'reason'
-  | 'createdTime'
->
-
-/**
  * 会员账户变更日志 (会员)
+ *
+ * @see {@link IMemberAccountChangeLogList}
  */
-export type IMemberAccountChangeLogMemberListItem = Omit<IMemberAccountChangeLogListItem, 'member'>
+export type IMemberAccountChangeLogMemberList = Omit<
+  IMemberAccountChangeLogList,
+  'member'
+>

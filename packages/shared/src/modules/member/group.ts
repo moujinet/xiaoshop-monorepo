@@ -6,7 +6,7 @@ import type {
 /**
  * 会员群体信息
  */
-export interface IMemberGroup {
+export interface IMemberGroupInfo {
   /**
    * 会员群体 ID
    */
@@ -29,18 +29,6 @@ export interface IMemberGroup {
    * 会员群体人数
    */
   total: number
-  /**
-   * 创建时间
-   */
-  createdTime: string
-  /**
-   * 更新时间
-   */
-  updatedTime: string
-  /**
-   * 刷新时间
-   */
-  refreshTime: string
 }
 
 /**
@@ -72,10 +60,10 @@ export interface IMemberGroupCondition {
 /**
  * 会员群体字典
  *
- * @see {@link IMemberGroup}
+ * @see {@link IMemberGroupInfo}
  */
 export type IMemberGroupDict = Pick<
-  IMemberGroup,
+  IMemberGroupInfo,
   | 'id'
   | 'name'
 >
@@ -83,24 +71,28 @@ export type IMemberGroupDict = Pick<
 /**
  * 会员群体列表
  *
- * @see {@link IMemberGroup}
+ * @see {@link IMemberGroupInfo}
  */
-export type IMemberGroupListItem = Pick<
-  IMemberGroup,
+export type IMemberGroupList = Pick<
+  IMemberGroupInfo,
   | 'id'
   | 'name'
   | `desc`
   | `total`
-  | `updatedTime`
->
+> & {
+  /**
+   * 更新时间
+   */
+  updatedTime: string
+}
 
 /**
  * 会员群体条件列表
  *
- * @see {@link IMemberGroup}
+ * @see {@link IMemberGroupInfo}
  */
-export type IMemberGroupConditionListItem = Pick<
-  IMemberGroup,
+export type IMemberGroupConditionList = Pick<
+  IMemberGroupInfo,
   | 'id'
   | 'name'
   | `total`

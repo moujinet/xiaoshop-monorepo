@@ -270,11 +270,11 @@ export const LOGISTICS_CALC_MODES = [
 /**
  * 地址类型 - 枚举
  *
- * - `SEND` - 发货地址
+ * - `DELIVERY` - 发货地址
  * - `RECEIVE` - 收货地址
  */
 export enum LogisticAddressType {
-  SEND = 1,
+  DELIVERY = 1,
   RECEIVE,
 }
 
@@ -284,6 +284,31 @@ export enum LogisticAddressType {
  * @see {@link LogisticAddressType}
  */
 export const LOGISTIC_ADDRESS_TYPES = [
-  { label: '发货地址', value: LogisticAddressType.SEND, color: ColorName.ARCOBLUE },
+  { label: '发货地址', value: LogisticAddressType.DELIVERY, color: ColorName.ARCOBLUE },
   { label: '收货地址', value: LogisticAddressType.RECEIVE, color: ColorName.PURPLE },
+]
+
+// --------------------------------
+// 物流 - 地址管理 - 地址归属
+// --------------------------------
+
+/**
+ * 地址归属 - 枚举
+ *
+ * - `SELLER` - 商家
+ * - `BUYER` - 买家
+ */
+export enum LogisticAddressOwner {
+  SELLER = 1,
+  BUYER,
+}
+
+/**
+ * 地址归属 - 字典
+ *
+ * @see {@link LogisticAddressOwner}
+ */
+export const LOGISTIC_ADDRESS_OWNERS = [
+  { label: '商家', value: LogisticAddressOwner.SELLER, color: ColorName.ARCOBLUE },
+  { label: '买家', value: LogisticAddressOwner.BUYER, color: ColorName.ORANGERED },
 ]

@@ -1,17 +1,13 @@
-import type {
-  MemberGender,
-  MemberSource,
-  MemberStatus,
-} from './constants'
-import type { IMemberTagDict } from './tag'
-import type { IMemberGroupDict } from './group'
-import type { IMemberBindingInfo } from './binding'
 import type { ILocationPath } from '~/common'
+import type { IMemberBindingInfo } from './binding'
+import type { MemberGender, MemberSource, MemberStatus } from './constants'
+import type { IMemberGroupDict } from './group'
+import type { IMemberTagInfo } from './tag'
 
 /**
  * 会员账户信息
  */
-export interface IMemberAccount {
+export interface IMemberProfile {
   /**
    * 会员 ID
    */
@@ -31,23 +27,15 @@ export interface IMemberAccount {
   /**
    * 会员标签
    *
-   * @see {@link IMemberTagDict}
+   * @see {@link IMemberTagInfo}
    */
-  tags: IMemberTagDict[]
-  /**
-   * 会员群体 ID
-   */
-  groupId: number
+  tags: IMemberTagInfo[]
   /**
    * 会员群体
    *
    * @see {@link IMemberGroupDict}
    */
   group: IMemberGroupDict
-  /**
-   * 会员卡绑定 ID
-   */
-  cardId: number
   /**
    * 绑定会员卡
    *
@@ -74,14 +62,6 @@ export interface IMemberAccount {
    * 会员手机号
    */
   mobile: string
-  /**
-   * 会员密码
-   */
-  password: string
-  /**
-   * 会员密码盐值
-   */
-  salt: string
   /**
    * 会员生日
    */
@@ -120,14 +100,6 @@ export interface IMemberAccount {
    */
   orderAmount: number
   /**
-   * 签到次数
-   */
-  signInTimes: number
-  /**
-   * 登录次数
-   */
-  loginTimes: number
-  /**
    * 红包数量
    */
   redPacket: number
@@ -136,17 +108,17 @@ export interface IMemberAccount {
    */
   coupon: number
   /**
+   * 签到次数
+   */
+  signInTimes: number
+  /**
+   * 登录次数
+   */
+  loginTimes: number
+  /**
    * 注册时间
    */
   createdTime: string
-  /**
-   * 更新时间
-   */
-  updatedTime: string
-  /**
-   * 锁定时间
-   */
-  lockedTime: string
   /**
    * 最后消费时间
    */
@@ -159,15 +131,19 @@ export interface IMemberAccount {
    * 最后登录时间
    */
   lastLoginTime: string
+  /**
+   * 锁定时间
+   */
+  lockedTime: string
 }
 
 /**
  * 会员账户值
  *
- * @see {@link IMemberAccount}
+ * @see {@link IMemberProfile}
  */
 export type IMemberAccountValues = Pick<
-  IMemberAccount,
+  IMemberProfile,
   | 'exp'
   | 'points'
   | 'balance'
@@ -189,10 +165,10 @@ export type IMemberAccountKeys = keyof IMemberAccountValues
 /**
  * 会员账户信息
  *
- * @see {@link IMemberAccount}
+ * @see {@link IMemberProfile}
  */
 export type IMemberAccountInfo = Pick<
-  IMemberAccount,
+  IMemberProfile,
   | 'id'
   | 'status'
   | 'tags'
@@ -207,55 +183,26 @@ export type IMemberAccountInfo = Pick<
 >
 
 /**
- * 会员资料
- *
- * @see {@link IMemberAccountInfo}
- */
-export type IMemberProfile = IMemberAccountInfo & Pick<
-  IMemberAccount,
-  | 'source'
-  | 'username'
-  | 'mobile'
-  | 'exp'
-  | 'points'
-  | 'balance'
-  | 'orders'
-  | 'orderAmount'
-  | 'redPacket'
-  | 'coupon'
-  | 'createdTime'
-  | 'lastLoginTime'
-  | 'lastOrderTime'
-  | 'lastSignInTime'
->
-
-/**
  * 会员账户列表
  *
  * @see {@link IMemberAccountInfo}
  */
-export type IMemberAccountListItem = IMemberAccountInfo & Pick<
-  IMemberAccount,
+export type IMemberAccountList = IMemberAccountInfo & Pick<
+  IMemberProfile,
   | 'source'
   | 'points'
   | 'orders'
   | 'orderAmount'
   | 'lastLoginTime'
->
-
-export type IMemberAccountNotificationInfo = Pick<
-  IMemberAccount,
-  | 'nickname'
-  | 'mobile'
 >
 
 /**
  * 登录会员账户信息
  *
- * @see {@link IMemberAccountInfo}
+ * @see {@link IMemberProfile}
  */
 export type IMemberLoginInfo = IMemberAccountInfo & Pick<
-  IMemberAccount,
+  IMemberProfile,
   | 'username'
   | 'exp'
   | 'points'
@@ -270,10 +217,26 @@ export type IMemberLoginInfo = IMemberAccountInfo & Pick<
 /**
  * 会员登录鉴权信息
  *
- * @see {@link IMemberAccountLoginInfo}
+ * @see {@link IMemberLoginInfo}
  */
-export type IMemberAuthInfo = IMemberLoginInfo & Pick<
-  IMemberAccount,
-  | 'password'
-  | 'salt'
+export type IMemberAuthInfo = IMemberLoginInfo & {
+  /**
+   * 会员密码
+   */
+  password: string
+  /**
+   * 会员密码盐值
+   */
+  salt: string
+}
+
+/**
+ * 会员账户名称
+ *
+ * @see {@link IMemberProfile}
+ */
+export type IMemberAccountName = Pick<
+  IMemberProfile,
+  | 'nickname'
+  | 'mobile'
 >

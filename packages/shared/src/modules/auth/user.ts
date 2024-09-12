@@ -1,7 +1,7 @@
-import type { AuthUserStatus } from './constants'
-import type { IAuthRolePermissions } from './role'
 import type { IOrganizeDepartmentDict, IOrganizePositionDict } from '@/organize'
 import type { YesOrNo } from '~/common'
+import type { AuthUserStatus } from './constants'
+import type { IAuthRolePermissions } from './role'
 
 /**
  * 员工账号

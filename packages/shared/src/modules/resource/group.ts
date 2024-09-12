@@ -1,5 +1,5 @@
-import type { ResourceType } from './constants'
 import type { YesOrNo } from '~/common'
+import type { ResourceType } from './constants'
 
 /**
  * 素材分组

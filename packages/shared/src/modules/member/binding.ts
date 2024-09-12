@@ -1,25 +1,23 @@
-import type {
-  IMemberCardBadgeStyle,
-  IMemberCardStyle,
-} from './card/styles'
-import type {
-  MemberCardPlanType,
-  MemberCardType,
-} from '@/member/constants'
+import type { MemberCardPlanType, MemberCardType } from '@/member/constants'
 import type { YesOrNo } from '~/common'
+import type { IMemberCardBadgeStyle, IMemberCardStyle } from './card/styles'
 
 /**
  * 会员卡 - 绑定信息
  */
-export interface IMemberBinding {
+export interface IMemberBindingInfo {
   /**
    * 绑定 ID
    */
   id: number
   /**
-   * 会员 ID
+   * 会员卡标识
    */
-  memberId: number
+  key: string
+  /**
+   * 会员卡名称
+   */
+  name: string
   /**
    * 会员卡 ID
    */
@@ -40,14 +38,6 @@ export interface IMemberBinding {
    * @see {@link MemberCardPlanType}
    */
   planType: MemberCardPlanType
-  /**
-   * 会员卡标识
-   */
-  key: string
-  /**
-   * 会员卡名称
-   */
-  name: string
   /**
    * 会员卡卡片样式
    *
@@ -77,13 +67,13 @@ export interface IMemberBinding {
    */
   nextLevelExp: number
   /**
-   * 是否包邮 (N:否 Y:是)
+   * 是否包邮
    *
    * @see {@link YesOrNo}
    */
-  freeShipping: YesOrNo
+  isFreeShipping: YesOrNo
   /**
-   * 是否可升级 (N:否 Y:是)
+   * 是否可升级
    *
    * @see {@link YesOrNo}
    */
@@ -93,39 +83,11 @@ export interface IMemberBinding {
    */
   times: number
   /**
-   * 到期时间 (根据自定义会员卡有效期计算)
-   */
-  dueTime: string
-  /**
    * 开通时间
    */
   createdTime: string
   /**
-   * 更新时间
+   * 到期时间 (根据自定义会员卡有效期计算)
    */
-  updatedTime: string
+  dueTime: string
 }
-
-/**
- * 会员卡绑定信息
- *
- * @see {@link IMemberBinding}
- */
-export type IMemberBindingInfo = Pick<
-  IMemberBinding,
-  | 'id'
-  | 'key'
-  | 'name'
-  | 'cardId'
-  | 'cardType'
-  | 'cardStyle'
-  | 'badgeStyle'
-  | 'discount'
-  | 'pointsRatio'
-  | 'needExp'
-  | 'nextLevelExp'
-  | 'freeShipping'
-  | 'upgradeable'
-  | 'times'
-  | 'dueTime'
->

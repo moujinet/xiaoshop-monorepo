@@ -1,15 +1,11 @@
-import type {
-  NotificationChannel,
-  NotificationScene,
-  NotificationScope,
-} from './constants'
-import type { INotificationTemplateContentInfo } from './template-content'
 import type { YesOrNo } from '~/common'
+import type { NotificationChannel, NotificationScene, NotificationScope } from './constants'
+import type { INotificationTemplateContentInfo } from './template-content'
 
 /**
  * 消息通知模板
  */
-export interface INotificationTemplate {
+export interface INotificationTemplateInfo {
   /**
    * 消息模板 ID
    */
@@ -23,7 +19,7 @@ export interface INotificationTemplate {
    *
    * @see {@link YesOrNo}
    */
-  enable: YesOrNo
+  isEnabled: YesOrNo
   /**
    * 消息通知范围
    *
@@ -56,41 +52,37 @@ export interface INotificationTemplate {
    * @see {@link INotificationTemplateContentInfo}
    */
   contents: INotificationTemplateContentInfo[]
-  /**
-   * 更新时间
-   */
-  updatedTime: string
 }
 
 /**
- * 消息通知模板信息
+ * 消息通知模板字典
  *
- * @see {@link INotificationTemplate}
+ * @see {@link INotificationTemplateInfo}
  */
-export type INotificationTemplateInfo = Pick<
-  INotificationTemplate,
+export type INotificationTemplateDict = Pick<
+  INotificationTemplateInfo,
   | 'id'
-  | 'key'
-  | 'enable'
-  | 'scene'
   | 'name'
-  | 'desc'
 >
 
 /**
  * 消息通知模板列表
  *
- * @see {@link INotificationTemplate}
+ * @see {@link INotificationTemplateInfo}
  */
-export type INotificationTemplateListItem = Pick<
-  INotificationTemplate,
+export type INotificationTemplateList = Pick<
+  INotificationTemplateInfo,
   | 'id'
   | 'key'
-  | 'enable'
+  | 'isEnabled'
   | 'scope'
   | 'scene'
   | 'channels'
   | 'name'
   | 'desc'
-  | 'updatedTime'
->
+> & {
+  /**
+   * 更新时间
+   */
+  updatedTime: string
+}

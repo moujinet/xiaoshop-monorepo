@@ -1,9 +1,9 @@
+import type { IMemberAccountInfo } from '@/member'
+import type { IOrder } from '@/order'
 import type {
   PaymentMethod,
   PaymentStatus,
 } from './constants'
-import type { IOrder } from '@/order'
-import type { IMemberAccount } from '@/member'
 
 /**
  * 支付信息
@@ -32,7 +32,7 @@ export interface IPayment {
   /**
    * 会员 ID
    */
-  memberId: IMemberAccount['id']
+  memberId: IMemberAccountInfo['id']
   /**
    * 订单 ID
    */
@@ -40,11 +40,7 @@ export interface IPayment {
   /**
    * 实际支付金额
    */
-  actualAmount: number
-  /**
-   * 创建时间
-   */
-  createdTime: string
+  paidPrice: number
   /**
    * 支付时间
    */

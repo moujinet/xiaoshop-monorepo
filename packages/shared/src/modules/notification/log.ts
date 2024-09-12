@@ -1,16 +1,11 @@
-import type {
-  NotificationChannel,
-  NotificationScene,
-  NotificationScope,
-  NotificationSendStatus,
-} from './constants'
-import type { INotificationTemplate, INotificationTemplateInfo } from './template'
-import type { IMemberAccount } from '@/member'
+import type { IMemberAccountInfo } from '@/member'
+import type { NotificationChannel, NotificationScene, NotificationScope, NotificationSendStatus } from './constants'
+import type { INotificationTemplateDict } from './template'
 
 /**
  * 消息通知日志
  */
-export interface INotificationLog {
+export interface INotificationLogInfo {
   /**
    * 日志 ID
    */
@@ -42,17 +37,13 @@ export interface INotificationLog {
   /**
    * 接收会员 ID
    */
-  memberId: IMemberAccount['id']
-  /**
-   * 消息模板 ID
-   */
-  templateId: INotificationTemplate['id']
+  memberId: IMemberAccountInfo['id']
   /**
    * 消息模板信息
    *
-   * @see {@link INotificationTemplateInfo}
+   * @see {@link INotificationTemplateDict}
    */
-  template: INotificationTemplateInfo
+  template: INotificationTemplateDict
   /**
    * 消息发送目标 (用户名, 邮箱地址, 手机号...)
    */
@@ -69,19 +60,15 @@ export interface INotificationLog {
    * 发送结果
    */
   result: string
-  /**
-   * 创建时间
-   */
-  createdTime: string
 }
 
 /**
  * 消息通知日志列表
  *
- * @see {@link INotificationLog}
+ * @see {@link INotificationLogInfo}
  */
-export type INotificationLogListItem = Pick<
-  INotificationLog,
+export type INotificationLogList = Pick<
+  INotificationLogInfo,
   | 'id'
   | 'scope'
   | 'status'
@@ -91,5 +78,9 @@ export type INotificationLogListItem = Pick<
   | 'template'
   | 'sendTo'
   | 'title'
-  | 'createdTime'
->
+> & {
+  /**
+   * 创建时间
+   */
+  createdTime: string
+}

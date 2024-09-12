@@ -1,7 +1,7 @@
 /**
  * 物流公司信息
  */
-export interface ILogisticsCompany {
+export interface ILogisticsCompanyList {
   /**
    * 物流公司编号
    */
@@ -23,10 +23,6 @@ export interface ILogisticsCompany {
    */
   sort: number
   /**
-   * 创建时间
-   */
-  createdTime: string
-  /**
    * 更新时间
    */
   updatedTime: string
@@ -35,25 +31,24 @@ export interface ILogisticsCompany {
 /**
  * 物流公司列表
  *
- * @see {@link ILogisticsCompany}
+ * @see {@link ILogisticsCompanyList}
  */
-export type ILogisticsCompanyListItem = Pick<
-  ILogisticsCompany,
+export type ILogisticsCompanyInfo = Pick<
+  ILogisticsCompanyList,
   | 'id'
   | 'name'
   | 'desc'
   | 'url'
   | 'sort'
-  | 'updatedTime'
 >
 
 /**
  * 物流公司字典
  *
- * @see {@link ILogisticsCompany}
+ * @see {@link ILogisticsCompanyInfo}
  */
 export type ILogisticsCompanyDict = Pick<
-  ILogisticsCompany,
+  ILogisticsCompanyInfo,
   | 'id'
   | 'name'
 >

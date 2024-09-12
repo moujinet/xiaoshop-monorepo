@@ -1,3 +1,10 @@
+import type { LogisticsDeliveryMethod } from '@/logistics'
+import type { YesOrNo } from '~/common'
+import type { IProductAdditionDict } from './addition'
+import type { IProductAttribute } from './attribute'
+import type { IProductBrandDict } from './brand'
+import type { IProductCategoryDict } from './category'
+import type { IProductCommitmentDict } from './commitment'
 import type {
   ProductBuyBtnType,
   ProductFreightChargeMode,
@@ -9,16 +16,9 @@ import type {
   ProductStatus,
   ProductType,
 } from './constants'
+import type { IProductGroupDict } from './group'
 import type { IProductSkuInfo } from './sku'
 import type { IProductTagDict } from './tag'
-import type { IProductBrandDict } from './brand'
-import type { IProductGroupDict } from './group'
-import type { IProductAttribute } from './attribute'
-import type { IProductAdditionDict } from './addition'
-import type { IProductCategoryDict } from './category'
-import type { IProductCommitmentDict } from './commitment'
-import type { LogisticsDeliveryMethod } from '@/logistics'
-import type { YesOrNo } from '~/common'
 
 /**
  * 商品信息

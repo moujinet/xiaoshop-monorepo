@@ -1,28 +1,28 @@
-import type { IMemberCardBadgeStyle, IMemberCardStyle } from './styles'
-import type { IMemberCardPlan } from './plan'
 import type { MemberCardType } from '@/member/constants'
 import type { YesOrNo } from '~/common'
+import type { IMemberCardPlanInfo } from './plan'
+import type { IMemberCardBadgeStyle, IMemberCardStyle } from './styles'
 
 /**
  * 会员卡信息
  */
-export interface IMemberCard {
+export interface IMemberCardInfo {
   /**
    * 会员卡 ID
    */
   id: number
+  /**
+   * 是否启用
+   *
+   * @see {@link YesOrNo}
+   */
+  isEnabled: YesOrNo
   /**
    * 会员卡类型
    *
    * @see {@link MemberCardType}
    */
   type: MemberCardType
-  /**
-   * 是否启用
-   *
-   * @see {@link YesOrNo}
-   */
-  enable: YesOrNo
   /**
    * 会员卡标识
    */
@@ -50,9 +50,9 @@ export interface IMemberCard {
   /**
    * 会员卡有效期
    *
-   * @see {@link IMemberCardPlan}
+   * @see {@link IMemberCardPlanInfo}
    */
-  plans: IMemberCardPlan[]
+  plans: IMemberCardPlanInfo[]
   /**
    * 所需成长值
    */
@@ -70,30 +70,16 @@ export interface IMemberCard {
    *
    * @see {@link YesOrNo}
    */
-  freeShipping: YesOrNo
-  /**
-   * 开通会员数
-   *
-   * @virtual
-   */
-  total: number
-  /**
-   * 创建时间
-   */
-  createdTime: string
-  /**
-   * 更新时间
-   */
-  updatedTime: string
+  isFreeShipping: YesOrNo
 }
 
 /**
  * 会员卡字典
  *
- * @see {@link IMemberCard}
+ * @see {@link IMemberCardInfo}
  */
 export type IMemberCardDict = Pick<
-  IMemberCard,
+  IMemberCardInfo,
   | 'id'
   | 'type'
   | 'name'
@@ -102,13 +88,12 @@ export type IMemberCardDict = Pick<
 /**
  * 会员等级列表
  *
- * @see {@link IMemberCard}
+ * @see {@link IMemberCardInfo}
  */
-export type IMemberLevelCardListItem = Pick<
-  IMemberCard,
+export type IMemberLevelCardList = Pick<
+  IMemberCardInfo,
   | 'id'
-  | 'type'
-  | 'enable'
+  | 'isEnabled'
   | 'key'
   | 'name'
   | 'desc'
@@ -116,16 +101,26 @@ export type IMemberLevelCardListItem = Pick<
   | 'needExp'
   | 'discount'
   | 'pointsRatio'
-  | 'freeShipping'
-  | 'total'
->
+  | 'isFreeShipping'
+> & {
+  /**
+   * 开通数量
+   */
+  total: number
+}
 
 /**
  * 自定义会员卡列表
  *
- * @see {@link IMemberLevelCardListItem}
+ * @see {@link IMemberCardInfo}
  */
-export type IMemberCustomCardListItem = IMemberLevelCardListItem & Pick<
-  IMemberCard,
-  | 'updatedTime'
->
+export type IMemberCustomCardList = IMemberLevelCardList &
+  Pick<
+    IMemberCardInfo,
+    | 'plans'
+  > & {
+  /**
+   * 更新时间
+   */
+    updatedTime: string
+  }

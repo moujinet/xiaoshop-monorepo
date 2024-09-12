@@ -3,7 +3,7 @@ import type { IColorName } from '~/common'
 /**
  * 会员标签信息
  */
-export interface IMemberTag {
+export interface IMemberTagInfo {
   /**
    * 会员标签 ID
    */
@@ -18,37 +18,32 @@ export interface IMemberTag {
    * @see {@link IColorName}
    */
   color: IColorName
-  /**
-   * 创建时间
-   */
-  createdTime: string
-  /**
-   * 更新时间
-   */
-  updatedTime: string
 }
 
 /**
  * 会员标签字典
  *
- * @see {@link IMemberTag}
+ * @see {@link IMemberTagInfo}
  */
 export type IMemberTagDict = Pick<
-  IMemberTag,
+  IMemberTagInfo,
   | 'id'
   | 'name'
-  | 'color'
 >
 
 /**
  * 会员标签列表
  *
- * @see {@link IMemberTag}
+ * @see {@link IMemberTagInfo}
  */
-export type IMemberTagListItem = Pick<
-  IMemberTag,
+export type IMemberTagList = Pick<
+  IMemberTagInfo,
   | 'id'
   | 'name'
   | 'color'
-  | 'updatedTime'
->
+> & {
+  /**
+   * 更新时间
+   */
+  updatedTime: string
+}

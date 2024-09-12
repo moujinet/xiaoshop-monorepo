@@ -1,5 +1,5 @@
-import type { IResourceGroupInfo } from './group'
 import type { ResourceType } from './constants'
+import type { IResourceGroupInfo } from './group'
 
 /**
  * 素材信息

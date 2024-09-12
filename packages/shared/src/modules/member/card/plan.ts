@@ -3,7 +3,7 @@ import type { MemberCardPlanType } from '@/member/constants'
 /**
  * 会员卡 - 有效期
  */
-export interface IMemberCardPlan {
+export interface IMemberCardPlanInfo {
   /**
    * 会员卡套餐 ID
    */

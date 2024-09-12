@@ -9,11 +9,13 @@ import { ColorName } from '~/common'
  *
  * - `PENDING`: 待支付
  * - `PAID`: 已支付
+ * - `REFUNDED`: 已退款
  * - `CANCELED`: 已取消
  */
 export enum PaymentStatus {
   PENDING,
   PAID,
+  REFUNDED,
   CANCELED,
 }
 
@@ -25,6 +27,7 @@ export enum PaymentStatus {
 export const PAYMENT_STATUSES = [
   { label: '待支付', value: PaymentStatus.PENDING, color: ColorName.ORANGERED },
   { label: '已支付', value: PaymentStatus.PAID, color: ColorName.GREEN },
+  { label: '已退款', value: PaymentStatus.REFUNDED, color: ColorName.RED },
   { label: '已取消', value: PaymentStatus.CANCELED, color: ColorName.GRAY },
 ]
 
@@ -60,29 +63,4 @@ export const PAYMENT_METHODS = [
   { label: '余额支付', value: PaymentMethod.BALANCE, icon: 'mingcute:wallet', color: ColorName.ORANGERED },
   { label: '现金支付', value: PaymentMethod.CASH, icon: 'mingcute:cash', color: ColorName.RED },
   { label: '积分支付', value: PaymentMethod.POINTS, icon: 'mingcute:yuanbao', color: ColorName.PURPLE },
-]
-
-// --------------------------------
-// 支付 - 折扣类型
-// --------------------------------
-
-/**
- * 支付折扣类型 - 枚举
- *
- * - `privilege`: 会员折扣
- * - `promotion`: 促销折扣
- */
-export enum PaymentDiscountType {
-  PRIVILEGE = 1,
-  PROMOTION,
-}
-
-/**
- * 支付折扣类型 - 字典
- *
- * @see {@link IPaymentDiscountType}
- */
-export const PAYMENT_DISCOUNT_TYPES = [
-  { label: '会员折扣', value: PaymentDiscountType.PRIVILEGE, color: ColorName.ORANGERED },
-  { label: '促销折扣', value: PaymentDiscountType.PROMOTION, color: ColorName.PINKPURPLE },
 ]

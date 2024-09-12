@@ -1,10 +1,10 @@
-import type { LogisticsCalcMode } from './constants'
 import type { ILocationPath, YesOrNo } from '~/common'
+import type { LogisticsCalcMode } from './constants'
 
 /**
  * 物流运费模板
  */
-export interface ILogisticsTemplate {
+export interface ILogisticsTemplateInfo {
   /**
    * 物流模板编号
    */
@@ -45,14 +45,6 @@ export interface ILogisticsTemplate {
    * @see {@link ILogisticsTemplateFreeRule}
    */
   freeRules: ILogisticsTemplateFreeRule[]
-  /**
-   * 创建时间
-   */
-  createdTime: string
-  /**
-   * 更新时间
-   */
-  updatedTime: string
 }
 
 /**
@@ -106,26 +98,30 @@ export interface ILogisticsTemplateFreeRule {
 /**
  * 物流运费模板 - 列表
  *
- * @see {@link ILogisticsTemplate}
+ * @see {@link ILogisticsTemplateInfo}
  */
-export type ILogisticsTemplateListItem = Pick<
-  ILogisticsTemplate,
+export type ILogisticsTemplateList = Pick<
+  ILogisticsTemplateInfo,
   | 'id'
   | 'name'
   | 'desc'
   | 'sort'
   | 'calcMode'
   | 'enableFreeRules'
-  | 'updatedTime'
->
+> & {
+  /**
+   * 更新时间
+   */
+  updatedTime: string
+}
 
 /**
  * 物流运费模板 - 字典
  *
- * @see {@link ILogisticsTemplate}
+ * @see {@link ILogisticsTemplateInfo}
  */
 export type ILogisticsTemplateDict = Pick<
-  ILogisticsTemplate,
+  ILogisticsTemplateInfo,
   | 'id'
   | 'name'
 >

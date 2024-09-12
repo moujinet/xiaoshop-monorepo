@@ -9,20 +9,20 @@ import { ColorName } from '~/common'
  *
  * - `PENDING`: 待付款
  * - `PAID`: 待发货
+ * - `PARTIAL`: 部分发货
  * - `DELIVERED`: 待收货
  * - `RECEIVED`: 待评价
  * - `FINISHED`: 已完成
- * - `REFUNDED`: 已退款
  * - `CANCELED`: 已取消
  * - `DELETED`: 已删除
  */
 export enum OrderStatus {
   PENDING,
   PAID,
+  PARTIAL,
   DELIVERED,
   RECEIVED,
   FINISHED,
-  REFUNDED,
   CANCELED,
   DELETED,
 }
@@ -35,10 +35,10 @@ export enum OrderStatus {
 export const ORDER_STATUSES = [
   { label: '待付款', value: OrderStatus.PENDING, color: ColorName.CYAN },
   { label: '待发货', value: OrderStatus.PAID, color: ColorName.ORANGERED },
+  { label: '部分发货', value: OrderStatus.PARTIAL, color: ColorName.ORANGERED },
   { label: '待收货', value: OrderStatus.DELIVERED, color: ColorName.ARCOBLUE },
   { label: '待评价', value: OrderStatus.RECEIVED, color: ColorName.PURPLE },
   { label: '已完成', value: OrderStatus.FINISHED, color: ColorName.GREEN },
-  { label: '已退款', value: OrderStatus.REFUNDED, color: ColorName.RED },
   { label: '已取消', value: OrderStatus.CANCELED, color: ColorName.GRAY },
   { label: '已删除', value: OrderStatus.DELETED, color: ColorName.GRAY },
 ]

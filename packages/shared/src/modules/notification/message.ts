@@ -1,22 +1,14 @@
-import type {
-  NotificationScene,
-  NotificationScope,
-  NotificationStatus,
-} from './constants'
-import type { IMemberAccount } from '@/member'
+import type { IMemberAccountInfo } from '@/member'
+import type { NotificationScene, NotificationScope, NotificationStatus } from './constants'
 
 /**
  * 系统消息通知信息
  */
-export interface INotificationMessage {
+export interface INotificationMessageInfo {
   /**
    * 消息通知 ID
    */
   id: number
-  /**
-   * 接收会员 ID
-   */
-  memberId: IMemberAccount['id']
   /**
    * 消息通知范围
    *
@@ -35,6 +27,10 @@ export interface INotificationMessage {
    * @see {@link NotificationStatus}
    */
   status: NotificationStatus
+  /**
+   * 接收会员 ID
+   */
+  memberId: IMemberAccountInfo['id']
   /**
    * 消息通知标题
    */
@@ -56,13 +52,13 @@ export interface INotificationMessage {
 /**
  * 系统消息通知列表
  *
- * @see {@link INotificationMessage}
+ * @see {@link INotificationMessageInfo}
  */
-export type INotificationMessageListItem = Pick<
-  INotificationMessage,
+export type INotificationMessageList = Pick<
+  INotificationMessageInfo,
   | 'id'
-  | 'status'
   | 'scene'
+  | 'status'
   | 'title'
   | 'content'
   | 'extras'

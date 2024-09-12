@@ -1,5 +1,5 @@
-import type { IProductInfo } from './product'
 import type { YesOrNo } from '~/common'
+import type { IProductInfo } from './product'
 
 /**
  * 商品 SKU 信息

@@ -1,4 +1,4 @@
-import type { IMemberAccount } from '@/member'
+import type { IMemberAccountInfo } from '@/member'
 import type {
   IProduct,
   IProductCartInfo,
@@ -18,7 +18,7 @@ export interface ICartProduct {
   /**
    * 会员 ID
    */
-  memberId: IMemberAccount['id']
+  memberId: IMemberAccountInfo['id']
   /**
    * 商品 ID
    */

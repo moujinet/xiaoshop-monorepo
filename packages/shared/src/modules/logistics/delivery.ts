@@ -3,7 +3,7 @@ import type { IOrder } from '@/order'
 /**
  * 物流发货信息
  */
-export interface ILogisticsDelivery {
+export interface ILogisticsDeliveryInfo {
   /**
    * 物流发货 ID
    */

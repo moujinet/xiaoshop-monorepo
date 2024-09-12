@@ -6,7 +6,7 @@ import type {
 /**
  * 会员注销申请
  */
-export interface IMemberUnregister {
+export interface IMemberUnregisterList {
   /**
    * 申请 ID
    */

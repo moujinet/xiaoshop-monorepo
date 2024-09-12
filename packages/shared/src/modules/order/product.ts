@@ -1,10 +1,10 @@
+import type { IOrder, OrderProductStatus } from '@/order'
 import type {
   IProduct,
   IProductCartInfo,
   IProductSku,
   IProductSkuInfo,
 } from '@/product'
-import type { IOrder, OrderProductStatus } from '@/order'
 
 /**
  * 订单商品信息
@@ -14,10 +14,6 @@ export interface IOrderProduct {
    * ID
    */
   id: number
-  /**
-   * 订单商品云链 ID
-   */
-  connectId: string
   /**
    * 订单 ID
    */
@@ -48,6 +44,14 @@ export interface IOrderProduct {
    * @see {@link OrderProductStatus}
    */
   status: OrderProductStatus
+  /**
+   * 商品价格
+   */
+  price: number
+  /**
+   * 实际支付金额
+   */
+  actualPrice: number
   /**
    * 购买数量
    */
