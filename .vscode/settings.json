@@ -1,9 +1,6 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
 
-  // Enable the ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
-
   // Disable the accessibility support
   "editor.accessibilitySupport": "off",
 
@@ -39,10 +36,21 @@
     "typescriptreact",
     "vue",
     "html",
+    "markdown",
     "json",
     "jsonc",
     "yaml",
-    "toml"
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
   ],
 
   "cSpell.words": [

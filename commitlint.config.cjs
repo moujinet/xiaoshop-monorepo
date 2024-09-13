@@ -1,7 +1,7 @@
 /* eslint-disable regexp/no-unused-capturing-group */
+const { execSync } = require('node:child_process')
 const fs = require('node:fs')
 const path = require('node:path')
-const { execSync } = require('node:child_process')
 
 const scopes = fs
   .readdirSync(path.resolve(__dirname, 'packages'), { withFileTypes: true })
