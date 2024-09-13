@@ -38,3 +38,25 @@ export enum ColorName {
  * @see {@link ColorName}
  */
 export type IColorName = `${ColorName}`
+
+/**
+ * 全局定义 - 字典
+ */
+export interface IDict {
+  /**
+   * 键
+   */
+  key: number
+  /**
+   * 值
+   */
+  value: string
+  /**
+   * 颜色
+   */
+  color?: IColorName
+  /**
+   * 图标
+   */
+  icon?: string
+}
