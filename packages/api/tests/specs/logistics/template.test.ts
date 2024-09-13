@@ -1,4 +1,5 @@
 import { LogisticsCalcMode } from '@xiaoshop/shared'
+
 import { truncateTable, useRequest } from '~~/tests/utils'
 
 describe('Logistics Module - Template', () => {

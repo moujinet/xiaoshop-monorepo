@@ -6,10 +6,11 @@ import { Logger, ValidationPipe } from '@nestjs/common'
 import { apiReference } from '@scalar/nestjs-api-reference'
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
-import { ResponseInterceptor } from '~/common/interceptors'
-import { exceptionFactory } from '~/common/exceptions'
+
 import { AppModule } from '~/app.module'
+import { exceptionFactory } from '~/common/exceptions'
+import { ResponseInterceptor } from '~/common/interceptors'
+import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

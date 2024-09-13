@@ -1,7 +1,7 @@
-import { Command, CommandRunner } from 'nest-commander'
+import { $ } from 'zx'
 import * as p from '@clack/prompts'
 import * as color from 'picocolors'
-import { $ } from 'zx'
+import { Command, CommandRunner } from 'nest-commander'
 
 @Command({
   name: 'migrate:create',

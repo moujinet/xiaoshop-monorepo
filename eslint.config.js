@@ -32,6 +32,7 @@ export default antfu(
       'node/prefer-global/process': 'off',
       'ts/consistent-type-imports': 'off',
       'test/prefer-lowercase-title': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
   {

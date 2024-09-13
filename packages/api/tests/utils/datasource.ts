@@ -2,6 +2,7 @@ import {
   DataSource,
   type DataSourceOptions,
 } from 'typeorm'
+
 import configuration from '~/configs'
 
 export const dataSourceOptions: DataSourceOptions = {

@@ -1,4 +1,5 @@
 import { AuthUserStatus } from '@xiaoshop/shared'
+
 import { runSQL, truncateTable, useRequest } from '~~/tests/utils'
 
 describe('Auth Module - User', () => {

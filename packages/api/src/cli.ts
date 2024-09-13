@@ -1,6 +1,7 @@
-import { CommandFactory } from 'nest-commander'
 import * as p from '@clack/prompts'
 import * as color from 'picocolors'
+import { CommandFactory } from 'nest-commander'
+
 import { AppModule } from '~/app.module'
 
 async function bootstrap() {

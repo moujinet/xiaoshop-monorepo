@@ -1,6 +1,6 @@
-import { Command, CommandRunner } from 'nest-commander'
-import * as p from '@clack/prompts'
 import { $ } from 'zx'
+import * as p from '@clack/prompts'
+import { Command, CommandRunner } from 'nest-commander'
 
 @Command({
   name: 'migrate:run',

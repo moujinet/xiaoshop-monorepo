@@ -1,3 +1,4 @@
+// Modules
 import { ClsModule } from 'nestjs-cls'
 import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
@@ -8,37 +9,9 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
-import {
-  BullModuleConfig,
-  CacheModuleConfig,
-  ClsModuleConfig,
-  TypeOrmModuleConfig,
-  WinstonModuleConfig,
-} from '~/configs/modules'
-
 import configuration from '~/configs'
-
-// Modules
-import { AuthModule } from '@/auth/module'
-import { LogisticsModule } from '@/logistics/module'
-import { MemberModule } from '@/member/module'
-import { NotificationModule } from '@/notification/module'
-import { OrganizeModule } from '@/organize/module'
-import { ProductModule } from '@/product/module'
-import { ResourceModule } from '@/resource/module'
-import { SettingsModule } from '@/settings/module'
-import { UploadModule } from '@/upload/module'
-
-// Commands
-import {
-  CreateMigrateCommand,
-  GenerateMigrateCommand,
-  RevertMigrateCommand,
-  RunMigrateCommand,
-} from '~/database/commands'
-import {
-  SettingsMigrationCommand,
-} from '@/settings/commands/settings.command'
+import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, RunMigrateCommand } from '~/database/commands'
+import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig, WinstonModuleConfig } from '~/configs/modules'
 
 @Module({
   imports: [
@@ -83,22 +56,12 @@ import {
     ScheduleModule.forRoot(),
 
     // Modules
-    SettingsModule,
-    ProductModule,
-    MemberModule,
-    LogisticsModule,
-    NotificationModule,
-    AuthModule,
-    OrganizeModule,
-    ResourceModule,
-    UploadModule,
 
     // Commands
     CreateMigrateCommand,
     RevertMigrateCommand,
     RunMigrateCommand,
     GenerateMigrateCommand,
-    SettingsMigrationCommand,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 import { MemberStatus } from '@xiaoshop/shared'
+
 import { runSQL, truncateTable, useRequest } from '~~/tests/utils'
 
 describe('Member Module - Account', () => {

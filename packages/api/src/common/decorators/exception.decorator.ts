@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common'
 import { ApiResponse, getSchemaPath } from '@nestjs/swagger'
+
 import { ApiErrorResponse } from '~/common'
 import {
   EXCEPTION_BAD_REQUEST,

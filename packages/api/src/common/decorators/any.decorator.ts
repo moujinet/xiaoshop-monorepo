@@ -1,5 +1,6 @@
 import { applyDecorators } from '@nestjs/common'
 import { ApiResponse, getSchemaPath } from '@nestjs/swagger'
+
 import { ApiResponse as CommonApiResponse } from '~/common'
 
 export function ApiAnyResponse<T>(data: T) {

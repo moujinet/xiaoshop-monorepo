@@ -1,4 +1,5 @@
 import type { IApiResponse } from '@xiaoshop/shared'
+
 import { ApiProperty } from '@nestjs/swagger'
 
 /**

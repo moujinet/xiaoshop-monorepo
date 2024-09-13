@@ -11,9 +11,19 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { WINSTON_MODULE_NEST_PROVIDER, WinstonModule } from 'nest-winston'
 
-import { dataSourceOptions } from './datasource'
-import { runSQL, truncateTable } from './tools'
-
+import configuration from '~/configs'
+import { AuthModule } from '@/auth/module'
+import { MemberModule } from '@/member/module'
+import { UploadModule } from '@/upload/module'
+import { ProductModule } from '@/product/module'
+import { OrganizeModule } from '@/organize/module'
+import { ResourceModule } from '@/resource/module'
+import { SettingsModule } from '@/settings/module'
+import { LogisticsModule } from '@/logistics/module'
+import { exceptionFactory } from '~/common/exceptions'
+import { NotificationModule } from '@/notification/module'
+import { ResponseInterceptor } from '~/common/interceptors'
+import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
 import {
   BullModuleConfig,
   CacheModuleConfig,
@@ -21,20 +31,8 @@ import {
   WinstonModuleConfig,
 } from '~/configs/modules'
 
-import configuration from '~/configs'
-import { exceptionFactory } from '~/common/exceptions'
-import { ResponseInterceptor } from '~/common/interceptors'
-import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
-
-import { AuthModule } from '@/auth/module'
-import { OrganizeModule } from '@/organize/module'
-import { SettingsModule } from '@/settings/module'
-import { LogisticsModule } from '@/logistics/module'
-import { ResourceModule } from '@/resource/module'
-import { UploadModule } from '@/upload/module'
-import { MemberModule } from '@/member/module'
-import { ProductModule } from '@/product/module'
-import { NotificationModule } from '@/notification/module'
+import { runSQL, truncateTable } from './tools'
+import { dataSourceOptions } from './datasource'
 
 export async function createTestingModule(modules: any[]) {
   const module = Test.createTestingModule({

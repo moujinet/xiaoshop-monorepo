@@ -1,5 +1,6 @@
-import { Type, applyDecorators } from '@nestjs/common'
+import { applyDecorators, Type } from '@nestjs/common'
 import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger'
+
 import { ApiResponse as ApiResponseData } from '~/common'
 
 export function ApiPaginatedResponse<TModel extends Type<any>>(model: TModel) {

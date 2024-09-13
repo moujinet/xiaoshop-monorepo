@@ -1,22 +1,34 @@
-import { AuthLogType } from '@xiaoshop/shared'
+import { SystemLogLevel, SystemLogType } from '@xiaoshop/shared'
 
-export interface ILogBasedEvent {
+/**
+ * 基础事件
+ */
+export interface IBaseEvent {
   /**
-   * 事件所属模块
+   * 触发模块
    */
   module: string
+}
+
+export interface ILogBasedEvent extends IBaseEvent {
   /**
-   * 事件日志类型
+   * 触发日志类型
    *
-   * @see {@link AuthLogType}
+   * @see {@link SystemLogType}
    */
-  authLogType: AuthLogType
+  type: SystemLogType
+  /**
+   * 触发日志级别
+   *
+   * @see {@link SystemLogLevel}
+   */
+  level: SystemLogLevel
   /**
    * 获取系统日志内容
    *
    * @returns string | false
    */
-  getAuthLogs: () => string | false
+  getLogContent: () => string | false
 }
 
 /**
@@ -24,18 +36,22 @@ export interface ILogBasedEvent {
  *
  * @see {@link ILogBasedEvent}
  */
-export abstract class BaseEvent implements ILogBasedEvent {
+export abstract class LogBasedEvent implements ILogBasedEvent {
   constructor(
     /**
-     * 事件所属模块
+     * 触发模块
      */
     public readonly module: string,
     /**
-     * 事件日志类型
+     * 触发日志类型
      *
-     * @see {@link AuthLogType}
+     * @see {@link SystemLogType}
      */
-    public readonly authLogType: AuthLogType = AuthLogType.USER,
+    public readonly type: SystemLogType = SystemLogType.USER,
+    /**
+     * 触发日志级别
+     */
+    public readonly level: SystemLogLevel = SystemLogLevel.INFO,
   ) {}
 
   /**
@@ -43,7 +59,7 @@ export abstract class BaseEvent implements ILogBasedEvent {
    *
    * @returns string | false
    */
-  getAuthLogs(): string | false {
+  getLogContent(): string | false {
     return false
   }
 }

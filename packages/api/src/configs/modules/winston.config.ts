@@ -2,11 +2,12 @@ import type {
   WinstonModuleOptions,
   WinstonModuleOptionsFactory,
 } from 'nest-winston'
-import { ConfigService } from '@nestjs/config'
-import { format, transports } from 'winston'
-import { Injectable } from '@nestjs/common'
-import { utilities } from 'nest-winston'
+
 import 'winston-daily-rotate-file'
+import { utilities } from 'nest-winston'
+import { Injectable } from '@nestjs/common'
+import { format, transports } from 'winston'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class WinstonModuleConfig implements WinstonModuleOptionsFactory {
