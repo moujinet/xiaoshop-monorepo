@@ -2,7 +2,6 @@
 import { ClsModule } from 'nestjs-cls'
 import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
-import { WinstonModule } from 'nest-winston'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ScheduleModule } from '@nestjs/schedule'
@@ -10,8 +9,10 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
+import { SystemModule } from '@/system/module'
+import { SettingsMigrationCommand } from '@/system/settings/commands/settings.command'
+import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig } from '~/configs/modules'
 import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, RunMigrateCommand } from '~/database/commands'
-import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig, WinstonModuleConfig } from '~/configs/modules'
 
 @Module({
   imports: [
@@ -20,11 +21,6 @@ import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConf
       isGlobal: true,
       cache: true,
       load: [configuration],
-    }),
-
-    // Winston
-    WinstonModule.forRootAsync({
-      useClass: WinstonModuleConfig,
     }),
 
     // Cache Manager
@@ -55,13 +51,15 @@ import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConf
     // Schedule
     ScheduleModule.forRoot(),
 
-    // Modules
+    // XiaoShop Modules
+    SystemModule,
 
     // Commands
     CreateMigrateCommand,
     RevertMigrateCommand,
     RunMigrateCommand,
     GenerateMigrateCommand,
+    SettingsMigrationCommand,
   ],
 })
 export class AppModule {}

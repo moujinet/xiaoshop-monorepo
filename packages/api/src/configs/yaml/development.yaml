@@ -1,15 +1,12 @@
 app:
   prefix: '/api'
   port: 3001
-  swagger: true
-
-logger:
-  dest: './logs'
-  console: true
-  debug: true
 
 upload:
   dest: './public/upload'
+
+backup:
+  path: './backup'
 
 db:
   mysql:
@@ -19,6 +16,7 @@ db:
     username: 'root'
     password: '123456'
     database: 'xiaoshop'
+    entityPrefix: 'xs_'
     charset: 'utf8mb4'
     logging: false
     logger: 'advanced-console'

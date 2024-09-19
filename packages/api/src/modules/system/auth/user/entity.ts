@@ -1,24 +1,25 @@
-import { SystemUserStatus, YesOrNo } from '@xiaoshop/shared'
+import type { SystemUserStatus, YesOrNo } from '@xiaoshop/shared'
+
 import { Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 import { SystemRole } from '@/system/auth/role/entity'
-import { Position } from '@/system/organize/position/entity'
-import { Department } from '@/system/organize/department/entity'
+import { SystemDepartment } from '@/system/organize/department/entity'
+import { SystemDepartmentPosition } from '@/system/organize/position/entity'
 
 @Entity({
   name: 'system_user',
   comment: '系统用户信息表',
 })
 @Index('IDX_system_user', ['status', 'name', 'mobile', 'departmentId', 'positionId', 'lastLoginTime'])
-@Index('IDX_system_user_login', ['username', 'mobile'], { unique: true })
+@Index('IDX_system_user_login', ['isAdmin', 'status', 'username'], { unique: true })
 export class SystemUser {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ name: 'is_admin', type: 'tinyint', unsigned: true, default: YesOrNo.NO, comment: '是否系统管理员' })
+  @Column({ name: 'is_admin', type: 'tinyint', unsigned: true, default: 0, comment: '是否系统管理员' })
   isAdmin: YesOrNo
 
-  @Column({ type: 'tinyint', unsigned: true, default: SystemUserStatus.NORMAL, comment: '系统用户状态' })
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '系统用户状态' })
   status: SystemUserStatus
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '用户名' })
@@ -43,16 +44,16 @@ export class SystemUser {
   @Column({ name: 'department_id', type: 'int', unsigned: true, default: 0, comment: '部门 ID' })
   departmentId: number
 
-  @OneToOne(() => Department, { createForeignKeyConstraints: false })
+  @OneToOne(() => SystemDepartment, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'department_id' })
-  department: Department
+  department: SystemDepartment
 
   @Column({ name: 'position_id', type: 'int', unsigned: true, default: 0, comment: '职位 ID' })
   positionId: number
 
-  @OneToOne(() => Position, { createForeignKeyConstraints: false })
+  @OneToOne(() => SystemDepartmentPosition, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'position_id' })
-  position: Position
+  position: SystemDepartmentPosition
 
   @Column({ name: 'last_login_ip', type: 'varchar', length: 32, nullable: false, default: '', comment: '最后登录 IP 及地区' })
   lastLoginIp: string

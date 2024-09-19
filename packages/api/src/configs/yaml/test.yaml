@@ -1,15 +1,12 @@
 app:
   prefix: ''
   port: 3001
-  swagger: false
-
-logger:
-  dest: './tests/__fixtures__/logs'
-  console: false
-  debug: true
 
 upload:
   dest: './tests/__fixtures__/upload'
+
+backup:
+  path: './tests/__fixtures__/backup'
 
 db:
   mysql:
@@ -19,6 +16,7 @@ db:
     username: 'root'
     password: '123456'
     database: 'xiaoshop_test'
+    entityPrefix: 'xs_'
     charset: 'utf8mb4'
     logging: true
     logger: 'advanced-console'

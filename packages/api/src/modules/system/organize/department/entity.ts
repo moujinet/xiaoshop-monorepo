@@ -4,8 +4,8 @@ import { Column, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 
   name: 'system_department',
   comment: '部门信息表',
 })
-@Index('IDX_system_department', ['sort', 'updatedTime'])
-export class Department {
+@Index('IDX_system_department', ['parentId', 'sort', 'updatedTime'])
+export class SystemDepartment {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 

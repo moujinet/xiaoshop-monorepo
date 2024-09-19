@@ -1,22 +1,22 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-import { Department } from '@/system/organize/department/entity'
+import { SystemDepartment } from '@/system/organize/department/entity'
 
 @Entity({
-  name: 'system_position',
+  name: 'system_department_position',
   comment: '部门职位信息表',
 })
-@Index('IDX_system_position', ['departmentId', 'sort', 'updatedTime'])
-export class Position {
+@Index('IDX_system_department_position', ['departmentId', 'sort', 'updatedTime'])
+export class SystemDepartmentPosition {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
   @Column({ name: 'department_id', type: 'int', default: 0, unsigned: true, comment: '所属部门 ID' })
   departmentId: number
 
-  @ManyToOne(() => Department, { createForeignKeyConstraints: false })
+  @ManyToOne(() => SystemDepartment, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'department_id' })
-  department: Department
+  department: SystemDepartment
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '职位名称' })
   name: string

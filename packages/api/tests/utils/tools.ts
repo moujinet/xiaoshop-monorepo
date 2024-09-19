@@ -1,6 +1,18 @@
 import { rimraf } from 'rimraf'
 
+import configuration from '~/configs'
+
 import { getDataSource } from './datasource'
+
+export function getTableName(table: string): string {
+  return `${configuration().db.mysql.entityPrefix}${table}`
+}
+
+export async function sleep(time: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time)
+  })
+}
 
 /**
  * 清理数据表
@@ -10,7 +22,9 @@ import { getDataSource } from './datasource'
 export async function truncateTable(tables: string[]) {
   const dataSource = await getDataSource()
 
-  for (const table of tables) {
+  for (const t of tables) {
+    const table = getTableName(t)
+
     const exists = await dataSource.query('SHOW TABLES LIKE ?', [table])
 
     if (exists.length > 0) {

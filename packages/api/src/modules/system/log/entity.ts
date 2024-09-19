@@ -1,4 +1,5 @@
-import { SystemLogLevel, SystemLogType } from '@xiaoshop/shared'
+import type { SystemLogLevel, SystemLogType } from '@xiaoshop/shared'
+
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 import { SystemUser } from '@/system/auth/user/entity'
@@ -12,10 +13,10 @@ export class SystemLog {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number
 
-  @Column({ type: 'tinyint', unsigned: true, default: SystemLogType.USER, comment: '日志类型' })
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '日志类型' })
   type: SystemLogType
 
-  @Column({ type: 'tinyint', unsigned: true, default: SystemLogLevel.INFO, comment: '日志级别' })
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '日志级别' })
   level: SystemLogLevel
 
   @Column({ type: 'varchar', length: 32, nullable: false, default: '', comment: '日志模块' })
