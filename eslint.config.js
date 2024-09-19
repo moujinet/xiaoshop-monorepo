@@ -45,7 +45,6 @@ export default antfu(
         'error',
         {
           type: 'line-length',
-          sortSideEffects: true,
           internalPattern: ['@/**', '~/**', '~~/**'],
           groups: [
             'type',
