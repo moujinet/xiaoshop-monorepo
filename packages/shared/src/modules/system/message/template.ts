@@ -1,11 +1,11 @@
-import type { IDict } from '~/common'
+import type { IDict, YesOrNo } from '~/common'
 
-import type { MessageChannel } from './constants'
+import type { SystemMessageChannel } from './constants'
 
 /**
  * 消息模板信息
  */
-export interface IMessageTemplateInfo {
+export interface ISystemMessageTemplateInfo {
   /**
    * 模板 ID
    */
@@ -19,17 +19,17 @@ export interface IMessageTemplateInfo {
    *
    * @see {@link YesOrNo}
    */
-  isEnabled: IDict
+  isEnabled: YesOrNo
   /**
    * 消息类型
    *
-   * @see {@link MessageType}
+   * @see {@link SystemMessageType}
    */
   type: IDict
   /**
    * 消息场景
    *
-   * @see {@link MessageScene}
+   * @see {@link SystemMessageScene}
    */
   scene: IDict
   /**
@@ -43,23 +43,23 @@ export interface IMessageTemplateInfo {
   /**
    * 消息发送通道
    *
-   * @see {@link MessageChannel}
+   * @see {@link SystemMessageChannel}
    */
   channels: IDict[]
   /**
    * 消息模板内容
    */
-  contents: IMessageTemplateContent[]
+  contents: ISystemMessageTemplateContent[]
 }
 
 /**
  * 消息模板内容
  */
-export interface IMessageTemplateContent {
+export interface ISystemMessageTemplateContent {
   /**
    * 消息通道
    */
-  channel: MessageChannel
+  channel: SystemMessageChannel
   /**
    * 消息标题
    */
@@ -73,8 +73,8 @@ export interface IMessageTemplateContent {
 /**
  * 消息模板字典
  */
-export type IMessageTemplateDict = Pick<
-  IMessageTemplateInfo,
+export type ISystemMessageTemplateDict = Pick<
+  ISystemMessageTemplateInfo,
   | 'id'
   | 'name'
 >
@@ -82,8 +82,8 @@ export type IMessageTemplateDict = Pick<
 /**
  * 消息模板列表
  */
-export type IMessageTemplateList = Pick<
-  IMessageTemplateInfo,
+export type ISystemMessageTemplateList = Pick<
+  ISystemMessageTemplateInfo,
   | 'id'
   | 'isEnabled'
   | 'name'
@@ -97,12 +97,20 @@ export type IMessageTemplateList = Pick<
 }
 
 /**
- * 消息模板内容列表
+ * 可发送消息模板内容列表
  */
-export type IMessageTemplateContentList = Pick<
-  IMessageTemplateInfo,
+export type ISystemMessageTemplateContentList = Pick<
+  ISystemMessageTemplateInfo,
   | 'id'
-  | 'name'
-  | 'channels'
-  | 'contents'
+  | 'type'
+  | 'scene'
 >
+& Pick<ISystemMessageTemplateContent, 'title' | 'content'>
+& {
+  /**
+   * 消息通道
+   *
+   * @see {@link SystemMessageChannel}
+   */
+  channel: IDict
+}

@@ -1,7 +1,7 @@
 /**
  * 系统设置信息
  */
-export interface ISetting {
+export interface ISystemSetting {
   /**
    * 设置名
    */
@@ -20,4 +20,4 @@ export type ISettingValueType = boolean | string | number | string[] | number[] 
 /**
  * 系统设置映射
  */
-export type ISettingMap = Record<string, any>
+export type ISystemSettingMap = Record<string, any>

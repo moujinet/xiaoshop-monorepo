@@ -1,11 +1,12 @@
 import type { IDict } from '~/common'
 
-import type { IMessageTemplateDict } from './template'
+import type { ISystemMessageExtrasInfo } from './message'
+import type { ISystemMessageTemplateDict } from './template'
 
 /**
  * 消息发送日志信息
  */
-export interface IMessageLogInfo {
+export interface ISystemMessageLogInfo {
   /**
    * 日志 ID
    */
@@ -13,33 +14,25 @@ export interface IMessageLogInfo {
   /**
    * 消息类型
    *
-   * @see {@link MessageType}
+   * @see {@link SystemMessageType}
    */
   type: IDict
   /**
+   * 消息场景
+   *
+   * @see {@link SystemMessageScene}
+   */
+  scene: IDict
+  /**
    * 发送通道
    *
-   * @see {@link MessageChannel}
+   * @see {@link SystemMessageChannel}
    */
   channel: IDict
   /**
-   * 发送状态
-   *
-   * @see {@link MessageSendStatus}
-   */
-  status: IDict
-  /**
    * 消息模板
    */
-  template: IMessageTemplateDict
-  /**
-   * 发送对象
-   *
-   * - `MessageChannel.SYSTEM` - (买家: nickname, 商家: '商家')
-   * - `MessageChannel.SMS` - (买家: mobile, 商家: 指定 mobile)
-   * - `MessageChannel.WECHAT` - (买家: openid, 商家: 指定 openid)
-   */
-  sendTo: string
+  template: ISystemMessageTemplateDict
   /**
    * 消息标题
    */
@@ -51,7 +44,21 @@ export interface IMessageLogInfo {
   /**
    * 附加数据
    */
-  extras: Record<string, any>
+  extras?: ISystemMessageExtrasInfo
+  /**
+   * 接收人
+   *
+   * - `MessageChannel.SYSTEM` - (买家: nickname, 商家: name)
+   * - `MessageChannel.SMS` - (买家: mobile, 商家: 指定 mobile)
+   * - `MessageChannel.WECHAT` - (买家: openid, 商家: 指定 openid)
+   */
+  receiver: string
+  /**
+   * 发送状态
+   *
+   * @see {@link MessageSendStatus}
+   */
+  status: IDict
   /**
    * 发送结果
    */
@@ -65,13 +72,14 @@ export interface IMessageLogInfo {
 /**
  * 消息发送日志列表
  */
-export type IMessageLogList = Pick<
-  IMessageLogInfo,
+export type ISystemMessageLogList = Pick<
+  ISystemMessageLogInfo,
   | 'id'
   | 'type'
+  | 'scene'
   | 'channel'
-  | 'status'
   | 'template'
-  | 'sendTo'
+  | 'receiver'
+  | 'status'
   | 'sentTime'
 >

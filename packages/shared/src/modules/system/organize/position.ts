@@ -1,9 +1,9 @@
-import type { IDepartmentDict } from './department'
+import type { ISystemDepartmentDict } from './department'
 
 /**
  * 部门职位信息
  */
-export interface IDepartmentPositionInfo {
+export interface ISystemDepartmentPositionInfo {
   /**
    * 职位 ID
    */
@@ -11,7 +11,7 @@ export interface IDepartmentPositionInfo {
   /**
    * 所属部门 ID
    */
-  departmentId: IDepartmentDict['id']
+  departmentId: ISystemDepartmentDict['id']
   /**
    * 职位名称
    */
@@ -29,8 +29,8 @@ export interface IDepartmentPositionInfo {
 /**
  * 部门职位字典
  */
-export type IDepartmentPositionDict = Pick<
-  IDepartmentPositionInfo,
+export type ISystemDepartmentPositionDict = Pick<
+  ISystemDepartmentPositionInfo,
   | 'id'
   | 'name'
 >
@@ -38,8 +38,8 @@ export type IDepartmentPositionDict = Pick<
 /**
  * 部门职位列表
  */
-export type IDepartmentPositionList = Pick<
-  IDepartmentPositionInfo,
+export type ISystemDepartmentPositionList = Pick<
+  ISystemDepartmentPositionInfo,
   | 'id'
   | 'name'
   | 'desc'
@@ -48,7 +48,7 @@ export type IDepartmentPositionList = Pick<
   /**
    * 所属部门
    */
-  department: IDepartmentDict
+  department: ISystemDepartmentDict
   /**
    * 更新时间
    */

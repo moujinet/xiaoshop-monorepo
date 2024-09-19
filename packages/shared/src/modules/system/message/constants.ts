@@ -10,7 +10,7 @@ import { ColorName, type IDict } from '~/common'
  * - `BUYER` 买家消息
  * - `SELLER` 商家消息
  */
-export enum MessageType {
+export enum SystemMessageType {
   BUYER = 1,
   SELLER,
 }
@@ -18,11 +18,11 @@ export enum MessageType {
 /**
  * 字典: 消息类型
  *
- * @see {@link MessageType}
+ * @see {@link SystemMessageType}
  */
-export const MESSAGE_TYPES: IDict[] = [
-  { value: '买家消息', key: MessageType.BUYER, color: ColorName.ORANGERED },
-  { value: '商家消息', key: MessageType.SELLER, color: ColorName.ARCOBLUE },
+export const SYSTEM_MESSAGE_TYPES: IDict[] = [
+  { value: '买家消息', key: SystemMessageType.BUYER, color: ColorName.ORANGERED },
+  { value: '商家消息', key: SystemMessageType.SELLER, color: ColorName.ARCOBLUE },
 ]
 
 // --------------------------------
@@ -35,7 +35,7 @@ export const MESSAGE_TYPES: IDict[] = [
  * - `UNREAD` 未读
  * - `READ` 已读
  */
-export enum MessageStatus {
+export enum SystemMessageStatus {
   UNREAD,
   READ,
 }
@@ -43,11 +43,11 @@ export enum MessageStatus {
 /**
  * 字典: 消息状态
  *
- * @see {@link MessageStatus}
+ * @see {@link SystemMessageStatus}
  */
-export const MESSAGE_STATUSES: IDict[] = [
-  { value: '未读', key: MessageStatus.UNREAD, color: ColorName.ARCOBLUE },
-  { value: '已读', key: MessageStatus.READ, color: ColorName.GRAY },
+export const SYSTEM_MESSAGE_STATUSES: IDict[] = [
+  { value: '未读', key: SystemMessageStatus.UNREAD, color: ColorName.ARCOBLUE },
+  { value: '已读', key: SystemMessageStatus.READ, color: ColorName.GRAY },
 ]
 
 // --------------------------------
@@ -60,7 +60,7 @@ export const MESSAGE_STATUSES: IDict[] = [
  * - `SUCCESS` 发送成功
  * - `FAILED` 发送失败
  */
-export enum MessageSendStatus {
+export enum SystemMessageSendStatus {
   SUCCESS = 1,
   FAILED,
 }
@@ -68,11 +68,11 @@ export enum MessageSendStatus {
 /**
  * 字典: 消息发送状态
  *
- * @see {@link MessageSendStatus}
+ * @see {@link SystemMessageSendStatus}
  */
-export const MESSAGE_SEND_STATUSES: IDict[] = [
-  { value: '发送成功', key: MessageSendStatus.SUCCESS, color: ColorName.GREEN },
-  { value: '发送失败', key: MessageSendStatus.FAILED, color: ColorName.RED },
+export const SYSTEM_MESSAGE_SEND_STATUSES: IDict[] = [
+  { value: '发送成功', key: SystemMessageSendStatus.SUCCESS, color: ColorName.GREEN },
+  { value: '发送失败', key: SystemMessageSendStatus.FAILED, color: ColorName.RED },
 ]
 
 // --------------------------------
@@ -86,7 +86,7 @@ export const MESSAGE_SEND_STATUSES: IDict[] = [
  * - `SMS`: 短信通知
  * - `WECHAT`: 微信通知
  */
-export enum MessageChannel {
+export enum SystemMessageChannel {
   SYSTEM = 1,
   SMS,
   WECHAT,
@@ -95,12 +95,12 @@ export enum MessageChannel {
 /**
  * 字典: 消息发送通道
  *
- * @see {@link MessageChannel}
+ * @see {@link SystemMessageChannel}
  */
-export const MESSAGE_CHANNELS: IDict[] = [
-  { value: '系统通知', key: MessageChannel.SYSTEM, color: ColorName.ARCOBLUE, icon: 'mingcute:chat-4' },
-  { value: '短信通知', key: MessageChannel.SMS, color: ColorName.PURPLE, icon: 'mingcute:message-4' },
-  { value: '微信通知', key: MessageChannel.WECHAT, color: ColorName.GREEN, icon: 'mingcute:wechat' },
+export const SYSTEM_MESSAGE_CHANNELS: IDict[] = [
+  { value: '系统通知', key: SystemMessageChannel.SYSTEM, color: ColorName.ARCOBLUE, icon: 'mingcute:chat-4' },
+  { value: '短信通知', key: SystemMessageChannel.SMS, color: ColorName.PURPLE, icon: 'mingcute:message-4' },
+  { value: '微信通知', key: SystemMessageChannel.WECHAT, color: ColorName.GREEN, icon: 'mingcute:wechat' },
 ]
 
 // --------------------------------
@@ -111,37 +111,28 @@ export const MESSAGE_CHANNELS: IDict[] = [
  * 消息场景
  *
  * - `SYSTEM`: 系统消息
+ * - `CONNECT`: 云链消息
  * - `ORDER`: 订单消息
- * - `PAYMENT`: 支付消息
- * - `LOGISTICS`: 物流消息
  * - `AFTER_SALE`: 售后消息
  * - `MARKETING`: 营销消息
- * - `PRODUCT`: 商品消息
- * - `MEMBER`: 会员消息
  */
-export enum MessageScene {
+export enum SystemMessageScene {
   SYSTEM = 1,
+  CONNECT,
   ORDER,
-  PAYMENT,
-  LOGISTICS,
   AFTER_SALE,
   MARKETING,
-  PRODUCT,
-  MEMBER,
 }
 
 /**
  * 字典: 消息场景
  *
- * @see {@link MessageScene}
+ * @see {@link SystemMessageScene}
  */
-export const MESSAGE_SCENES: IDict[] = [
-  { value: '系统消息', key: MessageScene.SYSTEM, color: ColorName.ARCOBLUE, icon: 'mingcute:settings-3' },
-  { value: '订单消息', key: MessageScene.ORDER, color: ColorName.ORANGERED, icon: 'mingcute:shopping-cart-1' },
-  { value: '支付消息', key: MessageScene.PAYMENT, color: ColorName.GREEN, icon: 'mingcute:wechat-pay' },
-  { value: '物流消息', key: MessageScene.LOGISTICS, color: ColorName.PURPLE, icon: 'mingcute:truck' },
-  { value: '售后消息', key: MessageScene.AFTER_SALE, color: ColorName.CYAN, icon: 'mingcute:bill-2' },
-  { value: '营销消息', key: MessageScene.MARKETING, color: ColorName.PINKPURPLE, icon: 'mingcute:gift' },
-  { value: '商品消息', key: MessageScene.PRODUCT, color: ColorName.BLUE, icon: 'mingcute:package-2' },
-  { value: '会员消息', key: MessageScene.MEMBER, color: ColorName.LIME, icon: 'mingcute:user-3' },
+export const SYSTEM_MESSAGE_SCENES: IDict[] = [
+  { value: '系统消息', key: SystemMessageScene.SYSTEM, color: ColorName.ARCOBLUE, icon: 'mingcute:settings-3' },
+  { value: '云链消息', key: SystemMessageScene.CONNECT, color: ColorName.PURPLE, icon: 'mingcute:cloud' },
+  { value: '订单消息', key: SystemMessageScene.ORDER, color: ColorName.ORANGERED, icon: 'mingcute:shopping-cart-1' },
+  { value: '售后消息', key: SystemMessageScene.AFTER_SALE, color: ColorName.CYAN, icon: 'mingcute:bill-2' },
+  { value: '营销消息', key: SystemMessageScene.MARKETING, color: ColorName.PINKPURPLE, icon: 'mingcute:gift' },
 ]

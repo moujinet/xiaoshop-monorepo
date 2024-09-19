@@ -1,7 +1,7 @@
 /**
  * 部门信息
  */
-export interface IDepartmentInfo {
+export interface ISystemDepartmentInfo {
   /**
    * 部门 ID
    */
@@ -27,9 +27,10 @@ export interface IDepartmentInfo {
 /**
  * 部门嵌套列表
  */
-export type IDepartmentNestedList = Pick<
-  IDepartmentInfo,
+export type ISystemDepartmentNestedList = Pick<
+  ISystemDepartmentInfo,
   | 'id'
+  | 'parentId'
   | 'name'
   | 'desc'
   | 'sort'
@@ -37,7 +38,7 @@ export type IDepartmentNestedList = Pick<
   /**
    * 下级部门
    */
-  children?: IDepartmentNestedList[]
+  children?: ISystemDepartmentNestedList[]
   /**
    * 更新时间
    */
@@ -47,8 +48,25 @@ export type IDepartmentNestedList = Pick<
 /**
  * 部门字典
  */
-export type IDepartmentDict = Pick<
-  IDepartmentInfo,
+export type ISystemDepartmentDict = Pick<
+  ISystemDepartmentInfo,
   | 'id'
   | 'name'
 >
+
+/**
+ * 部门字典
+ */
+export type ISystemDepartmentRootDict = ISystemDepartmentInfo
+
+/**
+ * 部门字典
+ */
+export type ISystemDepartmentNestedDict = ISystemDepartmentDict
+  & Pick<ISystemDepartmentInfo, | 'parentId'>
+  & {
+    /**
+     * 下级部门
+     */
+    children?: ISystemDepartmentNestedDict[]
+  }

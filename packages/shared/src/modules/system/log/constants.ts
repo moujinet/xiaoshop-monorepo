@@ -32,14 +32,14 @@ export const SYSTEM_LOG_TYPES: IDict[] = [
 /**
  * 系统日志级别
  *
- * - `INFO`: 信息
+ * - `INFO`: 操作
  * - `WARN`: 警告
- * - `ERROR`: 错误
+ * - `DANGER`: 危险
  */
 export enum SystemLogLevel {
   INFO = 1,
   WARN,
-  ERROR,
+  DANGER,
 }
 
 /**
@@ -48,7 +48,7 @@ export enum SystemLogLevel {
  * @see {@link SystemLogLevel}
  */
 export const SYSTEM_LOG_LEVELS: IDict[] = [
-  { value: '信息', key: SystemLogLevel.INFO, color: ColorName.CYAN },
+  { value: '操作', key: SystemLogLevel.INFO, color: ColorName.CYAN },
   { value: '警告', key: SystemLogLevel.WARN, color: ColorName.ORANGERED },
-  { value: '错误', key: SystemLogLevel.ERROR, color: ColorName.RED },
+  { value: '危险', key: SystemLogLevel.DANGER, color: ColorName.RED },
 ]

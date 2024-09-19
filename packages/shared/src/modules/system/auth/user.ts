@@ -1,6 +1,6 @@
-import type { IDict } from '~/common'
+import type { IDict, YesOrNo } from '~/common'
 import type { ISystemRoleDict, ISystemRolePermissions } from '@/system/auth/role'
-import type { IDepartmentDict, IDepartmentPositionDict } from '@/system/organize'
+import type { ISystemDepartmentDict, ISystemDepartmentPositionDict } from '@/system/organize'
 
 /**
  * 系统用户信息
@@ -15,7 +15,7 @@ export interface ISystemUserInfo {
    *
    * @see {@link YesOrNo}
    */
-  isAdmin: IDict
+  isAdmin: YesOrNo
   /**
    * 系统用户状态
    *
@@ -43,11 +43,11 @@ export interface ISystemUserInfo {
   /**
    * 所在部门
    */
-  department: IDepartmentDict
+  department: ISystemDepartmentDict
   /**
    * 所在职位
    */
-  position: IDepartmentPositionDict
+  position: ISystemDepartmentPositionDict
 }
 
 /**
