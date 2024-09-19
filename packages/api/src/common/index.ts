@@ -1,7 +1,5 @@
 import type { IApiResponse } from '@xiaoshop/shared'
 
-import { ApiProperty } from '@nestjs/swagger'
-
 /**
  * API 响应
  */
@@ -19,19 +17,16 @@ export class ApiResponse<T> implements IApiResponse {
   /**
    * 响应数据
    */
-  @ApiProperty({ description: '响应数据' })
   readonly data?: T
 
   /**
    * 响应消息
    */
-  @ApiProperty({ description: '响应消息', default: 'ok' })
   readonly message: string
 
   /**
    * 响应码
    */
-  @ApiProperty({ description: '响应码', default: 0 })
   readonly code: number
 }
 
@@ -52,19 +47,16 @@ export class ApiErrorResponse implements IApiResponse {
   /**
    * 响应消息
    */
-  @ApiProperty({ description: '响应消息', example: 'error' })
   readonly message: string
 
   /**
    * 响应码
    */
-  @ApiProperty({ description: '响应码', example: 0 })
   readonly code: number
 
   /**
    * 错误信息
    */
-  @ApiProperty({ description: '错误信息', example: '' })
   readonly error?: string
 }
 
@@ -75,12 +67,10 @@ export class ApiDoneResponse implements IApiResponse {
   /**
    * 响应消息
    */
-  @ApiProperty({ description: '响应消息', example: 'ok' })
   readonly message: string
 
   /**
    * 响应码
    */
-  @ApiProperty({ description: '响应码', example: 0 })
   readonly code: number
 }
