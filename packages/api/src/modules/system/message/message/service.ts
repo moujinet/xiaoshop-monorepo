@@ -7,8 +7,6 @@ import {
   type ISystemMessageInfo,
   type ISystemMessageList,
   type ISystemMessageTemplateInfo,
-  SYSTEM_MESSAGE_SCENES,
-  SYSTEM_MESSAGE_STATUSES,
   SystemMessageScene,
   SystemMessageSendStatus,
   SystemMessageStatus,
@@ -17,6 +15,7 @@ import {
 
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { FailedException, NotFoundException } from '~/common/exceptions'
+import { SYSTEM_MESSAGE_SCENES, SYSTEM_MESSAGE_STATUSES } from '~/common/dicts'
 import { objectToDict, pipeDict, toDict, toEventName } from '~/utils/transformers'
 
 import { SystemMessage } from './entity'

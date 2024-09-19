@@ -18,7 +18,7 @@
     "node_modules/.*"
   ],
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+    "^.+\\.ts$": "ts-jest"
   },
   "moduleNameMapper": {
     "@/(.*)": "<rootDir>/src/modules/$1",

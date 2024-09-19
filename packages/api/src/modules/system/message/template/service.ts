@@ -8,16 +8,13 @@ import {
   type ISystemMessageTemplateList,
   type ISystemUserDict,
   type ISystemUserInfo,
-  SYSTEM_MESSAGE_CHANNELS,
-  SYSTEM_MESSAGE_SCENES,
-  SYSTEM_MESSAGE_TYPES,
-  SYSTEM_USER_STATUSES,
   YesOrNo,
 } from '@xiaoshop/shared'
 
 import { SystemUser } from '@/system/auth/user/entity'
 import { objectToDict, pipeDict, toDict, toEventName } from '~/utils/transformers'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
+import { SYSTEM_MESSAGE_CHANNELS, SYSTEM_MESSAGE_SCENES, SYSTEM_MESSAGE_TYPES, SYSTEM_USER_STATUSES } from '~/common/dicts'
 
 import { SystemMessageTemplate } from './entity'
 import { GetSystemMessageTemplateListRequest, SystemMessageTemplatePayload } from './dto'

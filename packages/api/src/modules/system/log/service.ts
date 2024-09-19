@@ -7,9 +7,6 @@ import {
   type IApiPaginationData,
   type ISystemLoginSignData,
   type ISystemLogList,
-  SYSTEM_LOG_LEVELS,
-  SYSTEM_LOG_TYPES,
-  SYSTEM_USER_STATUSES,
   SystemLogLevel,
   SystemLogType,
 } from '@xiaoshop/shared'
@@ -18,6 +15,7 @@ import { WhoisService } from '~/services/whois'
 import { FailedException } from '~/common/exceptions'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { objectToDict, pipeDict } from '~/utils/transformers'
+import { SYSTEM_LOG_LEVELS, SYSTEM_LOG_TYPES, SYSTEM_USER_STATUSES } from '~/common/dicts'
 
 import { SystemLog } from './entity'
 import { GetSystemLogPagesRequest, SystemLogPayload } from './dto'

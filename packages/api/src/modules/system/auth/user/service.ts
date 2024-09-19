@@ -12,13 +12,13 @@ import {
   type ISystemUserInfo,
   type ISystemUserList,
   type ISystemUserLockedList,
-  SYSTEM_USER_STATUSES,
   SystemUserStatus,
   YesOrNo,
 } from '@xiaoshop/shared'
 
 import { nowStr } from '~/utils/datetime'
 import { WhoisService } from '~/services/whois'
+import { SYSTEM_USER_STATUSES } from '~/common/dicts'
 import { SystemRole } from '@/system/auth/role/entity'
 import { SystemUser } from '@/system/auth/user/entity'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'

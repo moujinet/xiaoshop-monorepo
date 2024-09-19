@@ -1,19 +1,22 @@
+import type {
+  IApiPaginationData,
+  ISystemMessageLogInfo,
+  ISystemMessageLogList,
+} from '@xiaoshop/shared'
+
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Between, FindOptionsWhere, LessThan, Like, Repository } from 'typeorm'
-import {
-  type IApiPaginationData,
-  type ISystemMessageLogInfo,
-  type ISystemMessageLogList,
-  SYSTEM_MESSAGE_CHANNELS,
-  SYSTEM_MESSAGE_SCENES,
-  SYSTEM_MESSAGE_SEND_STATUSES,
-  SYSTEM_MESSAGE_TYPES,
-} from '@xiaoshop/shared'
 
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { objectToDict, pipeDict, toDict } from '~/utils/transformers'
 import { FailedException, NotFoundException } from '~/common/exceptions'
+import {
+  SYSTEM_MESSAGE_CHANNELS,
+  SYSTEM_MESSAGE_SCENES,
+  SYSTEM_MESSAGE_SEND_STATUSES,
+  SYSTEM_MESSAGE_TYPES,
+} from '~/common/dicts'
 
 import { SystemMessageLog } from './entity'
 import { GetSystemMessageLogPagesRequest, SystemMessageLogPayload } from './dto'
