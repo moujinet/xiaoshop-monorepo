@@ -2,12 +2,14 @@ import { forwardRef, Module } from '@nestjs/common'
 
 import { SystemLogModule } from './log/module'
 import { SystemAuthModule } from './auth/module'
+import { SystemDictModule } from './dict/module'
 import { SystemMessageModule } from './message/module'
 import { SystemSettingsModule } from './settings/module'
 import { SystemOrganizeModule } from './organize/module'
 
 @Module({
   imports: [
+    forwardRef(() => SystemDictModule),
     forwardRef(() => SystemSettingsModule),
     forwardRef(() => SystemLogModule),
     forwardRef(() => SystemOrganizeModule),
