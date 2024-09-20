@@ -11,6 +11,7 @@ import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
     cors: true,
   })
 
