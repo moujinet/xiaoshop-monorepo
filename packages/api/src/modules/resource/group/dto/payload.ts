@@ -21,13 +21,13 @@ export class ResourceGroupPayload {
 
   @IsNumber({}, { message: '是否启用压缩不正确' })
   @IsOptional()
-  readonly isCompress?: number
+  readonly enableCompress?: number
 
   @IsNumber({}, { message: '是否启用水印不正确' })
   @IsOptional()
-  readonly isWatermark?: number
+  readonly enableWatermark?: number
 
   @IsNumber({}, { message: '是否启用缩略图不正确' })
   @IsOptional()
-  readonly isThumbnail?: number
+  readonly enableThumbnail?: number
 }

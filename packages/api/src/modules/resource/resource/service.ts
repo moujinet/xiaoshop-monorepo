@@ -96,9 +96,9 @@ export class ResourceService {
           group: {
             id: true,
             name: true,
-            isCompress: true,
-            isWatermark: true,
-            isThumbnail: true,
+            enableCompress: true,
+            enableWatermark: true,
+            enableThumbnail: true,
           },
           name: true,
           mimeType: true,

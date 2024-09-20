@@ -31,9 +31,9 @@ export class ResourceProcessor {
       const {
         file,
         mimeType,
-        isCompress,
-        isThumbnail,
-        isWatermark,
+        enableCompress,
+        enableThumbnail,
+        enableWatermark,
       } = job.data
 
       const options = await this.settings.findByKey('resource.image.*')
@@ -41,19 +41,19 @@ export class ResourceProcessor {
       const dest = join(uploadDir, file)
 
       // 1. 压缩图片
-      if (isCompress === YesOrNo.YES) {
+      if (enableCompress === YesOrNo.YES) {
         const processor = new ImageCompressProcessor(options)
         await processor.compress(dest, mimeType)
       }
 
       // 2. 添加水印
-      if (isThumbnail === YesOrNo.YES) {
+      if (enableThumbnail === YesOrNo.YES) {
         const processor = new WatermarkProcessor(options)
         await processor.process(dest, uploadDir)
       }
 
       // 3. 生成缩略图
-      if (isWatermark === YesOrNo.YES) {
+      if (enableWatermark === YesOrNo.YES) {
         const processor = new ThumbnailProcessor(options)
         await processor.process(dest)
       }

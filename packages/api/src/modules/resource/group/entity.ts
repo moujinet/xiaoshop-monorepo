@@ -22,14 +22,14 @@ export class ResourceGroup {
   @Column({ type: 'int', default: 1, unsigned: true, comment: '排序' })
   sort: number
 
-  @Column({ name: 'is_compress', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片压缩' })
-  isCompress: YesOrNo
+  @Column({ name: 'enable_compress', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片压缩' })
+  enableCompress: YesOrNo
 
-  @Column({ name: 'is_watermark', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片水印' })
-  isWatermark: YesOrNo
+  @Column({ name: 'enable_watermark', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片水印' })
+  enableWatermark: YesOrNo
 
-  @Column({ name: 'is_thumbnail', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片缩略图' })
-  isThumbnail: YesOrNo
+  @Column({ name: 'enable_thumbnail', type: 'tinyint', unsigned: true, default: 0, comment: '启用图片缩略图' })
+  enableThumbnail: YesOrNo
 
   @UpdateDateColumn({ name: 'updated_time', type: 'datetime', comment: '更新时间' })
   updatedTime: string

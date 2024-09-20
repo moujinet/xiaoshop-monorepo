@@ -15,13 +15,13 @@ export interface IResourceImageProcessJob {
   /**
    * 是否开启压缩
    */
-  isCompress: YesOrNo
+  enableCompress: YesOrNo
   /**
    * 是否开启缩略图
    */
-  isThumbnail: YesOrNo
+  enableThumbnail: YesOrNo
   /**
    * 是否开启水印
    */
-  isWatermark: YesOrNo
+  enableWatermark: YesOrNo
 }

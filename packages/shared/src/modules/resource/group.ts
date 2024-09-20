@@ -29,15 +29,15 @@ export interface IResourceGroupInfo {
   /**
    * 是否启用压缩
    */
-  isCompress: YesOrNo
+  enableCompress: YesOrNo
   /**
    * 是否启用水印
    */
-  isWatermark: YesOrNo
+  enableWatermark: YesOrNo
   /**
    * 是否启用缩略图
    */
-  isThumbnail: YesOrNo
+  enableThumbnail: YesOrNo
 }
 
 /**
@@ -47,9 +47,9 @@ export type IResourceGroupDict = Pick<
   IResourceGroupInfo,
   | 'id'
   | 'name'
-  | 'isCompress'
-  | 'isThumbnail'
-  | 'isWatermark'
+  | 'enableCompress'
+  | 'enableThumbnail'
+  | 'enableWatermark'
 >
 
 /**
@@ -60,9 +60,9 @@ export type IResourceGroupNestedList = Pick<
   | 'id'
   | 'parentId'
   | 'name'
-  | 'isCompress'
-  | 'isThumbnail'
-  | 'isWatermark'
+  | 'enableCompress'
+  | 'enableThumbnail'
+  | 'enableWatermark'
 >
 & {
   /**

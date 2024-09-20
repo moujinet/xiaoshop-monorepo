@@ -48,9 +48,9 @@ export class ResourceListener {
         await this.queue.add(RESOURCE_IMAGE_PROCESS, {
           file: resource.path,
           mimeType: resource.mimeType,
-          isCompress: resource.group.isCompress,
-          isThumbnail: resource.group.isThumbnail,
-          isWatermark: resource.group.isWatermark,
+          enableCompress: resource.group.enableCompress,
+          enableThumbnail: resource.group.enableThumbnail,
+          enableWatermark: resource.group.enableWatermark,
         }, {
           delay: 100,
         })

@@ -10,9 +10,9 @@ describe('Resource Module - Group', () => {
       .send({
         type: 1,
         name: 'test',
-        isCompress: 0,
-        isWatermark: 0,
-        isThumbnail: 0,
+        enableCompress: 0,
+        enableWatermark: 0,
+        enableThumbnail: 0,
       })
       .expect(200)
       .then(({ body }) => {
@@ -26,9 +26,9 @@ describe('Resource Module - Group', () => {
       .send({
         type: 1,
         name: 'test update',
-        isCompress: 0,
-        isWatermark: 0,
-        isThumbnail: 0,
+        enableCompress: 0,
+        enableWatermark: 0,
+        enableThumbnail: 0,
       })
       .expect(200)
       .then(({ body }) => {

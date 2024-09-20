@@ -41,7 +41,7 @@ export class ResourceGroupService {
   async findNestedList(type: ResourceType): Promise<IResourceGroupNestedList[]> {
     try {
       const list = await this.repository.find({
-        select: ['id', 'parentId', 'name', 'isCompress', 'isThumbnail', 'isWatermark', 'updatedTime'],
+        select: ['id', 'parentId', 'name', 'enableCompress', 'enableThumbnail', 'enableWatermark', 'updatedTime'],
         where: { type },
         order: {
           parentId: 'ASC',
@@ -90,7 +90,7 @@ export class ResourceGroupService {
   async findById(id: number): Promise<IResourceGroupInfo> {
     try {
       const group = await this.repository.findOne({
-        select: ['id', 'type', 'parentId', 'name', 'sort', 'isCompress', 'isWatermark', 'isThumbnail'],
+        select: ['id', 'type', 'parentId', 'name', 'sort', 'enableCompress', 'enableWatermark', 'enableThumbnail'],
         where: { id },
       })
 
@@ -131,9 +131,9 @@ export class ResourceGroupService {
       group.parentId = data.parentId || 0
       group.name = data.name.trim()
       group.sort = data.sort || 1
-      group.isCompress = data.isCompress
-      group.isWatermark = data.isWatermark
-      group.isThumbnail = data.isThumbnail
+      group.enableCompress = data.enableCompress
+      group.enableWatermark = data.enableWatermark
+      group.enableThumbnail = data.enableThumbnail
 
       const created = await this.repository.save(group)
 
@@ -159,7 +159,7 @@ export class ResourceGroupService {
   async update(id: number, data: ResourceGroupPayload) {
     try {
       const founded = await this.repository.findOne({
-        select: ['id', 'type', 'parentId', 'name', 'sort', 'isCompress', 'isWatermark', 'isThumbnail'],
+        select: ['id', 'type', 'parentId', 'name', 'sort', 'enableCompress', 'enableWatermark', 'enableThumbnail'],
         where: { id },
       })
 
@@ -185,14 +185,14 @@ export class ResourceGroupService {
       if (data.sort)
         founded.sort = data.sort
 
-      if (data.isCompress !== undefined)
-        founded.isCompress = data.isCompress
+      if (data.enableCompress !== undefined)
+        founded.enableCompress = data.enableCompress
 
-      if (data.isWatermark !== undefined)
-        founded.isWatermark = data.isWatermark
+      if (data.enableWatermark !== undefined)
+        founded.enableWatermark = data.enableWatermark
 
-      if (data.isThumbnail !== undefined)
-        founded.isThumbnail = data.isThumbnail
+      if (data.enableThumbnail !== undefined)
+        founded.enableThumbnail = data.enableThumbnail
 
       const updated = await this.repository.save(founded)
 
