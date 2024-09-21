@@ -59,4 +59,8 @@ export interface IDict {
    * 图标
    */
   icon?: string
+  /**
+   * 自定义
+   */
+  [key: string]: any
 }

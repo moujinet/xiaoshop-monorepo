@@ -14,6 +14,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter'
 import configuration from '~/configs'
 import { SystemModule } from '@/system/module'
 import { ResourceModule } from '@/resource/module'
+import { LogisticModule } from '@/logistic/module'
 import { exceptionFactory } from '~/common/exceptions'
 import { ResponseInterceptor } from '~/common/interceptors'
 import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
@@ -93,6 +94,7 @@ export async function getTestApplication() {
     const app = await createTestingApplication([
       SystemModule,
       ResourceModule,
+      LogisticModule,
     ])
     await app.init()
 

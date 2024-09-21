@@ -1,4 +1,3 @@
-// Modules
 import { ClsModule } from 'nestjs-cls'
 import { Module } from '@nestjs/common'
 import { BullModule } from '@nestjs/bull'
@@ -11,6 +10,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter'
 import configuration from '~/configs'
 import { SystemModule } from '@/system/module'
 import { ResourceModule } from '@/resource/module'
+import { LogisticModule } from '@/logistic/module'
 import { SettingsMigrationCommand } from '@/system/settings/commands/settings.command'
 import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig } from '~/configs/modules'
 import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, RunMigrateCommand } from '~/database/commands'
@@ -55,6 +55,7 @@ import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, Run
     // XiaoShop Modules
     SystemModule,
     ResourceModule,
+    LogisticModule,
 
     // Commands
     CreateMigrateCommand,
