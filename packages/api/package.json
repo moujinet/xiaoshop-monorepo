@@ -2,7 +2,7 @@
   "name": "@xiaoshop/api",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "description": "XiaoShop 云链小店 (@api)",
   "author": "Luoyi <luoyi@mouji.net>",
   "license": "Apache-2.0",
@@ -88,6 +88,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.2",
-    "zx": "^8.1.7"
+    "zx": "^8.1.8"
   }
 }
