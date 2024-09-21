@@ -42,7 +42,7 @@ export interface ISystemMessageLogInfo {
    */
   content: string
   /**
-   * 附加数据
+   * 附加数据 (JSON)
    */
   extras?: ISystemMessageExtrasInfo
   /**

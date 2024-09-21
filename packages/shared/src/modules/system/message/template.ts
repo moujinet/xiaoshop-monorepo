@@ -47,7 +47,7 @@ export interface ISystemMessageTemplateInfo {
    */
   channels: IDict[]
   /**
-   * 消息模板内容
+   * 消息模板内容 (JSON)
    */
   contents: ISystemMessageTemplateContent[]
 }

@@ -2,18 +2,22 @@ import type { ISystemLogList } from '@xiaoshop/shared'
 
 import { utils, writeFile } from 'xlsx'
 import { ConfigService } from '@nestjs/config'
+import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { ensureDir } from '~/utils'
 import { nowStr } from '~/utils/datetime'
+import { toEventName } from '~/utils/transformers'
 
 import { SystemLogService } from './service'
 import { SystemSettingsService } from '../settings/service'
+import { SystemCronJobExecuteEvent } from '../monitor/cron/events'
 
 @Injectable()
 export class SystemLogScheduler {
   private readonly logger = new Logger(SystemLogScheduler.name)
+  private days: number = 0
 
   constructor(
     @Inject(ConfigService)
@@ -24,6 +28,9 @@ export class SystemLogScheduler {
 
     @Inject(SystemLogService)
     private readonly log: SystemLogService,
+
+    @Inject(EventEmitter2)
+    private readonly event: EventEmitter2,
   ) {}
 
   /**
@@ -37,22 +44,46 @@ export class SystemLogScheduler {
       if (!options.enableCleanup)
         return
 
-      const logs = await this.log.findListBeforeDays(
-        Number(options.cleanupPeriod) || 90,
-      )
+      this.days = Number(options.cleanupPeriod) || 90
+
+      const logs = await this.log.findListBeforeDays(this.days)
 
       if (!logs.length)
         return
 
       this.logger.debug(`开始备份系统日志, 共计 ${logs.length} 条`)
 
-      await this.exportSystemLogs(logs)
+      const exportFile = await this.exportSystemLogs(logs)
       await this.log.deleteByIds(logs.map(log => log.id))
+
+      this.event.emit(
+        toEventName(SystemCronJobExecuteEvent.name),
+        new SystemCronJobExecuteEvent(
+          'system.log.cleanup',
+          '系统日志',
+          '系统日志清理',
+          `自动清理并备份超过 ${this.days} 天的系统日志`,
+          CronExpression.EVERY_DAY_AT_1AM,
+          `成功清理 ${logs.length} 条系统日志, 备份文件: ${exportFile}`,
+        ),
+      )
 
       this.logger.debug('清理系统日志完成')
     }
     catch (e) {
       this.logger.error(e.message)
+
+      this.event.emit(
+        toEventName(SystemCronJobExecuteEvent.name),
+        new SystemCronJobExecuteEvent(
+          'system.log.cleanup',
+          '系统日志',
+          '系统日志清理',
+          `自动清理并备份超过 ${this.days} 天的系统日志`,
+          CronExpression.EVERY_DAY_AT_1AM,
+          e.message,
+        ),
+      )
     }
   }
 
@@ -115,5 +146,7 @@ export class SystemLogScheduler {
     })
 
     this.logger.debug(`备份系统日志成功: ${returnDest}`)
+
+    return returnDest
   }
 }
