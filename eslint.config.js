@@ -38,9 +38,10 @@ export default antfu(
   {
     files: [
       'packages/api/**/*.ts',
-      'packages/shared/**/*.ts',
+      'packages/shared/src/**/*.ts',
     ],
     rules: {
+      'perfectionist/sort-exports': 'off',
       'perfectionist/sort-imports': [
         'error',
         {
