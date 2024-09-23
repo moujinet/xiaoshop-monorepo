@@ -8,7 +8,7 @@ import {
   YesOrNo,
 } from '@xiaoshop/shared'
 
-export class LogisticFreightLocationRulePayload implements ILogisticFreightLocationRule {
+export class FreightLocationRulePayload implements ILogisticFreightLocationRule {
   @IsArray({ message: '规则地区不正确' })
   @ArrayNotEmpty({ message: '规则地区不能为空' })
   readonly locations: ILocationPath[]
@@ -30,7 +30,7 @@ export class LogisticFreightLocationRulePayload implements ILogisticFreightLocat
   readonly continuePrice: number
 }
 
-export class LogisticFreightFreeRulePayload implements ILogisticFreightFreeRule {
+export class FreightFreeRulePayload implements ILogisticFreightFreeRule {
   @IsArray({ message: '规则地区不正确' })
   @ArrayNotEmpty({ message: '规则地区不能为空' })
   readonly locations: ILocationPath[]
@@ -44,7 +44,7 @@ export class LogisticFreightFreeRulePayload implements ILogisticFreightFreeRule 
   readonly overAmount: number
 }
 
-export class LogisticFreightTemplatePayload {
+export class FreightTemplatePayload {
   @IsString({ message: '模板名称不正确' })
   @IsNotEmpty({ message: '模板名称不能为空' })
   readonly name: string
@@ -65,7 +65,7 @@ export class LogisticFreightTemplatePayload {
   @ValidateNested()
   @IsArray({ message: '运费规则不正确' })
   @ArrayNotEmpty({ message: '运费规则不能为空' })
-  @Type(() => LogisticFreightLocationRulePayload)
+  @Type(() => FreightLocationRulePayload)
   readonly rules: ILogisticFreightLocationRule[]
 
   @IsNumber({}, { message: '是否包邮不正确' })
@@ -78,6 +78,6 @@ export class LogisticFreightTemplatePayload {
   @ValidateNested()
   @IsArray({ message: '包邮规则不正确' })
   @ArrayNotEmpty({ message: '包邮规则不能为空' })
-  @Type(() => LogisticFreightFreeRulePayload)
+  @Type(() => FreightFreeRulePayload)
   readonly freeRules?: ILogisticFreightFreeRule[]
 }

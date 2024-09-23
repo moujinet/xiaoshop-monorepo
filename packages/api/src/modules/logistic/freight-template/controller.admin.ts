@@ -4,10 +4,10 @@ import { Admin } from '@/system/auth/decorators'
 
 import { LogisticFreightTemplateService } from './service'
 import {
-  DeleteLogisticFreightTemplateInfoRequest,
-  GetLogisticFreightTemplateInfoRequest,
-  GetLogisticFreightTemplatePagesRequest,
-  LogisticFreightTemplatePayload,
+  DeleteFreightTemplateInfoRequest,
+  FreightTemplatePayload,
+  GetFreightTemplateInfoRequest,
+  GetFreightTemplatePagesRequest,
 } from './dto'
 
 @Controller('admin/logistic/freight-template')
@@ -18,7 +18,7 @@ export class LogisticFreightTemplateAdminController {
 
   @Get('pages')
   @Admin()
-  async pages(@Query() query: GetLogisticFreightTemplatePagesRequest) {
+  async pages(@Query() query: GetFreightTemplatePagesRequest) {
     return this.service.findPages(query)
   }
 
@@ -30,29 +30,29 @@ export class LogisticFreightTemplateAdminController {
 
   @Get('detail')
   @Admin()
-  async detail(@Query() query: GetLogisticFreightTemplateInfoRequest) {
+  async detail(@Query() query: GetFreightTemplateInfoRequest) {
     return this.service.findById(+query.id)
   }
 
   @Post('create')
   @HttpCode(200)
   @Admin()
-  async create(@Body() payload: LogisticFreightTemplatePayload) {
+  async create(@Body() payload: FreightTemplatePayload) {
     return this.service.create(payload)
   }
 
   @Put('update')
   @Admin()
   async update(
-    @Query() query: GetLogisticFreightTemplateInfoRequest,
-    @Body() payload: LogisticFreightTemplatePayload,
+    @Query() query: GetFreightTemplateInfoRequest,
+    @Body() payload: FreightTemplatePayload,
   ) {
     return this.service.update(+query.id, payload)
   }
 
   @Delete('delete')
   @Admin()
-  async delete(@Body() data: DeleteLogisticFreightTemplateInfoRequest) {
+  async delete(@Body() data: DeleteFreightTemplateInfoRequest) {
     return this.service.delete(data.id)
   }
 }

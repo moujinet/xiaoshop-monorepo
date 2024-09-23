@@ -26,36 +26,38 @@ describe('System Settings Module', () => {
       ('verifyCode.enableOnRegister', '1')`)
   })
 
-  it('Update Setting', async () => {
-    await useRequest('put', '/system/settings/update')
-      .send({
-        settings: [{ key: 'store.name', value: 'XiaoShop Update' }],
-      })
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.code).toEqual(0)
-      })
-  })
+  describe('Admin', () => {
+    it('Update Setting', async () => {
+      await useRequest('put', '/system/settings/update')
+        .send({
+          settings: [{ key: 'store.name', value: 'XiaoShop Update' }],
+        })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.code).toEqual(0)
+        })
+    })
 
-  it('Fetch All Settings', async () => {
-    const { body } = await useRequest('get', '/system/settings/list').expect(200)
+    it('Fetch All Settings', async () => {
+      const { body } = await useRequest('get', '/system/settings/list').expect(200)
 
-    expect(Object.keys(body.data).length).toEqual(19)
-  })
+      expect(Object.keys(body.data).length).toEqual(19)
+    })
 
-  it('Fetch Single Setting', async () => {
-    const { body } = await useRequest('get', '/system/settings/option')
-      .query({ key: 'store.name' })
-      .expect(200)
+    it('Fetch Single Setting', async () => {
+      const { body } = await useRequest('get', '/system/settings/option')
+        .query({ key: 'store.name' })
+        .expect(200)
 
-    expect(body.data['store.name']).toEqual('XiaoShop Update')
-  })
+      expect(body.data['store.name']).toEqual('XiaoShop Update')
+    })
 
-  it('Fetch Settings By Wildcard', async () => {
-    const { body } = await useRequest('get', '/system/settings/option')
-      .query({ key: 'map.*' })
-      .expect(200)
+    it('Fetch Settings By Wildcard', async () => {
+      const { body } = await useRequest('get', '/system/settings/option')
+        .query({ key: 'map.*' })
+        .expect(200)
 
-    expect(Object.keys(body.data).length).toEqual(3)
+      expect(Object.keys(body.data).length).toEqual(3)
+    })
   })
 })

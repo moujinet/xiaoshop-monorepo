@@ -17,8 +17,8 @@ import { ExistsException, FailedException, NotFoundException } from '~/common/ex
 
 import { LogisticFreightTemplate } from './entity'
 import {
-  GetLogisticFreightTemplatePagesRequest,
-  LogisticFreightTemplatePayload,
+  FreightTemplatePayload,
+  GetFreightTemplatePagesRequest,
 } from './dto'
 import {
   LogisticFreightTemplateCreateEvent,
@@ -44,7 +44,7 @@ export class LogisticFreightTemplateService {
    * @throws {FailedException} 获取运费模板列表失败
    */
   async findPages(
-    query: GetLogisticFreightTemplatePagesRequest,
+    query: GetFreightTemplatePagesRequest,
   ): Promise<IApiPaginationData<ILogisticFreightTemplateList>> {
     try {
       const {
@@ -132,7 +132,7 @@ export class LogisticFreightTemplateService {
    * @throws {ExistsException} 运费模板已存在
    * @throws {FailedException} 创建运费模板失败
    */
-  async create(data: LogisticFreightTemplatePayload) {
+  async create(data: FreightTemplatePayload) {
     try {
       const exists = await this.repository.existsBy({
         name: data.name.trim(),
@@ -172,7 +172,7 @@ export class LogisticFreightTemplateService {
    * @throws {ExistsException} 运费模板已存在
    * @throws {FailedException} 更新运费模板失败
    */
-  async update(id: number, data: LogisticFreightTemplatePayload) {
+  async update(id: number, data: FreightTemplatePayload) {
     try {
       const template = await this.repository.findOne({
         select: ['id', 'name', 'desc', 'sort', 'calcMode', 'rules', 'enableFreeRules', 'freeRules'],

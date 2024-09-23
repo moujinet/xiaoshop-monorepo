@@ -2,15 +2,15 @@ import { IsNotEmpty, IsNumber, IsNumberString } from 'class-validator'
 
 import { PaginationRequest } from '~/common/dto'
 
-export class GetLogisticFreightTemplatePagesRequest extends PaginationRequest {}
+export class GetFreightTemplatePagesRequest extends PaginationRequest {}
 
-export class GetLogisticFreightTemplateInfoRequest {
+export class GetFreightTemplateInfoRequest {
   @IsNumberString({}, { message: '运费模板 ID 不正确' })
   @IsNotEmpty({ message: '运费模板 ID 不能为空' })
   readonly id: number
 }
 
-export class DeleteLogisticFreightTemplateInfoRequest {
+export class DeleteFreightTemplateInfoRequest {
   @IsNumber({}, { message: '运费模板 ID 不正确' })
   readonly id: number
 }

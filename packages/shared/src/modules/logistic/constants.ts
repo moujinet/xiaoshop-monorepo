@@ -60,12 +60,12 @@ export enum LogisticFreightCalcMode {
 /**
  * 地址类型 - 枚举
  *
- * - `DELIVERY` - 发货地址
  * - `RECEIVE` - 收货地址
+ * - `DELIVERY` - 发货地址
  */
 export enum LogisticAddressType {
-  DELIVERY = 1,
-  RECEIVE,
+  RECEIVE = 1,
+  DELIVERY,
 }
 
 // --------------------------------

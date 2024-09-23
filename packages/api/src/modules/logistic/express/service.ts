@@ -15,7 +15,7 @@ import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
 import { LogisticExpress } from './entity'
-import { GetLogisticExpressPagesRequest, LogisticExpressPayload } from './dto'
+import { ExpressPayload, GetExpressPagesRequest } from './dto'
 import {
   LogisticExpressCreateEvent,
   LogisticExpressDeleteEvent,
@@ -40,7 +40,7 @@ export class LogisticExpressService {
    * @throws {FailedException} 获取物流公司列表失败
    */
   async findPages(
-    query: GetLogisticExpressPagesRequest,
+    query: GetExpressPagesRequest,
   ): Promise<IApiPaginationData<ILogisticExpressList>> {
     try {
       const {
@@ -118,7 +118,7 @@ export class LogisticExpressService {
    * @throws {FailedException} 创建物流公司失败
    * @throws {ExistsException} 物流公司已存在
    */
-  async create(data: LogisticExpressPayload) {
+  async create(data: ExpressPayload) {
     try {
       const exists = await this.repository.existsBy({ name: data.name.trim() })
 
@@ -154,7 +154,7 @@ export class LogisticExpressService {
    * @throws {ExistsException} 物流公司已存在
    * @throws {FailedException} 更新物流公司失败
    */
-  async update(id: number, data: LogisticExpressPayload) {
+  async update(id: number, data: ExpressPayload) {
     try {
       const express = await this.repository.findOne({
         select: ['id', 'name', 'desc', 'logo', 'url', 'sort'],

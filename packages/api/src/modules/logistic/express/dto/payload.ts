@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator'
 
-export class LogisticExpressPayload {
+export class ExpressPayload {
   @IsString({ message: '物流公司名称不正确' })
   @IsNotEmpty({ message: '物流公司名称不能为空' })
   readonly name: string

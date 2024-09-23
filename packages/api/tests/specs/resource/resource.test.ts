@@ -24,42 +24,44 @@ describe('Resource Module - Resource', () => {
     await cleanDirs([`${basePath}/upload/**/*`])
   })
 
-  it('Upload Image Resource', async () => {
-    await useRequest('post', '/resource/upload/image')
-      .attach('file', `${basePath}/tmp/image/pass/1.jpg`)
-      .field('groupId', 1)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.data).toBeDefined()
-      })
-  })
+  describe('Admin', () => {
+    it('Upload Image Resource', async () => {
+      await useRequest('post', '/resource/upload/image')
+        .attach('file', `${basePath}/tmp/image/pass/1.jpg`)
+        .field('groupId', 1)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.data).toBeDefined()
+        })
+    })
 
-  it('Fetch Resource Detail', async () => {
-    const { body } = await useRequest('get', '/resource/detail')
-      .query({ id: 1 })
-      .expect(200)
+    it('Fetch Resource Detail', async () => {
+      const { body } = await useRequest('get', '/resource/detail')
+        .query({ id: 1 })
+        .expect(200)
 
-    expect(body.data).toBeDefined()
-  })
+      expect(body.data).toBeDefined()
+    })
 
-  it('Fetch Resource Pages', async () => {
-    const { body } = await useRequest('get', '/resource/pages')
-      .query({
-        groupId: 1,
-        type: 1,
-      })
-      .expect(200)
+    it('Fetch Resource Pages', async () => {
+      const { body } = await useRequest('get', '/resource/pages')
+        .query({
+          groupId: 1,
+          type: 1,
+        })
+        .expect(200)
 
-    expect(body.data.total).toEqual(1)
-  })
+      expect(body.data.total).toEqual(1)
+    })
 
-  it('Delete Resource', async () => {
-    await useRequest('delete', '/resource/delete')
-      .send({ id: 1 })
-      .expect(200)
-      .then(async ({ body }) => {
-        expect(body.code).toEqual(0)
-        await sleep(10)
-      })
+    it('Delete Resource', async () => {
+      await useRequest('delete', '/resource/delete')
+        .send({ id: 1 })
+        .expect(200)
+        .then(async ({ body }) => {
+          expect(body.code).toEqual(0)
+          await sleep(10)
+        })
+    })
   })
 })

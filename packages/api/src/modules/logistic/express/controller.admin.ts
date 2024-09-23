@@ -4,10 +4,10 @@ import { Admin } from '@/system/auth/decorators'
 
 import { LogisticExpressService } from './service'
 import {
-  DeleteLogisticExpressInfoRequest,
-  GetLogisticExpressInfoRequest,
-  GetLogisticExpressPagesRequest,
-  LogisticExpressPayload,
+  DeleteExpressInfoRequest,
+  ExpressPayload,
+  GetExpressInfoRequest,
+  GetExpressPagesRequest,
 } from './dto'
 
 @Controller('admin/logistic/express')
@@ -18,7 +18,7 @@ export class LogisticExpressAdminController {
 
   @Get('pages')
   @Admin()
-  async pages(@Query() query: GetLogisticExpressPagesRequest) {
+  async pages(@Query() query: GetExpressPagesRequest) {
     return this.service.findPages(query)
   }
 
@@ -30,29 +30,29 @@ export class LogisticExpressAdminController {
 
   @Get('detail')
   @Admin()
-  async detail(@Query() query: GetLogisticExpressInfoRequest) {
+  async detail(@Query() query: GetExpressInfoRequest) {
     return this.service.findById(+query.id)
   }
 
   @Post('create')
   @HttpCode(200)
   @Admin()
-  async create(@Body() payload: LogisticExpressPayload) {
+  async create(@Body() payload: ExpressPayload) {
     return this.service.create(payload)
   }
 
   @Put('update')
   @Admin()
   async update(
-    @Query() query: GetLogisticExpressInfoRequest,
-    @Body() payload: LogisticExpressPayload,
+    @Query() query: GetExpressInfoRequest,
+    @Body() payload: ExpressPayload,
   ) {
     return this.service.update(+query.id, payload)
   }
 
   @Delete('delete')
   @Admin()
-  async delete(@Body() data: DeleteLogisticExpressInfoRequest) {
+  async delete(@Body() data: DeleteExpressInfoRequest) {
     return this.service.delete(data.id)
   }
 }

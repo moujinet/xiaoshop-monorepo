@@ -7,12 +7,14 @@ describe('Resource Module - Upload', () => {
     await cleanDirs([`${basePath}/upload/**/*`])
   })
 
-  it('Upload Excel File', async () => {
-    await useRequest('post', '/resource/upload/file')
-      .attach('file', `${basePath}/tmp/excel/1.xlsx`)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.data).toBeDefined()
-      })
+  describe('Admin', () => {
+    it('Upload Excel File', async () => {
+      await useRequest('post', '/resource/upload/file')
+        .attach('file', `${basePath}/tmp/excel/1.xlsx`)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.data).toBeDefined()
+        })
+    })
   })
 })
