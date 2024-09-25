@@ -9,6 +9,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
 import { SystemModule } from '@/system/module'
+import { MemberModule } from '@/member/module'
 import { ResourceModule } from '@/resource/module'
 import { LogisticModule } from '@/logistic/module'
 import { SettingsMigrationCommand } from '@/system/settings/commands/settings.command'
@@ -54,6 +55,7 @@ import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, Run
 
     // XiaoShop Modules
     SystemModule,
+    MemberModule,
     ResourceModule,
     LogisticModule,
 
