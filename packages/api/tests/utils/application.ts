@@ -12,10 +12,6 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
-import { SystemModule } from '@/system/module'
-import { MemberModule } from '@/member/module'
-import { ResourceModule } from '@/resource/module'
-import { LogisticModule } from '@/logistic/module'
 import { exceptionFactory } from '~/common/exceptions'
 import { ResponseInterceptor } from '~/common/interceptors'
 import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
@@ -93,10 +89,7 @@ export async function createTestingApplication(modules: any[]) {
 export async function getTestApplication() {
   if (!globalThis.__APP__) {
     const app = await createTestingApplication([
-      SystemModule,
-      ResourceModule,
-      MemberModule,
-      LogisticModule,
+
     ])
     await app.init()
 

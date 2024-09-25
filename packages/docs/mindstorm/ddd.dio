@@ -25,6 +25,15 @@
                 <mxCell id="19" value="DOMAIN" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
                     <mxGeometry x="40" y="-200" width="200" height="120" as="geometry"/>
                 </mxCell>
+                <mxCell id="23" value="SUB DOMAIN" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="-200" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="CRUD" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="-200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="BIZ" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="-120" width="160" height="40" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>

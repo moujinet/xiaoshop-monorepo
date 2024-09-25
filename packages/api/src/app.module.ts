@@ -8,11 +8,6 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
-import { SystemModule } from '@/system/module'
-import { MemberModule } from '@/member/module'
-import { ResourceModule } from '@/resource/module'
-import { LogisticModule } from '@/logistic/module'
-import { SettingsMigrationCommand } from '@/system/settings/commands/settings.command'
 import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig } from '~/configs/modules'
 import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, RunMigrateCommand } from '~/database/commands'
 
@@ -54,17 +49,12 @@ import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, Run
     ScheduleModule.forRoot(),
 
     // XiaoShop Modules
-    SystemModule,
-    MemberModule,
-    ResourceModule,
-    LogisticModule,
 
     // Commands
     CreateMigrateCommand,
     RevertMigrateCommand,
     RunMigrateCommand,
     GenerateMigrateCommand,
-    SettingsMigrationCommand,
   ],
 })
 export class AppModule {}
