@@ -22,7 +22,7 @@ interface Migration {
 }
 
 const skipPrefixs = [
-  'system.settings',
+  'system.setting',
 ]
 
 export class SettingsMigrationGenerator {

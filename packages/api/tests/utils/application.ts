@@ -12,6 +12,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
+import { SystemModule } from '@/system/module'
 import { exceptionFactory } from '~/common/exceptions'
 import { ResponseInterceptor } from '~/common/interceptors'
 import { ExceptionsFilter, HttpExceptionsFilter } from '~/common/filters'
@@ -89,23 +90,49 @@ export async function createTestingApplication(modules: any[]) {
 export async function getTestApplication() {
   if (!globalThis.__APP__) {
     const app = await createTestingApplication([
-
+      SystemModule,
     ])
     await app.init()
 
     await truncateTable([
+      'system_settings',
       'system_user',
       'system_log',
     ])
 
     await runSQL([
+      // Settings
+      `INSERT INTO \`${getTableName('system_settings')}\` (\`key\`, \`value\`) VALUES
+      ('store.address', ''),
+      ('store.contact', '云链小朔'),
+      ('store.contactMobile', ''),
+      ('store.contactPhone', ''),
+      ('store.email', 'xiaos@mouji.net'),
+      ('store.latitude', ''),
+      ('store.location', '[]'),
+      ('store.logo', ''),
+      ('store.longitude', ''),
+      ('store.name', 'XiaoShop'),
+      ('store.tel', ''),
+      ('system.auth.login.captchaLength', '4'),
+      ('system.auth.login.captchaRetryTimes', '5'),
+      ('system.auth.security.passwordLength', '6'),
+      ('system.auth.security.passwordRetryTimes', '5'),
+      ('system.auth.security.passwordStrength', '["number", "lower"]'),
+      ('system.auth.security.unlockAdminAfter', '30'),
+      ('system.notification.log.cleanupPeriod', '90'),
+      ('system.notification.log.enableCleanup', '0'),
+      ('system.notification.message.cleanupPeriod', '180'),
+      ('system.notification.message.enableCleanup', '0')`,
+
+      // Admin User
       `INSERT INTO \`${getTableName('system_user')}\` (\`is_admin\`, \`status\`, \`username\`, \`name\`, \`password\`, \`salt\`) VALUES (1, 1, 'admin', 'Admin', '$2b$10$6HjLrj5a0Jefr12T.76SRe/5AISF0uVaCaoL0grW.4mKBI/393zNO', '$2b$10$6HjLrj5a0Jefr12T.76SRe')`,
     ])
 
     globalThis.__APP__ = app
 
     await request(app.getHttpServer())
-      .post('/admin/system/user/login')
+      .post('/admin/login')
       .set('x-client-ip', '114.114.114.114')
       .send({
         username: 'admin',

@@ -11,7 +11,7 @@ import {
   GetSystemPositionPagesRequest,
 } from './dto/request'
 
-@Controller('admin/system/department/position')
+@Controller('admin/system/position')
 export class SystemPositionAdminController {
   constructor(
     private readonly service: SystemPositionService,
