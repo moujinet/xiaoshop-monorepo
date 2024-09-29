@@ -5,11 +5,11 @@
 /**
  * 系统日志类型
  *
- * - `USER` 用户日志
+ * - `ADMIN` 用户日志
  * - `SYSTEM` 系统日志
  */
 export enum SystemLogType {
-  USER = 1,
+  ADMIN = 1,
   SYSTEM,
 }
 

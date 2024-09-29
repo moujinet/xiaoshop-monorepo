@@ -1,4 +1,5 @@
-import { IDict } from '@xiaoshop/shared'
+import type { IDict } from '@xiaoshop/shared'
+
 import { kebabCase } from 'es-toolkit/string'
 
 /**
@@ -8,7 +9,7 @@ import { kebabCase } from 'es-toolkit/string'
  * @returns 事件名称 (event.name)
  */
 export function toEventName(className: string) {
-  return kebabCase(className).replace(/-/g, '.')
+  return kebabCase(className).replace(/-/g, '.').replace(/\.event$/, '')
 }
 
 /**

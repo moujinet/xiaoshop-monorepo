@@ -1,6 +1,6 @@
 import type { IDict, YesOrNo } from '~/common'
 import type { ISystemRoleDict, ISystemRolePermissions } from '@/system/auth/role'
-import type { ISystemDepartmentDict, ISystemDepartmentPositionDict } from '@/system/organize'
+import type { ISystemDepartmentDict, ISystemDepartmentPositionDict } from '@/system/organization'
 
 /**
  * 系统用户信息

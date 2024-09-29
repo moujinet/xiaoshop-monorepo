@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { redisStore } from 'cache-manager-redis-yet'
 import { CacheModuleOptions, type CacheOptionsFactory } from '@nestjs/cache-manager'
+
+import { redisStore } from './redis/store'
 
 @Injectable()
 export class CacheModuleConfig implements CacheOptionsFactory {
@@ -18,6 +19,7 @@ export class CacheModuleConfig implements CacheOptionsFactory {
       database: this.config.get<number>('cache.db'),
       ttl: this.config.get<number>('cache.ttl'),
       max: this.config.get<number>('cache.max'),
+      isGlobal: true,
     }
   }
 }

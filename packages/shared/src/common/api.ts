@@ -12,7 +12,7 @@ export interface IApiResponse<T = any> {
  * 分页数据响应结构
  */
 export interface IApiPaginationData<T = any> {
-  result: T[]
+  list: T[]
   total: number
   page: number
   pagesize: number
