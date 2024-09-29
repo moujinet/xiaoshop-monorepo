@@ -37,7 +37,7 @@ async function bootstrap() {
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
-        scriptSrc: ['self', 'cdn.jsdelivr.net'],
+        'script-src': ['\'self\'', 'cdn.jsdelivr.net'],
       },
     },
   }))
