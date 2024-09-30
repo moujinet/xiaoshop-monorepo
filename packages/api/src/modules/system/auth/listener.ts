@@ -4,7 +4,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { toEventName } from '~/utils/transformers'
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
+import { SystemSettingService } from '@/system/setting/setting/service'
 
 import { USER_PASSWORD_ERROR_KEY } from './constants'
 import { SystemUserAdminUnlockEvent } from './user/admin/events'

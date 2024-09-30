@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config'
 import { Inject, Logger } from '@nestjs/common'
 import { Process, Processor } from '@nestjs/bull'
 
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
+import { SystemSettingService } from '@/system/setting/setting/service'
 
 import { CompressProcessor } from './resource/processors/compress'
 import { ThumbnailProcessor } from './resource/processors/thumbnail'

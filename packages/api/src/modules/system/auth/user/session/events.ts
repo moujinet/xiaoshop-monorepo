@@ -1,8 +1,8 @@
 import { SystemLogLevel } from '@xiaoshop/shared'
 
+import { MODULE_NAME } from '@/system/auth/constants'
 import { AdminEvent } from '~/common/events/event.admin'
 import { SystemEvent } from '~/common/events/event.system'
-import { MODULE_NAME } from '@/system/organization/constants'
 
 /**
  * 系统用户登录事件

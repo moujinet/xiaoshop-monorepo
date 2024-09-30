@@ -20,8 +20,8 @@ import { WhoisService } from '~/services/whois'
 import { ADMIN_KEY } from '@/system/auth/constants'
 import { toDict, toEventName } from '~/utils/transformers'
 import { SystemUserEntity } from '@/system/auth/user/entity'
+import { SystemSettingService } from '@/system/setting/setting/service'
 import { BadRequestException, FailedException } from '~/common/exceptions'
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
 
 import {
   SystemUserAutoLockEvent,

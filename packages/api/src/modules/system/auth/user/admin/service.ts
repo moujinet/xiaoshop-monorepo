@@ -16,7 +16,7 @@ import { SYSTEM_USER_STATUSES } from '~/dicts'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { SystemRoleEntity } from '@/system/auth/role/entity'
 import { SystemUserEntity } from '@/system/auth/user/entity'
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
+import { SystemSettingService } from '@/system/setting/setting/service'
 import { objectToDict, pipeDict, toDict, toEventName } from '~/utils/transformers'
 import { BadRequestException, ExistsException, FailedException } from '~/common/exceptions'
 

@@ -7,7 +7,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { ensureDir } from '~/utils'
 import { nowStr } from '~/utils/datetime'
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
+import { SystemSettingService } from '@/system/setting/setting/service'
 
 import { SystemLogService } from './service'
 

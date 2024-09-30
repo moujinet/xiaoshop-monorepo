@@ -5,8 +5,8 @@ import { ConfigService } from '@nestjs/config'
 import { Inject, Injectable } from '@nestjs/common'
 
 import { ensureDir } from '~/utils'
+import { SystemSettingService } from '@/system/setting/setting/service'
 import { BadRequestException, FailedException } from '~/common/exceptions'
-import { SystemSettingService } from '@/system/setting/domain/setting/service'
 
 @Injectable()
 export class ResourceUploadService {
