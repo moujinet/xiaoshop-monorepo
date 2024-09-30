@@ -3,7 +3,7 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 import { Admin } from '@/system/auth/decorators'
 
 import { ExpressPayload } from './dto/payload'
-import { LogisticExpressService } from './service'
+import { LogisticExpressAdminService } from './service'
 import {
   DeleteExpressRequest,
   GetExpressInfoRequest,
@@ -13,7 +13,7 @@ import {
 @Controller('admin/logistic/express')
 export class LogisticExpressAdminController {
   constructor(
-    private readonly service: LogisticExpressService,
+    private readonly service: LogisticExpressAdminService,
   ) {}
 
   @Get('pages')

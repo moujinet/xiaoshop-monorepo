@@ -12,10 +12,10 @@ import { EventEmitter2 } from '@nestjs/event-emitter'
 
 import { toEventName } from '~/utils/transformers'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
+import { LogisticExpressEntity } from '@/logistic/express/entity'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
 import { ExpressPayload } from './dto/payload'
-import { LogisticExpressEntity } from './entity'
 import { GetExpressPagesRequest } from './dto/request'
 import {
   LogisticExpressCreateEvent,
@@ -24,7 +24,7 @@ import {
 } from './events'
 
 @Injectable()
-export class LogisticExpressService {
+export class LogisticExpressAdminService {
   constructor(
     @InjectRepository(LogisticExpressEntity)
     private readonly repository: Repository<LogisticExpressEntity>,
