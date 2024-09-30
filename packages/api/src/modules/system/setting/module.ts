@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { SystemSettingEntity } from './entity'
-import { SystemSettingService } from './domain/setting/service'
-import { SystemSettingAdminService } from './domain/admin/service'
-import { SystemSettingController } from './domain/setting/controller'
-import { SystemSettingAdminController } from './domain/admin/controller'
+import { SystemSettingService } from './setting/service'
+import { SystemSettingAdminService } from './admin/service'
+import { SystemSettingController } from './setting/controller'
+import { SystemSettingAdminController } from './admin/controller'
 
 @Module({
   imports: [

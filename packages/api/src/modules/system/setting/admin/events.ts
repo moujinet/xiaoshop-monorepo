@@ -13,6 +13,6 @@ export class SystemSettingUpdateEvent extends AdminEvent {
   }
 
   getLogContent() {
-    return `更新系统设置 ${this.key}: ${this.value}`
+    return `更新设置 ${this.key}: ${this.value}`
   }
 }

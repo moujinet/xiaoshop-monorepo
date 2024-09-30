@@ -111,9 +111,7 @@ export class SettingsMigrationGenerator {
         })
     })
 
-    return settings.sort(
-      (a, b) => a.key.localeCompare(b.key),
-    )
+    return settings.sort((a, b) => a.key.localeCompare(b.key))
   }
 
   async loadMigrations(): Promise<Setting[]> {

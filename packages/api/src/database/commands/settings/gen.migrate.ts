@@ -1,12 +1,12 @@
 import { Command, CommandRunner } from 'nest-commander'
 
-import { SettingsMigrationGenerator } from './settings.generator'
+import { SettingsMigrationGenerator } from './generator'
 
 @Command({
   name: 'migrate:gen:settings',
   description: '根据 settings.ts 生成迁移文件',
 })
-export class SettingsMigrationCommand extends CommandRunner {
+export class SettingsGenerateMigrateCommand extends CommandRunner {
   async run() {
     const generate = new SettingsMigrationGenerator(
       './src/modules',
