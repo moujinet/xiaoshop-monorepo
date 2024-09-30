@@ -68,7 +68,7 @@ export type ILogisticFreightTemplateList = Pick<
 }
 
 /**
- * 地区运费计算规则
+ * 运费规则
  */
 export interface ILogisticFreightLocationRule {
   /**
