@@ -26,6 +26,7 @@ import { SystemSettingAdminController } from './admin/controller'
 
   exports: [
     SystemSettingService,
+    SystemSettingAdminService,
   ],
 })
 export class SystemSettingModule {}

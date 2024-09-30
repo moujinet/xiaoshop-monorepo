@@ -26,16 +26,18 @@ export class SystemSettingAdminService {
    * @param settings 系统设置列表
    * @throws {FailedException} 更新系统设置失败
    */
-  async update(settings: UpdateSystemSettingPayload[]) {
+  async update(settings: UpdateSystemSettingPayload[], needEmit = true) {
     try {
       await Promise.all(
         settings.map(async ({ key, value }) => {
           await this.repo.update(key, { value })
 
-          this.event.emit(
-            toEventName(SystemSettingUpdateEvent.name),
-            new SystemSettingUpdateEvent(key, value),
-          )
+          if (needEmit) {
+            this.event.emit(
+              toEventName(SystemSettingUpdateEvent.name),
+              new SystemSettingUpdateEvent(key, value),
+            )
+          }
         }),
       )
     }
