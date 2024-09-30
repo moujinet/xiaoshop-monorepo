@@ -11,6 +11,7 @@ import { Between, FindOptionsWhere, LessThan, Like, Repository } from 'typeorm'
 import { FailedException } from '~/common/exceptions'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { objectToDict, pipeDict, toDict } from '~/utils/transformers'
+import { SystemNotificationLogEntity } from '@/system/notification/log/entity'
 import {
   SYSTEM_NOTIFICATION_CHANNELS,
   SYSTEM_NOTIFICATION_SCENES,
@@ -18,12 +19,11 @@ import {
   SYSTEM_NOTIFICATION_TYPES,
 } from '~/dicts/system/notification'
 
-import { SystemNotificationLogEntity } from './entity'
 import { SystemNotificationLogPayload } from './dto/payload'
 import { GetSystemNotificationLogPagesRequest } from './dto/request'
 
 @Injectable()
-export class SystemNotificationLogService {
+export class SystemNotificationLogAdminService {
   constructor(
     @InjectRepository(SystemNotificationLogEntity)
     private readonly repo: Repository<SystemNotificationLogEntity>,

@@ -6,7 +6,7 @@ import type {
 import { SystemEvent } from '~/common/events'
 
 import { MODULE_NAME } from './constants'
-import { SystemNotificationPayload } from './notification/dto/payload'
+import { SystemNotificationPayload } from './notification/admin/dto/payload'
 
 /**
  * 系统消息发送事件

@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { SystemPositionEntity } from './position/entity'
-import { SystemPositionService } from './position/service'
 import { SystemDepartmentEntity } from './department/entity'
-import { SystemDepartmentService } from './department/service'
-import { SystemPositionAdminController } from './position/controller.admin'
-import { SystemDepartmentAdminController } from './department/controller.admin'
+import { SystemPositionAdminService } from './position/admin/service'
+import { SystemDepartmentAdminService } from './department/admin/service'
+import { SystemPositionAdminController } from './position/admin/controller'
+import { SystemDepartmentAdminController } from './department/admin/controller'
 
 @Module({
   imports: [
@@ -22,8 +22,8 @@ import { SystemDepartmentAdminController } from './department/controller.admin'
   ],
 
   providers: [
-    SystemDepartmentService,
-    SystemPositionService,
+    SystemDepartmentAdminService,
+    SystemPositionAdminService,
   ],
 })
 export class SystemOrganizationModule {}

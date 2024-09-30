@@ -6,15 +6,15 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { SystemUserLoginEvent } from '@/system/auth/user/session/events'
 
-import { SystemLogService } from './service'
+import { SystemLogAdminService } from './admin/service'
 
 @Injectable()
 export class SystemLogListener {
   private readonly logger = new Logger(SystemLogListener.name)
 
   constructor(
-    @Inject(SystemLogService)
-    private readonly systemLog: SystemLogService,
+    @Inject(SystemLogAdminService)
+    private readonly systemLog: SystemLogAdminService,
   ) {}
 
   /**

@@ -12,11 +12,11 @@ import { SystemAuthListener } from './listener'
 import { SystemRoleEntity } from './role/entity'
 import { SystemUserEntity } from './user/entity'
 import { SystemAuthScheduler } from './scheduler'
-import { SystemRoleService } from './role/service'
 import { SystemUserAdminService } from './user/admin/service'
+import { SystemRoleAdminService } from './role/admin/service'
 import { SystemUserSessionService } from './user/session/service'
-import { SystemRoleAdminController } from './role/controller.admin'
 import { SystemUserAdminController } from './user/admin/controller'
+import { SystemRoleAdminController } from './role/admin/controller'
 import { SystemUserSessionController } from './user/session/controller'
 
 @Module({
@@ -43,7 +43,7 @@ import { SystemUserSessionController } from './user/session/controller'
   providers: [
     WhoisService,
 
-    SystemRoleService,
+    SystemRoleAdminService,
     SystemUserAdminService,
     SystemUserSessionService,
 

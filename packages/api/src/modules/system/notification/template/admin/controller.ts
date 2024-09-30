@@ -2,8 +2,8 @@ import { Body, Controller, Get, Put, Query } from '@nestjs/common'
 
 import { Admin } from '@/system/auth/decorators'
 
-import { SystemNotificationTemplateService } from './service'
 import { SystemNotificationTemplatePayload } from './dto/payload'
+import { SystemNotificationTemplateAdminService } from './service'
 import {
   GetSystemNotificationTemplateInfoRequest,
   GetSystemNotificationTemplateListRequest,
@@ -12,7 +12,7 @@ import {
 @Controller('admin/system/notification/template')
 export class SystemNotificationTemplateAdminController {
   constructor(
-    private readonly service: SystemNotificationTemplateService,
+    private readonly service: SystemNotificationTemplateAdminService,
   ) {}
 
   /**

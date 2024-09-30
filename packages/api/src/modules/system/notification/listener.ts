@@ -1,19 +1,16 @@
 import { Queue } from 'bull'
-import { Repository } from 'typeorm'
 import { InjectQueue } from '@nestjs/bull'
-import { InjectRepository } from '@nestjs/typeorm'
+import { SystemNotificationChannel } from '@xiaoshop/shared'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common'
-import { ISystemUserDict, SystemNotificationChannel, YesOrNo } from '@xiaoshop/shared'
 
 import { IBaseEvent } from '~/common/events'
-import { SYSTEM_USER_STATUSES } from '~/dicts'
-import { objectToDict, pipeDict, toEventName } from '~/utils/transformers'
+import { toEventName } from '~/utils/transformers'
 
 import { SystemNotificationSentEvent } from './events'
 import { ISystemNotificationSendJob } from './interface'
-import { SystemNotificationLogService } from './log/service'
-import { SystemNotificationTemplateEntity } from './template/entity'
+import { SystemNotificationLogAdminService } from './log/admin/service'
+import { SystemNotificationTemplateSubscribeService } from './template/subscribe/service'
 import {
   NOTIFICATION_QUEUE_ID,
   NOTIFICATION_SMS_CHANNEL,
@@ -26,14 +23,14 @@ export class SystemNotificationListener implements OnModuleInit {
   private readonly logger = new Logger(SystemNotificationListener.name)
 
   constructor(
-    @InjectRepository(SystemNotificationTemplateEntity)
-    private readonly repo: Repository<SystemNotificationTemplateEntity>,
+    @Inject(SystemNotificationTemplateSubscribeService)
+    private readonly subscribe: SystemNotificationTemplateSubscribeService,
 
     @InjectQueue(NOTIFICATION_QUEUE_ID)
     private readonly queue: Queue<ISystemNotificationSendJob>,
 
-    @Inject(SystemNotificationLogService)
-    private readonly log: SystemNotificationLogService,
+    @Inject(SystemNotificationLogAdminService)
+    private readonly log: SystemNotificationLogAdminService,
 
     @Inject(EventEmitter2)
     private readonly event: EventEmitter2,
@@ -44,12 +41,7 @@ export class SystemNotificationListener implements OnModuleInit {
    */
   async onModuleInit() {
     try {
-      const templates = await this.repo.find({
-        select: ['id', 'trigger'],
-        where: {
-          isEnabled: YesOrNo.YES,
-        },
-      })
+      const templates = await this.subscribe.findTriggers()
 
       if (!templates.length)
         return
@@ -73,56 +65,35 @@ export class SystemNotificationListener implements OnModuleInit {
    */
   async subscriber(event: IBaseEvent) {
     try {
-      const templates = await this.repo.find({
-        select: {
-          id: true,
-          type: true,
-          scene: true,
-          channels: true,
-          contents: true,
-          subscribers: { id: true, isAdmin: true, status: true, name: true },
-        },
-        where: {
-          isEnabled: YesOrNo.YES,
-          trigger: toEventName(event.constructor.name),
-        },
-      })
+      const contents = await this.subscribe.findContentList(
+        toEventName(event.constructor.name),
+      )
 
-      if (!templates.length)
+      if (!contents.length)
         return
 
-      for (const template of templates) {
-        if (template.channels.length === 0 || template.contents.length === 0)
-          continue
+      for (const content of contents) {
+        let channel = NOTIFICATION_SYSTEM_CHANNEL
 
-        template.contents.filter(c => template.channels.includes(c.channel))
-          .forEach(async (content) => {
-            let channel = NOTIFICATION_SYSTEM_CHANNEL
+        switch (content.channel) {
+          case SystemNotificationChannel.WECHAT:
+            channel = NOTIFICATION_WECHAT_CHANNEL
+            break
 
-            switch (content.channel) {
-              case SystemNotificationChannel.WECHAT:
-                channel = NOTIFICATION_WECHAT_CHANNEL
-                break
+          case SystemNotificationChannel.SMS:
+            channel = NOTIFICATION_SMS_CHANNEL
+            break
+        }
 
-              case SystemNotificationChannel.SMS:
-                channel = NOTIFICATION_SMS_CHANNEL
-                break
-            }
-
-            await this.queue.add(channel, {
-              templateId: template.id,
-              type: template.type,
-              scene: template.scene,
-              title: content.title,
-              content: content.content,
-              extras: event.extras,
-              subscribers: template.subscribers
-                ? pipeDict<ISystemUserDict>(template.subscribers, [
-                  row => objectToDict(row, 'status', SYSTEM_USER_STATUSES),
-                ])
-                : [],
-            })
-          })
+        await this.queue.add(channel, {
+          templateId: content.id,
+          type: content.type,
+          scene: content.scene,
+          title: content.title,
+          content: content.content,
+          extras: event.extras,
+          subscribers: content.subscribers,
+        })
       }
     }
     catch (e) {

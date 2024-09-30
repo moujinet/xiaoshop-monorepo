@@ -5,15 +5,15 @@ import { EventEmitter2 } from '@nestjs/event-emitter'
 
 import { toEventName } from '~/utils/transformers'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
+import { SystemRoleEntity } from '@/system/auth/role/entity'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
-import { SystemRoleEntity } from './entity'
 import { SystemRolePayload } from './dto/payload'
 import { GetSystemRolePagesRequest } from './dto/request'
 import { SystemRoleCreateEvent, SystemRoleDeleteEvent, SystemRoleUpdateEvent } from './events'
 
 @Injectable()
-export class SystemRoleService {
+export class SystemRoleAdminService {
   constructor(
     @InjectRepository(SystemRoleEntity)
     private readonly repository: Repository<SystemRoleEntity>,

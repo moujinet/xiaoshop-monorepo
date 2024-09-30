@@ -13,13 +13,13 @@ import {
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { objectToDict, pipeDict, toDict } from '~/utils/transformers'
 import { FailedException, NotFoundException } from '~/common/exceptions'
+import { NOTIFICATION_SEND_SUCCESS } from '@/system/notification/constants'
+import { SystemNotificationEntity } from '@/system/notification/notification/entity'
 import {
   SYSTEM_NOTIFICATION_SCENES,
   SYSTEM_NOTIFICATION_STATUSES,
 } from '~/dicts/system/notification'
 
-import { SystemNotificationEntity } from './entity'
-import { NOTIFICATION_SEND_SUCCESS } from '../constants'
 import { SystemNotificationPayload } from './dto/payload'
 import {
   GetSystemNotificationListRequest,

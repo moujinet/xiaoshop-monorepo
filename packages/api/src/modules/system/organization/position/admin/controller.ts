@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 
 import { Admin } from '@/system/auth/decorators'
 
-import { SystemPositionService } from './service'
 import { SystemPositionPayload } from './dto/payload'
+import { SystemPositionAdminService } from './service'
 import {
   DeleteSystemPositionRequest,
   GetSystemPositionInfoRequest,
@@ -14,7 +14,7 @@ import {
 @Controller('admin/system/position')
 export class SystemPositionAdminController {
   constructor(
-    private readonly service: SystemPositionService,
+    private readonly service: SystemPositionAdminService,
   ) {}
 
   /**

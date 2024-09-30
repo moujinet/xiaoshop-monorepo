@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 
 import { Admin } from '@/system/auth/decorators'
 
-import { SystemRoleService } from './service'
 import { SystemRolePayload } from './dto/payload'
+import { SystemRoleAdminService } from './service'
 import {
   DeleteSystemRoleRequest,
   GetSystemRoleInfoRequest,
@@ -13,7 +13,7 @@ import {
 @Controller('admin/system/role')
 export class SystemRoleAdminController {
   constructor(
-    private readonly service: SystemRoleService,
+    private readonly service: SystemRoleAdminService,
   ) {}
 
   /**

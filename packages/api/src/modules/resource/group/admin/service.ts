@@ -10,10 +10,10 @@ import {
 } from '@xiaoshop/shared'
 
 import { RESOURCE_TYPES } from '~/dicts'
+import { ResourceGroupEntity } from '@/resource/group/entity'
 import { toDict, toEventName, toNestedList } from '~/utils/transformers'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
-import { ResourceGroupEntity } from './entity'
 import { ResourceGroupPayload } from './dto/payload'
 import {
   ResourceGroupCreateEvent,
@@ -22,7 +22,7 @@ import {
 } from './events'
 
 @Injectable()
-export class ResourceGroupService {
+export class ResourceGroupAdminService {
   constructor(
     @InjectRepository(ResourceGroupEntity)
     private readonly repository: Repository<ResourceGroupEntity>,

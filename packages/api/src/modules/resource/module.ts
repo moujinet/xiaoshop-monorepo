@@ -9,12 +9,12 @@ import { RESOURCE_QUEUE_ID } from './constants'
 import { ResourceProcessor } from './processor'
 import { ResourceEntity } from './resource/entity'
 import { ResourceGroupEntity } from './group/entity'
-import { ResourceService } from './resource/service'
-import { ResourceGroupService } from './group/service'
-import { ResourceUploadService } from './upload/service'
-import { ResourceAdminController } from './resource/controller.admin'
-import { ResourceGroupAdminController } from './group/controller.admin'
-import { ResourceUploadAdminController } from './upload/controller.admin'
+import { ResourceAdminService } from './resource/admin/service'
+import { ResourceUploadService } from './resource/upload/service'
+import { ResourceGroupAdminService } from './group/admin/service'
+import { ResourceAdminController } from './resource/admin/controller'
+import { ResourceUploadController } from './resource/upload/controller'
+import { ResourceGroupAdminController } from './group/admin/controller'
 
 @Module({
   imports: [
@@ -31,15 +31,15 @@ import { ResourceUploadAdminController } from './upload/controller.admin'
   ],
 
   controllers: [
+    ResourceUploadController,
     ResourceAdminController,
     ResourceGroupAdminController,
-    ResourceUploadAdminController,
   ],
 
   providers: [
-    ResourceService,
-    ResourceGroupService,
     ResourceUploadService,
+    ResourceAdminService,
+    ResourceGroupAdminService,
 
     // Listener
     ResourceListener,

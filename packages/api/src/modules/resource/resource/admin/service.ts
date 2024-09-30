@@ -12,16 +12,16 @@ import { FindOptionsWhere, Like, Repository } from 'typeorm'
 
 import { RESOURCE_TYPES } from '~/dicts'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
+import { ResourceEntity } from '@/resource/resource/entity'
 import { FailedException, NotFoundException } from '~/common/exceptions'
 import { objectToDict, pipeDict, toDict, toEventName } from '~/utils/transformers'
 
-import { ResourceEntity } from './entity'
 import { ResourceCreatePayload } from './dto/payload'
 import { GetResourcePagesRequest } from './dto/request'
 import { ResourceDeleteEvent, ResourceUploadEvent } from './events'
 
 @Injectable()
-export class ResourceService {
+export class ResourceAdminService {
   constructor(
     @InjectRepository(ResourceEntity)
     private readonly repository: Repository<ResourceEntity>,

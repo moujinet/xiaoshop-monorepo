@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 
 import { Admin } from '@/system/auth/decorators'
 
-import { SystemDepartmentService } from './service'
 import { SystemDepartmentPayload } from './dto/payload'
+import { SystemDepartmentAdminService } from './service'
 import {
   DeleteSystemDepartmentRequest,
   GetSystemDepartmentInfoRequest,
@@ -12,7 +12,7 @@ import {
 @Controller('admin/system/department')
 export class SystemDepartmentAdminController {
   constructor(
-    private readonly service: SystemDepartmentService,
+    private readonly service: SystemDepartmentAdminService,
   ) {}
 
   /**

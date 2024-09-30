@@ -5,10 +5,10 @@ import { WhoisService } from '~/services/whois'
 import { SystemSettingModule } from '@/system/setting/module'
 
 import { SystemLogEntity } from './entity'
-import { SystemLogService } from './service'
 import { SystemLogListener } from './listener'
 import { SystemLogScheduler } from './scheduler'
-import { SystemLogAdminController } from './controller.admin'
+import { SystemLogAdminService } from './admin/service'
+import { SystemLogAdminController } from './admin/controller'
 
 @Module({
   imports: [
@@ -25,7 +25,8 @@ import { SystemLogAdminController } from './controller.admin'
 
   providers: [
     WhoisService,
-    SystemLogService,
+
+    SystemLogAdminService,
     SystemLogListener,
     SystemLogScheduler,
   ],

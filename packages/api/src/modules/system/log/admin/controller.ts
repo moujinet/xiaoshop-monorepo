@@ -2,13 +2,13 @@ import { Controller, Get, Query } from '@nestjs/common'
 
 import { Admin } from '@/system/auth/decorators'
 
-import { SystemLogService } from './service'
+import { SystemLogAdminService } from './service'
 import { GetSystemLogPagesRequest } from './dto/request'
 
 @Controller('admin/system/log')
 export class SystemLogAdminController {
   constructor(
-    private readonly service: SystemLogService,
+    private readonly service: SystemLogAdminService,
   ) {}
 
   /**

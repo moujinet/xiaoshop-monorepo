@@ -11,9 +11,9 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { toEventName } from '~/utils/transformers'
 
-import { ResourceService } from './resource/service'
+import { ResourceAdminService } from './resource/admin/service'
 import { RESOURCE_IMAGE_PROCESS, RESOURCE_QUEUE_ID } from './constants'
-import { ResourceDeleteEvent, ResourceUploadEvent } from './resource/events'
+import { ResourceDeleteEvent, ResourceUploadEvent } from './resource/admin/events'
 
 @Injectable()
 export class ResourceListener {
@@ -23,8 +23,8 @@ export class ResourceListener {
     @Inject(ConfigService)
     private readonly config: ConfigService,
 
-    @Inject(ResourceService)
-    private readonly resource: ResourceService,
+    @Inject(ResourceAdminService)
+    private readonly resource: ResourceAdminService,
 
     @InjectQueue(RESOURCE_QUEUE_ID)
     private readonly queue: Queue<IResourceImageProcessJob>,

@@ -9,7 +9,7 @@ import { ensureDir } from '~/utils'
 import { nowStr } from '~/utils/datetime'
 import { SystemSettingService } from '@/system/setting/setting/service'
 
-import { SystemLogService } from './service'
+import { SystemLogAdminService } from './admin/service'
 
 @Injectable()
 export class SystemLogScheduler {
@@ -23,8 +23,8 @@ export class SystemLogScheduler {
     @Inject(SystemSettingService)
     private readonly settings: SystemSettingService,
 
-    @Inject(SystemLogService)
-    private readonly log: SystemLogService,
+    @Inject(SystemLogAdminService)
+    private readonly log: SystemLogAdminService,
   ) {}
 
   /**

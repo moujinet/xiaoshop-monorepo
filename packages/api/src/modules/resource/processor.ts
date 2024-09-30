@@ -10,9 +10,9 @@ import { Process, Processor } from '@nestjs/bull'
 
 import { SystemSettingService } from '@/system/setting/setting/service'
 
-import { CompressProcessor } from './resource/processors/compress'
-import { ThumbnailProcessor } from './resource/processors/thumbnail'
-import { WatermarkProcessor } from './resource/processors/watermark'
+import { CompressProcessor } from './processor/compress'
+import { ThumbnailProcessor } from './processor/thumbnail'
+import { WatermarkProcessor } from './processor/watermark'
 import { RESOURCE_IMAGE_PROCESS, RESOURCE_QUEUE_ID } from './constants'
 
 @Processor(RESOURCE_QUEUE_ID)

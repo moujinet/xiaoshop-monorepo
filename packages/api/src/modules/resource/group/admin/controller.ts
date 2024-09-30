@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nest
 
 import { Admin } from '@/system/auth/decorators'
 
-import { ResourceGroupService } from './service'
 import { ResourceGroupPayload } from './dto/payload'
+import { ResourceGroupAdminService } from './service'
 import {
   DeleteResourceGroupRequest,
   GetResourceGroupInfoRequest,
@@ -13,7 +13,7 @@ import {
 @Controller('admin/resource/group')
 export class ResourceGroupAdminController {
   constructor(
-    private readonly service: ResourceGroupService,
+    private readonly service: ResourceGroupAdminService,
   ) {}
 
   /**

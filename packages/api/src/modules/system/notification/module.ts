@@ -7,15 +7,16 @@ import { SystemSettingModule } from '@/system/setting/module'
 import { NOTIFICATION_QUEUE_ID } from './constants'
 import { SystemNotificationListener } from './listener'
 import { SystemNotificationLogEntity } from './log/entity'
-import { SystemNotificationLogService } from './log/service'
 import { SystemNotificationEntity } from './notification/entity'
 import { SystemNotificationTemplateEntity } from './template/entity'
-import { SystemNotificationTemplateService } from './template/service'
-import { SystemNotificationAdminService } from './notification/service'
+import { SystemNotificationLogAdminService } from './log/admin/service'
 import { SystemNotificationSystemChannel } from './channel/system.channel'
-import { SystemNotificationLogAdminController } from './log/controller.admin'
-import { SystemNotificationAdminController } from './notification/controller.admin'
-import { SystemNotificationTemplateAdminController } from './template/controller.admin'
+import { SystemNotificationLogAdminController } from './log/admin/controller'
+import { SystemNotificationAdminService } from './notification/admin/service'
+import { SystemNotificationTemplateAdminService } from './template/admin/service'
+import { SystemNotificationAdminController } from './notification/admin/controller'
+import { SystemNotificationTemplateAdminController } from './template/admin/controller'
+import { SystemNotificationTemplateSubscribeService } from './template/subscribe/service'
 
 @Module({
   imports: [
@@ -40,8 +41,9 @@ import { SystemNotificationTemplateAdminController } from './template/controller
 
   providers: [
     SystemNotificationAdminService,
-    SystemNotificationLogService,
-    SystemNotificationTemplateService,
+    SystemNotificationLogAdminService,
+    SystemNotificationTemplateAdminService,
+    SystemNotificationTemplateSubscribeService,
 
     // Listeners
     SystemNotificationListener,

@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm'
+import { Inject, Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { FindOptionsWhere, Not, Repository } from 'typeorm'
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import {
   type ISystemNotificationTemplateInfo,
   type ISystemNotificationTemplateList,
@@ -11,15 +11,15 @@ import {
 } from '@xiaoshop/shared'
 
 import { SYSTEM_USER_STATUSES } from '~/dicts'
-import { ExistsException, FailedException } from '~/common/exceptions'
 import { objectToDict, pipeDict, toDict, toEventName } from '~/utils/transformers'
+import { SystemNotificationTemplateEntity } from '@/system/notification/template/entity'
+import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 import {
   SYSTEM_NOTIFICATION_CHANNELS,
   SYSTEM_NOTIFICATION_SCENES,
   SYSTEM_NOTIFICATION_TYPES,
 } from '~~/src/dicts/system/notification'
 
-import { SystemNotificationTemplateEntity } from './entity'
 import { SystemNotificationTemplatePayload } from './dto/payload'
 import { GetSystemNotificationTemplateListRequest } from './dto/request'
 import {
@@ -29,7 +29,7 @@ import {
 } from './events'
 
 @Injectable()
-export class SystemNotificationTemplateService {
+export class SystemNotificationTemplateAdminService {
   constructor(
     @InjectRepository(SystemNotificationTemplateEntity)
     private readonly repo: Repository<SystemNotificationTemplateEntity>,

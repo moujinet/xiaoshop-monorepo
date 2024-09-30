@@ -12,13 +12,13 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 
 import { toEventName, toNestedList } from '~/utils/transformers'
 import { ExistsException, FailedException } from '~/common/exceptions'
+import { SystemDepartmentEntity } from '@/system/organization/department/entity'
 
-import { SystemDepartmentEntity } from './entity'
 import { SystemDepartmentPayload } from './dto/payload'
 import { SystemDepartmentCreateEvent, SystemDepartmentDeleteEvent, SystemDepartmentUpdateEvent } from './events'
 
 @Injectable()
-export class SystemDepartmentService {
+export class SystemDepartmentAdminService {
   constructor(
     @InjectRepository(SystemDepartmentEntity)
     private readonly repository: Repository<SystemDepartmentEntity>,

@@ -13,13 +13,14 @@ import {
 import { replaceVariables } from '~/utils'
 import { toEventName } from '~/utils/transformers'
 import { SystemNotificationSentEvent } from '@/system/notification/events'
-import { SystemNotificationTemplateService } from '@/system/notification/template/service'
-import { SystemNotificationAdminService } from '@/system/notification/notification/service'
 import {
   NOTIFICATION_QUEUE_ID,
   NOTIFICATION_SEND_SUCCESS,
   NOTIFICATION_SYSTEM_CHANNEL,
 } from '@/system/notification/constants'
+
+import { SystemNotificationAdminService } from '../notification/admin/service'
+import { SystemNotificationTemplateAdminService } from '../template/admin/service'
 
 @Processor(NOTIFICATION_QUEUE_ID)
 export class SystemNotificationSystemChannel {
@@ -29,8 +30,8 @@ export class SystemNotificationSystemChannel {
     @Inject(SystemNotificationAdminService)
     private readonly sender: SystemNotificationAdminService,
 
-    @Inject(SystemNotificationTemplateService)
-    private readonly template: SystemNotificationTemplateService,
+    @Inject(SystemNotificationTemplateAdminService)
+    private readonly template: SystemNotificationTemplateAdminService,
 
     @Inject(EventEmitter2)
     private readonly event: EventEmitter2,

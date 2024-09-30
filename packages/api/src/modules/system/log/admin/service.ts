@@ -13,16 +13,16 @@ import {
 
 import { WhoisService } from '~/services/whois'
 import { FailedException } from '~/common/exceptions'
+import { SystemLogEntity } from '@/system/log/entity'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
 import { objectToDict, pipeDict } from '~/utils/transformers'
 import { SYSTEM_LOG_LEVELS, SYSTEM_LOG_TYPES, SYSTEM_USER_STATUSES } from '~/dicts'
 
-import { SystemLogEntity } from './entity'
 import { SystemLogPayload } from './dto/payload'
 import { GetSystemLogPagesRequest } from './dto/request'
 
 @Injectable()
-export class SystemLogService {
+export class SystemLogAdminService {
   constructor(
     @InjectRepository(SystemLogEntity)
     private readonly repo: Repository<SystemLogEntity>,

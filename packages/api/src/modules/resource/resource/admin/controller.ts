@@ -4,10 +4,10 @@ import { Body, Controller, Delete, Get, HttpCode, ParseFilePipeBuilder, Post, Qu
 
 import { Admin } from '@/system/auth/decorators'
 import { exceptionFactory } from '~/common/exceptions'
-import { ResourceUploadService } from '@/resource/upload/service'
+import { ResourceUploadService } from '@/resource/resource/upload/service'
 import { RESOURCE_MIMETYPE_IMAGE, RESOURCE_MIMETYPE_VIDEO } from '@/resource/constants'
 
-import { ResourceService } from './service'
+import { ResourceAdminService } from './service'
 import { ResourceUploadPayload } from './dto/payload'
 import {
   DeleteResourceRequest,
@@ -18,7 +18,7 @@ import {
 @Controller('admin/resource')
 export class ResourceAdminController {
   constructor(
-    private readonly service: ResourceService,
+    private readonly service: ResourceAdminService,
     private readonly uploadService: ResourceUploadService,
   ) {}
 

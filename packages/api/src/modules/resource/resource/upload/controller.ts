@@ -7,7 +7,7 @@ import { RESOURCE_MIMETYPE_FILE } from '@/resource/constants'
 import { ResourceUploadService } from './service'
 
 @Controller('admin/resource/upload')
-export class ResourceUploadAdminController {
+export class ResourceUploadController {
   constructor(
     private readonly service: ResourceUploadService,
   ) {}

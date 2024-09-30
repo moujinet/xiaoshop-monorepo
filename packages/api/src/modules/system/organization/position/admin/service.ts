@@ -12,10 +12,10 @@ import { FindOptionsWhere, Not, Repository } from 'typeorm'
 
 import { toEventName } from '~/utils/transformers'
 import { DEFAULT_PAGE_SIZE } from '~/configs/constants'
-import { SystemDepartmentService } from '@/system/organization/department/service'
+import { SystemPositionEntity } from '@/system/organization/position/entity'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
+import { SystemDepartmentAdminService } from '@/system/organization/department/admin/service'
 
-import { SystemPositionEntity } from './entity'
 import { SystemPositionPayload } from './dto/payload'
 import { GetSystemPositionPagesRequest } from './dto/request'
 import {
@@ -25,13 +25,13 @@ import {
 } from './events'
 
 @Injectable()
-export class SystemPositionService {
+export class SystemPositionAdminService {
   constructor(
     @InjectRepository(SystemPositionEntity)
     private readonly repository: Repository<SystemPositionEntity>,
 
-    @Inject(SystemDepartmentService)
-    private readonly department: SystemDepartmentService,
+    @Inject(SystemDepartmentAdminService)
+    private readonly department: SystemDepartmentAdminService,
 
     @Inject(EventEmitter2)
     private readonly event: EventEmitter2,

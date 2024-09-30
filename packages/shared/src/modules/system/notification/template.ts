@@ -1,7 +1,7 @@
 import type { IDict, YesOrNo } from '~/common'
 import type { ISystemUserDict } from '@/system/auth'
 
-import type { SystemNotificationChannel } from './constants'
+import type { SystemNotificationChannel, SystemNotificationScene, SystemNotificationType } from './constants'
 
 /**
  * 通知模板信息
@@ -98,3 +98,32 @@ export type ISystemNotificationTemplateList = Pick<
    */
   updatedTime: string
 }
+
+/**
+ * 通知模板触发事件
+ */
+export type ISystemNotificationTemplateTriggerList = Pick<
+  ISystemNotificationTemplateInfo,
+  | 'id'
+  | 'trigger'
+>
+
+/**
+ * 可发送通知模板内容列表
+ */
+export type ISystemNotificationTemplateContentList = Pick<
+  ISystemNotificationTemplateInfo,
+  | 'id'
+  | 'subscribers'
+>
+& {
+  /**
+   * 通知类型
+   */
+  type: SystemNotificationType
+  /**
+   * 通知场景
+   */
+  scene: SystemNotificationScene
+}
+& ISystemNotificationTemplateContent
