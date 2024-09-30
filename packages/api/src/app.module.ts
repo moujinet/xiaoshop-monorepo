@@ -9,9 +9,21 @@ import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import configuration from '~/configs'
 import { SystemModule } from '@/system/module'
-import { SettingsMigrationCommand } from '@/system/setting/commands/settings.command'
-import { BullModuleConfig, CacheModuleConfig, ClsModuleConfig, TypeOrmModuleConfig } from '~/configs/modules'
-import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, RunMigrateCommand } from '~/database/commands'
+import { ResourceModule } from '@/resource/module'
+import { LogisticModule } from '@/logistic/module'
+import {
+  BullModuleConfig,
+  CacheModuleConfig,
+  ClsModuleConfig,
+  TypeOrmModuleConfig,
+} from '~/configs/modules'
+import {
+  CreateMigrateCommand,
+  GenerateMigrateCommand,
+  RevertMigrateCommand,
+  RunMigrateCommand,
+  SettingsGenerateMigrateCommand,
+} from '~/database/commands'
 
 @Module({
   imports: [
@@ -52,13 +64,15 @@ import { CreateMigrateCommand, GenerateMigrateCommand, RevertMigrateCommand, Run
 
     // XiaoShop Modules
     SystemModule,
+    ResourceModule,
+    LogisticModule,
 
     // Commands
     CreateMigrateCommand,
     RevertMigrateCommand,
     RunMigrateCommand,
     GenerateMigrateCommand,
-    SettingsMigrationCommand,
+    SettingsGenerateMigrateCommand,
   ],
 })
 export class AppModule {}
