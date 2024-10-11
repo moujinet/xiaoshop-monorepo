@@ -1,5 +1,4 @@
 import type { IDict, YesOrNo } from '~/common'
-
 import type { IMemberCardBadgeStyle, IMemberCardStyle } from './card'
 
 /**
@@ -79,7 +78,7 @@ export interface IMemberCardBindingInfo {
 /**
  * 会员卡绑定关联信息
  */
-export type IMemberCardBinding = Pick<
+export type IMemberCardBindCard = Pick<
   IMemberCardBindingInfo,
   | 'id'
   | 'key'

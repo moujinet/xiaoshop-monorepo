@@ -1,5 +1,4 @@
 import type { IDict } from '~/common'
-
 import type { IMemberCardBadgeStyle, IMemberCardInfo, IMemberCardPlanInfo } from './card'
 
 /**
@@ -10,12 +9,6 @@ export interface IMemberCardUpgradeInfo {
    * 升级信息 ID
    */
   id: number
-  /**
-   * 升级方式
-   *
-   * @see {@link MemberCardUpgradeMethod}
-   */
-  method: IDict
   /**
    * 会员卡 ID (冗余)
    */
@@ -43,6 +36,12 @@ export interface IMemberCardUpgradeInfo {
    */
   badgeStyle: IMemberCardBadgeStyle
   /**
+   * 升级方式
+   *
+   * @see {@link MemberCardUpgradeMethod}
+   */
+  method: IDict
+  /**
    * 升级原因
    */
   reason: string
@@ -58,11 +57,11 @@ export interface IMemberCardUpgradeInfo {
 export type IMemberCardUpgradeList = Pick<
   IMemberCardUpgradeInfo,
   | 'id'
-  | 'method'
   | 'key'
   | 'type'
   | 'name'
   | 'badgeStyle'
+  | 'method'
   | 'reason'
   | 'createdTime'
 >

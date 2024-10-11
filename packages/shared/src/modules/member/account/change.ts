@@ -1,6 +1,5 @@
 import type { IDict } from '~/common'
-
-import type { IMemberDict } from '../member'
+import type { IMemberProfileDict } from '../member'
 
 /**
  * 会员账户变更信息
@@ -25,7 +24,7 @@ export interface IMemberAccountChangeInfo {
   /**
    * 会员
    */
-  member: IMemberDict
+  member: IMemberProfileDict
   /**
    * 变更值
    */
@@ -37,7 +36,7 @@ export interface IMemberAccountChangeInfo {
   /**
    * 变更时间
    */
-  createdTime: string
+  updatedTime: string
 }
 
 /**
@@ -49,7 +48,7 @@ export type IMemberAccountChangeList = Pick<
   | 'method'
   | 'value'
   | 'reason'
-  | 'createdTime'
+  | 'updatedTime'
 >
 
 /**
@@ -62,5 +61,5 @@ export type IMemberAccountChangeMemberList = Pick<
   | 'member'
   | 'value'
   | 'reason'
-  | 'createdTime'
+  | 'updatedTime'
 >

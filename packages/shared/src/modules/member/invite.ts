@@ -1,4 +1,4 @@
-import type { IMemberInfo } from './member'
+import type { IMemberProfileDict } from './member'
 
 /**
  * 会员邀请记录信息
@@ -9,21 +9,13 @@ export interface IMemberInviteInfo {
    */
   id: number
   /**
-   * 会员 ID
-   */
-  memberId: IMemberInfo['id']
-  /**
-   * 会员昵称 (冗余)
-   */
-  nickname: IMemberInfo['nickname']
-  /**
    * 受邀会员 ID
    */
-  invitedMemberId: IMemberInfo['id']
+  invitedMemberId: IMemberProfileDict['id']
   /**
-   * 受邀会员昵称 (冗余)
+   * 受邀会员
    */
-  invitedNickname: IMemberInfo['nickname']
+  invitedMember: IMemberProfileDict
   /**
    * 邀请时间
    */

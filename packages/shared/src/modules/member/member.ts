@@ -1,14 +1,13 @@
-import type { IDict, ILocationPath } from '~/common'
-
 import type { IMemberTagInfo } from './tag'
 import type { IMemberGroupDict } from './group'
 import type { IMemberAccountInfo } from './account'
-import type { IMemberCardBinding } from './card/binding'
+import type { IDict, ILocationPath } from '~/common'
+import type { IMemberCardBindCard } from './card/binding'
 
 /**
  * 会员信息
  */
-export interface IMemberInfo {
+export interface IMemberProfileInfo {
   /**
    * 会员 ID
    */
@@ -61,23 +60,13 @@ export interface IMemberInfo {
    */
   location: ILocationPath
   /**
-   * 邀请码
-   *
-   * @example 000-000-000
-   */
-  inviteCode: string
-  /**
-   * 邀请会员 ID
-   */
-  inviteMemberId: IMemberInfo['id']
-  /**
    * 会员卡号
    */
   cardNo: string
   /**
    * 会员卡
    */
-  card: IMemberCardBinding
+  card: IMemberCardBindCard
   /**
    * 会员群体
    */
@@ -91,17 +80,39 @@ export interface IMemberInfo {
    */
   account: IMemberAccountInfo
   /**
+   * 邀请码
+   *
+   * @example 000-000-000
+   */
+  inviteCode: string
+  /**
+   * 消费次数
+   */
+  orderCount: number
+  /**
+   * 消费金额
+   */
+  orderAmount: number
+  /**
+   * 红包数量
+   */
+  redPacketCount: number
+  /**
+   * 优惠券数量
+   */
+  couponCount: number
+  /**
    * 累计签到次数
    */
-  signInCount: number
+  checkInTimes: number
   /**
    * 连续签到天数
    */
-  signInDays: number
+  checkInDays: number
   /**
    * 累计登录次数
    */
-  loginCount: number
+  loginTimes: number
   /**
    * 注册时间
    */
@@ -121,35 +132,34 @@ export interface IMemberInfo {
   /**
    * 最后签到时间
    */
-  lastSignInTime: string
+  lastCheckInTime: string
 }
 
 /**
  * 会员字典
  */
-export type IMemberDict = Pick<
-  IMemberInfo,
+export type IMemberProfileDict = Pick<
+  IMemberProfileInfo,
   | 'id'
   | 'status'
-  | 'nickname'
   | 'avatar'
+  | 'nickname'
   | 'gender'
   | 'card'
   | 'group'
   | 'tags'
-  | 'createdTime'
 >
 
 /**
  * 会员列表
  */
-export type IMemberList = Pick<
-  IMemberInfo,
+export type IMemberProfileList = Pick<
+  IMemberProfileInfo,
   | 'id'
   | 'status'
   | 'source'
-  | 'nickname'
   | 'avatar'
+  | 'nickname'
   | 'mobile'
   | 'birthday'
   | 'gender'
@@ -158,6 +168,9 @@ export type IMemberList = Pick<
   | 'card'
   | 'group'
   | 'tags'
+  | 'orderCount'
+  | 'orderAmount'
   | 'account'
   | 'lastLoginTime'
+  | 'lastOrderTime'
 >

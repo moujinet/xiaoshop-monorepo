@@ -24,7 +24,7 @@ export default antfu(
   {
     files: [
       'packages/api/src/**/*.ts',
-      'packages/api/tests/**/*.ts',
+      'packages/api/test/**/*.ts',
     ],
     rules: {
       'no-console': 'off',
@@ -48,9 +48,7 @@ export default antfu(
           type: 'line-length',
           internalPattern: ['@/**', '~/**', '~~/**'],
           groups: [
-            'type',
-            'internal-type',
-            ['parent-type', 'sibling-type', 'index-type'],
+            ['type'],
             ['builtin', 'external'],
             'internal',
             ['parent', 'sibling', 'index'],

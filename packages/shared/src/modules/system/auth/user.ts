@@ -1,6 +1,5 @@
 import type { IDict, YesOrNo } from '~/common'
 import type { ISystemRoleDict, ISystemRolePermissions } from '@/system/auth/role'
-import type { ISystemDepartmentDict, ISystemDepartmentPositionDict } from '@/system/organization'
 
 /**
  * 系统用户信息
@@ -40,14 +39,6 @@ export interface ISystemUserInfo {
    * 最多同时拥有 2 个系统角色
    */
   roles: ISystemRolePermissions[]
-  /**
-   * 所在部门
-   */
-  department: ISystemDepartmentDict
-  /**
-   * 所在职位
-   */
-  position: ISystemDepartmentPositionDict
 }
 
 /**
@@ -85,8 +76,6 @@ export type ISystemUserList = Pick<
   | 'username'
   | 'name'
   | 'mobile'
-  | 'department'
-  | 'position'
 >
 & ISystemUserExtraInfo
 & {

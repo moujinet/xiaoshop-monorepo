@@ -67,19 +67,11 @@ export enum MemberGender {
  * - `EXP`: 成长值
  * - `POINTS`: 积分值
  * - `BALANCE`: 当前余额
- * - `ORDERS`: 消费次数
- * - `ORDER_AMOUNT`: 消费金额
- * - `RED_PACKET`: 红包
- * - `COUPON`: 优惠券
  */
 export enum MemberAccountKey {
   EXP = 'exp',
   POINTS = 'points',
   BALANCE = 'balance',
-  ORDERS = 'orders',
-  ORDER_AMOUNT = 'orderAmount',
-  RED_PACKET = 'redPacket',
-  COUPON = 'coupon',
 }
 
 // --------------------------------
@@ -140,20 +132,20 @@ export enum MemberCardPlanType {
 /**
  * 会员卡升级方式 - 枚举
  *
- * - `LEVEL_UP`: 升级
- * - `UPGRADE`: 开通
  * - `BINDING`: 绑定
+ * - `UPGRADE`: 开通
+ * - `LEVEL_UP`: 升级
  */
 export enum MemberCardUpgradeMethod {
-  LEVEL_UP = 1,
+  BINDING = 1,
   UPGRADE,
-  BINDING,
+  LEVEL_UP,
 }
 
 // --------------------------------
 // 会员群体 - 筛选条件 - 条件项
 // --------------------------------
-
+// TODO: 移除
 /**
  * 会员群体筛选条件项 - 枚举
  *
