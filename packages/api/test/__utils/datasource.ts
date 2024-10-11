@@ -1,3 +1,4 @@
+import { join } from 'node:path'
 import {
   DataSource,
   type DataSourceOptions,
@@ -5,9 +6,15 @@ import {
 
 import configuration from '~/config'
 
+const mysql = configuration().mysql
+
 export const dataSourceOptions: DataSourceOptions = {
-  ...configuration().db.mysql,
-  timezone: '+08:00',
+  ...mysql,
+  entities: [
+    join(__dirname, '../..', 'src/modules', '**', '*.entity.{ts,js}'),
+    join(__dirname, '../..', 'src/modules', '**', 'entity.{ts,js}'),
+  ],
+  timezone: 'Z',
   keepAlive: true,
   autoLoadEntities: true,
   synchronize: true,
