@@ -111,6 +111,7 @@ export class SystemUserRepository implements ISystemUserRepository {
     user.mobile = data.mobile.trim()
     user.isAdmin = data.isAdmin || YesOrNo.NO
     user.status = SystemUserStatus.NORMAL
+    user.roles = []
 
     user.salt = await generateSalt()
     user.password = await hashPassword(data.password, user.salt)

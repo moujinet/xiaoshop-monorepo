@@ -1,6 +1,7 @@
 import type { ISystemRoleRepository } from '@/system/auth/model/role/interface'
 import type { IApiPaginationData, ISystemRoleDict, ISystemRoleInfo, ISystemRoleList } from '@xiaoshop/shared'
 
+import { Not } from 'typeorm'
 import { Inject, Injectable } from '@nestjs/common'
 
 import { DEFAULT_PAGESIZE } from '~/common/constants'
@@ -119,7 +120,7 @@ export class SystemRoleService {
       if (!role)
         throw new NotFoundException('角色不存在')
 
-      if (await this.repo.exists({ name: data.name.trim() }))
+      if (await this.repo.exists({ id: Not(id), name: data.name.trim() }))
         throw new ExistsException('角色已存在')
 
       const updated = await this.repo.update(role, data)
