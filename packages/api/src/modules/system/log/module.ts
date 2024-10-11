@@ -5,7 +5,6 @@ import { WhoisModule } from '~/services/whois/module'
 import { SystemSettingModule } from '@/system/setting/module'
 import { ExcelExporterModule } from '~/services/excel-exporter/module'
 
-import { SystemLogListener } from './listener'
 import { SystemLogEntity } from './model/entity'
 import { SystemLogScheduler } from './scheduler'
 import { SystemLogQueryService } from './domain/query/service'
@@ -34,7 +33,6 @@ import { SystemLogAdminController } from './controller/admin.controller'
     SystemLogStoreService,
 
     SystemLogScheduler,
-    SystemLogListener,
   ],
 })
 export class SystemLogModule {}

@@ -1,7 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
+import { Cache } from 'cache-manager'
+import { CACHE_MANAGER } from '@nestjs/cache-manager'
+import { Body, Controller, Delete, Get, HttpCode, Inject, Logger, Post, Put, Query } from '@nestjs/common'
 
 import { Admin } from '~/common/decorators'
+import { OnEvent } from '~/services/event-bus'
+import { USER_PASSWORD_ERROR_KEY } from '@/system/auth/constants'
 import { SystemUserService } from '@/system/auth/domain/user/service'
+import { SystemUserAdminUnlockEvent } from '@/system/auth/domain/user/events'
 import {
   DeleteSystemUserRequest,
   GetSystemUserInfoRequest,
@@ -15,8 +20,13 @@ import {
 
 @Controller('admin/system/user')
 export class SystemUserAdminController {
+  private readonly logger = new Logger(SystemUserAdminController.name)
+
   constructor(
     private readonly service: SystemUserService,
+
+    @Inject(CACHE_MANAGER)
+    private readonly cache: Cache,
   ) {}
 
   /**
@@ -114,5 +124,20 @@ export class SystemUserAdminController {
   @Admin()
   async delete(@Body() data: DeleteSystemUserRequest) {
     return this.service.delete(data.id)
+  }
+
+  /**
+   * 处理手动解锁(清理记数器)
+   *
+   * @param payload SystemUserAdminUnlockEvent
+   */
+  @OnEvent(SystemUserAdminUnlockEvent)
+  async onSystemUserAdminUnlock(payload: SystemUserAdminUnlockEvent) {
+    try {
+      await this.cache.del(`${USER_PASSWORD_ERROR_KEY}.${payload.userId}`)
+    }
+    catch (e) {
+      this.logger.error(`重置用户错误密码记数器 - ${e.message}`)
+    }
   }
 }
