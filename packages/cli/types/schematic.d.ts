@@ -11,16 +11,11 @@ declare interface ISchematicAction {
   isActive?: (data: Record<string, any>) => boolean
 }
 
-declare interface ISchematic {
+declare interface ISchematic extends IHandler {
   /**
    * 脚手架名称
    */
   readonly name: string
-
-  /**
-   * 生成句柄
-   */
-  handle: () => Promise<void>
 
   /**
    * 用户输入

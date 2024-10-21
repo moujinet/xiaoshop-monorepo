@@ -3,6 +3,7 @@ import { Command } from 'commander'
 import { existsSync } from 'node:fs'
 
 import { ConfigPath } from '@/config/path'
+import { MigrateCommand } from '@/commands/migrate'
 import { SchematicCommand } from '@/commands/schematic'
 
 export class CommandLoader {
@@ -30,6 +31,7 @@ export class CommandLoader {
      *
      * $ migrate <action>
      */
+    await new MigrateCommand().load(program)
 
     /**
      * 数据库备份

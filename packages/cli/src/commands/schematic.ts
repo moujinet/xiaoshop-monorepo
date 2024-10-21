@@ -39,7 +39,7 @@ export class SchematicCommand extends AbstractCommand {
 
       // eslint-disable-next-line ts/no-require-imports
       const SchematicClass = require(classFile)[className]
-      const schematic = new SchematicClass()
+      const schematic: ISchematic = new SchematicClass()
 
       return await schematic.handle()
     }

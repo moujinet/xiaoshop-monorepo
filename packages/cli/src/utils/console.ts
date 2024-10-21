@@ -37,7 +37,7 @@ export const Console = {
 
   step: {
     start: (msg: string, ...args: any[]) => {
-      spinner.start(`${color.yellow(format(msg, ...args.map(arg => color.greenBright(arg))))}...`)
+      spinner.start(`${color.magenta(format(msg, ...args.map(arg => color.greenBright(arg))))} ...`)
     },
     done: (msg: string, ...args: any[]) => {
       spinner.stop(`${color.blueBright(format(msg, ...args.map(arg => color.greenBright(arg))))} Done.`)
