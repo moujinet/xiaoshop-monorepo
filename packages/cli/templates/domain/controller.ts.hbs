@@ -1,0 +1,79 @@
+import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
+
+import { Admin } from '~/common/decorators'
+
+import { {{ domainName }}Service } from '{{ moduleAlias }}/domain/{{ domainPath }}/service'
+import {
+  Create{{ domainName }}Payload,
+  Update{{ domainName }}Payload,
+} from '{{ moduleAlias }}/dto/payload'
+import {
+  Get{{ domainName }}Request,
+  Delete{{ domainName }}Request,
+  Get{{ domainName }}PagesRequest,
+} from '{{ moduleAlias }}/dto/request'
+
+@Controller('{{apiPrefix}}{{ topModulePath }}/{{ domainPath }}')
+export class {{ domainName }}AdminController {
+  constructor(
+    private readonly service: {{ domainName }}Service,
+  ) {}
+
+  /**
+   * Get {{ startCase domainName }} Pages
+   */
+  @Get('pages')
+  @Admin()
+  async pages(@Query() query: Get{{ domainName }}PagesRequest) {
+    return this.service.findPages(query)
+  }
+
+  /**
+   * Get {{ startCase domainName }} Dict List
+   */
+  @Get('dict/list')
+  @Admin()
+  async dictList() {
+    return this.service.findDictList()
+  }
+
+  /**
+   * Get {{ startCase domainName }} Detail
+   */
+  @Get('detail')
+  @Admin()
+  async detail(@Query() query: Get{{ domainName }}Request) {
+    return this.service.findById(+query.id)
+  }
+
+  /**
+   * Create {{ startCase domainName }}
+   */
+  @Post('create')
+  @HttpCode(200)
+  @Admin()
+  async create(@Body() payload: Create{{ domainName }}Payload) {
+    return this.service.create(payload)
+  }
+
+  /**
+   * Update {{ startCase domainName }}
+   */
+  @Put('update')
+  @Admin()
+  async update(
+    @Query() query: Get{{ domainName }}Request,
+    @Body() payload: Update{{ domainName }}Payload,
+  ) {
+    return this.service.update(+query.id, payload)
+  }
+
+  /**
+   * Delete {{ startCase domainName }}
+   */
+  @Delete('delete')
+  @Admin()
+  async delete(@Body() data: Delete{{ domainName }}Request) {
+    return this.service.delete(data.id)
+  }
+}

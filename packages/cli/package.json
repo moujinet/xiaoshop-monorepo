@@ -1,0 +1,41 @@
+{
+  "name": "@xiaoshop/cli",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.2",
+  "description": "XiaoShop 云链小店 (@cli)",
+  "author": "Luoyi <luoyi@mouji.net>",
+  "license": "Apache-2.0",
+  "bin": {
+    "xiaoshop": "dist/bin/cli.js"
+  },
+  "scripts": {
+    "prebuild": "pnpm run clean",
+    "build": "tsc && tsc-alias",
+    "clean": "rimraf dist",
+    "build:watch": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")",
+    "dev": "node dist/bin/cli.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "defu": "^6.1.4",
+    "es-toolkit": "^1.25.2",
+    "glob": "^11.0.0",
+    "handlebars": "^4.7.8",
+    "mkdirp": "^3.0.1",
+    "picocolors": "^1.1.1",
+    "typeorm": "^0.3.20",
+    "zx": "^8.1.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "rimraf": "5.0.0",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.3"
+  }
+}

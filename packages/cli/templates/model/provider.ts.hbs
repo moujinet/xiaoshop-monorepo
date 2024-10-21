@@ -1,0 +1,10 @@
+import { Inject, Provider } from '@nestjs/common'
+
+import { {{ modelName }}Repository } from './repository'
+
+export const {{ modelName }}Repo = () => Inject('{{ modelName }}Repo')
+
+export const {{ modelName }}RepositoryProvider: Provider = {
+  provide: '{{ modelName }}Repo',
+  useClass: {{ modelName }}Repository,
+}

@@ -1,0 +1,26 @@
+import { IsNumber, IsNumberString } from 'class-validator'
+
+{{#if isNew}}
+import { PaginationDto } from '~/common/dto'
+{{/if}}
+
+/**
+ * Query {{ startCase domainName }} Pages
+ */
+export class Get{{ domainName }}PagesRequest extends PaginationDto {}
+
+/**
+ * Get {{ startCase domainName }}
+ */
+export class Get{{ domainName }}Request {
+  @IsNumberString({}, { message: 'ID 不正确' })
+  readonly id: number
+}
+
+/**
+ * Delete {{ startCase domainName }}
+ */
+export class Delete{{ domainName }}Request {
+  @IsNumber({}, { message: 'ID 不正确' })
+  readonly id: number
+}

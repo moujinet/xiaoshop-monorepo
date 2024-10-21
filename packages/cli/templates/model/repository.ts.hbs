@@ -1,0 +1,94 @@
+import type {
+  I{{ modelName }}Repository,
+  I{{ modelName }}Select,
+  I{{ modelName }}Where,
+} from './interface'
+
+import { Repository } from 'typeorm'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+
+import { DEFAULT_PAGESIZE } from '~/common/constants'
+import { toPaginationParams } from '~/utils/pagination'
+
+import { {{ modelName }}Entity } from './entity'
+
+@Injectable()
+export class {{ modelName }}Repository implements I{{ modelName }}Repository {
+  constructor(
+    @InjectRepository({{ modelName }}Entity)
+    private readonly repo: Repository<{{ modelName }}Entity>,
+  ) {}
+
+  async findAndCount(
+    where: I{{ modelName }}Where,
+    page: number,
+    pagesize = DEFAULT_PAGESIZE,
+  ) {
+    const {
+      skip,
+      take,
+    } = toPaginationParams(page, pagesize)
+
+    const [list, total] = await this.repo.findAndCount({
+      where,
+      skip,
+      take,
+      order: {
+        sort: 'ASC',
+        updatedTime: 'DESC',
+      },
+    })
+
+    return {
+      list,
+      total,
+      page,
+      pagesize: take,
+    }
+  }
+
+  async find(where: I{{ modelName }}Where, select: I{{ modelName }}Select) {
+    return await this.repo.find({
+      select,
+      where,
+      order: {
+        sort: 'ASC',
+        updatedTime: 'DESC',
+      },
+    })
+  }
+
+  async findById(
+    id: number,
+    select?: I{{ modelName }}Select,
+  ) {
+    return await this.repo.findOne({
+      select,
+      where: { id },
+    })
+  }
+
+  async exists(where: I{{ modelName }}Where) {
+    return await this.repo.exists({
+      where,
+    })
+  }
+
+  async create(data: Partial<{{ modelName }}Entity>) {
+    data.sort = data.sort || 1
+
+    return await this.repo.save(data)
+  }
+
+  async update({{ model }}: {{ modelName }}Entity, data: Partial<{{ modelName }}Entity>) {
+    if (data.sort !== undefined)
+      {{ model }}.sort = data.sort
+
+    return await this.repo.save({{ model }})
+  }
+
+  async destroy(id: number) {
+    await this.repo.delete(id)
+  }
+}

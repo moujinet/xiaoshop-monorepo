@@ -1,0 +1,20 @@
+{{#if isNew}}
+import { PickType } from '@nestjs/mapped-types'
+{{/if}}
+
+/**
+ * Create {{ startCase domainName }}
+ */
+export class Create{{ domainName }}Payload {
+
+}
+
+/**
+ * Update {{ startCase domainName }}
+ */
+export class Update{{ domainName }}Payload extends PickType(
+  Create{{ domainName }}Payload,
+  [] as const,
+) {
+
+}
