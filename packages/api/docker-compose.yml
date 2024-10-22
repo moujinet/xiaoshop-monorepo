@@ -1,0 +1,25 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.4
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: xiaoshop
+      MYSQL_USER: xiaoshop
+      MYSQL_PASSWORD: xiaoshop123456
+      TZ: "Asia/Shanghai"
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: "Asia/Shanghai"

@@ -23,7 +23,7 @@
         "src/modules/*"
       ],
       "#/*": [
-        "test/*"
+        "test/__utils__/*"
       ],
       "~/*": [
         "src/*"
