@@ -1,0 +1,21 @@
+import type { I{{ modelName }}Info, I{{ modelName }}List } from '@xiaoshop/shared'
+
+import { objectToDict, pipeDict } from '~/utils/transformer'
+
+import { {{ modelName }}Entity } from './entity'
+
+/**
+  * Transform entities to list
+  */
+export function to{{ modelName }}List({{ model }}s: {{ modelName }}Entity[]) {
+  return pipeDict<I{{ modelName }}List>({{ model }}s, [
+    {{ model }} => objectToDict({{ model }}, '%name%', %DICT%),
+  ])
+}
+
+/**
+  * Transform entity
+  */
+export function to{{ modelName }}Info({{ model }}: {{ modelName }}Entity) {
+  return objectToDict({{ model }}, '%name%', %DICT%) as I{{ modelName }}Info
+}

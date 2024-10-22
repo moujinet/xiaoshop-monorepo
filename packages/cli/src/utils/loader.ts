@@ -17,23 +17,32 @@ export async function loadModules(): Promise<ISelectOptions[]> {
     cwd: config.moduleRoot,
   }).then(
     (files) => {
-      return files.map(
-        (file) => {
-          const value = file.replace(/\/module\.ts$/, '')
-          const label = pascalCase(file.replace(/\.ts$/, ''))
-          const hint = value.includes('/')
-            ? `${color.cyan(`${pascalCase(value.split('/').shift() || '')}Module`)} ⇢ ${color.cyan(label)}`
-            : undefined
+      const skips = ['system/dict']
 
-          return {
-            value,
-            label,
-            hint,
-          }
-        },
-      ).sort(
-        (a, b) => a.value.localeCompare(b.value),
-      )
+      return files
+        .filter(
+          file => skips.every(
+            skip => !file.startsWith(skip),
+          ),
+        )
+        .map(
+          (file) => {
+            const value = file.replace(/\/module\.ts$/, '')
+            const label = pascalCase(file.replace(/\.ts$/, ''))
+            const hint = value.includes('/')
+              ? `${color.cyan(`${pascalCase(value.split('/').shift() || '')}Module`)} ⇢ ${color.cyan(label)}`
+              : undefined
+
+            return {
+              value,
+              label,
+              hint,
+            }
+          },
+        )
+        .sort(
+          (a, b) => a.value.localeCompare(b.value),
+        )
     },
   )
 
@@ -48,8 +57,11 @@ export async function loadModels(module: string): Promise<ISelectOptions[]> {
     (files) => {
       return files.map(
         (file) => {
-          const value = file.replace(/model\/|\/provider\.ts/g, '')
-          const label = `${pascalCase(module) + pascalCase(value)}`
+          const isDefault = file.endsWith('model/provider.ts')
+          const value = isDefault
+            ? module.includes('/') ? module.split('/').pop() as string : module
+            : file.replace(/(model\/)|(\/provider\.ts)/g, '')
+          const label = isDefault ? pascalCase(module) : `${pascalCase(module) + pascalCase(value)}`
 
           return {
             value,

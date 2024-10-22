@@ -13,6 +13,8 @@ import { toPaginationParams } from '~/utils/pagination'
 
 import { {{ modelName }}Entity } from './entity'
 
+const defaultSelect: I{{ modelName }}Select = ['id', 'name', 'sort', 'updatedTime']
+
 @Injectable()
 export class {{ modelName }}Repository implements I{{ modelName }}Repository {
   constructor(
@@ -31,6 +33,7 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     } = toPaginationParams(page, pagesize)
 
     const [list, total] = await this.repo.findAndCount({
+      select: defaultSelect,
       where,
       skip,
       take,
@@ -48,7 +51,10 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     }
   }
 
-  async find(where: I{{ modelName }}Where, select: I{{ modelName }}Select) {
+  async find(
+    where: I{{ modelName }}Where,
+    select?: I{{ modelName }}Select = defaultSelect,
+  ) {
     return await this.repo.find({
       select,
       where,
@@ -61,7 +67,7 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
 
   async findById(
     id: number,
-    select?: I{{ modelName }}Select,
+    select?: I{{ modelName }}Select = defaultSelect,
   ) {
     return await this.repo.findOne({
       select,
@@ -81,7 +87,10 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     return await this.repo.save(data)
   }
 
-  async update({{ model }}: {{ modelName }}Entity, data: Partial<{{ modelName }}Entity>) {
+  async update(
+    {{ model }}: {{ modelName }}Entity,
+    data: Partial<{{ modelName }}Entity>,
+  ) {
     if (data.sort !== undefined)
       {{ model }}.sort = data.sort
 

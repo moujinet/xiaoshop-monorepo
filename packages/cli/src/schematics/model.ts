@@ -19,7 +19,6 @@ export class ModelSchematic extends AbstractSchematic {
       modelName: () => Prompt.text({
         message: 'What is the model name?',
         placeholder: 'Input `default` to generate root model',
-        initialValue: 'default',
         validate: (value: string) => {
           if (value.length === 0) {
             return 'Model name is required'
@@ -51,6 +50,11 @@ export class ModelSchematic extends AbstractSchematic {
         type: 'add',
         template: 'model/interface.ts.hbs',
         dest: '{{ modulePath }}/model/{{ modelPath }}interface.ts',
+      },
+      {
+        type: 'add',
+        template: 'model/mapper.ts.hbs',
+        dest: '{{ modulePath }}/model/{{ modelPath }}mapper.ts',
       },
       {
         type: 'add',

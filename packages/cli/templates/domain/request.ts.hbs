@@ -1,7 +1,6 @@
-import { IsNumber, IsNumberString } from 'class-validator'
-
 {{#if isNew}}
-import { PaginationDto } from '~/common/dto'
+import { IsNotEmpty, IsNumber, IsNumberString } from 'class-validator'
+import { PaginationDto } from '~/common/dto/pagination.dto'
 {{/if}}
 
 /**
@@ -10,10 +9,16 @@ import { PaginationDto } from '~/common/dto'
 export class Get{{ domainName }}PagesRequest extends PaginationDto {}
 
 /**
+ * Query {{ startCase domainName }} List
+ */
+export class Get{{ domainName }}ListRequest {}
+
+/**
  * Get {{ startCase domainName }}
  */
 export class Get{{ domainName }}Request {
   @IsNumberString({}, { message: 'ID 不正确' })
+  @IsNotEmpty({ message: 'ID 不能为空' })
   readonly id: number
 }
 

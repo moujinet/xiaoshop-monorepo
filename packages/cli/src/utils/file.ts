@@ -1,8 +1,12 @@
 import { join } from 'node:path'
 import { readFileSync } from 'node:fs'
 
-export function readFile(name: string, root: string = '') {
-  return readFileSync(join(root || process.cwd(), name), 'utf8')
+export function readFile(name: string, root: string | false = '') {
+  const path = root !== false
+    ? join(root || process.cwd(), name)
+    : name
+
+  return readFileSync(path, 'utf8')
 }
 
 export function readAnyOf(names: string[], root: string = '') {

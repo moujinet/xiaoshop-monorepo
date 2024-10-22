@@ -59,7 +59,7 @@ export abstract class AbstractSchematic implements ISchematic {
         action.dest,
       )
 
-      if (existsSync(dest)) {
+      if (action.type === 'add' && existsSync(dest)) {
         Console.step.skip(
           `${pascalCase(action.dest.replace('.ts', ''))} %s is already exists.`,
           dest.replace(cwd, '.'),
@@ -73,13 +73,10 @@ export abstract class AbstractSchematic implements ISchematic {
 
       if (action.template) {
         if (action.type === 'add') {
-          const content = renderTemplate(
-            action.template,
-            {
-              ...data,
-              isNew: true,
-            },
-          )
+          const content = renderTemplate(action.template, {
+            ...data,
+            isNew: true,
+          })
 
           if (!content) {
             Console.step.fail(
@@ -94,13 +91,10 @@ export abstract class AbstractSchematic implements ISchematic {
         }
 
         if (action.type === 'update') {
-          let content = renderTemplate(
-            action.template,
-            {
-              ...data,
-              isNew: !existsSync(dest),
-            },
-          )
+          let content = renderTemplate(action.template, {
+            ...data,
+            isNew: !existsSync(dest),
+          })
 
           if (!content) {
             Console.step.fail(
@@ -112,7 +106,7 @@ export abstract class AbstractSchematic implements ISchematic {
           }
 
           if (existsSync(dest)) {
-            const oldContent = readFile(dest) || ''
+            const oldContent = readFile(dest, false) || ''
             content = `${oldContent}\n${content}`
           }
 

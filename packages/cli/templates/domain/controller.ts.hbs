@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Post, Put, Query } from '@nestjs/common'
 
 import { Admin } from '~/common/decorators'
-
 import { {{ domainName }}Service } from '{{ moduleAlias }}/domain/{{ domainPath }}/service'
 import {
   Create{{ domainName }}Payload,
