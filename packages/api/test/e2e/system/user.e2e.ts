@@ -1,6 +1,6 @@
-import { useRequest } from '#/__utils/request'
+import { useRequest } from '#/request'
 import { SystemUserStatus } from '@xiaoshop/shared'
-import { getTableName, runSQL, truncateTable } from '#/__utils/tools'
+import { getTableName, runSQL, truncateTable } from '#/tools'
 
 describe('System Auth Module - User', () => {
   beforeAll(async () => {

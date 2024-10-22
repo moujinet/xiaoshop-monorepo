@@ -1,4 +1,4 @@
-import { useRequest } from '#/__utils/request'
+import { useRequest } from '#/request'
 
 describe('System Dict Module', () => {
   describe('Public', () => {

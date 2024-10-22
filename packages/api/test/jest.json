@@ -9,7 +9,7 @@
   },
   "moduleNameMapper": {
     "@/(.*)": "<rootDir>/src/modules/$1",
-    "#/(.*)": "<rootDir>/test/$1",
+    "#/(.*)": "<rootDir>/test/__utils__/$1",
     "~~/(.*)": "<rootDir>/$1",
     "~/(.*)": "<rootDir>/src/$1"
   },

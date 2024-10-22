@@ -1,4 +1,4 @@
-import { createTestingApplication } from '#/__utils/application'
+import { createTestingApplication } from '#/application'
 
 beforeAll(async () => {
   await createTestingApplication()

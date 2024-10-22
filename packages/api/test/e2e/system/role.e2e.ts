@@ -1,5 +1,5 @@
-import { useRequest } from '#/__utils/request'
-import { truncateTable } from '#/__utils/tools'
+import { useRequest } from '#/request'
+import { truncateTable } from '#/tools'
 
 describe('System Auth Module - Role', () => {
   beforeAll(async () => {
