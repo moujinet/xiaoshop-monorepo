@@ -6,7 +6,6 @@ import { CreateSystemUserPayload, UpdateSystemUserPayload } from '@/system/auth/
 import { SystemUserEntity } from './entity'
 
 export type ISystemUserSelect = FindManyOptions<SystemUserEntity>['select']
-
 export type ISystemUserWhere = FindManyOptions<SystemUserEntity>['where']
 
 /**

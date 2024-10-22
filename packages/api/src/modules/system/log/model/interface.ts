@@ -4,7 +4,6 @@ import type { IApiPaginationData } from '@xiaoshop/shared'
 import { SystemLogEntity } from './entity'
 
 export type ISystemLogSelect = FindManyOptions<SystemLogEntity>['select']
-
 export type ISystemLogWhere = FindManyOptions<SystemLogEntity>['where']
 
 /**

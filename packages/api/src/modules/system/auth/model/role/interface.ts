@@ -4,7 +4,6 @@ import type { IApiPaginationData } from '@xiaoshop/shared'
 import { SystemRoleEntity } from './entity'
 
 export type ISystemRoleSelect = FindManyOptions<SystemRoleEntity>['select']
-
 export type ISystemRoleWhere = FindManyOptions<SystemRoleEntity>['where']
 
 /**
