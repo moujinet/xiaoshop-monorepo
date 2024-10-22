@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ScheduleModule } from '@nestjs/schedule'
 import { CacheModule } from '@nestjs/cache-manager'
 
+import { AssetModule } from '@/asset/module'
 import { SystemModule } from '@/system/module'
 
 import configuration from './config'
@@ -60,6 +61,7 @@ import {
 
     // Modules
     SystemModule,
+    AssetModule,
   ],
 })
 export class Server {}

@@ -3,10 +3,10 @@ api:
   port: 3002
 
 upload:
-  dest: './tests/__fixtures__/upload'
+  dest: './test/__fixtures__/upload'
 
 export:
-  path: './tests/__fixtures__/backup'
+  path: './test/__fixtures__/backup'
 
 mysql:
   type: 'mysql'
