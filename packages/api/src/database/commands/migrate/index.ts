@@ -1,5 +1,0 @@
-export * from './create.command'
-export * from './revert.command'
-export * from './run.command'
-export * from './generate/schema.generate'
-export * from './generate/setting.generate'

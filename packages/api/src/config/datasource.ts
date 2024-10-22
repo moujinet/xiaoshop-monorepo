@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { join } from 'node:path'
 import { DataSource, DataSourceOptions } from 'typeorm'
 
-import configuration from '..'
+import configuration from '.'
 
 const mysql = configuration().mysql
 
@@ -11,11 +11,11 @@ const config = {
   synchronize: false,
   timezone: 'Z',
   entities: [
-    join(__dirname, '../..', 'modules', '**', '*.entity.{ts,js}'),
-    join(__dirname, '../..', 'modules', '**', 'entity.{ts,js}'),
+    join(__dirname, '..', 'modules', '**', '*.entity.{ts,js}'),
+    join(__dirname, '..', 'modules', '**', 'entity.{ts,js}'),
   ],
   migrations: [
-    join(__dirname, '../..', 'database/migrations', '**', '*.{ts,js}'),
+    join(__dirname, '..', 'database/migrations', '**', '*.{ts,js}'),
   ],
 } as DataSourceOptions
 
