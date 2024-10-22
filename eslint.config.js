@@ -19,12 +19,14 @@ export default antfu(
       'snapshots*',
       'node_modules',
       'packages/docs/**',
+      'packages/cli/scripts/**',
     ],
   },
   {
     files: [
       'packages/api/src/**/*.ts',
       'packages/api/test/**/*.ts',
+      'packages/cli/**/*.ts',
     ],
     rules: {
       'no-console': 'off',
@@ -38,6 +40,7 @@ export default antfu(
   {
     files: [
       'packages/api/**/*.ts',
+      'packages/cli/**/*.ts',
       'packages/shared/src/**/*.ts',
     ],
     rules: {

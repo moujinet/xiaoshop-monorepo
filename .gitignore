@@ -15,5 +15,5 @@ packages/admin/src/vue-components.d.ts
 # API
 packages/api/public/upload
 packages/api/logs
-packages/api/tests/__fixtures__/logs
-packages/api/tests/__fixtures__/upload
+packages/api/docker
+
