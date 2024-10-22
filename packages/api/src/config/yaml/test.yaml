@@ -19,7 +19,7 @@ mysql:
   charset: 'utf8mb4'
   dateStrings: true
   logging: false
-  synchronize: false
+  synchronize: true
   autoLoadEntities: true
 
 redis:
