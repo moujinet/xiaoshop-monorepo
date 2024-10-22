@@ -24,7 +24,7 @@ interface Metadata {
 export class GenerateMigrate implements IHandler {
   private readonly config: IConfig
   private readonly tablePrefix: string
-  private readonly timestamp = Date.now().toString()
+  private readonly timestamp = (Date.now() + 10000).toString()
 
   private output: Metadata
 
