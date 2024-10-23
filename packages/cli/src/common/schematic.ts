@@ -1,8 +1,8 @@
 import { mkdirp } from 'mkdirp'
 import { dirname } from 'node:path'
 import { group } from '@clack/prompts'
+import { pascalCase } from 'es-toolkit/string'
 import { existsSync, writeFileSync } from 'node:fs'
-import { capitalize, pascalCase } from 'es-toolkit/string'
 
 import { loadConfig } from '@/config'
 import { readFile } from '@/utils/file'
@@ -147,18 +147,18 @@ export abstract class AbstractSchematic implements ISchematic {
 
       if (module.includes('/')) {
         data.topModulePath = module.split('/')[0]?.trim()
-        data.topModuleAlias = `@/${data.topModule}`
-        data.topModuleName = capitalize(data.topModule)
+        data.topModuleAlias = `@/${data.topModulePath}`
+        data.topModuleName = pascalCase(data.topModulePath)
       }
       else {
         data.topModulePath = module
         data.topModuleAlias = `@/${module}`
-        data.topModuleName = capitalize(module)
+        data.topModuleName = pascalCase(module)
       }
 
       data.moduleAlias = `@/${module}`
       data.modulePath = module
-      data.moduleName = capitalize(module)
+      data.moduleName = pascalCase(module)
     }
 
     return this.dataTransform(data)

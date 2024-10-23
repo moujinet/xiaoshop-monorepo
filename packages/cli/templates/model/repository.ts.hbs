@@ -53,7 +53,7 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
 
   async find(
     where: I{{ modelName }}Where,
-    select?: I{{ modelName }}Select = defaultSelect,
+    select: I{{ modelName }}Select = defaultSelect,
   ) {
     return await this.repo.find({
       select,
@@ -67,7 +67,7 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
 
   async findById(
     id: number,
-    select?: I{{ modelName }}Select = defaultSelect,
+    select: I{{ modelName }}Select = defaultSelect,
   ) {
     return await this.repo.findOne({
       select,

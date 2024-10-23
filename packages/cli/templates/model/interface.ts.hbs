@@ -24,7 +24,7 @@ export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
    * @param select 查询字段
    * @returns {{ tableComment }}列表
    */
-  find: (where: I{{ modelName }}Where, select: I{{ modelName }}Select) => Promise<T[]>
+  find: (where: I{{ modelName }}Where, select?: I{{ modelName }}Select) => Promise<T[]>
 
   /**
    * 根据 ID 查询{{ tableComment }}
@@ -53,11 +53,11 @@ export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
   /**
    * 更新{{ tableComment }}
    *
-   * @param role {{ tableComment }}
+   * @param {{ model }} {{ tableComment }}
    * @param data 更新信息
    * @returns 保存后的{{ tableComment }}
    */
-  update: (role: T, data: Partial<T>) => Promise<T>
+  update: ({{ model }}: T, data: Partial<T>) => Promise<T>
 
   /**
    * 删除{{ tableComment }}
