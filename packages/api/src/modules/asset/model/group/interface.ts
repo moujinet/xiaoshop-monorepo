@@ -42,11 +42,11 @@ export interface IAssetGroupRepository<T = AssetGroupEntity> {
   /**
    * 更新素材分组
    *
-   * @param role 素材分组
+   * @param group 素材分组
    * @param data 更新信息
    * @returns 保存后的素材分组
    */
-  update: (role: T, data: Partial<T>) => Promise<T>
+  update: (group: T, data: Partial<T>) => Promise<T>
 
   /**
    * 删除素材分组
