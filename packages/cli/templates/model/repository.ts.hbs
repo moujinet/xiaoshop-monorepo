@@ -22,6 +22,9 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     private readonly repo: Repository<{{ modelName }}Entity>,
   ) {}
 
+  /**
+   * @inheritdoc
+   */
   async findAndCount(
     where: I{{ modelName }}Where,
     page: number,
@@ -51,6 +54,9 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     }
   }
 
+  /**
+   * @inheritdoc
+   */
   async find(
     where: I{{ modelName }}Where,
     select: I{{ modelName }}Select = defaultSelect,
@@ -65,6 +71,9 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async findById(
     id: number,
     select: I{{ modelName }}Select = defaultSelect,
@@ -75,28 +84,37 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async exists(where: I{{ modelName }}Where) {
     return await this.repo.exists({
       where,
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async create(data: Partial<{{ modelName }}Entity>) {
-    data.sort = data.sort || 1
-
-    return await this.repo.save(data)
-  }
-
-  async update(
-    {{ model }}: {{ modelName }}Entity,
-    data: Partial<{{ modelName }}Entity>,
-  ) {
-    if (data.sort !== undefined)
-      {{ model }}.sort = data.sort
+    const {{ model }} = this.repo.create(data)
 
     return await this.repo.save({{ model }})
   }
 
+  /**
+   * @inheritdoc
+   */
+  async update(
+    {{ model }}: {{ modelName }}Entity,
+    data: Partial<{{ modelName }}Entity>,
+  ) {
+    return await this.repo.save({{ model }})
+  }
+
+  /**
+   * @inheritdoc
+   */
   async destroy(id: number) {
     await this.repo.delete(id)
   }
