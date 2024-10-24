@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common'
 
-import { SystemDictService } from './service'
-import { SystemDictController } from './controller'
+import { SystemDictQueryService } from './domain/query/service'
+import { SystemDictQueryController } from './controller/query.controller'
 
 @Module({
   controllers: [
-    SystemDictController,
+    SystemDictQueryController,
   ],
 
   providers: [
-    SystemDictService,
+    SystemDictQueryService,
   ],
 })
 export class SystemDictModule {}

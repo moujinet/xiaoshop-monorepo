@@ -3,9 +3,9 @@ import type { ISystemSettingRepository } from '@/system/setting/model/interface'
 
 import { Injectable } from '@nestjs/common'
 
-import { SystemSettingMapper } from '@/system/setting/model/mapper'
 import { SystemSettingRepo } from '@/system/setting/model/provider'
 import { FailedException, NotFoundException } from '~/common/exceptions'
+import { toSystemSettingMap, toSystemSettingTypedValue } from '@/system/setting/model/mapper'
 
 @Injectable()
 export class SystemSettingReadService {
@@ -22,9 +22,7 @@ export class SystemSettingReadService {
    */
   async findAll(): Promise<ISystemSettingMap> {
     try {
-      return await this.repo.findAll().then(
-        settings => SystemSettingMapper.create(settings).toMap(),
-      )
+      return await this.repo.findAll().then(toSystemSettingMap)
     }
     catch (e) {
       throw new FailedException('获取系统设置', e.message)
@@ -40,9 +38,7 @@ export class SystemSettingReadService {
    */
   async find(key: string): Promise<ISystemSettingMap> {
     try {
-      return await this.repo.findByKey(key).then(
-        settings => SystemSettingMapper.create(settings).toMap(),
-      )
+      return await this.repo.findByKey(key).then(toSystemSettingMap)
     }
     catch (e) {
       throw new FailedException('获取系统设置', e.message)
@@ -64,7 +60,7 @@ export class SystemSettingReadService {
       if (!setting)
         throw new NotFoundException('系统设置不存在')
 
-      return SystemSettingMapper.toTypedValue(setting) as T
+      return toSystemSettingTypedValue(setting) as T
     }
     catch (e) {
       throw new FailedException('获取系统设置值', e.message)

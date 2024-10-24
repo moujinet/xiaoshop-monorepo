@@ -1,14 +1,13 @@
 import { Controller, Get, Inject, Param } from '@nestjs/common'
 
 import { Public } from '~/common/decorators'
-
-import { SystemDictService } from './service'
+import { SystemDictQueryService } from '@/system/dict/domain/query/service'
 
 @Controller('system/dict')
-export class SystemDictController {
+export class SystemDictQueryController {
   constructor(
-    @Inject(SystemDictService)
-    private readonly service: SystemDictService,
+    @Inject(SystemDictQueryService)
+    private readonly service: SystemDictQueryService,
   ) {}
 
   /**

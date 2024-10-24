@@ -12,12 +12,18 @@ export class SystemSettingRepository implements ISystemSettingRepository {
     private readonly repo: Repository<SystemSettingEntity>,
   ) {}
 
+  /**
+   * @inheritdoc
+   */
   async findAll(): Promise<SystemSettingEntity[]> {
     return await this.repo.find({
       order: { key: 'ASC' },
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async findByKey(key: string): Promise<SystemSettingEntity[]> {
     const isWildcard = key.includes('.*')
 
@@ -30,10 +36,16 @@ export class SystemSettingRepository implements ISystemSettingRepository {
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async findOne(key: string) {
     return await this.repo.findOneBy({ key })
   }
 
+  /**
+   * @inheritdoc
+   */
   async update(settings: { key: string, value: string }[]) {
     await Promise.all(
       settings.map(async ({ key, value }) => {

@@ -5,7 +5,7 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { FailedException } from '~/common/exceptions'
 
 @Injectable()
-export class SystemDictService {
+export class SystemDictQueryService {
   /**
    * 获取系统字典列表
    *
@@ -16,7 +16,7 @@ export class SystemDictService {
    */
   async findDictList(name: string): Promise<IDict[]> {
     try {
-      const dicts = await import('../../../dicts')
+      const dicts = await import('../../../../../dicts')
 
       const dictName = name.toUpperCase()
 
