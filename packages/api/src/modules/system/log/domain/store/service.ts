@@ -1,9 +1,10 @@
+import type { ISystemLogRepository } from '@/system/log/model/interface'
+
 import { UAParser } from 'ua-parser-js'
 import { ClsService } from 'nestjs-cls'
 import { Inject, Injectable } from '@nestjs/common'
 import {
   type ISystemLoginSignData,
-  type ISystemLogList,
   type SystemLogLevel,
   SystemLogType,
 } from '@xiaoshop/shared'
@@ -11,10 +12,8 @@ import {
 import { FailedException } from '~/common/exceptions'
 import { WhoisService } from '~/services/whois/service'
 import { SystemLogRepo } from '@/system/log/model/provider'
-import { SystemLogMapper } from '@/system/log/model/mapper'
 import { SystemLogEntity } from '@/system/log/model/entity'
 import { CreateSystemLogPayload } from '@/system/log/dto/payload'
-import { ISystemLogRepository } from '@/system/log/model/interface'
 import {
   REQUEST_ADMIN_KEY,
   REQUEST_AGENT_KEY,
@@ -33,25 +32,6 @@ export class SystemLogStoreService {
     @Inject(ClsService)
     private readonly cls: ClsService,
   ) {}
-
-  /**
-   * 获取指定天数前的系统日志
-   *
-   * @param days 天数
-   * @returns 指定天数前的系统日志
-   * @throws {FailedException} 获取指定天数前的系统日志失败
-   */
-  async findBeforeDays(days: number): Promise<ISystemLogList[]> {
-    try {
-      return await this.repo.findBeforeDays(days)
-        .then(
-          list => SystemLogMapper.toSystemLogList(list),
-        )
-    }
-    catch (e) {
-      throw new FailedException('获取指定天数前的系统日志', e.message)
-    }
-  }
 
   /**
    * 写入系统日志
@@ -85,21 +65,6 @@ export class SystemLogStoreService {
     }
     catch (e) {
       throw new FailedException('写入系统日志', e.message)
-    }
-  }
-
-  /**
-   * 删除指定 ID 的系统日志
-   *
-   * @param ids 日志 ID 列表
-   * @throws {FailedException} 删除系统日志失败
-   */
-  async deleteByIds(ids: number[]) {
-    try {
-      await this.repo.destroyByIds(ids)
-    }
-    catch (e) {
-      throw new FailedException('删除系统日志', e.message)
     }
   }
 }

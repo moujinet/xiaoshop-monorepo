@@ -1,3 +1,5 @@
+import type { ISystemLogRepository, ISystemLogWhere } from './interface'
+
 import { Injectable } from '@nestjs/common'
 import { LessThan, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -7,7 +9,6 @@ import { toUtcDateTime } from '~/utils/formatter'
 import { toPaginationParams } from '~/utils/pagination'
 
 import { SystemLogEntity } from './entity'
-import { ISystemLogRepository, ISystemLogWhere } from './interface'
 
 @Injectable()
 export class SystemLogRepository implements ISystemLogRepository {
@@ -16,6 +17,9 @@ export class SystemLogRepository implements ISystemLogRepository {
     private readonly repo: Repository<SystemLogEntity>,
   ) {}
 
+  /**
+   * @inheritdoc
+   */
   async findAndCount(where: ISystemLogWhere, page: number, pagesize: number) {
     const {
       skip,
@@ -51,6 +55,9 @@ export class SystemLogRepository implements ISystemLogRepository {
     }
   }
 
+  /**
+   * @inheritdoc
+   */
   async findBeforeDays(days: number) {
     return await this.repo.find({
       select: {
@@ -74,6 +81,9 @@ export class SystemLogRepository implements ISystemLogRepository {
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   async create(data: Partial<SystemLogEntity>) {
     const log = new SystemLogEntity()
 
@@ -88,6 +98,9 @@ export class SystemLogRepository implements ISystemLogRepository {
     await this.repo.save(log)
   }
 
+  /**
+   * @inheritdoc
+   */
   async destroyByIds(ids: number[]) {
     await this.repo.remove(
       ids.map(id => ({ id } as SystemLogEntity)),

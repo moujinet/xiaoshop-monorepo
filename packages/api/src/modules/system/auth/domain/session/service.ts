@@ -3,20 +3,20 @@ import type { ISystemUserRepository } from '@/system/auth/model/user/interface'
 import { ClsService } from 'nestjs-cls'
 import { JwtService } from '@nestjs/jwt'
 import { isStrongPassword } from 'class-validator'
-import { Inject, Injectable } from '@nestjs/common'
+import { Cron, CronExpression } from '@nestjs/schedule'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import {
   type ISystemLoginSignData,
   type ISystemLoginToken,
-  type ISystemUserLockedList,
   SystemUserStatus,
   YesOrNo,
 } from '@xiaoshop/shared'
 
-import { utcNow } from '~/utils/formatter'
 import { toDict } from '~/utils/transformer'
 import { comparePassword } from '~/utils/bcrypt'
 import { SYSTEM_USER_STATUSES } from '~/dicts/system'
 import { WhoisService } from '~/services/whois/service'
+import { toUtcDateTime, utcNow } from '~/utils/formatter'
 import { EventBusEmitter } from '~/services/event-bus/emitter'
 import { IS_ADMIN_KEY, REQUEST_IP_KEY } from '~/common/constants'
 import { SystemUserRepo } from '@/system/auth/model/user/provider'
@@ -32,6 +32,8 @@ import {
 
 @Injectable()
 export class SystemSessionService {
+  private readonly logger = new Logger(SystemSessionService.name)
+
   constructor(
     @SystemUserRepo()
     private readonly repo: ISystemUserRepository,
@@ -163,24 +165,6 @@ export class SystemSessionService {
   }
 
   /**
-   * 获取锁定状态的管理员列表
-   *
-   * @returns 锁定状态的管理员列表
-   * @throws {FailedException} 获取锁定状态管理员列表失败
-   */
-  async findLockedAdminList(): Promise<ISystemUserLockedList[]> {
-    try {
-      return await this.repo.find(['id', 'name', 'lockedTime'], {
-        isAdmin: YesOrNo.YES,
-        status: SystemUserStatus.LOCKED,
-      })
-    }
-    catch (e) {
-      throw new FailedException('获取锁定状态管理员列表', e.message)
-    }
-  }
-
-  /**
    * 锁定系统用户
    *
    * @param id 系统用户 ID
@@ -246,6 +230,37 @@ export class SystemSessionService {
     }
     catch (e) {
       throw new FailedException('解锁系统用户', e.message, e.status)
+    }
+  }
+
+  /**
+   * 解锁超过 60 分钟的超级管理员 (30 分钟执行一次)
+   */
+  @Cron(
+    CronExpression.EVERY_30_MINUTES,
+    { name: '@SystemSessionUnlock' },
+  )
+  async handleSystemSessionUnlock() {
+    try {
+      const users = await this.repo.find(['id', 'name', 'lockedTime'], {
+        isAdmin: YesOrNo.YES,
+        status: SystemUserStatus.LOCKED,
+      })
+
+      if (users.length === 0)
+        return
+
+      Promise.all(
+        users.map(
+          user => () => {
+            if (toUtcDateTime(user.lockedTime).add(1, 'hour') >= toUtcDateTime())
+              return this.unlock(user.id)
+          },
+        ),
+      )
+    }
+    catch (e) {
+      this.logger.error(e.message, e.stack)
     }
   }
 

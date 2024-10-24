@@ -6,10 +6,10 @@ import { SystemSettingModule } from '@/system/setting/module'
 import { ExcelExporterModule } from '~/services/excel-exporter/module'
 
 import { SystemLogEntity } from './model/entity'
-import { SystemLogScheduler } from './scheduler'
 import { SystemLogQueryService } from './domain/query/service'
 import { SystemLogStoreService } from './domain/store/service'
 import { SystemLogRepositoryProvider } from './model/provider'
+import { SystemLogCleanupService } from './domain/cleanup/service'
 import { SystemLogAdminController } from './controller/admin.controller'
 
 @Module({
@@ -31,8 +31,7 @@ import { SystemLogAdminController } from './controller/admin.controller'
     SystemLogRepositoryProvider,
     SystemLogQueryService,
     SystemLogStoreService,
-
-    SystemLogScheduler,
+    SystemLogCleanupService,
   ],
 })
 export class SystemLogModule {}

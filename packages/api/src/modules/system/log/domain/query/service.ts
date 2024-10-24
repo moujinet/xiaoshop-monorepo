@@ -1,14 +1,15 @@
+import type { IApiPaginationData, ISystemLogList } from '@xiaoshop/shared'
+import type { ISystemLogRepository, ISystemLogWhere } from '@/system/log/model/interface'
+
 import { Like } from 'typeorm'
 import { Injectable } from '@nestjs/common'
-import { IApiPaginationData, ISystemLogList } from '@xiaoshop/shared'
 
 import { toBetweenDate } from '~/utils/typeorm'
 import { FailedException } from '~/common/exceptions'
 import { DEFAULT_PAGESIZE } from '~/common/constants'
 import { SystemLogRepo } from '@/system/log/model/provider'
-import { SystemLogMapper } from '@/system/log/model/mapper'
+import { toSystemLogList } from '@/system/log/model/mapper'
 import { GetSystemLogPagesRequest } from '@/system/log/dto/request'
-import { ISystemLogRepository, ISystemLogWhere } from '@/system/log/model/interface'
 
 @Injectable()
 export class SystemLogQueryService {
@@ -55,7 +56,7 @@ export class SystemLogQueryService {
       return await this.repo.findAndCount(where, page, pagesize)
         .then(
           ({ list, total, page, pagesize }) => ({
-            list: SystemLogMapper.toSystemLogList(list),
+            list: toSystemLogList(list),
             total,
             page,
             pagesize,

@@ -7,7 +7,6 @@ import { WhoisModule } from '~/services/whois/module'
 import { SystemSettingModule } from '@/system/setting/module'
 
 import { SystemAuthGuard } from './guard'
-import { SystemAuthScheduler } from './scheduler'
 import { JwtModuleConfig } from './config/jwt.config'
 import { SystemRoleEntity } from './model/role/entity'
 import { SystemUserEntity } from './model/user/entity'
@@ -49,8 +48,6 @@ import { SystemUserSessionController } from './controller/user/session.controlle
     SystemSessionService,
     SystemRoleService,
     SystemUserService,
-
-    SystemAuthScheduler,
 
     {
       provide: APP_GUARD,
