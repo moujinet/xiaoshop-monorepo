@@ -87,3 +87,19 @@ export function afterDateTime(
 ) {
   return toUtcDateTime(fromDate).add(value, unit)
 }
+
+/**
+ * 获取指定天数前的日期
+ *
+ * @param fromDate 开始日期
+ * @param value 持续时间
+ * @param unit 时间单位
+ * @returns 计算后的 Dayjs 对象
+ */
+export function beforeDateTime(
+  fromDate: IDateTime,
+  value: number,
+  unit: 'year' | 'month' | 'day' = 'day',
+) {
+  return toUtcDateTime(fromDate).subtract(value, unit)
+}
