@@ -1,4 +1,4 @@
-import type { SystemLogLevel } from '@xiaoshop/shared'
+import type { INotificationExtrasInfo, SystemLogLevel } from '@xiaoshop/shared'
 
 /**
  * 事件源
@@ -37,6 +37,16 @@ export interface ILogBasedEvent extends IBaseEvent {
    * 日志内容
    */
   get logContent(): string | false
+}
+
+/**
+ * 基于通知的事件
+ */
+export interface INotifyBasedEvent {
+  /**
+   * 通知附加数据
+   */
+  readonly extras?: INotificationExtrasInfo
 }
 
 /**
