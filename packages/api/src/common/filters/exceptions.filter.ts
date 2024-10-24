@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
 } from '@nestjs/common'
 
 @Injectable()
@@ -36,6 +37,13 @@ export class ExceptionsFilter implements ExceptionFilter {
         message = '请求资源不存在'
       }
     }
+
+    const logger = new Logger(ExceptionsFilter.name)
+
+    logger.error(
+      `${code} - ${message} - ${error}`,
+      exception.stack,
+    )
 
     response
       .status(status)
