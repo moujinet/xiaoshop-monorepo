@@ -1,6 +1,6 @@
-import type { ISystemUserRepository, ISystemUserWhere } from '@/system/auth/model/user/interface'
+import type { ISystemUserRepository, ISystemUserSelect, ISystemUserWhere } from '@/system/auth/model/user/interface'
 
-import { Like, Not } from 'typeorm'
+import { In, Like, Not } from 'typeorm'
 import { isStrongPassword } from 'class-validator'
 import { Inject, Injectable } from '@nestjs/common'
 import {
@@ -15,9 +15,9 @@ import { comparePassword } from '~/utils/bcrypt'
 import { DEFAULT_PAGESIZE } from '~/common/constants'
 import { EventBusEmitter } from '~/services/event-bus/emitter'
 import { SystemUserRepo } from '@/system/auth/model/user/provider'
-import { SystemUserMapper } from '@/system/auth/model/user/mapper'
 import { GetSystemUserPagesRequest } from '@/system/auth/dto/request'
 import { SystemSettingReadService } from '@/system/setting/domain/read/service'
+import { toSystemUserInfo, toSystemUserList } from '@/system/auth/model/user/mapper'
 import { CreateSystemUserPayload, UpdateSystemUserPayload } from '@/system/auth/dto/payload'
 import { BadRequestException, ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
@@ -76,7 +76,7 @@ export class SystemUserService {
 
       return await this.repo.findAndCount(where, page, pagesize)
         .then(({ list, total, page, pagesize }) => ({
-          list: SystemUserMapper.toSystemUserList(list),
+          list: toSystemUserList(list),
           total,
           page,
           pagesize,
@@ -97,7 +97,7 @@ export class SystemUserService {
     try {
       return await this.repo.find()
         .then(
-          list => SystemUserMapper.toSystemUserList(list),
+          list => toSystemUserList(list),
         )
     }
     catch (e) {
@@ -120,10 +120,29 @@ export class SystemUserService {
       if (!user)
         throw new NotFoundException('用户不存在')
 
-      return SystemUserMapper.toSystemUserInfo(user)
+      return toSystemUserInfo(user)
     }
     catch (e) {
       throw new FailedException('获取用户信息', e.message, e.status)
+    }
+  }
+
+  /**
+   * 获取指定 ID 的用户列表
+   *
+   * @param ids 用户 ID 列表
+   * @param select 字段
+   * @returns 用户列表
+   * @throws {FailedException} 获取指定 ID 的用户列表失败
+   */
+  async findByIds(ids: number[], select: ISystemUserSelect) {
+    try {
+      return await this.repo.find(select, {
+        id: In(ids),
+      })
+    }
+    catch (e) {
+      throw new FailedException('获取指定 ID 的用户列表', e.message)
     }
   }
 

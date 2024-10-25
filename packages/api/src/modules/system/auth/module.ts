@@ -54,5 +54,9 @@ import { SystemUserSessionController } from './controller/user/session.controlle
       useClass: SystemAuthGuard,
     },
   ],
+
+  exports: [
+    SystemUserService,
+  ],
 })
 export class SystemAuthModule {}
