@@ -8,6 +8,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 
 import { AssetModule } from '@/asset/module'
 import { SystemModule } from '@/system/module'
+import { NotificationModule } from '@/notification/module'
 
 import configuration from './config'
 import { EventBusModule } from './services/event-bus'
@@ -61,6 +62,7 @@ import {
 
     // Modules
     SystemModule,
+    NotificationModule,
     AssetModule,
   ],
 })
