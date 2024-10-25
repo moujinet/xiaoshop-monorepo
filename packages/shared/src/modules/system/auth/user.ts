@@ -97,14 +97,12 @@ export type ISystemUserDict = Pick<
 >
 
 /**
- * 锁定中的系统用户列表
+ * 系统用户公开信息
  */
-export type ISystemUserLockedList = Pick<
+export type ISystemUserPublicInfo = Pick<
   ISystemUserInfo,
   | 'id'
   | 'name'
->
-& Pick<
-  ISystemUserExtraInfo,
-  | 'lockedTime'
+  | 'username'
+  | 'mobile'
 >

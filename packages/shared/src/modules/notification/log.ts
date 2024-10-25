@@ -1,5 +1,4 @@
 import type { IDict } from '~/common'
-import type { INotificationMessageDict } from './message'
 
 /**
  * 通知发送日志信息
@@ -28,17 +27,13 @@ export interface INotificationLogInfo {
    */
   channel: IDict
   /**
-   * 通知消息
-   */
-  message: INotificationMessageDict
-  /**
-   * 接收人
+   * 订阅者
    *
    * - `NotificationChannel.SYSTEM` - (买家: username,  商家: name)
    * - `NotificationChannel.SMS`    - (买家: mobile,    商家: mobile)
    * - `NotificationChannel.WECHAT` - (买家: openid)
    */
-  sendTo: string
+  subscriber: string
   /**
    * 通知标题
    */
@@ -72,8 +67,8 @@ export type INotificationLogList = Pick<
   | 'type'
   | 'scene'
   | 'channel'
-  | 'message'
-  | 'sendTo'
+  | 'subscriber'
+  | 'title'
   | 'status'
   | 'sentTime'
 >
