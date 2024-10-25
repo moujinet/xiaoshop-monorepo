@@ -20,7 +20,7 @@ export interface INotificationMessageInfo {
   /**
    * 触发事件
    */
-  trigger: string
+  listenTo: string
   /**
    * 通知类型
    *
@@ -98,12 +98,12 @@ export type INotificationMessageList = Pick<
 }
 
 /**
- * 通知消息触发事件列表
+ * 通知消息事件列表
  */
-export type INotificationMessageTriggerList = Pick<
+export type INotificationMessageEventList = Pick<
   INotificationMessageInfo,
   | 'id'
-  | 'trigger'
+  | 'listenTo'
 >
 
 /**

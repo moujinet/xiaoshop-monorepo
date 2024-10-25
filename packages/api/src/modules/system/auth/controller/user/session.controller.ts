@@ -1,7 +1,8 @@
+import type { ISystemLoginSignData } from '@xiaoshop/shared'
+
 import { Cache } from 'cache-manager'
 import { ClsService } from 'nestjs-cls'
 import { CACHE_MANAGER } from '@nestjs/cache-manager'
-import { ISystemLoginSignData } from '@xiaoshop/shared'
 import { Body, Controller, Get, HttpCode, Inject, Logger, Post, Put } from '@nestjs/common'
 
 import { OnEvent } from '~/services/event-bus'
