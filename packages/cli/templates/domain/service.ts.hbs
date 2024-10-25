@@ -1,0 +1,159 @@
+import type { I{{ domainName }}Repository } from '{{ moduleAlias }}/model/{{ domainPath }}/interface'
+import type { IApiPaginationData, I{{ domainName }}Dict, I{{ domainName }}Info, I{{ domainName }}List } from '@xiaoshop/shared'
+
+import { Not } from 'typeorm'
+import { Inject, Injectable } from '@nestjs/common'
+
+import { DEFAULT_PAGESIZE } from '~/common/constants'
+import { EventBusEmitter } from '~/services/event-bus/emitter'
+import { {{ domainName }}Repo } from '{{ moduleAlias }}/model/{{ domainPath }}/provider'
+import { Get{{ domainName }}PagesRequest } from '{{ moduleAlias }}/dto/request'
+import { Create{{ domainName }}Payload, Update{{ domainName }}Payload } from '{{ moduleAlias }}/dto/payload'
+import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
+
+import { {{ domainName }}CreateEvent, {{ domainName }}DeleteEvent, {{ domainName }}UpdateEvent } from './events'
+
+@Injectable()
+export class {{ domainName }}Service {
+  constructor(
+    @{{ domainName }}Repo()
+    private readonly repo: I{{ domainName }}Repository,
+
+    @Inject(EventBusEmitter)
+    private readonly event: EventBusEmitter,
+  ) {}
+
+  /**
+   * 获取%ENTITY%分页列表
+   *
+   * @param query 查询条件
+   * @returns %ENTITY%分页列表
+   * @throws {FailedException} 获取%ENTITY%分页列表失败
+   */
+  async findPages(
+    query: Get{{ domainName }}PagesRequest,
+  ): Promise<IApiPaginationData<I{{ domainName }}List>> {
+    try {
+      const {
+        page = 1,
+        pagesize = DEFAULT_PAGESIZE,
+      } = query
+
+      return await this.repo.findAndCount(page, pagesize)
+    }
+    catch (e) {
+      throw new FailedException('获取%ENTITY%分页列表', e.message)
+    }
+  }
+
+  /**
+   * 获取%ENTITY%字典列表
+   *
+   * @returns %ENTITY%字典列表
+   * @throws {FailedException} 获取%ENTITY%字典列表失败
+   */
+  async findDictList(): Promise<I{{ domainName }}Dict[]> {
+    try {
+      return await this.repo.find(['id', 'name'])
+    }
+    catch (e) {
+      throw new FailedException('获取%ENTITY%字典列表', e.message)
+    }
+  }
+
+  /**
+   * 获取%ENTITY%详情
+   *
+   * @param id %ENTITY% ID
+   * @returns 获取%ENTITY%详情失败
+   */
+  async findById(id: number): Promise<I{{ domainName }}Info> {
+    try {
+      const {{ domain }} = await this.repo.findById(id)
+
+      if (!{{ domain }})
+        throw new NotFoundException('%ENTITY%')
+
+      return {{ domain }}
+    }
+    catch (e) {
+      throw new FailedException('获取%ENTITY%详情', e.message, e.status)
+    }
+  }
+
+  /**
+   * 创建%ENTITY%
+   *
+   * @param data 创建数据
+   * @throws {FailedException} 创建%ENTITY%失败
+   * @throws {ExistsException} %ENTITY%已存在
+   */
+  async create(data: Create{{ domainName }}Payload) {
+    try {
+      if (await this.repo.exists({ name: data.name.trim() }))
+        throw new ExistsException('%ENTITY%')
+
+      const {{ domain }} = await this.repo.create(data)
+
+      this.event.emit(
+        new {{ domainName }}CreateEvent({{ domain }}.id, {{ domain }}.name),
+      )
+    }
+    catch (e) {
+      throw new FailedException('创建%ENTITY%', e.message, e.status)
+    }
+  }
+
+  /**
+   * 更新%ENTITY%
+   *
+   * @param id %ENTITY% ID
+   * @param data 更新数据
+   * @throws {FailedException} 更新%ENTITY%失败
+   * @throws {NotFoundException} %ENTITY%不存在
+   * @throws {ExistsException} %ENTITY%已存在
+   */
+  async update(id: number, data: Update{{ domainName }}Payload) {
+    try {
+      const {{ domain }} = await this.repo.findById(id)
+
+      if (!{{ domain }})
+        throw new NotFoundException('%ENTITY%')
+
+      if (await this.repo.exists({ id: Not(id), name: data.name.trim() }))
+        throw new ExistsException('%ENTITY%')
+
+      const updated = await this.repo.update({{ domain }}, data)
+
+      this.event.emit(
+        new {{ domainName }}UpdateEvent(updated.id, updated.name),
+      )
+    }
+    catch (e) {
+      throw new FailedException('创建%ENTITY%', e.message, e.status)
+    }
+  }
+
+  /**
+   * 删除%ENTITY%
+   *
+   * @param id %ENTITY% ID
+   * @throws {FailedException} 删除%ENTITY%失败
+   */
+  async delete(id: number) {
+    try {
+      const {{ domain }} = await this.repo.findById(id, ['id', 'name'])
+
+      if ({{ domain }}) {
+        await this.repo.destroy({{ domain }}.id)
+
+        this.event.emit(
+          new {{ domainName }}DeleteEvent({{ domain }}.id, {{ domain }}.name),
+        )
+      }
+    }
+    catch (e) {
+      throw new FailedException('删除%ENTITY%', e.message)
+    }
+  }
+}

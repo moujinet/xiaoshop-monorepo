@@ -1,0 +1,50 @@
+import { AdminEvent } from '~/common/events'
+import { MODULE_NAME } from '{{ moduleAlias }}/constants'
+
+/**
+ * Create {{ startCase domainName }} Event
+ */
+export class {{ domainName }}CreateEvent extends AdminEvent {
+  constructor(
+    public readonly {{ domain }}Id: number,
+    public readonly {{ domain }}Name: string,
+  ) {
+    super(MODULE_NAME)
+  }
+
+  get logContent() {
+    return `Create ${this.{{ domain }}Name}`
+  }
+}
+
+/**
+ * Update {{ startCase domainName }} Event
+ */
+export class {{ domainName }}UpdateEvent extends AdminEvent {
+  constructor(
+    public readonly {{ domain }}Id: number,
+    public readonly {{ domain }}Name: string,
+  ) {
+    super(MODULE_NAME)
+  }
+
+  get logContent() {
+    return `Update ${this.{{ domain }}Name}`
+  }
+}
+
+/**
+ * Delete {{ startCase domainName }} Event
+ */
+export class {{ domainName }}DeleteEvent extends AdminEvent {
+  constructor(
+    public readonly {{ domain }}Id: number,
+    public readonly {{ domain }}Name: string,
+  ) {
+    super(MODULE_NAME)
+  }
+
+  get logContent() {
+    return `Delete ${this.{{ domain }}Name}`
+  }
+}

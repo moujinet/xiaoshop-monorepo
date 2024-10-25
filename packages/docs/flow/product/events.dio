@@ -1,0 +1,74 @@
+<mxfile host="65bd71144e">
+    <diagram id="hsWyLWoQM5RUPQEKzR56" name="Page-1">
+        <mxGraphModel dx="1000" dy="862" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=oval;endFill=1;strokeWidth=2;dashPattern=1 4;" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="&lt;font color=&quot;#99ccff&quot;&gt;&amp;lt;Order&amp;gt;&lt;/font&gt;&lt;br&gt;OrderAcceptedEvent" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Sales" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;dashed=1;endArrow=oval;endFill=1;strokeWidth=2;dashPattern=1 4;" edge="1" parent="1" source="6" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;font color=&quot;#99ccff&quot;&gt;&amp;lt;Product&amp;gt;&lt;/font&gt;&lt;br&gt;ProductVisitEvent" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Views" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1160" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;dashed=1;fontColor=#99CCFF;endArrow=oval;endFill=1;strokeWidth=2;dashPattern=1 4;" edge="1" parent="1" source="9" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;font color=&quot;#99ccff&quot;&gt;&amp;lt;Product&amp;gt;&lt;/font&gt;&lt;br&gt;ProductFavoriteEvent" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="400" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Favorites" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1160" y="400" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=1 4;strokeWidth=2;fontColor=#99CCFF;endArrow=oval;endFill=1;" edge="1" parent="1" source="12" target="13">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1720" y="420"/>
+                            <mxPoint x="1720" y="300"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=1 4;strokeWidth=2;fontColor=#99CCFF;endArrow=oval;endFill=1;" edge="1" parent="1" source="12" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=1 4;strokeWidth=2;fontColor=#99CCFF;endArrow=oval;endFill=1;" edge="1" parent="1" source="12" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=1 4;strokeWidth=2;fontColor=#99CCFF;endArrow=oval;endFill=1;" edge="1" parent="1" source="12" target="16">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1720" y="420"/>
+                            <mxPoint x="1720" y="540"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="&lt;font color=&quot;#99ccff&quot;&gt;&amp;lt;Comment&amp;gt;&lt;/font&gt;&lt;br&gt;CommentPostedEvent" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="1480" y="400" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Overall Grade" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1800" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Overall Product Score" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1800" y="360" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Overall Service Score" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1800" y="440" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Overall Logistics Score" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=dashed;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="1800" y="520" width="160" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -4,6 +4,7 @@
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -18,13 +19,22 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@/*": ["src/modules/*"],
-      "~/*": ["src/*"],
-      "~~/*": ["./*"]
+      "@/*": [
+        "src/modules/*"
+      ],
+      "#/*": [
+        "test/__utils__/*"
+      ],
+      "~/*": [
+        "src/*"
+      ],
+      "~~/*": [
+        "./*"
+      ]
     },
   },
   "include": [
     "./src/**/*",
-    "./tests/**/*"
+    "./test/**/*",
   ]
 }

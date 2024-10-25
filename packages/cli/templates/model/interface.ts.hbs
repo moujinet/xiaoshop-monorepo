@@ -1,0 +1,68 @@
+import type { FindManyOptions } from 'typeorm'
+import type { IApiPaginationData } from '@xiaoshop/shared'
+
+import { {{ modelName }}Entity } from './entity'
+
+export type I{{ modelName }}Select = FindManyOptions<{{ modelName }}Entity>['select']
+export type I{{ modelName }}Where = FindManyOptions<{{ modelName }}Entity>['where']
+
+export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
+  /**
+   * 查询{{ tableComment }}分页列表
+   *
+   * @param where 查询条件
+   * @param page 当前页码
+   * @param pagesize 分页大小
+   * @returns {{ tableComment }}分页列表
+   */
+  findAndCount: (where: I{{ modelName }}Where, page: number, pagesize: number) => Promise<IApiPaginationData<T>>
+
+  /**
+   * 查询{{ tableComment }}列表
+   *
+   * @param where 查询条件
+   * @param select 查询字段
+   * @returns {{ tableComment }}列表
+   */
+  find: (where: I{{ modelName }}Where, select?: I{{ modelName }}Select) => Promise<T[]>
+
+  /**
+   * 根据 ID 查询{{ tableComment }}
+   *
+   * @param id {{ tableComment }} ID
+   * @returns {{ tableComment }}
+   */
+  findById: (id: number, select?: I{{ modelName }}Select) => Promise<T>
+
+  /**
+   * 判断{{ tableComment }}是否存在
+   *
+   * @param where 查询条件
+   * @returns 是否存在
+   */
+  exists: (where: I{{ modelName }}Where) => Promise<boolean>
+
+  /**
+   * 创建{{ tableComment }}
+   *
+   * @param data {{ tableComment }}
+   * @returns 保存后的{{ tableComment }}
+   */
+  create: (data: Partial<T>) => Promise<T>
+
+  /**
+   * 更新{{ tableComment }}
+   *
+   * @param {{ model }} {{ tableComment }}
+   * @param data 更新信息
+   * @returns 保存后的{{ tableComment }}
+   */
+  update: ({{ model }}: T, data: Partial<T>) => Promise<T>
+
+  /**
+   * 删除{{ tableComment }}
+   *
+   * @param id {{ tableComment }} ID
+   */
+  destroy: (id: number) => Promise<void>
+}

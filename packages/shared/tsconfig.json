@@ -5,7 +5,8 @@
     "useDefineForClassFields": true,
     "moduleResolution": "Bundler",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/modules/*"],
+      "~/*": ["src/*"],
       "~~/*": ["./*"]
     },
     "verbatimModuleSyntax": true

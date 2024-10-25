@@ -1,16 +1,12 @@
 /* eslint-disable regexp/no-unused-capturing-group */
+const { execSync } = require('node:child_process')
 const fs = require('node:fs')
 const path = require('node:path')
-const { execSync } = require('node:child_process')
 
 const scopes = fs
   .readdirSync(path.resolve(__dirname, 'packages'), { withFileTypes: true })
   .filter(dirent => dirent.isDirectory())
   .map(dirent => dirent.name.replace(/s$/, ''))
-
-const apiScopes = fs
-  .readdirSync(path.resolve(__dirname, 'packages/apis'), { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
 
 // precomputed scope
 const scopeComplete = execSync('git status --porcelain || true')
@@ -61,10 +57,11 @@ module.exports = {
       d: 'docs: 更新文档',
       b: 'build: 更新依赖',
       c: 'chore: 更新配置',
+      t: 'types(shared): 更新类型',
     },
     customScopesAlign: !scopeComplete ? 'top' : 'bottom',
     defaultScope: scopeComplete,
-    scopes: [...scopes, ...apiScopes],
+    scopes: [...scopes],
     allowEmptyIssuePrefixs: false,
     allowCustomIssuePrefixs: false,
 

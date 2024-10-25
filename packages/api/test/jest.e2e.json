@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "../",
+  "testEnvironment": "node",
+  "testRegex": ".e2e.ts$",
+  "prettierPath": "./node_modules/prettier-2/index.js",
+  "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
+  "transform": {
+    "^.+\\.(t|j)s$": ["@swc/jest"]
+  },
+  "moduleNameMapper": {
+    "@/(.*)": "<rootDir>/src/modules/$1",
+    "#/(.*)": "<rootDir>/test/__utils__/$1",
+    "~~/(.*)": "<rootDir>/$1",
+    "~/(.*)": "<rootDir>/src/$1"
+  },
+  "verbose": true
+}

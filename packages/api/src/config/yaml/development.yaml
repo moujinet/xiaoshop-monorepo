@@ -1,0 +1,46 @@
+api:
+  prefix: '/api'
+  port: 3001
+
+upload:
+  dest: './public/upload'
+
+export:
+  path: './backup'
+
+mysql:
+  type: 'mysql'
+  host: '127.0.0.1'
+  port: 3306
+  username: 'root'
+  password: '123456'
+  database: 'xiaoshop'
+  entityPrefix: 'xs_'
+  charset: 'utf8mb4'
+  dateStrings: true
+  logging: false
+  synchronize: false
+  autoLoadEntities: true
+
+redis:
+  host: '127.0.0.1'
+  port: 6379
+
+cache:
+  keyPrefix: 'cache'
+  db: 1
+  ttl: 5000
+  max: 100
+
+queue:
+  prefix: 'queue'
+  db: 2
+
+jwt:
+  adminSecret: 'XIAOSHOP_ADMIN_SECRET'
+  shopSecret: 'XIAOSHOP_SHOP_SECRET'
+  expiresIn: '1d'
+
+http:
+  timeout: 5000
+  maxRedirects: 5

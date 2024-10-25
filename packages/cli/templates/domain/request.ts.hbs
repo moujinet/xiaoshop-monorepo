@@ -1,0 +1,31 @@
+{{#if isNew}}
+import { IsNotEmpty, IsNumber, IsNumberString } from 'class-validator'
+import { PaginationDto } from '~/common/dto/pagination.dto'
+{{/if}}
+
+/**
+ * Query {{ startCase domainName }} Pages
+ */
+export class Get{{ domainName }}PagesRequest extends PaginationDto {}
+
+/**
+ * Query {{ startCase domainName }} List
+ */
+export class Get{{ domainName }}ListRequest {}
+
+/**
+ * Get {{ startCase domainName }}
+ */
+export class Get{{ domainName }}Request {
+  @IsNumberString({}, { message: 'ID 不正确' })
+  @IsNotEmpty({ message: 'ID 不能为空' })
+  readonly id: number
+}
+
+/**
+ * Delete {{ startCase domainName }}
+ */
+export class Delete{{ domainName }}Request {
+  @IsNumber({}, { message: 'ID 不正确' })
+  readonly id: number
+}

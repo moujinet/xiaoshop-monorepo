@@ -1,23 +1,16 @@
-import { HttpException } from '@nestjs/common'
-
-export const EXCEPTION_EXISTS = 1003
-export const EXCEPTION_EXISTS_MESSAGE = '#NAME#已存在'
+import { BadRequestException } from './bad-request.exception'
 
 /**
- * 数据已存在
+ * 已存在错误 - 1003
  *
- * @see {@link https://docs.nestjs.com/exception-filters#custom-exceptions}
+ * @see {@link https://docs.nestjs.com/exception-filters#built-in-http-exceptions}
  */
-export class ExistsException extends HttpException {
+export class ExistsException extends BadRequestException {
   constructor(
-    name: string = '数据',
-    error?: string,
-    code: number = EXCEPTION_EXISTS,
+    public readonly name: string,
+    public readonly error?: string,
+    public readonly code: number = 1003,
   ) {
-    super(
-      EXCEPTION_EXISTS_MESSAGE.replaceAll('#NAME#', name),
-      code,
-      { description: error },
-    )
+    super(`${name}已存在`, error, code)
   }
 }

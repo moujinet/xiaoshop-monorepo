@@ -3,11 +3,18 @@ coverage
 dist
 .DS_Store
 .xiao
+
+# VitePress
 packages/docs/.vitepress/cache
+
+# Admin
 packages/admin/src/auto-imports.d.ts
 packages/admin/src/typed-router.d.ts
 packages/admin/src/vue-components.d.ts
-packages/apis/nestjs/public/upload
-packages/apis/nestjs/upload
-packages/apis/nestjs/upload-test
-packages/apis/nestjs/logs
+
+# API
+packages/api/public/upload
+packages/api/logs
+packages/api/docker
+packages/api/test/__fixtures__
+

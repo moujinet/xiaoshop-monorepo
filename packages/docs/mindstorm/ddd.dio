@@ -1,0 +1,40 @@
+<mxfile host="65bd71144e">
+    <diagram id="-aJX7ShnvCAauGCVfhOE" name="Event Storm">
+        <mxGraphModel dx="917" dy="1073" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="13" value="ADMIN EVENT" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=auto;strokeWidth=2;fontSize=11;fillColor=default;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="APP EVENT" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;shadow=0;glass=0;labelBackgroundColor=none;fillStyle=auto;strokeWidth=2;fontSize=11;fillColor=default;fontColor=#FFFFFF;strokeColor=#C73500;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="MODEL" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="40" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="EVENTS" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="200" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="REPO" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="280" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="ENTITY" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="80" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="DOMAIN" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="-200" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="SUB DOMAIN" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="-200" width="160" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="CRUD" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="-200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="BIZ" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;rounded=1;fillStyle=auto;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="-120" width="160" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

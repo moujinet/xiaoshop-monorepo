@@ -6,6 +6,8 @@
     "assets": [
       "**/*.yaml"
     ],
+    "builder": "swc",
+    "typeCheck": true,
     "watchAssets": true,
     "deleteOutDir": true
   }

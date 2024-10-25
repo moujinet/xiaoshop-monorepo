@@ -1,6 +1,0 @@
-export * from './account'
-export * from './login'
-export * from './department'
-export * from './position'
-export * from './role'
-export * from './logs'

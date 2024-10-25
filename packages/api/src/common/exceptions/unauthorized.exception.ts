@@ -1,21 +1,16 @@
-import { HttpException } from '@nestjs/common'
-
-export const EXCEPTION_UNAUTHORIZED = 1005
-export const EXCEPTION_UNAUTHORIZED_MESSAGE = '请求未授权'
+import { HttpException, HttpStatus } from '@nestjs/common'
 
 /**
- * 请求未授权
+ * 未授权错误 - 1005
  *
- * @see {@link https://docs.nestjs.com/exception-filters#custom-exceptions}
+ * @see {@link https://docs.nestjs.com/exception-filters#built-in-http-exceptions}
  */
 export class UnauthorizedException extends HttpException {
   constructor(
-    error?: string,
+    public readonly message: string,
+    public readonly error?: string,
+    public readonly code: number = 1005,
   ) {
-    super(
-      EXCEPTION_UNAUTHORIZED_MESSAGE,
-      EXCEPTION_UNAUTHORIZED,
-      { description: error },
-    )
+    super(message, HttpStatus.UNAUTHORIZED, { description: error })
   }
 }
