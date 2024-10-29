@@ -65,7 +65,7 @@ export class NotificationLogCleanupService {
       }
     }
     catch (e) {
-      throw new FailedException('自动清理通知发送日志', e.message, e.status)
+      throw new FailedException('自动清理通知发送日志', e.message, e.code)
     }
   }
 }

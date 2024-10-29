@@ -25,7 +25,7 @@ export class NotificationLogStoreService {
       await this.repo.create(data)
     }
     catch (e) {
-      throw new FailedException('创建通知消息发送日志', e.message, e.status)
+      throw new FailedException('创建通知消息发送日志', e.message, e.code)
     }
   }
 }

@@ -123,7 +123,7 @@ export class SystemSessionService {
       }
     }
     catch (e) {
-      throw new FailedException('登录系统用户', e.message, e.status)
+      throw new FailedException('登录系统用户', e.message, e.code)
     }
   }
 
@@ -160,7 +160,7 @@ export class SystemSessionService {
       await this.repo.updatePassword(id, newPassword)
     }
     catch (e) {
-      throw new FailedException('修改密码', e.message, e.status)
+      throw new FailedException('修改密码', e.message, e.code)
     }
   }
 
@@ -199,7 +199,7 @@ export class SystemSessionService {
       }
     }
     catch (e) {
-      throw new FailedException('锁定系统用户', e.message, e.status)
+      throw new FailedException('锁定系统用户', e.message, e.code)
     }
   }
 
@@ -229,7 +229,7 @@ export class SystemSessionService {
       }
     }
     catch (e) {
-      throw new FailedException('解锁系统用户', e.message, e.status)
+      throw new FailedException('解锁系统用户', e.message, e.code)
     }
   }
 

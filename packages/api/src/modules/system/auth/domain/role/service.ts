@@ -77,7 +77,7 @@ export class SystemRoleService {
       return role
     }
     catch (e) {
-      throw new FailedException('获取角色信息', e.message, e.status)
+      throw new FailedException('获取角色信息', e.message, e.code)
     }
   }
 
@@ -100,7 +100,7 @@ export class SystemRoleService {
       )
     }
     catch (e) {
-      throw new FailedException('创建角色', e.message, e.status)
+      throw new FailedException('创建角色', e.message, e.code)
     }
   }
 
@@ -130,7 +130,7 @@ export class SystemRoleService {
       )
     }
     catch (e) {
-      throw new FailedException('创建角色', e.message, e.status)
+      throw new FailedException('创建角色', e.message, e.code)
     }
   }
 

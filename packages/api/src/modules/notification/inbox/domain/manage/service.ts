@@ -77,7 +77,7 @@ export class NotificationInboxManageService {
       return toNotificationInfo(notification)
     }
     catch (e) {
-      throw new FailedException('读取通知消息详情', e.message, e.status)
+      throw new FailedException('读取通知消息详情', e.message, e.code)
     }
   }
 

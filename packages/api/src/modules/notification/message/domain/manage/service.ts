@@ -69,7 +69,7 @@ export class NotificationMessageService {
       return toNotificationMessageInfo(message)
     }
     catch (e) {
-      throw new FailedException('获取通知消息模板详情', e.message, e.status)
+      throw new FailedException('获取通知消息模板详情', e.message, e.code)
     }
   }
 
@@ -97,7 +97,7 @@ export class NotificationMessageService {
       )
     }
     catch (e) {
-      throw new FailedException('创建通知消息模板', e.message, e.status)
+      throw new FailedException('创建通知消息模板', e.message, e.code)
     }
   }
 
@@ -133,7 +133,7 @@ export class NotificationMessageService {
       )
     }
     catch (e) {
-      throw new FailedException('创建通知消息模板', e.message, e.status)
+      throw new FailedException('创建通知消息模板', e.message, e.code)
     }
   }
 
@@ -166,7 +166,7 @@ export class NotificationMessageService {
       )
     }
     catch (e) {
-      throw new FailedException('更新通知消息模板状态', e.message, e.status)
+      throw new FailedException('更新通知消息模板状态', e.message, e.code)
     }
   }
 

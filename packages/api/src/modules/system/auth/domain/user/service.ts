@@ -123,7 +123,7 @@ export class SystemUserService {
       return toSystemUserInfo(user)
     }
     catch (e) {
-      throw new FailedException('获取用户信息', e.message, e.status)
+      throw new FailedException('获取用户信息', e.message, e.code)
     }
   }
 
@@ -177,7 +177,7 @@ export class SystemUserService {
       )
     }
     catch (e) {
-      throw new FailedException('创建用户', e.message, e.status)
+      throw new FailedException('创建用户', e.message, e.code)
     }
   }
 
@@ -211,7 +211,7 @@ export class SystemUserService {
       )
     }
     catch (e) {
-      throw new FailedException('更新用户', e.message, e.status)
+      throw new FailedException('更新用户', e.message, e.code)
     }
   }
 
@@ -248,7 +248,7 @@ export class SystemUserService {
       )
     }
     catch (e) {
-      throw new FailedException('重置用户密码', e.message, e.status)
+      throw new FailedException('重置用户密码', e.message, e.code)
     }
   }
 
@@ -278,7 +278,7 @@ export class SystemUserService {
       }
     }
     catch (e) {
-      throw new FailedException('禁用用户', e.message, e.status)
+      throw new FailedException('禁用用户', e.message, e.code)
     }
   }
 
@@ -308,7 +308,7 @@ export class SystemUserService {
       }
     }
     catch (e) {
-      throw new FailedException('恢复禁用用户', e.message, e.status)
+      throw new FailedException('恢复禁用用户', e.message, e.code)
     }
   }
 
@@ -338,7 +338,7 @@ export class SystemUserService {
       }
     }
     catch (e) {
-      throw new FailedException('解锁用户', e.message, e.status)
+      throw new FailedException('解锁用户', e.message, e.code)
     }
   }
 

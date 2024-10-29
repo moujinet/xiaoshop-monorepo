@@ -28,7 +28,7 @@ export class SystemDictQueryService {
       ]
     }
     catch (e) {
-      throw new FailedException('获取系统字典列表', e.message, e.status)
+      throw new FailedException('获取系统字典列表', e.message, e.code)
     }
   }
 }

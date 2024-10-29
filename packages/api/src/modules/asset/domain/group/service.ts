@@ -81,7 +81,7 @@ export class AssetGroupService {
       return toAssetGroupInfo(group)
     }
     catch (e) {
-      throw new FailedException('获取素材分组详情', e.message, e.status)
+      throw new FailedException('获取素材分组详情', e.message, e.code)
     }
   }
 
@@ -109,7 +109,7 @@ export class AssetGroupService {
       )
     }
     catch (e) {
-      throw new FailedException('创建素材分组', e.message, e.status)
+      throw new FailedException('创建素材分组', e.message, e.code)
     }
   }
 
@@ -145,7 +145,7 @@ export class AssetGroupService {
       )
     }
     catch (e) {
-      throw new FailedException('创建素材分组', e.message, e.status)
+      throw new FailedException('创建素材分组', e.message, e.code)
     }
   }
 

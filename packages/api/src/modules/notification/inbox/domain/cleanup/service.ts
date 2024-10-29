@@ -65,7 +65,7 @@ export class NotificationInboxCleanupService {
       }
     }
     catch (e) {
-      throw new FailedException('自动清理通知', e.message, e.status)
+      throw new FailedException('自动清理通知', e.message, e.code)
     }
   }
 }

@@ -90,7 +90,7 @@ export class AssetResourceService {
       return toAssetResourceInfo(resource)
     }
     catch (e) {
-      throw new FailedException('获取素材详情', e.message, e.status)
+      throw new FailedException('获取素材详情', e.message, e.code)
     }
   }
 
@@ -114,7 +114,7 @@ export class AssetResourceService {
       )
     }
     catch (e) {
-      throw new FailedException('创建素材', e.message, e.status)
+      throw new FailedException('创建素材', e.message, e.code)
     }
   }
 

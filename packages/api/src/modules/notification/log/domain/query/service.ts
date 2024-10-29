@@ -89,7 +89,7 @@ export class NotificationLogQueryService {
       return toNotificationLogInfo(query)
     }
     catch (e) {
-      throw new FailedException('获取通知消息发送日志详情', e.message, e.status)
+      throw new FailedException('获取通知消息发送日志详情', e.message, e.code)
     }
   }
 }

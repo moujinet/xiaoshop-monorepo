@@ -40,7 +40,7 @@ export class AssetUploadService {
       return filePath
     }
     catch (e) {
-      throw new FailedException('上传文件', e.message, e.status)
+      throw new FailedException('上传文件', e.message, e.code)
     }
   }
 
