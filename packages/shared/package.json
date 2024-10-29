@@ -27,7 +27,7 @@
     "prepublishOnly": "nr build"
   },
   "devDependencies": {
-    "tsup": "^8.3.0"
+    "tsup": "^8.3.5"
   },
-  "packageManager": "pnpm@9.12.2"
+  "packageManager": "pnpm@9.12.3"
 }

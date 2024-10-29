@@ -2,7 +2,7 @@
   "name": "@xiaoshop/cli",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@9.12.3",
   "description": "XiaoShop 云链小店 (@cli)",
   "author": "Luoyi <luoyi@mouji.net>",
   "license": "Apache-2.0",
@@ -21,7 +21,7 @@
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0",
     "defu": "^6.1.4",
-    "es-toolkit": "^1.25.2",
+    "es-toolkit": "^1.26.1",
     "glob": "^11.0.0",
     "handlebars": "^4.7.8",
     "mkdirp": "^3.0.1",
@@ -31,7 +31,7 @@
     "zx": "^8.1.9"
   },
   "devDependencies": {
-    "@types/node": "^22.7.8",
+    "@types/node": "^22.8.2",
     "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
     "rimraf": "5.0.0",
