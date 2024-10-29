@@ -1,9 +1,9 @@
-import { v4 as uuid } from 'uuid'
 import { writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { ConfigService } from '@nestjs/config'
 import { BadRequestException, Inject } from '@nestjs/common'
 
+import { uuid } from '~/utils/uuid'
 import { ensureLocalDir } from '~/utils/fs'
 import { FailedException } from '~/common/exceptions'
 import { SystemSettingReadService } from '@/system/setting/domain/read/service'
