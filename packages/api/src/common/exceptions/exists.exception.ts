@@ -7,10 +7,12 @@ import { BadRequestException } from './bad-request.exception'
  */
 export class ExistsException extends BadRequestException {
   constructor(
-    public readonly name: string,
+    public readonly message: string,
     public readonly error?: string,
     public readonly code: number = 1003,
   ) {
-    super(`${name}已存在`, error, code)
+    message = `${message}已存在`
+
+    super(message, error, code)
   }
 }

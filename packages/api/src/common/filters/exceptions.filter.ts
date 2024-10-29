@@ -38,7 +38,7 @@ export class ExceptionsFilter implements ExceptionFilter {
       }
     }
 
-    const logger = new Logger(ExceptionsFilter.name)
+    const logger = new Logger(exception.constructor.name)
 
     logger.error(
       `${code} - ${message} - ${error}`,

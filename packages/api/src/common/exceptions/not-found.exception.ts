@@ -11,6 +11,8 @@ export class NotFoundException extends HttpException {
     public readonly error?: string,
     public readonly code: number = 1000,
   ) {
+    message = `${message}不存在`
+
     super(message, HttpStatus.OK, { description: error })
   }
 }

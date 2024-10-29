@@ -23,11 +23,26 @@ export class BadRequestException extends HttpException {
  * @returns BadRequestException
  */
 export function exceptionFactory(errors: string | ValidationError[]) {
-  const error = errors instanceof Object ? errors.shift() : errors
+  const error = Array.isArray(errors) ? extractErrorMessages(errors) : errors
 
   const message = error instanceof Object
-    ? error.constraints[Object.keys(error.constraints)[0]]
+    ? error.pop()
     : error
 
   return new BadRequestException('请求参数错误', message)
+}
+
+function extractErrorMessages(errors: ValidationError[]): string[] {
+  const messages: string[] = []
+
+  errors.forEach((error) => {
+    if (error.constraints) {
+      messages.push(...Object.values(error.constraints))
+    }
+    if (error.children && error.children.length > 0) {
+      messages.push(...extractErrorMessages(error.children))
+    }
+  })
+
+  return messages
 }

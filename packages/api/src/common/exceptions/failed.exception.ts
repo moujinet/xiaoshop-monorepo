@@ -1,16 +1,18 @@
-import { BadRequestException } from './bad-request.exception'
+import { HttpException, HttpStatus } from '@nestjs/common'
 
 /**
  * 请求失败 - 1002
  *
  * @see {@link https://docs.nestjs.com/exception-filters#built-in-http-exceptions}
  */
-export class FailedException extends BadRequestException {
+export class FailedException extends HttpException {
   constructor(
-    public readonly name: string,
+    public readonly message: string,
     public readonly error?: string,
     public readonly code: number = 1002,
   ) {
-    super(`${name}失败`, error, code)
+    message = `${message}失败`
+
+    super(message, HttpStatus.OK, { description: error })
   }
 }
