@@ -6,6 +6,7 @@ import { MemberGroupModule } from './group/module'
 import { MemberPointsModule } from './points/module'
 import { MemberInviteModule } from './invite/module'
 import { MemberAccountModule } from './account/module'
+import { MemberUnregisterModule } from './unregister/module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { MemberAccountModule } from './account/module'
     MemberCardModule,
     MemberPointsModule,
     MemberInviteModule,
+    MemberUnregisterModule,
   ],
 })
 export class MemberModule {}

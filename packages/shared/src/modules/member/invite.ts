@@ -16,7 +16,8 @@ export type IMemberInviteInfo = {
    * 邀请时间
    */
   createdTime: string
-} & Pick<
+}
+& Pick<
   IMemberProfileInfo,
   | 'avatar'
   | 'nickname'

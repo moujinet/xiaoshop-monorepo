@@ -199,13 +199,13 @@ export enum MemberGroupFilterOperator {
  * - `PENDING`: 待处理
  * - `APPROVED`: 已通过
  * - `REJECTED`: 已拒绝
- * - `FINISHED`: 已注销
+ * - `DONE`: 已注销
  */
 export enum MemberUnregisterStatus {
   PENDING,
   APPROVED,
   REJECTED,
-  FINISHED,
+  DONE,
 }
 
 // --------------------------------
