@@ -1,8 +1,8 @@
-import type { IMemberTagInfo } from './tag'
-import type { IMemberGroupDict } from './group'
+import type { IMemberTagInfo } from '../tag'
+import type { IMemberGroupDict } from '../group'
 import type { IMemberAccountInfo } from './account'
+import type { IMemberBindCard } from '../card/bind'
 import type { IDict, ILocationPath } from '~/common'
-import type { IMemberCardBindCard } from './card/binding'
 
 /**
  * 会员信息
@@ -60,13 +60,13 @@ export interface IMemberProfileInfo {
    */
   location: ILocationPath
   /**
-   * 会员卡号
+   * 邀请码
    */
-  cardNo: string
+  inviteCode: string
   /**
    * 会员卡
    */
-  card: IMemberCardBindCard
+  card: IMemberBindCard
   /**
    * 会员群体
    */
@@ -79,12 +79,6 @@ export interface IMemberProfileInfo {
    * 会员账户
    */
   account: IMemberAccountInfo
-  /**
-   * 邀请码
-   *
-   * @example 000-000-000
-   */
-  inviteCode: string
   /**
    * 消费次数
    */
@@ -164,13 +158,13 @@ export type IMemberProfileList = Pick<
   | 'birthday'
   | 'gender'
   | 'location'
-  | 'cardNo'
+  | 'account'
   | 'card'
   | 'group'
   | 'tags'
   | 'orderCount'
   | 'orderAmount'
-  | 'account'
   | 'lastLoginTime'
   | 'lastOrderTime'
+  | 'createdTime'
 >

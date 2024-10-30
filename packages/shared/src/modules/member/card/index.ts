@@ -1,3 +1,3 @@
 export * from './card'
-export * from './binding'
+export * from './bind'
 export * from './upgrade'

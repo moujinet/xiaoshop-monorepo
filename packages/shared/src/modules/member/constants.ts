@@ -83,12 +83,10 @@ export enum MemberAccountKey {
  *
  * - `ADD`: 增加
  * - `SUB`: 减少
- * - `SET`: 设置
  */
 export enum MemberAccountChangeMethod {
   ADD = 1,
   SUB,
-  SET,
 }
 
 // --------------------------------
@@ -132,20 +130,17 @@ export enum MemberCardPlanType {
 /**
  * 会员卡升级方式 - 枚举
  *
- * - `BINDING`: 绑定
- * - `UPGRADE`: 开通
- * - `LEVEL_UP`: 升级
+ * - `UPGRADE`: 升级会员
+ * - `LEVELUP`: 等级升级
  */
 export enum MemberCardUpgradeMethod {
-  BINDING = 1,
-  UPGRADE,
-  LEVEL_UP,
+  UPGRADE = 1,
+  LEVELUP,
 }
 
 // --------------------------------
 // 会员群体 - 筛选条件 - 条件项
 // --------------------------------
-// TODO: 移除
 /**
  * 会员群体筛选条件项 - 枚举
  *
@@ -158,7 +153,8 @@ export enum MemberCardUpgradeMethod {
  * - `CREATED_TIME`: 注册时间 [from, to]
  * - `POINTS`: 当前积分 [min, max]
  * - `EXP`: 当前成长值 [min, max]
- * - `SIGN_IN`: 累计签到数 [min, max]
+ * - `CHECK_IN`: 累计签到数 [min, max]
+ * - `CHECK_IN_DAY`: 连续签到天数 [min, max]
  * - `ORDER_COUNT`: 累计订单数 [min, max]
  * - `ORDER_AMOUNT`: 累计订单金额 [min, max]
  */
@@ -172,7 +168,8 @@ export enum MemberGroupFilterKey {
   CREATED_TIME,
   POINTS,
   EXP,
-  SIGN_IN,
+  CHECK_IN,
+  CHECK_IN_DAY,
   ORDER_COUNT,
   ORDER_AMOUNT,
 }
@@ -221,7 +218,7 @@ export enum MemberUnregisterStatus {
  * - `REGISTER`: 注册奖励
  * - `ORDER`: 消费奖励
  * - `BIRTHDAY`: 生日有礼
- * - `SIGN_IN`: 签到奖励
+ * - `CHECK_IN`: 签到奖励
  * - `DEDUCT`: 积分抵现
  * - `INVITE`: 邀请奖励
  */
@@ -229,7 +226,7 @@ export enum MemberPointsRuleKey {
   REGISTER = 'register',
   ORDER = 'order',
   BIRTHDAY = 'birthday',
-  SIGN_IN = 'signIn',
+  CHECK_IN = 'checkIn',
   DEDUCT = 'deduct',
   INVITE = 'invite',
 }

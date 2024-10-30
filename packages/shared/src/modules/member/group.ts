@@ -1,7 +1,5 @@
 import type { IDict } from '~/common'
 
-import type { MemberGroupFilterKey, MemberGroupFilterOperator } from './constants'
-
 /**
  * 会员群体信息
  */
@@ -21,7 +19,7 @@ export interface IMemberGroupInfo {
   /**
    * 会员群体筛选条件 (JSON)
    */
-  filters: IMemberGroupFilterDict[]
+  filters: IMemberGroupFilter[]
   /**
    * 会员群体人数
    */
@@ -59,32 +57,6 @@ export type IMemberGroupList = Pick<
 export interface IMemberGroupFilter {
   /**
    * 筛选条件标识
-   */
-  key: MemberGroupFilterKey
-  /**
-   * 筛选条件运算符
-   */
-  operator: MemberGroupFilterOperator
-  /**
-   * 筛选条件名
-   */
-  name: string
-  /**
-   * 筛选条件值
-   */
-  value: Array<string | number>
-}
-
-/**
- * 会员群体筛选条件字典
- */
-export type IMemberGroupFilterDict = Pick<
-  IMemberGroupFilter,
-  | 'name'
-  | 'value'
-> & {
-  /**
-   * 筛选条件标识
    *
    * @see {@link MemberGroupFilterKey}
    */
@@ -95,6 +67,14 @@ export type IMemberGroupFilterDict = Pick<
    * @see {@link MemberGroupFilterOperator}
    */
   operator: IDict
+  /**
+   * 筛选条件名
+   */
+  name: string
+  /**
+   * 筛选条件值
+   */
+  value: Array<string | number>
 }
 
 /**

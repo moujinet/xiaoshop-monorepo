@@ -4,7 +4,7 @@ import type { IMemberCardBadgeStyle, IMemberCardStyle } from './card'
 /**
  * 会员卡绑定信息
  */
-export interface IMemberCardBindingInfo {
+export interface IMemberCardBindInfo {
   /**
    * 绑定 ID
    */
@@ -66,6 +66,10 @@ export interface IMemberCardBindingInfo {
    */
   useTimes: number
   /**
+   * 会员卡限制次数
+   */
+  limitTimes: number
+  /**
    * 到期时间 (根据自定义会员卡有效期计算)
    */
   dueTime: string
@@ -78,12 +82,14 @@ export interface IMemberCardBindingInfo {
 /**
  * 会员卡绑定关联信息
  */
-export type IMemberCardBindCard = Pick<
-  IMemberCardBindingInfo,
+export type IMemberBindCard = Pick<
+  IMemberCardBindInfo,
   | 'id'
   | 'key'
   | 'type'
   | 'name'
   | 'badgeStyle'
   | 'dueTime'
+  | 'useTimes'
+  | 'limitTimes'
 >

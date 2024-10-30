@@ -1,5 +1,5 @@
 import type { IDict } from '~/common'
-import type { IMemberProfileDict } from '../member'
+import type { IMemberProfileDict } from './profile'
 
 /**
  * 会员账户变更信息

@@ -1,5 +1,5 @@
 import type { IDict } from '~/common'
-import type { IMemberCardBadgeStyle, IMemberCardInfo, IMemberCardPlanInfo } from './card'
+import type { IMemberCardBadgeStyle } from './card'
 
 /**
  * 会员卡升级信息
@@ -12,15 +12,15 @@ export interface IMemberCardUpgradeInfo {
   /**
    * 会员卡 ID (冗余)
    */
-  cardId: IMemberCardInfo['id']
+  cardId: number
   /**
    * 会员卡套餐 ID (冗余)
    */
-  cardPlanId: IMemberCardPlanInfo['id']
+  cardPlanId: number
   /**
    * 会员卡标识 (冗余)
    */
-  key: IMemberCardInfo['key']
+  key: string
   /**
    * 会员卡类型 (冗余)
    *
@@ -30,7 +30,7 @@ export interface IMemberCardUpgradeInfo {
   /**
    * 会员卡名称 (冗余)
    */
-  name: IMemberCardInfo['name']
+  name: string
   /**
    * 会员卡徽章样式 (冗余)
    */
@@ -46,7 +46,7 @@ export interface IMemberCardUpgradeInfo {
    */
   reason: string
   /**
-   * 变更时间
+   * 升级时间
    */
   createdTime: string
 }

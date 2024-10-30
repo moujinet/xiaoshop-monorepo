@@ -1,4 +1,4 @@
-import type { IMemberProfileDict } from './member'
+import type { IMemberProfileDict } from './account/profile'
 
 /**
  * 会员邀请记录信息

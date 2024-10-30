@@ -1,5 +1,4 @@
 import type { IDict, YesOrNo } from '~/common'
-
 import type { MemberCardType } from '../constants'
 
 /**

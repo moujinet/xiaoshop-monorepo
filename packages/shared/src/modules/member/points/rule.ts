@@ -1,5 +1,4 @@
 import type { YesOrNo } from '~/common'
-
 import type { MemberPointsRuleKey } from '../constants'
 
 /**
@@ -14,13 +13,25 @@ export type IMemberPointsRuleKey = `${MemberPointsRuleKey}`
  */
 export interface IMemberPointsRule {
   /**
+   * 积分规则标识
+   */
+  key: IMemberPointsRuleKey
+  /**
    * 是否启用
    */
   isEnabled: YesOrNo
   /**
-   * 积分规则标识
+   * 积分规则名称
    */
-  key: IMemberPointsRuleKey
+  name: string
+  /**
+   * 积分规则描述
+   */
+  desc: string
+  /**
+   * 积分规则图标
+   */
+  icon: string
   /**
    * 积分规则选项
    *
@@ -31,7 +42,7 @@ export interface IMemberPointsRule {
    * - `perMonthRatio`: 连续 30 天倍率
    * - `ratio`: 积分抵扣比例
    */
-  rule: IMemberPointsRuleOptions
+  options: IMemberPointsRuleOptions
 }
 
 /**
