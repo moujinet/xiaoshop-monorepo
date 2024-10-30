@@ -1,5 +1,5 @@
-import type { FindManyOptions } from 'typeorm'
 import type { IApiPaginationData } from '@xiaoshop/shared'
+import type { DeepPartial, FindManyOptions } from 'typeorm'
 
 import { {{ modelName }}Entity } from './entity'
 
@@ -27,9 +27,19 @@ export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
   find: (where: I{{ modelName }}Where, select?: I{{ modelName }}Select) => Promise<T[]>
 
   /**
+   * 根据条件查询{{ tableComment }}
+   *
+   * @param where 查询条件
+   * @param select 查询字段
+   * @returns {{ tableComment }}
+   */
+  findOne: (where: I{{ modelName }}Where, select?: I{{ modelName }}Select) => Promise<T>
+
+  /**
    * 根据 ID 查询{{ tableComment }}
    *
    * @param id {{ tableComment }} ID
+   * @param select 查询字段
    * @returns {{ tableComment }}
    */
   findById: (id: number, select?: I{{ modelName }}Select) => Promise<T>
@@ -53,11 +63,11 @@ export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
   /**
    * 更新{{ tableComment }}
    *
-   * @param {{ model }} {{ tableComment }}
+   * @param {{ lowerCase model }} {{ tableComment }}
    * @param data 更新信息
    * @returns 保存后的{{ tableComment }}
    */
-  update: ({{ model }}: T, data: Partial<T>) => Promise<T>
+  update: ({{ lowerCase model }}: T, data: Partial<T>) => Promise<T>
 
   /**
    * 删除{{ tableComment }}
@@ -65,4 +75,12 @@ export interface I{{ modelName }}Repository<T = {{ modelName }}Entity> {
    * @param id {{ tableComment }} ID
    */
   destroy: (id: number) => Promise<void>
+
+  /**
+   * 创建{{ tableComment }}实例
+   *
+   * @param entity 实例数据
+   * @returns {{ tableComment }}实例
+   */
+  newEntity: (entity: DeepPartial<T>) => T
 }

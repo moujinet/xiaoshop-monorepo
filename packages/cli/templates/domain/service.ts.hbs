@@ -8,6 +8,7 @@ import { DEFAULT_PAGESIZE } from '~/common/constants'
 import { EventBusEmitter } from '~/services/event-bus/emitter'
 import { {{ domainName }}Repo } from '{{ moduleAlias }}/model/{{ domainPath }}/provider'
 import { Get{{ domainName }}PagesRequest } from '{{ moduleAlias }}/dto/request'
+import { to{{ domainName }}List, to{{ domainName }}Info } from '{{ moduleAlias }}/model/mapper'
 import { Create{{ domainName }}Payload, Update{{ domainName }}Payload } from '{{ moduleAlias }}/dto/payload'
 import { ExistsException, FailedException, NotFoundException } from '~/common/exceptions'
 
@@ -39,7 +40,14 @@ export class {{ domainName }}Service {
         pagesize = DEFAULT_PAGESIZE,
       } = query
 
-      return await this.repo.findAndCount(page, pagesize)
+      return await this.repo.findAndCount(page, pagesize).then(
+        ({ list, total, page, pagesize }) => ({
+          list: to{{ domainName }}List(list),
+          total,
+          page,
+          pagesize,
+        }),
+      )
     }
     catch (e) {
       throw new FailedException('获取%ENTITY%分页列表', e.message)
@@ -74,10 +82,10 @@ export class {{ domainName }}Service {
       if (!{{ domain }})
         throw new NotFoundException('%ENTITY%')
 
-      return {{ domain }}
+      return to{{ domainName }}Info({{ domain }})
     }
     catch (e) {
-      throw new FailedException('获取%ENTITY%详情', e.message, e.status)
+      throw new FailedException('获取%ENTITY%详情', e.message, e.code)
     }
   }
 
@@ -100,7 +108,7 @@ export class {{ domainName }}Service {
       )
     }
     catch (e) {
-      throw new FailedException('创建%ENTITY%', e.message, e.status)
+      throw new FailedException('创建%ENTITY%', e.message, e.code)
     }
   }
 
@@ -130,7 +138,7 @@ export class {{ domainName }}Service {
       )
     }
     catch (e) {
-      throw new FailedException('创建%ENTITY%', e.message, e.status)
+      throw new FailedException('更新%ENTITY%', e.message, e.code)
     }
   }
 

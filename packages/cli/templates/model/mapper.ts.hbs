@@ -7,15 +7,15 @@ import { {{ modelName }}Entity } from './entity'
 /**
   * Transform entities to list
   */
-export function to{{ modelName }}List({{ model }}s: {{ modelName }}Entity[]) {
+export function to{{ modelName }}List({{ lowerCase model }}s: {{ modelName }}Entity[]) {
   return pipeDict<I{{ modelName }}List>({{ model }}s, [
-    {{ model }} => objectToDict({{ model }}, '%name%', %DICT%),
+    row => objectToDict(row, '%name%', %DICT%),
   ])
 }
 
 /**
   * Transform entity
   */
-export function to{{ modelName }}Info({{ model }}: {{ modelName }}Entity) {
-  return objectToDict({{ model }}, '%name%', %DICT%) as I{{ modelName }}Info
+export function to{{ modelName }}Info({{ lowerCase model }}: {{ modelName }}Entity) {
+  return objectToDict({{ lowerCase model }}, '%name%', %DICT%) as I{{ modelName }}Info
 }
