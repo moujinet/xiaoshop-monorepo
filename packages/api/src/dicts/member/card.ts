@@ -33,7 +33,6 @@ export const MEMBER_CARD_PLAN_TYPES: IDict[] = [
  * @see {@link MemberCardUpgradeMethod}
  */
 export const MEMBER_CARD_UPGRADE_METHODS: IDict[] = [
-  { value: '升级', key: MemberCardUpgradeMethod.LEVEL_UP },
-  { value: '开通', key: MemberCardUpgradeMethod.UPGRADE },
-  { value: '绑定', key: MemberCardUpgradeMethod.BINDING },
+  { value: '等级升级', key: MemberCardUpgradeMethod.LEVELUP },
+  { value: '升级会员', key: MemberCardUpgradeMethod.UPGRADE },
 ]

@@ -1,4 +1,3 @@
-export * from './member'
 export * from './account'
 export * from './group'
 export * from './card'

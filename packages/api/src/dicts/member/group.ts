@@ -19,7 +19,8 @@ export const MEMBER_GROUP_FILTER_KEYS: IDict[] = [
   { value: '注册时间', key: MemberGroupFilterKey.CREATED_TIME },
   { value: '当前积分', key: MemberGroupFilterKey.POINTS },
   { value: '当前成长值', key: MemberGroupFilterKey.EXP },
-  { value: '累计签到数', key: MemberGroupFilterKey.SIGN_IN },
+  { value: '累计签到数', key: MemberGroupFilterKey.CHECK_IN },
+  { value: '连续签到天数', key: MemberGroupFilterKey.CHECK_IN_DAY },
   { value: '累计订单数', key: MemberGroupFilterKey.ORDER_COUNT },
   { value: '累计订单金额', key: MemberGroupFilterKey.ORDER_AMOUNT },
 ]
