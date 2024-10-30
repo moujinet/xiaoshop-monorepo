@@ -1,9 +1,9 @@
-import type { IMemberProfileDict } from './account/profile'
+import type { IMemberProfileInfo } from './account/profile'
 
 /**
  * 会员邀请记录信息
  */
-export interface IMemberInviteInfo {
+export type IMemberInviteInfo = {
   /**
    * 记录 ID
    */
@@ -11,13 +11,35 @@ export interface IMemberInviteInfo {
   /**
    * 受邀会员 ID
    */
-  invitedMemberId: IMemberProfileDict['id']
-  /**
-   * 受邀会员
-   */
-  invitedMember: IMemberProfileDict
+  inviteeId: number
   /**
    * 邀请时间
    */
   createdTime: string
-}
+} & Pick<
+  IMemberProfileInfo,
+  | 'avatar'
+  | 'nickname'
+  | 'gender'
+  | 'card'
+  | 'orderCount'
+  | 'orderAmount'
+  | 'lastLoginTime'
+>
+
+/**
+ * 会员邀请记录列表
+ */
+export type IMemberInviteList = Pick<
+  IMemberInviteInfo,
+  | 'id'
+  | 'inviteeId'
+  | 'avatar'
+  | 'nickname'
+  | 'gender'
+  | 'card'
+  | 'orderCount'
+  | 'orderAmount'
+  | 'lastLoginTime'
+  | 'createdTime'
+>
