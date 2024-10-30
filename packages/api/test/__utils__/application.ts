@@ -46,12 +46,23 @@ export async function createTestingApplication() {
   await truncateTable([
     'system_settings',
     'system_user',
-    'system_log',
+    // 'system_log',
+    'member_points_rule',
   ])
 
   await runSQL([
     // Settings
     `INSERT INTO \`${getTableName('system_settings')}\` (\`key\`, \`value\`) VALUES
+    ('member.defaults.avatar', 'https://dummyimage.com/200x200/000/fff'),
+    ('member.defaults.cardId', '1'),
+    ('member.register.enableUsername', '1'),
+    ('member.register.enableMobile', '1'),
+    ('member.register.enableOAuth', '1'),
+    ('member.unregister.enable', '1'),
+    ('member.unregister.enableAudit', '1'),
+    ('member.security.enableBindMobile', '1'),
+    ('member.security.passwordLength', '6'),
+    ('member.security.passwordStrength', '["number", "lower"]'),
     ('asset.customDomain', ''),
     ('asset.upload.maxFileSizeImage', '2500'),
     ('asset.upload.maxFileSizeVideo', '10000'),
@@ -87,13 +98,26 @@ export async function createTestingApplication() {
     ('asset.image.watermarkImageX', '10'),
     ('asset.image.watermarkImageY', '10'),
     ('system.log.cleanup.enable', '1'),
-    ('system.log.cleanup.period', '90'),
+    ('system.log.cleanup.beforeDays', '180'),
     ('system.auth.login.captchaLength', '4'),
     ('system.auth.login.captchaRetryTimes', '5'),
     ('system.auth.security.passwordLength', '6'),
     ('system.auth.security.passwordStrength', '["number", "lower"]'),
     ('system.auth.security.passwordRetryTimes', '5'),
-    ('system.auth.security.unlockAdminAfter', '30')`,
+    ('system.auth.security.unlockAdminAfter', '30'),
+    ('notification.log.cleanup.enable', '0'),
+    ('notification.log.cleanup.beforeDays', '180'),
+    ('notification.inbox.cleanup.enable', '0'),
+    ('notification.inbox.cleanup.beforeDays', '180')`,
+
+    // Points Rules
+    `INSERT INTO \`${getTableName('member_points_rule')}\` (\`key\`, \`is_enabled\`, \`name\`, \`desc\`, \`icon\`, \`options\`) VALUES
+    ('register', 1, '注册奖励', '注册会员时赠送的积分', 'icon', '{"points": 100}'),
+    ('order', 1, '消费奖励', '会员消费时, 赠送消费金额 100% 的积分', 'icon', '{"perOrderRatio": 100}'),
+    ('birthday', 1, '生日有礼', '会员生日时赠送的积分', 'icon', '{"points": 500}'),
+    ('checkIn', 1, '签到奖励', '会员签到时赠送的积分', 'icon', '{"points": 10, "perWeekRatio": 1.5, "perMonthRatio": 3}'),
+    ('deduct', 1, '积分抵现', '会员消费时, 积分抵扣一定金额', 'icon', '{"limit": 10000, "ratio": 10}'),
+    ('invite', 1, '邀请奖励', '邀请会员注册, 赠送一定的积分', 'icon', '{"points": 1000}')`,
 
     // Admin User
     `INSERT INTO \`${getTableName('system_user')}\` (\`is_admin\`, \`status\`, \`username\`, \`name\`, \`password\`, \`salt\`) VALUES (1, 1, 'admin', 'Admin', '$2b$10$6HjLrj5a0Jefr12T.76SRe/5AISF0uVaCaoL0grW.4mKBI/393zNO', '$2b$10$6HjLrj5a0Jefr12T.76SRe')`,
