@@ -13,7 +13,7 @@ export class {{ domainName }}CreateEvent extends AdminEvent {
   }
 
   get logContent() {
-    return `Create ${this.{{ domain }}Name}`
+    return `创建 - ${this.{{ domain }}Name}`
   }
 }
 
@@ -29,7 +29,7 @@ export class {{ domainName }}UpdateEvent extends AdminEvent {
   }
 
   get logContent() {
-    return `Update ${this.{{ domain }}Name}`
+    return `更新 - ${this.{{ domain }}Name}`
   }
 }
 
@@ -45,6 +45,6 @@ export class {{ domainName }}DeleteEvent extends AdminEvent {
   }
 
   get logContent() {
-    return `Delete ${this.{{ domain }}Name}`
+    return `删除 - ${this.{{ domain }}Name}`
   }
 }

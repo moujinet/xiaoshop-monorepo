@@ -13,7 +13,7 @@ import { toPaginationParams } from '~/utils/pagination'
 
 import { {{ modelName }}Entity } from './entity'
 
-const defaultSelect: I{{ modelName }}Select = ['id', 'name', 'sort', 'updatedTime']
+const defaultSelect: I{{ modelName }}Select = ['id']
 
 @Injectable()
 export class {{ modelName }}Repository implements I{{ modelName }}Repository {
@@ -42,7 +42,6 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
       take,
       order: {
         sort: 'ASC',
-        updatedTime: 'DESC',
       },
     })
 
@@ -66,8 +65,20 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
       where,
       order: {
         sort: 'ASC',
-        updatedTime: 'DESC',
       },
+    })
+  }
+
+  /**
+   * @inheritdoc
+   */
+  async findOne(
+    where: I{{ modelName }}Where,
+    select: I{{ modelName }}Select = defaultSelect,
+  ) {
+    return await this.repo.findOne({
+      select,
+      where,
     })
   }
 
@@ -97,7 +108,7 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
    * @inheritdoc
    */
   async create(data: Partial<{{ modelName }}Entity>) {
-    const {{ model }} = this.repo.create(data)
+    const {{ model }} = this.newEntity(data)
 
     return await this.repo.save({{ model }})
   }
@@ -117,5 +128,12 @@ export class {{ modelName }}Repository implements I{{ modelName }}Repository {
    */
   async destroy(id: number) {
     await this.repo.delete(id)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  newEntity(entity: DeepPartial<{{ modelName }}Entity>): {{ modelName }}Entity {
+    return this.repo.create(entity)
   }
 }
