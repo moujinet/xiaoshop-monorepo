@@ -49,6 +49,14 @@ export async function loadModules(): Promise<ISelectOptions[]> {
   return modules
 }
 
+export async function loadTopModules(): Promise<ISelectOptions[]> {
+  return loadModules().then(
+    modules => modules.filter(
+      module => module.hint === undefined,
+    ),
+  )
+}
+
 export async function loadModels(module: string): Promise<ISelectOptions[]> {
   const config = loadConfig()
   const providers = await glob('**/provider.ts', {

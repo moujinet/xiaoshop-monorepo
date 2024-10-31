@@ -1,7 +1,7 @@
 import * as Prompt from '@clack/prompts'
 import { capitalize } from 'es-toolkit/string'
 
-import { loadModules } from '@/utils/loader'
+import { loadTopModules } from '@/utils/loader'
 import { AbstractSchematic } from '@/common/schematic'
 
 export class ModuleSchematic extends AbstractSchematic {
@@ -30,7 +30,7 @@ export class ModuleSchematic extends AbstractSchematic {
         if (results.isSubModule) {
           return Prompt.select({
             message: 'Pick a parent module',
-            options: await loadModules(),
+            options: await loadTopModules(),
           })
         }
       },
