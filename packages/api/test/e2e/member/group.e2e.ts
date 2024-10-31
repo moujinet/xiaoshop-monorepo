@@ -32,6 +32,7 @@ describe('Member Module - Group', () => {
             { name: 'test', key: 1, operator: 1, value: [2] },
           ],
         })
+        .expect(200)
         .then(({ body }) => {
           expect(body.code).toEqual(0)
         })

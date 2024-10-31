@@ -21,6 +21,7 @@ describe('Member Module - Points', () => {
           icon: 'test',
           options: { points: 1 },
         })
+        .expect(200)
         .then(({ body }) => {
           expect(body.code).toEqual(0)
         })

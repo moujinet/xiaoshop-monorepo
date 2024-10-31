@@ -27,6 +27,7 @@ describe('Member Module - Tag', () => {
           name: 'test update',
           color: 'blue',
         })
+        .expect(200)
         .then(({ body }) => {
           expect(body.code).toEqual(0)
         })

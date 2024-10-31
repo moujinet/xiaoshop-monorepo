@@ -9,6 +9,10 @@ export interface ILogisticFreightTemplateInfo {
    */
   id: number
   /**
+   * 是否启用
+   */
+  isEnabled: YesOrNo
+  /**
    * 模板名称
    */
   name: string
@@ -55,6 +59,7 @@ export type ILogisticFreightTemplateDict = Pick<
 export type ILogisticFreightTemplateList = Pick<
   ILogisticFreightTemplateInfo,
   | 'id'
+  | 'isEnabled'
   | 'name'
   | 'desc'
   | 'sort'
