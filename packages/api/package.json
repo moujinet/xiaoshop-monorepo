@@ -68,7 +68,7 @@
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.9",
     "@types/multer": "^1.4.12",
-    "@types/node": "^22.8.5",
+    "@types/node": "^22.8.6",
     "@types/request-ip": "^0.0.41",
     "@types/supertest": "^6.0.2",
     "@types/ua-parser-js": "^0.7.39",
@@ -84,6 +84,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.3",
-    "zx": "^8.1.9"
+    "zx": "^8.2.0"
   }
 }
