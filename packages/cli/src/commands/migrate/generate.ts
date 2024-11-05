@@ -30,7 +30,7 @@ export class GenerateMigrate implements IHandler {
 
   constructor() {
     this.config = loadConfig()
-    this.tablePrefix = this.config.tablePrefix || ''
+    this.tablePrefix = this.config.typeorm.tablePrefix || ''
 
     this.output = {
       create: [],

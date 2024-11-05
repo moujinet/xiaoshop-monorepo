@@ -2,6 +2,7 @@ export const defaultConfig: IConfig = {
   sourceRoot: 'src',
   moduleRoot: '{{ SRC }}/modules',
   typeorm: {
+    tablePrefix: '',
     lib: '{{ CLI }}/scripts/typeorm.js',
     datasource: '{{ SRC }}/config/datasource.ts',
     migrations: '{{ SRC }}/database/migrations',

@@ -6,7 +6,6 @@ declare interface IConfigTypeOrmOptions {
 }
 
 declare interface IConfig {
-  tablePrefix?: string
   sourceRoot: string
   moduleRoot: string
   typeorm: IConfigTypeOrmOptions
