@@ -1,0 +1,7 @@
+{
+  "typeorm": {
+    "tablePrefix": "xs_",
+    "datasource": "{{ SRC }}/config/datasource.ts",
+    "migrations": "{{ SRC }}/database/migrations"
+  }
+}

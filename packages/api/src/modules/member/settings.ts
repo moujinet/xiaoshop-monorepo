@@ -8,10 +8,6 @@ export default {
   'register.enableMobile': '1',
   'register.enableOAuth': '1',
 
-  // 注销设置
-  'unregister.enable': '1',
-  'unregister.enableAudit': '1',
-
   // 安全设置
   'security.enableBindMobile': '1',
   'security.passwordLength': '6',
